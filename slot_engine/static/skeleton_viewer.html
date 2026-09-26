@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Leviathan 3D Volumetric Sculpt & Articulated Rig | slot-3d-visual-engine</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background: #020712;
+      color: #e0f2fe;
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #canvas-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Top Cockpit Header */
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(180deg, rgba(2, 6, 14, 0.95), rgba(2, 6, 14, 0.2));
+      border-bottom: 1px solid rgba(0, 240, 255, 0.35);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .title-group { pointer-events: auto; }
+    .main-title {
+      font-family: 'Cinzel', serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #00f0ff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    }
+    .sub-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 9px;
+      color: #7dd3fc;
+      letter-spacing: 1px;
+    }
+
+    .status-badge {
+      pointer-events: auto;
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 900;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid #00f0ff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+      white-space: nowrap;
+    }
+
+    /* Floating Technical Specs Card */
+    .info-card {
+      position: absolute;
+      top: 72px;
+      left: 16px;
+      background: rgba(2, 8, 18, 0.9);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 8px;
+      padding: 12px 14px;
+      width: 255px;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.85);
+      pointer-events: none;
+    }
+    .info-title {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 900;
+      color: #ffd700;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Orbitron', monospace;
+      font-size: 9px;
+      margin-bottom: 3px;
+    }
+    .info-label { color: #94a3b8; }
+    .info-val { color: #00f0ff; font-weight: 700; }
+
+    /* Camera Preset Dock (Right Side) */
+    .cam-dock {
+      position: absolute;
+      top: 72px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 10;
+      background: rgba(2, 8, 18, 0.85);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 8px;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+    }
+    .btn-cam {
+      background: rgba(10, 25, 45, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #bae6fd;
+      font-family: 'Orbitron', monospace;
+      font-size: 9px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-cam:hover {
+      background: rgba(0, 240, 255, 0.2);
+      border-color: #00f0ff;
+      color: #fff;
+    }
+
+    /* Bottom Interactive Animation & Control Dock */
+    .control-dock {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(3, 12, 24, 0.94);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 240, 255, 0.25);
+      backdrop-filter: blur(14px);
+      padding: 10px 18px;
+      border-radius: 12px;
+      z-index: 10;
+      max-width: 96vw;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    }
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+      background: #0284c7;
+    }
+    .btn-action:active { transform: translateY(1px); }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #b91c1c, #dc2626);
+      border-color: #fca5a5;
+      box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+      box-shadow: 0 0 20px rgba(255, 42, 75, 0.8);
+    }
+
+    .btn-snap {
+      background: linear-gradient(135deg, #047857, #10b981);
+      border-color: #6ee7b7;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    .btn-snap:hover {
+      background: #10b981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+    }
+
+    .btn-toggle {
+      background: rgba(10, 25, 45, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+    .btn-toggle.active {
+      background: rgba(0, 240, 255, 0.25);
+      border-color: #00f0ff;
+      color: #00f0ff;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+    }
+
+    .swatch-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      border-left: 1px solid rgba(148, 163, 184, 0.3);
+      padding-left: 10px;
+    }
+    .color-swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease;
+    }
+    .color-swatch.active {
+      transform: scale(1.25);
+      border-color: #fff;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    @media (max-width: 650px) {
+      .info-card { display: none; }
+      .cam-dock {
+        top: auto;
+        bottom: 74px;
+        right: 10px;
+        flex-direction: row;
+        padding: 4px;
+      }
+      .btn-cam { font-size: 8px; padding: 4px 6px; }
+      .control-dock { bottom: 10px; padding: 6px 10px; gap: 5px; }
+      .btn-action { padding: 6px 9px; font-size: 8.5px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Three.js Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Header -->
+  <header class="top-bar">
+    <div class="title-group">
+      <div class="main-title">ABYSSAL LEVIATHAN // TRUE 3D SKELETAL RIG</div>
+      <div class="sub-title">100% VOLUMETRIC MESH // BONE RIGGED JAW & SWIMMING SPINE // PBR SHADERS</div>
+    </div>
+    <div class="status-badge" id="status-hud">TRUE 3D PREDATOR // ACTIVE</div>
+  </header>
+
+  <!-- Left Technical Specs Card -->
+  <div class="info-card">
+    <div class="info-title">TRUE 3D SKELETAL SPECS</div>
+    <div class="info-row"><span class="info-label">GEOMETRY:</span><span class="info-val">100% 360° CLOSED 3D MESH</span></div>
+    <div class="info-row"><span class="info-label">SKELETAL RIG:</span><span class="info-val">BONE WEIGHTED SKINNING</span></div>
+    <div class="info-row"><span class="info-label">ANIMATIONS:</span><span class="info-val">SWIMMING + BITE STRIKE</span></div>
+    <div class="info-row"><span class="info-label">JAW STRIKE:</span><span class="info-val">UNHINGED TMJ BITE</span></div>
+    <div class="info-row"><span class="info-label">SURFACE:</span><span class="info-val">3D GILLS, TEETH & GUMS</span></div>
+    <div class="info-row"><span class="info-label">LIGHTING:</span><span class="info-val">CYAN KEY + CRIMSON RIM</span></div>
+    <div class="info-row"><span class="info-label">CAUSTICS:</span><span class="info-val">UNDERWATER SPOTLIGHT</span></div>
+    <div class="info-row"><span class="info-label">FPS:</span><span class="info-val">LOCKED 60 FPS</span></div>
+  </div>
+
+  <!-- Camera Presets -->
+  <div class="cam-dock">
+    <button class="btn-cam" id="btn-cam-front">🎥 FRONT VIEW</button>
+    <button class="btn-cam" id="btn-cam-34">🎥 3/4 DRAMATIC</button>
+    <button class="btn-cam" id="btn-cam-profile">🎥 90° PROFILE (TRUE 3D)</button>
+    <button class="btn-cam" id="btn-cam-maw">🎥 MAW CLOSEUP</button>
+  </div>
+
+  <!-- Bottom Interactive Animation Dock -->
+  <div class="control-dock">
+    <button class="btn-action btn-danger" id="btn-strike">
+      ⚡ TEST JAW STRIKE & CHOMP
+    </button>
+    <button class="btn-action" id="btn-roar">
+      🔊 TEST SUB-BASS ROAR
+    </button>
+    <button class="btn-action btn-snap" id="btn-snapshot">
+      📸 SNAPSHOT HD
+    </button>
+    <button class="btn-action" id="btn-upload-glb" style="background: linear-gradient(135deg, #7c3aed, #9333ea); border-color: #c084fc;">
+      📁 UPLOAD .GLB
+    </button>
+    <input type="file" id="file-input-glb" accept="*/*" style="display:none">
+
+    <button class="btn-action btn-toggle active" id="btn-pbr">
+      🎨 STUDIO PBR
+    </button>
+    <button class="btn-action btn-toggle" id="btn-wireframe">
+      🕸️ WIREFRAME
+    </button>
+    <button class="btn-action btn-toggle" id="btn-bones">
+      🦴 BONES
+    </button>
+
+    <div class="swatch-group">
+      <div class="color-swatch active" data-color="#00f0ff" style="background:#00f0ff;" title="Abyssal Cyan"></div>
+      <div class="color-swatch" data-color="#ffd700" style="background:#ffd700;" title="Sulfur Gold"></div>
+      <div class="color-swatch" data-color="#a855f7" style="background:#a855f7;" title="Void Amethyst"></div>
+      <div class="color-swatch" data-color="#ff2a4b" style="background:#ff2a4b;" title="Blood Crimson (Level 5)"></div>
+    </div>
+  </div>
+
+  <!-- Three.js, OrbitControls, and 3D Model Loaders -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+  <script src="/static/skeleton_viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,1704 @@
+/* The Descent: Abyssal Leviathan - Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+  --bg-deep: #03070d;
+  --copper-glow: #d97736;
+  --brass: #c5a059;
+  --brass-dark: #6e5527;
+  --abyssal-cyan: #00f0ff;
+  --crimson-alarm: #ff2a4b;
+  --vent-amber: #ff9100;
+  --viewport-glass: rgba(0, 20, 35, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #e0f2fe;
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Scene with Ambient Water Movement */
+#game-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  background: url('/static/assets/abyssal_trench_bg.jpg') center/cover no-repeat;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.95) inset;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: filter 0.8s ease, box-shadow 0.8s ease;
+}
+
+/* Dynamic Depth Atmosphere Filters */
+#game-wrapper.depth-0 { filter: hue-rotate(0deg) contrast(1.0) brightness(1.0); }
+#game-wrapper.depth-1 { filter: hue-rotate(12deg) contrast(1.1) brightness(0.94); }
+#game-wrapper.depth-2 { filter: hue-rotate(25deg) contrast(1.18) brightness(0.88); }
+#game-wrapper.depth-3 { filter: hue-rotate(45deg) contrast(1.25) brightness(0.82); box-shadow: 0 0 100px rgba(168, 85, 247, 0.25) inset; }
+#game-wrapper.depth-4 { filter: hue-rotate(75deg) contrast(1.35) brightness(0.78); box-shadow: 0 0 120px rgba(236, 72, 153, 0.3) inset; }
+#game-wrapper.depth-5 {
+  filter: hue-rotate(130deg) contrast(1.45) brightness(0.78);
+  animation: emergencyAlarmPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes emergencyAlarmPulse {
+  0% { box-shadow: 0 0 80px rgba(255, 42, 75, 0.3) inset; }
+  100% { box-shadow: 0 0 160px rgba(255, 42, 75, 0.7) inset, 0 0 30px rgba(255, 0, 0, 0.4); }
+}
+
+/* Background Living Ocean Canvas */
+#ambient-ocean-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Underwater Particles and Light Rays */
+.water-caustics {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  animation: causticPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes causticPulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* Cockpit / Bathysphere Top Header */
+.top-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: linear-gradient(180deg, rgba(3, 10, 20, 0.96), rgba(3, 10, 20, 0.55));
+  border-bottom: 2px solid var(--brass-dark);
+}
+
+.game-logo {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.6), 0 0 30px rgba(0, 240, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-logo .subtext {
+  font-size: 10px;
+  font-family: 'Orbitron', monospace;
+  color: var(--copper-glow);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Depth Bar & Pressure Gauge in Header */
+.depth-gauge-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(4, 16, 30, 0.85);
+  border: 1px solid var(--brass);
+  padding: 6px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) inset, 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.depth-meter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.depth-label {
+  font-size: 9px;
+  font-family: 'Orbitron', monospace;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+.depth-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--abyssal-cyan);
+  text-shadow: 0 0 10px var(--abyssal-cyan);
+}
+
+.pressure-bar-container {
+  width: 190px;
+  height: 16px;
+  background: #02070f;
+  border: 1px solid var(--brass);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.9) inset;
+}
+
+.pressure-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0284c7, var(--abyssal-cyan), #f59e0b, #ff2a4b);
+  box-shadow: 0 0 12px var(--abyssal-cyan);
+  transition: width 0.35s ease-out;
+}
+
+.pressure-text-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+  pointer-events: none;
+}
+
+.level-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--copper-glow);
+  background: rgba(217, 119, 54, 0.2);
+  color: #ffeedb;
+  text-shadow: 0 0 8px var(--copper-glow);
+  transition: all 0.3s ease;
+}
+
+/* Main Playing Stage with Sidebars */
+.main-stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  z-index: 5;
+}
+
+/* Cockpit Sidebars (Purged Runes & Creature Status) */
+.cockpit-sidebar {
+  width: 180px;
+  height: 480px;
+  background: linear-gradient(180deg, rgba(4, 10, 20, 0.95), rgba(1, 4, 8, 0.98));
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  border-radius: 12px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.9) inset, 0 0 15px rgba(0, 240, 255, 0.08);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: #00f0ff;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.panel-sub {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+/* Vertical Depth Barometer Scale */
+.depth-barometer-panel {
+  background: rgba(2, 6, 14, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 6px;
+}
+
+.barometer-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.barometer-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.depth-tier-tick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  color: #475569;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.depth-tier-tick.active {
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+  border-left: 3px solid #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+  font-weight: 700;
+}
+
+.depth-tier-tick.cleared {
+  color: #94a3b8;
+  border-left: 2px solid #22c55e;
+}
+
+.t-depth {
+  font-weight: 800;
+}
+
+.t-name {
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* Compact Runic Soul Matrix */
+.compact-runes-container {
+  background: rgba(2, 6, 14, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 6px;
+}
+
+.compact-runes-header {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.compact-runes-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.compact-rune-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 2px;
+  background: rgba(10, 25, 45, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.compact-rune-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.4));
+}
+
+.compact-rune-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 800;
+  color: #38bdf8;
+  margin-top: 2px;
+}
+
+.compact-rune-card .purge-slash {
+  position: absolute;
+  inset: 0;
+  background: rgba(220, 20, 40, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.compact-rune-card .purge-slash::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: #ff2a4b;
+  transform: rotate(-35deg);
+  box-shadow: 0 0 6px #ff2a4b;
+}
+
+.compact-rune-card.purged {
+  filter: grayscale(0.9) opacity(0.4);
+  border-color: #ff2a4b;
+  background: rgba(20, 4, 8, 0.6);
+}
+
+.compact-rune-card.purged .purge-slash {
+  opacity: 1;
+}
+
+/* Submersible Vital Telemetry Box */
+.telemetry-specs-box {
+  background: rgba(2, 6, 14, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.18);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+}
+
+.telemetry-label {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.telemetry-value {
+  color: #00f0ff;
+  font-weight: 800;
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.telemetry-value.status-nominal {
+  color: #22c55e;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+}
+
+/* Right Sidebar: Sleek Circular Sonar Depth Gauge */
+.sonar-dial-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Interactive Points Progression Tracker */
+.sonar-progression-box {
+  background: rgba(2, 6, 14, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8) inset;
+}
+
+.sonar-ratio-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.sonar-ratio-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+.sonar-ratio-vals {
+  font-family: 'Orbitron', monospace;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.pts-curr {
+  font-size: 16px;
+  font-weight: 900;
+  color: #00f0ff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+}
+
+.pts-divider {
+  font-size: 11px;
+  color: #475569;
+}
+
+.pts-targ {
+  font-size: 13px;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.pts-unit {
+  font-size: 8px;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 1px;
+}
+
+.sonar-target-desc {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  color: #f59e0b;
+  letter-spacing: 0.5px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sonar-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #02070f;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9) inset;
+}
+
+.sonar-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0284c7, #00f0ff, #f59e0b);
+  box-shadow: 0 0 8px #00f0ff;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sonar-radar-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 4px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(2, 14, 28, 0.95), rgba(1, 6, 14, 0.98));
+  border: 2px solid rgba(0, 240, 255, 0.35);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2) inset, 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.sonar-radar-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.sonar-bg-track {
+  fill: none;
+  stroke: rgba(0, 240, 255, 0.15);
+  stroke-width: 6;
+}
+
+.sonar-fill-ring {
+  fill: none;
+  stroke: var(--abyssal-cyan);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 427.26;
+  stroke-dashoffset: 427.26;
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s;
+  filter: drop-shadow(0 0 6px var(--abyssal-cyan));
+}
+
+.sonar-range-circle {
+  fill: none;
+  stroke: rgba(0, 240, 255, 0.15);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.sonar-crosshair {
+  stroke: rgba(0, 240, 255, 0.2);
+  stroke-width: 1;
+}
+
+.sonar-sweep-group {
+  transform-origin: 80px 80px;
+  animation: sonarSweep 3.5s linear infinite;
+}
+
+@keyframes sonarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.sonar-sweep-beam {
+  stroke: var(--abyssal-cyan);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px var(--abyssal-cyan));
+}
+
+.sonar-sweep-cone {
+  fill: rgba(0, 240, 255, 0.12);
+}
+
+.sonar-center-info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.sonar-depth-level {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--abyssal-cyan);
+  letter-spacing: 1px;
+}
+
+.sonar-pts-countdown {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+  margin: 2px 0;
+}
+
+.sonar-pts-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+.sonar-metrics-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(4, 12, 22, 0.7);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.sonar-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+}
+
+.sonar-metric-row .metric-label {
+  color: #94a3b8;
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+}
+
+.sonar-metric-row .metric-val {
+  color: var(--abyssal-cyan);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* Center Stage Container */
+.center-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Free Spins / Expedition HUD Banner */
+.free-spins-hud {
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(90deg, rgba(6, 20, 36, 0.95), rgba(16, 38, 64, 0.98), rgba(6, 20, 36, 0.95));
+  border: 2px solid var(--copper-glow);
+  border-radius: 8px;
+  padding: 6px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(217, 119, 54, 0.35);
+  animation: hudPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes hudPulse {
+  0% { box-shadow: 0 0 15px rgba(217, 119, 54, 0.2); }
+  100% { box-shadow: 0 0 25px rgba(217, 119, 54, 0.6); }
+}
+
+.hud-left { display: flex; flex-direction: column; }
+.hud-tag { font-family: 'Orbitron', monospace; font-size: 9px; color: #94a3b8; }
+.hud-mode-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 900; color: #ffd700; letter-spacing: 1px; }
+
+.hud-spin-counter {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 12px var(--abyssal-cyan);
+}
+
+.hud-multiplier-badge {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff9100;
+  border: 1px solid #ff9100;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 145, 0, 0.15);
+}
+
+/* Interactive Ways to Win Banner Centered Above Grid */
+.ways-to-win-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 5px 22px;
+  background: linear-gradient(180deg, rgba(5, 14, 26, 0.96), rgba(1, 4, 10, 0.98));
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(0, 240, 255, 0.12);
+  overflow: hidden;
+  z-index: 10;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ways-to-win-banner.pulse {
+  transform: scale(1.08);
+  border-color: #00f0ff;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), inset 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.ways-flare {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.25), transparent);
+  transform: skewX(-25deg);
+  animation: flareSwipe 4s ease-in-out infinite;
+}
+
+@keyframes flareSwipe {
+  0%, 70% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.ways-count {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 900;
+  color: #00f0ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px #00f0ff, 0 0 24px rgba(0, 240, 255, 0.5);
+  transition: transform 0.2s ease;
+}
+
+.ways-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* Bathysphere Viewport Porthole Frame */
+.viewport-outer-frame {
+  position: relative;
+  padding: 16px;
+  background: radial-gradient(circle, rgba(5, 12, 22, 0.65) 0%, rgba(1, 4, 8, 0.9) 100%) !important;
+  backdrop-filter: blur(2px);
+  border: 2px solid rgba(0, 240, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 240, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 3D WebGL Leviathan Layer - In Foreground OVER the Grid Cells */
+#leviathan-3d-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* Hydrothermal Vents Column Indicators */
+.vents-row {
+  display: grid;
+  grid-template-columns: repeat(5, 84px);
+  gap: 8px;
+  margin-bottom: 6px;
+  height: 28px;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.vents-row.grid-6x5 {
+  grid-template-columns: repeat(6, 84px);
+}
+
+.vent-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 900;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.3s ease;
+}
+
+.vent-indicator.active {
+  opacity: 1;
+  transform: translateY(0);
+  background: linear-gradient(180deg, rgba(255, 145, 0, 0.35), rgba(255, 42, 75, 0.6));
+  border: 1px solid var(--vent-amber);
+  color: #fff;
+  text-shadow: 0 0 10px var(--vent-amber), 0 0 20px var(--crimson-alarm);
+  box-shadow: 0 0 15px rgba(255, 145, 0, 0.5);
+  animation: ventSteamPulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes ventSteamPulse {
+  0% { box-shadow: 0 0 10px rgba(255, 145, 0, 0.5); }
+  100% { box-shadow: 0 0 25px rgba(255, 42, 75, 0.8); }
+}
+
+/* 5x5 (or 6x5) Reels Grid Matrix */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 84px);
+  grid-template-rows: repeat(5, 84px);
+  gap: 8px;
+  padding: 8px;
+  background: rgba(1, 4, 10, 0.65) !important;
+  border: 2px solid rgba(0, 240, 255, 0.22);
+  border-radius: 10px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.85) inset;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes symbolEvaporate {
+  0% {
+    transform: scale(1) translateY(0);
+    filter: brightness(1) drop-shadow(0 0 0 transparent);
+    opacity: 1;
+  }
+  35% {
+    transform: scale(1.25) translateY(-18px);
+    filter: brightness(3.0) drop-shadow(0 0 20px #00f0ff);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(0.05) translateY(-90px);
+    filter: brightness(6) blur(6px) drop-shadow(0 0 35px #00f0ff);
+    opacity: 0;
+  }
+}
+
+.symbol-cell.evaporating {
+  animation: symbolEvaporate 0.7s forwards cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.grid-container.grid-6x5 {
+  grid-template-columns: repeat(6, 84px);
+  box-shadow: 0 0 40px rgba(255, 42, 75, 0.4) inset, 0 0 20px rgba(255, 42, 75, 0.3);
+  border-color: var(--crimson-alarm);
+}
+
+/* Symbol Cell Tile */
+.symbol-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(145deg, rgba(8, 16, 28, 0.94), rgba(2, 6, 12, 0.98));
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s, filter 0.25s;
+  perspective: 600px;
+}
+
+.symbol-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transform: scale(1.32); /* Eliminates any outer golden circle borders from legacy art */
+}
+
+/* Beautiful carved SVG runestones inside .symbol-cell */
+.symbol-cell .rune-cell-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.02);
+}
+
+.rune-card .rune-symbol img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+}
+
+/* Pearl Token Overlay Badge */
+.pearl-overlay-icon {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e0f2fe, #9333ea);
+  border: 1px solid #fff;
+  box-shadow: 0 0 8px #c084fc, 0 0 15px #a855f7;
+  animation: pearlRotate 3s linear infinite;
+}
+
+@keyframes pearlRotate {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.15); filter: brightness(1.3); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* LIVE VISUAL BURNS & SIZZLE PARTICLES */
+.symbol-cell.burning {
+  border: 2px solid #ff9100 !important;
+  box-shadow: 0 0 20px #ff3b00, 0 0 35px #ff9100, inset 0 0 15px rgba(255, 69, 0, 0.8) !important;
+  transform: scale(1.08);
+  z-index: 15;
+  animation: flameBurn 0.25s ease-in-out infinite alternate;
+}
+
+@keyframes flameBurn {
+  0% {
+    filter: brightness(1.2) contrast(1.1);
+    box-shadow: 0 0 18px #ff3b00, 0 0 30px #ff9100, inset 0 0 12px #ff4500;
+  }
+  100% {
+    filter: brightness(1.5) contrast(1.3);
+    box-shadow: 0 0 28px #ff7700, 0 0 45px #ff2a4b, inset 0 0 20px #ff7700;
+  }
+}
+
+/* SYMBOL PLUNGE & WATER DIVE INTERACTION */
+.symbol-cell.diving {
+  transform: scale(0.68) translateZ(-90px) rotateX(25deg) !important;
+  filter: blur(2.5px) brightness(0.6) hue-rotate(180deg) !important;
+  border-color: #00f0ff !important;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.6) !important;
+  transition: transform 0.35s ease-in, filter 0.35s ease-in !important;
+}
+
+/* SYMBOL STEAM BOILING & EVAPORATION */
+.symbol-cell.evaporating {
+  opacity: 0 !important;
+  transform: scale(0.2) translateY(-25px) translateZ(-160px) !important;
+  filter: blur(8px) brightness(2.0) !important;
+  transition: transform 0.35s ease-out, opacity 0.35s ease-out, filter 0.35s ease-out !important;
+}
+
+.symbol-cell.exploding {
+  transform: scale(0);
+  opacity: 0;
+  filter: blur(4px);
+  transition: transform 0.25s ease-in, opacity 0.25s ease-in;
+}
+
+/* Floating Win & Points Text Rising from Burned Tiles */
+.win-float-tag {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 900;
+  color: #ffd700;
+  text-shadow: 0 0 6px #000, 0 0 10px #ffd700;
+  pointer-events: none;
+  z-index: 25;
+  white-space: nowrap;
+  animation: floatUpAndFade 0.85s ease-out forwards;
+}
+
+.win-float-tag.pts {
+  top: 48%;
+  font-size: 11px;
+  color: var(--abyssal-cyan);
+  text-shadow: 0 0 6px #000, 0 0 10px var(--abyssal-cyan);
+}
+
+@keyframes floatUpAndFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -24px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -42px) scale(1.0);
+  }
+}
+
+/* FX Particle Canvas */
+#fx-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 22;
+}
+
+/* Violent Viewport Screen Shake */
+@keyframes shakeHeavy {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  15% { transform: translate(-10px, 8px) rotate(-1.5deg); }
+  30% { transform: translate(10px, -8px) rotate(1.5deg); }
+  45% { transform: translate(-8px, 6px) rotate(-1deg); }
+  60% { transform: translate(8px, -4px) rotate(1deg); }
+  75% { transform: translate(-4px, 3px) rotate(-0.5deg); }
+  90% { transform: translate(3px, -2px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* PHYSICAL ON-GRID LEVIATHAN JAWS STRIKE LAYER */
+#grid-creature-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 28;
+}
+
+.grid-leviathan-jaw-bite {
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 35;
+  animation: onGridJawBite 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.grid-leviathan-jaw-bite img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px #00f0ff) drop-shadow(0 0 55px #ff2a4b);
+}
+
+@keyframes onGridJawBite {
+  0% {
+    transform: scale(2.0) rotate(-12deg);
+    opacity: 0;
+    filter: drop-shadow(0 0 50px #00f0ff);
+  }
+  35% {
+    transform: scale(1.05) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 65px #ff2a4b);
+  }
+  65% {
+    transform: scale(0.98) rotate(3deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 45px #00f0ff);
+  }
+  100% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+/* LEVEL UP DEPTH BREACH SPLASH MODAL */
+.level-up-splash {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 5, 12, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 55;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.85);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.level-up-splash.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.splash-box {
+  background: linear-gradient(180deg, #091c30, #030810);
+  border: 2px solid var(--brass);
+  border-radius: 14px;
+  padding: 24px 32px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0, 240, 255, 0.35);
+  max-width: 440px;
+}
+
+.splash-badge {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--vent-amber);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.splash-level-title {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 15px var(--abyssal-cyan);
+}
+
+.splash-level-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  color: var(--copper-glow);
+  margin-bottom: 12px;
+}
+
+.splash-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #e2e8f0;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+/* Bottom Cockpit Control Panel */
+.control-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: linear-gradient(0deg, rgba(2, 6, 12, 0.98), rgba(6, 15, 28, 0.85));
+  border-top: 2px solid var(--brass-dark);
+}
+
+.stats-group {
+  display: flex;
+  gap: 28px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.stat-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat-val.win-val {
+  color: #ffd700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+/* Buttons and Controls */
+.buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-bonus-buy {
+  background: linear-gradient(135deg, #b45309, #d97706);
+  border: 1px solid #fde68a;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 0 15px rgba(217, 119, 6, 0.4);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-bonus-buy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(217, 119, 6, 0.7);
+}
+
+.btn-spin {
+  background: radial-gradient(circle, #0284c7, #0369a1);
+  border: 2px solid var(--abyssal-cyan);
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 4px 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.15s ease;
+}
+
+.btn-spin:hover:not(:disabled) {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
+}
+
+.btn-spin:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.btn-spin:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.btn-spin svg {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+  filter: drop-shadow(0 0 4px #000);
+}
+
+/* Modals */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bonus-menu-card {
+  width: 90%;
+  max-width: 720px;
+  background: linear-gradient(180deg, #071526, #020810);
+  border: 2px solid var(--brass);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
+}
+
+.bonus-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--brass-dark);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.bonus-menu-header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.bonus-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.bonus-option-card {
+  background: rgba(10, 25, 45, 0.8);
+  border: 1px solid var(--brass-dark);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bonus-option-card:hover {
+  border-color: var(--copper-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(217, 119, 54, 0.4);
+}
+
+.bonus-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.bonus-cost {
+  font-family: 'Orbitron', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.bonus-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* Big Win Celebration Splash Banner */
+.big-win-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(20, 5, 10, 0.95), rgba(5, 0, 2, 0.98));
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 60px #ffd700, 0 0 100px rgba(255, 42, 75, 0.6);
+  padding: 30px 60px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 80;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.big-win-banner.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.big-win-title {
+  font-family: 'Cinzel', serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffd700;
+  text-shadow: 0 0 20px #ffd700;
+  letter-spacing: 3px;
+}
+
+.big-win-amount {
+  font-family: 'Orbitron', monospace;
+  font-size: 48px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 30px var(--abyssal-cyan);
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE STYLING (Phones in Portrait / Landscape)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  #game-wrapper {
+    max-width: 100vw;
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .top-header {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .game-logo {
+    font-size: 15px;
+    gap: 6px;
+  }
+
+  .depth-gauge-panel {
+    gap: 6px;
+    padding: 4px 8px;
+  }
+
+  .depth-value {
+    font-size: 15px;
+  }
+
+  .pressure-bar-container {
+    width: 70px;
+    height: 12px;
+  }
+
+  .level-badge {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  .main-stage {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    width: 100%;
+  }
+
+  /* Center Stage & Reels Grid MUST BE ORDER 1 (HERO) */
+  .center-stage-container {
+    order: 1 !important;
+    width: 100%;
+    max-width: 410px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .free-spins-hud {
+    width: 100%;
+    padding: 4px 10px;
+    margin-bottom: 4px;
+  }
+
+  .ways-to-win-banner {
+    padding: 3px 14px;
+    margin-bottom: 4px;
+    gap: 6px;
+  }
+
+  .ways-count {
+    font-size: 16px;
+  }
+
+  .ways-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .viewport-outer-frame {
+    padding: 6px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+
+  .vents-row {
+    gap: 5px !important;
+    height: 20px;
+    margin-bottom: 3px;
+  }
+
+  .vent-indicator {
+    font-size: 9px;
+  }
+
+  .grid-container {
+    gap: 5px !important;
+    padding: 5px !important;
+  }
+
+  /* Right Panel (Sonar Depth Progression) directly beneath the reels (ORDER 2) */
+  .cockpit-sidebar.right-panel {
+    order: 2 !important;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(3, 8, 18, 0.92);
+  }
+
+  .cockpit-sidebar.right-panel .panel-header {
+    display: none !important;
+  }
+
+  .sonar-progression-box {
+    flex: 1;
+    padding: 4px 6px;
+  }
+
+  .pts-curr {
+    font-size: 14px;
+  }
+
+  .pts-targ {
+    font-size: 11px;
+  }
+
+  .sonar-radar-container {
+    width: 68px;
+    height: 68px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .sonar-radar-svg {
+    width: 68px;
+    height: 68px;
+  }
+
+  .sonar-center-info .sonar-depth-level {
+    font-size: 7px;
+  }
+
+  .sonar-center-info .sonar-pts-countdown {
+    font-size: 11px;
+  }
+
+  .sonar-center-info .sonar-pts-label {
+    font-size: 6px;
+  }
+
+  .sonar-metrics-card {
+    display: none !important;
+  }
+
+  /* Left Panel (Trench Telemetry & Compact Runes) placed at bottom (ORDER 3) */
+  .cockpit-sidebar.left-panel {
+    order: 3 !important;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 4px 8px;
+    background: rgba(3, 8, 18, 0.9);
+  }
+
+  .cockpit-sidebar.left-panel .panel-header {
+    display: none !important;
+  }
+
+  .depth-barometer-panel {
+    display: none !important;
+  }
+
+  .compact-runes-container {
+    padding: 4px 6px;
+  }
+
+  .compact-runes-header {
+    font-size: 7px;
+    margin-bottom: 2px;
+  }
+
+  .compact-rune-icon img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .compact-rune-tag {
+    font-size: 7px;
+  }
+
+  .telemetry-specs-box {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 4px;
+  }
+
+  .telemetry-row {
+    font-size: 8px;
+    gap: 4px;
+  }
+
+  /* Control Bar */
+  .control-bar {
+    padding: 8px 10px calc(12px + env(safe-area-inset-bottom, 16px)) 10px;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(2, 6, 14, 0.98);
+  }
+
+  .stats-group {
+    width: 100%;
+    justify-content: space-around;
+    gap: 8px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-val {
+    font-size: 16px;
+  }
+
+  .buttons-group {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .btn-spin {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+  }
+
+  .btn-bonus-buy {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  #btn-xbet {
+    padding: 8px 8px;
+    font-size: 10px;
+  }
+
+  #btn-test-devour {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  #btn-turbo {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .bonus-menu-card {
+    max-width: 95vw;
+    max-height: 88vh;
+    padding: 12px;
+  }
+
+  .bonus-options-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Abyssal Leviathan // Tripo3D Multi-View 4-Pack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 20%, #06152b 0%, #020713 60%, #01040a 100%);
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      padding: 16px 12px 60px;
+    }
+    header { text-align: center; margin-bottom: 20px; }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: #00f0ff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+    }
+    .subtitle {
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      color: #7dd3fc;
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #6ee7b7;
+      font-family: 'Orbitron', monospace;
+      font-size: 9px;
+      font-weight: 800;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 720px;
+      margin: 0 auto 24px;
+    }
+    .card {
+      background: rgba(10, 25, 45, 0.75);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .card-header {
+      background: rgba(2, 8, 18, 0.85);
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    }
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffd700;
+    }
+    .card-slot {
+      font-family: 'Orbitron', monospace;
+      font-size: 9px;
+      color: #00f0ff;
+    }
+    .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #2a2a2a;
+    }
+    .btn-dl {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 1px solid #38bdf8;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 9px 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-dl:hover {
+      background: #0284c7;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    }
+    .section-box {
+      max-width: 720px;
+      margin: 0 auto 20px;
+      background: rgba(10, 25, 45, 0.8);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 900;
+      color: #00f0ff;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .prompt-content {
+      background: rgba(2, 8, 18, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #bae6fd;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .btn-copy {
+      background: linear-gradient(135deg, #7c3aed, #9333ea);
+      border: 1px solid #c084fc;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-copy:hover {
+      background: #9333ea;
+      box-shadow: 0 0 15px rgba(192, 132, 252, 0.8);
+    }
+    .tips-list { list-style: none; padding: 0; margin-top: 8px; }
+    .tips-list li {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .tips-list li::before { content: '⚡'; color: #ffd700; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TRIPO3D MULTI-VIEW 4-PACK</h1>
+    <div class="subtitle">MATHEMATICALLY ALIGNED // ORTHOGRAPHIC // STUDIO REFERENCE</div>
+    <div class="badge">100% COMPATIBLE WITH TRIPO3D HD MODEL SLOTS</div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-header"><span class="card-title">FRONT VIEW</span><span class="card-slot">Slot: Front</span></div>
+      <img src="/static/assets/tripo_views/front.jpg" alt="Front View">
+      <a class="btn-dl" href="/static/assets/tripo_views/front.jpg" download="front.jpg">⬇️ SAVE FRONT</a>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">LEFT PROFILE</span><span class="card-slot">Slot: Left</span></div>
+      <img src="/static/assets/tripo_views/left.jpg" alt="Left View">
+      <a class="btn-dl" href="/static/assets/tripo_views/left.jpg" download="left.jpg">⬇️ SAVE LEFT</a>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">RIGHT PROFILE</span><span class="card-slot">Slot: Right</span></div>
+      <img src="/static/assets/tripo_views/right.jpg" alt="Right View">
+      <a class="btn-dl" href="/static/assets/tripo_views/right.jpg" download="right.jpg">⬇️ SAVE RIGHT</a>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">BACK VIEW</span><span class="card-slot">Slot: Back</span></div>
+      <img src="/static/assets/tripo_views/back.jpg" alt="Back View">
+      <a class="btn-dl" href="/static/assets/tripo_views/back.jpg" download="back.jpg">⬇️ SAVE BACK</a>
+    </div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-title">
+      <span>🎯 OPTIMIZED TRIPO3D PROMPT</span>
+      <button class="btn-copy" id="copy-btn" onclick="copyPrompt()">📋 COPY PROMPT</button>
+    </div>
+    <div class="prompt-content" id="prompt-text">Abyssal Leviathan sea dragon monster bust, game-ready character 3D asset, watertight manifold geometry. Armored obsidian charcoal rocky scales, bioluminescent electric cyan magma cracks and fissures, fiery orange eyes. Terrifying unhinged dragon maw with rows of interlocking translucent needle fangs and glowing cyan throat. Symmetrical curved swept-back horns and dorsal spines along the neck. Clean silhouette, sharp details, studio lighting, high polygon count, no background, no pedestal.</div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-title">💡 WHY THE PREVIOUS MESH FAILED & HOW THIS FIXES IT</div>
+    <ul class="tips-list">
+      <li><strong>No Water / Fog Noise:</strong> The previous image had sea spray and waves at the bottom. Tripo3D mistook the water for solid geometry, melting the bottom half. These 4 views are completely isolated on neutral studio grey.</li>
+      <li><strong>100% Orthographic Alignment:</strong> Eye line, jaw hinge, horn curve, and spine ridge line up precisely across Front, Left, Right, and Back.</li>
+      <li><strong>Watertight Topology:</strong> The prompt directs Tripo3D to generate a clean manifold game mesh without floating debris.</li>
+    </ul>
+  </div>
+
+  <script>
+    function copyPrompt() {
+      const text = document.getElementById('prompt-text').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = '✅ COPIED!';
+        setTimeout(() => { btn.textContent = '📋 COPY PROMPT'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

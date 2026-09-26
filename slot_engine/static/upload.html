@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Upload 3D Leviathan Model</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 20%, #06152b 0%, #020713 60%, #01040a 100%);
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: #00f0ff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      color: #7dd3fc;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .upload-card {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(10, 25, 45, 0.85);
+      border: 2px dashed rgba(0, 240, 255, 0.4);
+      border-radius: 16px;
+      padding: 36px 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .upload-card:hover, .upload-card.dragover {
+      border-color: #00f0ff;
+      background: rgba(0, 240, 255, 0.1);
+      transform: scale(1.02);
+    }
+    .icon {
+      font-size: 52px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+    .btn-select {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 1px solid #38bdf8;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      pointer-events: none;
+    }
+    #file-input {
+      display: none;
+    }
+    .status-box {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+      width: 100%;
+      max-width: 480px;
+    }
+    .status-loading {
+      background: rgba(2, 132, 199, 0.2);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      display: block;
+    }
+    .status-success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #34d399;
+      display: block;
+    }
+    .status-error {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #f87171;
+      display: block;
+    }
+    .btn-view {
+      margin-top: 14px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 1px solid #6ee7b7;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+      transition: all 0.2s ease;
+    }
+    .btn-view:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.9);
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #64748b;
+      max-width: 440px;
+    }
+  </style>
+</head>
+<body>
+  <h1>UPLOAD 3D LEVIATHAN</h1>
+  <div class="subtitle">FAST DIRECT UPLOAD // ACCEPTS .GLB, .GLTF OR RENAMED .PNG</div>
+
+  <div class="upload-card" id="dropzone">
+    <div class="icon">🐉</div>
+    <div class="card-title">TAP HERE TO SELECT FILE</div>
+    <div class="card-desc">Select your downloaded 3D model from Files, Downloads, or iCloud Drive</div>
+    <div class="btn-select">📁 BROWSE DEVICE FILES</div>
+    <input type="file" id="file-input" accept="*/*">
+  </div>
+
+  <div class="status-box" id="status-box"></div>
+  <a class="btn-view" id="btn-view" style="display:none;" href="/static/skeleton_viewer.html?model=custom_leviathan.glb">🚀 OPEN IN 3D ENGINE</a>
+
+  <div class="note">
+    💡 Whether your file is named <strong>model.glb</strong> or <strong>model.png</strong>, our server will automatically extract the 3D geometry and configure the abyssal lighting.
+  </div>
+
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const statusBox = document.getElementById('status-box');
+    const btnView = document.getElementById('btn-view');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    ['dragenter', 'dragover'].forEach(name => {
+      dropzone.addEventListener(name, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach(name => {
+      dropzone.addEventListener(name, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      const files = e.dataTransfer.files;
+      if (files.length) handleFile(files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+
+    async function handleFile(file) {
+      statusBox.className = 'status-box status-loading';
+      statusBox.textContent = '⏳ Uploading ' + file.name + ' (' + (file.size / (1024*1024)).toFixed(2) + ' MB)...';
+      btnView.style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/upload-model', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          statusBox.className = 'status-box status-success';
+          statusBox.innerHTML = '✅ Successfully uploaded! (' + (file.size / (1024*1024)).toFixed(2) + ' MB)<br>Model bound to 3D engine!';
+          btnView.style.display = 'inline-block';
+          // Auto-redirect after 1.5 seconds
+          setTimeout(() => {
+            window.location.href = '/static/skeleton_viewer.html?model=custom_leviathan.glb';
+          }, 1500);
+        } else {
+          statusBox.className = 'status-box status-error';
+          statusBox.textContent = '❌ Upload failed. Please try again.';
+        }
+      } catch (err) {
+        statusBox.className = 'status-box status-error';
+        statusBox.textContent = '❌ Network error during upload.';
+      }
+    }
+  </script>
+</body>
+</html>

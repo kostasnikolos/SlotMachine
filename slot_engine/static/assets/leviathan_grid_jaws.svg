@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <radialGradient id="mawVortex" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="60%" stop-color="#021422" />
+      <stop offset="90%" stop-color="#052c42" />
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+    </radialGradient>
+
+    <filter id="jawGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <linearGradient id="fangGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#e0f2fe" />
+      <stop offset="85%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <linearGradient id="lowerFangGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#e0f2fe" />
+      <stop offset="85%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Ocean Maw Vortex Abyss Core -->
+  <circle cx="150" cy="150" r="135" fill="url(#mawVortex)" stroke="#00f0ff" stroke-width="4" filter="url(#jawGlow)" />
+
+  <!-- Bioluminescent Energy Arcs -->
+  <path d="M 40,150 Q 150,80 260,150" fill="none" stroke="#00f0ff" stroke-width="2.5" opacity="0.7" stroke-dasharray="8 6" />
+  <path d="M 40,150 Q 150,220 260,150" fill="none" stroke="#00f0ff" stroke-width="2.5" opacity="0.7" stroke-dasharray="8 6" />
+
+  <!-- Upper Jaws with Serrated Monster Fangs -->
+  <g id="upper-jaw" filter="url(#jawGlow)">
+    <!-- Jaw Ridge -->
+    <path d="M 25,130 C 50,40 250,40 275,130 C 255,105 45,105 25,130 Z" fill="#081826" stroke="#00f0ff" stroke-width="3" />
+    
+    <!-- Giant Upper Fangs -->
+    <polygon points="50,110 65,110 57,175" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="80,100 100,100 90,195" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="115,95 140,95 127,215" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="160,95 185,95 173,215" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="200,100 220,100 210,195" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="235,110 250,110 243,175" fill="url(#fangGrad)" stroke="#0369a1" stroke-width="1.5" />
+  </g>
+
+  <!-- Lower Jaws with Upward Interlocking Fangs -->
+  <g id="lower-jaw" filter="url(#jawGlow)">
+    <!-- Jaw Ridge -->
+    <path d="M 25,170 C 50,260 250,260 275,170 C 255,195 45,195 25,170 Z" fill="#081826" stroke="#00f0ff" stroke-width="3" />
+
+    <!-- Giant Lower Fangs Interlocking -->
+    <polygon points="65,190 80,190 72,125" fill="url(#lowerFangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="98,200 118,200 108,105" fill="url(#lowerFangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="138,205 162,205 150,85" fill="url(#lowerFangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="182,200 202,200 192,105" fill="url(#lowerFangGrad)" stroke="#0369a1" stroke-width="1.5" />
+    <polygon points="220,190 235,190 228,125" fill="url(#lowerFangGrad)" stroke="#0369a1" stroke-width="1.5" />
+  </g>
+
+  <!-- Electric Plasma Sparks -->
+  <circle cx="150" cy="150" r="14" fill="#ffffff" filter="url(#jawGlow)" />
+  <circle cx="95" cy="140" r="4" fill="#00f0ff" filter="url(#jawGlow)" />
+  <circle cx="205" cy="160" r="4" fill="#00f0ff" filter="url(#jawGlow)" />
+</svg>
