@@ -422,6 +422,10 @@ class SlotGame {
       }
       this.gridState.push(row);
     }
+    
+    if (window.webglEngine) {
+      window.webglEngine.updateGrid(defaultSymbols);
+    }
   }
 
   createSymbolElement(symType, hasPearl = false) {
@@ -434,6 +438,7 @@ class SlotGame {
       const img = document.createElement('img');
       img.src = SYMBOL_ASSETS[symType];
       img.alt = symType;
+      img.style.opacity = '0';
       if (symType.startsWith('LOW_')) {
         img.className = 'rune-cell-img';
       }
@@ -443,6 +448,7 @@ class SlotGame {
       img.src = `/static/assets/rune_${LOW_SYMBOLS[symType].label.toLowerCase()}.svg`;
       img.alt = symType;
       img.className = 'rune-cell-img';
+      img.style.opacity = '0';
       wrap.appendChild(img);
     }
 
@@ -806,6 +812,16 @@ class SlotGame {
         }, (c * 45 + r * 15) * speed);
       }
     }
+    
+    if (window.webglEngine && gridData.grid) {
+      window.webglEngine.updateGrid(gridData.grid);
+      if (this.isSpinning) {
+        window.webglEngine.startSpin();
+      } else {
+        window.webglEngine.startCascade();
+      }
+    }
+
     await new Promise(r => setTimeout(r, (cols * 45 + 160) * speed));
   }
 
@@ -1209,5 +1225,12 @@ class SlotGame {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.slotGame = new SlotGame();
+  if (typeof WebGLGameEngine !== 'undefined') {
+    window.webglEngine = new WebGLGameEngine('webgl-grid-container');
+    window.webglEngine.init().then(() => {
+      window.slotGame = new SlotGame();
+    });
+  } else {
+    window.slotGame = new SlotGame();
+  }
 });

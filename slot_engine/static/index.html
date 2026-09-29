@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>The Descent: Abyssal Leviathan | Nolimit Style Slot Engine</title>
-  <link rel="stylesheet" href="/static/style.css?v=19181">
+  <link rel="stylesheet" href="/static/style.css?v=56885">
 </head>
 <body>
   <div id="game-wrapper">
@@ -165,8 +165,11 @@
             <div class="vent-indicator" id="vent-5" style="display:none;"></div>
           </div>
 
+          <!-- 3D WebGL Symbols Layer -->
+          <div id="webgl-grid-container" style="position:absolute; inset:0; z-index:2; pointer-events:none !important;"></div>
+
           <!-- Reels Grid -->
-          <div class="grid-container" id="slot-grid">
+          <div class="grid-container" id="slot-grid" style="z-index:5; position:relative;">
             <!-- Dynamically populated by game.js -->
           </div>
 
@@ -382,11 +385,12 @@
   </div>
 
   <!-- Three.js 3D WebGL Engine & 3D Leviathan Controller -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js?v=19181"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js?v=19181"></script>
-  <script src="/static/leviathan_3d_engine.js?v=19181"></script>
-  <script src="/static/ocean_ambient.js?v=19181"></script>
-  <script src="/static/sound.js?v=19181"></script>
-  <script src="/static/game.js?v=19181"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js?v=56885"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js?v=56885"></script>
+  <script src="/static/leviathan_3d_engine.js?v=56885"></script>
+  <script src="/static/ocean_ambient.js?v=56885"></script>
+  <script src="/static/sound.js?v=56885"></script>
+  <script src="/static/js/WebGLGameEngine.js?v=56885"></script>
+  <script src="/static/game.js?v=56885"></script>
 </body>
 </html>
