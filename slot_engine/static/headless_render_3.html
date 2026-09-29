@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gate 3 Headless Render</title>
+    <style>
+        body { margin: 0; background-color: #020b14; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="/slot_engine/static/js/monolithic_frame.js?v=1790625238"></script>
+    <script src="/slot_engine/static/js/webgl_reel_engine.js?v=1790625238"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x020b14);
+
+        const camera = new THREE.PerspectiveCamera(45, 1920 / 1080, 0.1, 2000);
+        camera.position.set(0, 0, 480);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(1920, 1080);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        document.body.appendChild(renderer.domElement);
+        
+        // Lighting is now handled by MonolithicFrame! We don't need to duplicate it.
+        // Wait, MonolithicFrame calls setupLighting(), which adds lights to the scene.
+        
+        // We override MonolithicFrame's texture loader to share a manager so we know when everything is loaded.
+        const manager = new THREE.LoadingManager();
+        manager.onLoad = () => {
+            console.log("All textures loaded");
+            window.__RENDER_READY = true;
+        };
+        const texLoader = new THREE.TextureLoader(manager);
+
+        // Instantiate both
+        // We will mock MonolithicFrame to use our texLoader instead of creating its own without a manager.
+        // But monolithic_frame.js hardcodes its texLoader inside loadMaterials.
+        // Actually, we can just replace the definition or simply wait for network idle in playwright!
+        // The Playwright script wait_for_function("window.__RENDER_READY === true") can still be used.
+        // Let's pass the manager to MonolithicFrame by monkey-patching THREE.TextureLoader temporarily!
+        
+        const OriginalTextureLoader = THREE.TextureLoader;
+        THREE.TextureLoader = function() {
+            return new OriginalTextureLoader(manager);
+        };
+        
+        const frame = new MonolithicFrame(scene, camera, renderer);
+        const reelEngine = new WebGLReelEngine(scene, new OriginalTextureLoader(manager));
+        
+        // Restore TextureLoader just in case
+        THREE.TextureLoader = OriginalTextureLoader;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            frame.update(0.016);
+            reelEngine.update(0.016);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

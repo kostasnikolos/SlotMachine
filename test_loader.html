@@ -1,0 +1,14 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    const manager = new THREE.LoadingManager();
+    manager.onLoad = () => console.log('LOADED');
+    manager.onError = (url) => console.log('ERROR: ' + url);
+    const loader = new THREE.TextureLoader(manager);
+    loader.load('http://localhost:9999/fake.png');
+</script>
+</body>
+</html>

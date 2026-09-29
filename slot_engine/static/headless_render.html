@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Headless Render</title>
+    <style>
+        body { margin: 0; background-color: #050510; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/monolithic_frame.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x020b14);
+
+        const camera = new THREE.PerspectiveCamera(45, 1920 / 1080, 0.1, 2000);
+        camera.position.set(0, 0, 480);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(1920, 1080);
+        document.body.appendChild(renderer.domElement);
+
+        const frame = new MonolithicFrame(scene, camera, renderer);
+        frame.update(1.0);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

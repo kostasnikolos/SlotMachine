@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gate 4 Headless Render</title>
+    <style>
+        body { margin: 0; background-color: #020b14; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script src="/slot_engine/static/js/monolithic_frame.js?v=1790625457"></script>
+    <script src="/slot_engine/static/js/webgl_reel_engine.js?v=1790625457"></script>
+    <script src="/slot_engine/static/js/leviathan_director.js?v=1790625457"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x020b14);
+
+        const camera = new THREE.PerspectiveCamera(45, 1920 / 1080, 0.1, 2000);
+        camera.position.set(0, 0, 480);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(1920, 1080);
+                        document.body.appendChild(renderer.domElement);
+        
+        const manager = new THREE.LoadingManager();
+        manager.onLoad = () => {
+            console.log("All textures and models loaded");
+            
+            // Force Leviathan to snapshot state (Devour Surge Z=+70)
+            if(window.leviathanDirector) {
+                window.leviathanDirector.setSnapshotState();
+                
+                // Force an update to mix animation
+                if (window.leviathanDirector.mixer) {
+                    window.leviathanDirector.mixer.setTime(0.5); // skip into animation
+                    window.leviathanDirector.mixer.update(0);
+                }
+            }
+            
+            // Give it a tiny delay for materials to compile
+            setTimeout(() => {
+                window.__RENDER_READY = true;
+            }, 100);
+        };
+        
+        const texLoader = new THREE.TextureLoader(manager);
+        
+        const OriginalTextureLoader = THREE.TextureLoader;
+        THREE.TextureLoader = function() { return new OriginalTextureLoader(manager); };
+        
+        const frame = new MonolithicFrame(scene, camera, renderer);
+        const reelEngine = new WebGLReelEngine(scene, new OriginalTextureLoader(manager));
+        const leviathanDirector = new LeviathanDirector(scene, manager);
+        window.leviathanDirector = leviathanDirector;
+        
+        THREE.TextureLoader = OriginalTextureLoader;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            frame.update(0.016);
+            reelEngine.update(0.016);
+            leviathanDirector.update(0.016);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

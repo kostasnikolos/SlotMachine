@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>State 2: Spin Initiation & Anticipation</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="overlay" style="position: absolute; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8); color: white; display:flex; justify-content:center; align-items:center; font-family:sans-serif; font-size:32px; cursor:pointer; z-index:999;">Click to Start</div>
+    <script type="module" src="vignette_state_2_spin.js"></script>
+</body>
+</html>

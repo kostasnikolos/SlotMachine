@@ -41,9 +41,11 @@ class Leviathan3DEngine {
     this.pendingDevour = null;
 
     // Submerged deep in the Hadal trench void when idle
-    this.dormantY = -360;
-    this.dormantZ = -200;
-    this.creatureRoot.position.set(0, this.dormantY, this.dormantZ);
+    this.dormantY = -20;
+    this.dormantX = 160;
+    this.dormantZ = -80;
+    this.creatureRoot.position.set(this.dormantX, this.dormantY, this.dormantZ);
+    this.creatureRoot.rotation.y = -0.3; // Angle slightly towards center
     this.creatureRoot.visible = false; // Start hidden so reels are 100% unobstructed
     this.container.style.display = 'none'; // Ensure canvas does not composite over grid when idle
     this.container.style.pointerEvents = 'none';
@@ -91,7 +93,7 @@ class Leviathan3DEngine {
       const box = new THREE.Box3().setFromObject(this.model);
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
-      const fitScale = 280.0 / (maxDim || 1.0);
+      const fitScale = 140.0 / (maxDim || 1.0);
       this.model.scale.set(fitScale, fitScale, fitScale);
 
       box.setFromObject(this.model);
@@ -246,7 +248,8 @@ class Leviathan3DEngine {
       if (p < 1.0) {
         requestAnimationFrame(animateDevour);
       } else {
-        this.creatureRoot.position.set(0, this.dormantY, this.dormantZ);
+        this.creatureRoot.position.set(this.dormantX, this.dormantY, this.dormantZ);
+    this.creatureRoot.rotation.y = -0.3; // Angle slightly towards center
         this.creatureRoot.rotation.set(0, Math.PI, 0);
         this.creatureRoot.visible = false; // Submerge back into darkness
         this.container.style.display = 'none'; // Completely hide container so symbols are 100% visible

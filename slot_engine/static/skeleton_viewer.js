@@ -122,7 +122,7 @@ class LeviathanTrue3DViewer {
     const urlParams = new URLSearchParams(window.location.search);
     const modelParam = urlParams.get('model') || 'custom_leviathan.glb';
     const isCustom = modelParam !== 'shark_clean.glb';
-    const modelUrl = `/static/assets/models/${modelParam}`;
+    const modelUrl = `./assets/models/${modelParam}`;
 
     const loader = new THREE.GLTFLoader();
     loader.load(modelUrl, (gltf) => {
@@ -171,8 +171,8 @@ class LeviathanTrue3DViewer {
         this.model.rotation.set(0, 0, 0);
 
         const texLoader = new THREE.TextureLoader();
-        const diffTex = texLoader.load('/static/assets/textures/leviathan_diffuse.png');
-        const emisTex = texLoader.load('/static/assets/textures/leviathan_emissive.png');
+        const diffTex = texLoader.load('./assets/textures/leviathan_diffuse.png');
+        const emisTex = texLoader.load('./assets/textures/leviathan_emissive.png');
         diffTex.flipY = false;
         emisTex.flipY = false;
 
