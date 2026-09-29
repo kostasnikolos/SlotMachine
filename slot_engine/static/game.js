@@ -668,7 +668,8 @@ class SlotGame {
 
         case 'SPIN_STARTED':
           this.currentDepthLevel = ev.data.depth_level;
-          this.updateDepthProgress(ev.data.depth_level, ev.data.depth_meters, ev.data.accumulated_points);
+          audio.playMeterAbsorb();
+            this.updateDepthProgress(ev.data.depth_level, ev.data.depth_meters, ev.data.accumulated_points);
           this.updatePurgedRunes(ev.data.purged_symbols || []);
 
           if (ev.data.is_free_spin) {
@@ -712,6 +713,7 @@ class SlotGame {
           this.currentWin = ev.data.cumulative_payout;
           this.updateStats();
           if (ev.data.accumulated_points !== undefined) {
+            audio.playMeterAbsorb();
             this.updateDepthProgress(ev.data.depth_level, ev.data.depth_meters, ev.data.accumulated_points);
           }
           await delay(350 * speed);

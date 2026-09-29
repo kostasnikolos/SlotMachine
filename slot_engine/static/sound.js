@@ -79,23 +79,52 @@ class SlotAudio {
     osc.stop(this.ctx.currentTime + 0.12);
   }
 
+
   playWin() {
     if (!this.ctx || !this.enabled) return;
     const now = this.ctx.currentTime;
-    const chords = [330, 415, 495, 660]; // Abyssal mystic major triad
-    chords.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
-      gain.gain.setValueAtTime(0.1, now + idx * 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    
+    // Dark underwater wave/surge instead of fake harp
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
 
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now + idx * 0.04);
-      osc.stop(now + 0.5);
-    });
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(45, now);
+    osc.frequency.exponentialRampToValueAtTime(15, now + 0.6); // Deep dive
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(300, now);
+    filter.frequency.linearRampToValueAtTime(80, now + 0.6);
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.5, now + 0.1); // Swell up like a wave
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6); // Fade out
+
+    // Add a secondary rumble
+    const rumble = this.ctx.createOscillator();
+    const rumbleGain = this.ctx.createGain();
+    rumble.type = 'sawtooth';
+    rumble.frequency.setValueAtTime(60, now);
+    rumble.frequency.exponentialRampToValueAtTime(20, now + 0.6);
+    rumbleGain.gain.setValueAtTime(0.001, now);
+    rumbleGain.gain.linearRampToValueAtTime(0.15, now + 0.2);
+    rumbleGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.6);
+
+    const rumbleFilter = this.ctx.createBiquadFilter();
+    rumbleFilter.type = 'lowpass';
+    rumbleFilter.frequency.setValueAtTime(150, now);
+    rumble.connect(rumbleFilter);
+    rumbleFilter.connect(rumbleGain);
+    rumbleGain.connect(this.ctx.destination);
+    rumble.start(now);
+    rumble.stop(now + 0.6);
   }
 
   playCascade() {
@@ -145,50 +174,78 @@ class SlotAudio {
     noise.start();
   }
 
+
   playSoulBurn() {
     if (!this.ctx || !this.enabled) return;
     const now = this.ctx.currentTime;
-    // Crackling noise burst with resonant filter
-    const bufferSize = this.ctx.sampleRate * 0.35;
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.4));
-    }
-    const noise = this.ctx.createBufferSource();
-    noise.buffer = buffer;
-
-    const filter = this.ctx.createBiquadFilter();
-    filter.type = 'highpass';
-    filter.frequency.setValueAtTime(1200, now);
-
-    const gain = this.ctx.createGain();
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-
-    noise.connect(filter);
-    filter.connect(gain);
-    gain.connect(this.ctx.destination);
-    noise.start();
-  }
-
-  playSoulAbsorb() {
-    if (!this.ctx || !this.enabled) return;
-    const now = this.ctx.currentTime;
-    // Shimmering ascending chime
+    
+    // Deep liquid bubble pop
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
+    
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(587.33, now); // D5
-    osc.frequency.exponentialRampToValueAtTime(1174.66, now + 0.15); // D6
+    // Start mid-low, drop fast to simulate a bubble bursting
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
 
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.3, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
 
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.18);
+    osc.stop(now + 0.15);
+  }
+
+
+  playSoulAbsorb() {
+    if (!this.ctx || !this.enabled) return;
+    const now = this.ctx.currentTime;
+    
+    // Watery swoosh / suction sound entering the meter
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
+
+    // Noise burst for watery splash
+    const bufferSize = this.ctx.sampleRate * 0.4;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1);
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    filter.type = 'bandpass';
+    // Swoosh up to simulate suction
+    filter.frequency.setValueAtTime(200, now);
+    filter.frequency.exponentialRampToValueAtTime(800, now + 0.3);
+    filter.Q.setValueAtTime(1.5, now);
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.4, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    noise.start(now);
+    noise.stop(now + 0.4);
+    
+    // Low sub hit
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(80, now);
+    subOsc.frequency.exponentialRampToValueAtTime(30, now + 0.4);
+    subGain.gain.setValueAtTime(0.2, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+    subOsc.connect(subGain);
+    subGain.connect(this.ctx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.4);
   }
 
   playSonarPing() {
