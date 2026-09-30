@@ -204,6 +204,30 @@ class Leviathan3DEngine {
 
     this.renderer.render(this.scene, this.camera);
   }
+
+  setDepthLighting(level) {
+    if (!this.ambientLight || !this.keyLight || !this.rimLight) return;
+    const depthColors = [
+      { a: 0x0a1526, k: 0x00f0ff, r: 0xff0044 },
+      { a: 0x081020, k: 0x00d0ff, r: 0xff0044 },
+      { a: 0x060c18, k: 0x00a0ff, r: 0xcc0033 },
+      { a: 0x040810, k: 0x0070cc, r: 0xaa0022 },
+      { a: 0x020408, k: 0x004099, r: 0x880011 },
+      { a: 0x1a0505, k: 0xff2a4b, r: 0xff8800 }
+    ];
+    const colors = depthColors[Math.min(level, 5)];
+    this.ambientLight.color.setHex(colors.a);
+    this.keyLight.color.setHex(colors.k);
+    this.rimLight.color.setHex(colors.r);
+    
+    if (level >= 5) {
+      this.keyLight.intensity = 5.0;
+      this.rimLight.intensity = 5.0;
+    } else {
+      this.keyLight.intensity = 3.5;
+      this.rimLight.intensity = 4.0;
+    }
+  }
 }
 
 if(typeof window !== 'undefined') {

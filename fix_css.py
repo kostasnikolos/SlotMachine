@@ -1,15 +1,19 @@
-import re
+with open('slot_engine/static/style.css', 'r') as f:
+    css = f.read()
 
-with open("slot_engine/static/style.css", "r") as f:
-    code = f.read()
+css = css.replace(
+    'background: rgba(1, 4, 10, 0.65) !important;',
+    'background: transparent !important;'
+)
 
-# Make fx-canvas behind everything
-code = code.replace("z-index: 22;", "z-index: 0;")
-code = code.replace("pointer-events: none;", "/*pointer-events: none;*/")
-
-# Remove background from game-wrapper so the canvas shows through
-code = re.sub(r"background: url\('/static/assets/abyssal_trench_bg\.jpg'\).*?;", "background: transparent;", code)
-
-with open("slot_engine/static/style.css", "w") as f:
-    f.write(code)
-
+new_css = '''
+.grid-wrapper {
+  background: rgba(1, 4, 10, 0.65);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 240, 255, 0.22);
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.85) inset;
+  padding: 8px;
+}
+'''
+with open('slot_engine/static/style.css', 'a') as f:
+    f.write(new_css)

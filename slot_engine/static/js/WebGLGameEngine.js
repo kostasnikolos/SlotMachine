@@ -99,7 +99,7 @@ class WebGLGameEngine {
             });
 
             this.loadingManager.onLoad = () => {
-                window.__RENDER_READY = true;
+                this.onWindowResize(); window.addEventListener("resize", () => this.onWindowResize()); console.log("[WebGLGameEngine] init loaded!"); window.__RENDER_READY = true;
                 if (this.pendingGridData) {
                     this.updateGrid(this.pendingGridData);
                     this.pendingGridData = null;
@@ -138,7 +138,7 @@ class WebGLGameEngine {
             this.pendingGridData = gridData;
             return;
         }
-        if (!gridData || gridData.length === 0) return;
+        console.log("updateGrid gridData:", gridData); if (!gridData || gridData.length === 0) return;
         
         this.isSpinning = false;
         this.spinVelocity = 0;
