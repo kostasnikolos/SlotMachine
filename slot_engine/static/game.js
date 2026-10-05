@@ -587,6 +587,10 @@ class SlotGame {
     this.isSpinning = true;
     this.spinBtn.disabled = true;
 
+    if (window.webglEngine) {
+      window.webglEngine.startSpin();
+    }
+
     audio.playSpin();
     if (window.oceanAmbient) window.oceanAmbient.scatterFish();
 
@@ -627,6 +631,10 @@ class SlotGame {
     this.updateStats();
     this.isSpinning = true;
     this.spinBtn.disabled = true;
+
+    if (window.webglEngine) {
+      window.webglEngine.startSpin();
+    }
 
     try {
       const res = await fetch('/api/slot/buy-bonus', {
@@ -815,11 +823,7 @@ class SlotGame {
     
     if (window.webglEngine && gridData.grid) {
       window.webglEngine.updateGrid(gridData.grid);
-      if (this.isSpinning) {
-        window.webglEngine.startSpin();
-      } else {
-        window.webglEngine.startCascade();
-      }
+      window.webglEngine.startCascade();
     }
 
     await new Promise(r => setTimeout(r, (cols * 45 + 160) * speed));

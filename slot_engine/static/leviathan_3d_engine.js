@@ -12,7 +12,7 @@ class Leviathan3DEngine {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(44, this.container.clientWidth / this.container.clientHeight, 1, 2000);
-    this.camera.position.set(0, 0, 310);
+    this.camera.position.set(0, 0, 500);
 
     this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
     this.renderer.setSize(this.container.clientWidth || 400, this.container.clientHeight || 400);
@@ -28,7 +28,7 @@ class Leviathan3DEngine {
     this.isLoaded = false;
 
     // Pragmatic right-side positioning
-    this.dormantX = 170;
+    this.dormantX = 120;
     this.dormantY = -10;
     this.dormantZ = -80;
     this.creatureRoot.position.set(this.dormantX, this.dormantY, this.dormantZ);

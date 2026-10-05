@@ -7,6 +7,7 @@ from slot_engine.config.symbols import (
     SymbolCategory,
     SYMBOL_CATEGORIES,
     DepthLevel,
+    GAME_RULES,
 )
 from slot_engine.core.grid import GridMatrix, CellCoordinate
 from slot_engine.core.rng import SlotRNG
@@ -107,7 +108,7 @@ class LeviathansMaw:
             top_left_coord=(r, c),
             consumed_coords=consumed,
             transmuted_coords=transmuted,
-            respins_awarded=2,
+            respins_awarded=GAME_RULES["creature_respins_awarded"],
         )
 
     def _execute_level_2_stalker(self, grid: GridMatrix, rng: SlotRNG) -> CreatureActionEvent:
@@ -157,7 +158,7 @@ class LeviathansMaw:
             top_left_coord=(r, c),
             consumed_coords=consumed,
             transmuted_coords=transmuted,
-            respins_awarded=2,
+            respins_awarded=GAME_RULES["creature_respins_awarded"],
         )
 
     def _execute_level_3_maelstrom(self, grid: GridMatrix, rng: SlotRNG) -> CreatureActionEvent:
@@ -175,7 +176,7 @@ class LeviathansMaw:
             for dc in range(2):
                 cell_r, cell_c = r + dr, c + dc
                 old_sym = grid.get_symbol(cell_r, cell_c)
-                multiplier = rng.sample_vent_multiplier() # 2x, 3x, or 5x
+                multiplier = rng.sample_creature_wild_multiplier()
                 grid.set_symbol(cell_r, cell_c, SymbolType.WILD_MAW)
                 grid.set_multiplier(cell_r, cell_c, multiplier)
                 transmuted.append({
@@ -192,7 +193,7 @@ class LeviathansMaw:
             top_left_coord=(r, c),
             consumed_coords=[],
             transmuted_coords=transmuted,
-            respins_awarded=2,
+            respins_awarded=GAME_RULES["creature_respins_awarded"],
         )
 
     def _execute_level_4_tentacles(self, grid: GridMatrix, rng: SlotRNG) -> CreatureActionEvent:
@@ -212,9 +213,9 @@ class LeviathansMaw:
                 old_sym = grid.get_symbol(cell_r, cell_c)
                 if dr == 1 and dc == 1:
                     grid.set_symbol(cell_r, cell_c, SymbolType.WILD_MAW)
-                    grid.set_multiplier(cell_r, cell_c, 3)
+                    mult = GAME_RULES["hadal_center_wild_multiplier"]
+                    grid.set_multiplier(cell_r, cell_c, mult)
                     new_sym = SymbolType.WILD_MAW
-                    mult = 3
                 elif (dr + dc) % 2 == 0:
                     new_sym = SymbolType.HIGH_LEVIATHAN
                     grid.set_symbol(cell_r, cell_c, new_sym)
@@ -238,7 +239,7 @@ class LeviathansMaw:
             top_left_coord=(r, c),
             consumed_coords=[],
             transmuted_coords=transmuted,
-            respins_awarded=2,
+            respins_awarded=GAME_RULES["creature_respins_awarded"],
         )
 
     def _execute_level_5_awakened(self, grid: GridMatrix, rng: SlotRNG) -> CreatureActionEvent:
@@ -255,12 +256,12 @@ class LeviathansMaw:
                 cell_r, cell_c = r + dr, c + dc
                 old_sym = grid.get_symbol(cell_r, cell_c)
                 grid.set_symbol(cell_r, cell_c, SymbolType.WILD_MAW)
-                grid.set_multiplier(cell_r, cell_c, 2)
+                grid.set_multiplier(cell_r, cell_c, GAME_RULES["core_wild_multiplier"])
                 transmuted.append({
                     "coord": (cell_r, cell_c),
                     "old_symbol": old_sym.value,
                     "new_symbol": SymbolType.WILD_MAW.value,
-                    "multiplier": 2,
+                    "multiplier": GAME_RULES["core_wild_multiplier"],
                 })
 
         return CreatureActionEvent(
@@ -270,5 +271,5 @@ class LeviathansMaw:
             top_left_coord=(r, c),
             consumed_coords=[],
             transmuted_coords=transmuted,
-            respins_awarded=2,
+            respins_awarded=GAME_RULES["creature_respins_awarded"],
         )

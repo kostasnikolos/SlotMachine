@@ -8,6 +8,7 @@ from slot_engine.config.symbols import (
     SYMBOL_PRESSURE_POINTS,
     DEPTH_LEVEL_THRESHOLDS,
     DEPTH_METADATA,
+    GAME_RULES,
 )
 from slot_engine.config.weights import LEVEL_WEIGHT_DISTRIBUTIONS
 from slot_engine.config.rtp_profiles import RTPProfile, RTP_PROFILES, get_active_rtp_profile
@@ -20,6 +21,7 @@ __all__ = [
     "SYMBOL_PRESSURE_POINTS",
     "DEPTH_LEVEL_THRESHOLDS",
     "DEPTH_METADATA",
+    "GAME_RULES",
     "LEVEL_WEIGHT_DISTRIBUTIONS",
     "RTPProfile",
     "RTP_PROFILES",

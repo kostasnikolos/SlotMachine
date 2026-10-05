@@ -9,6 +9,7 @@ from slot_engine.config.symbols import (
     FeatureBuyType,
     DEPTH_METADATA,
     DEPTH_LEVEL_THRESHOLDS,
+    GAME_RULES,
 )
 from slot_engine.config.rtp_profiles import get_active_rtp_profile
 from slot_engine.core.grid import GridMatrix, CellCoordinate
@@ -32,12 +33,14 @@ class SpinOutcome:
     bet: float
     feature_type: FeatureBuyType
     total_payout: float
-    payout_multiplier: float
+    payout_multiplier: float          # total_payout / cost of the round (bet field)
     max_win_capped: bool
     final_depth_level: DepthLevel
     depth_name: str
     total_cascades: int
     events: List[SpinEvent]
+    base_bet: float = 1.0
+    win_x_base_bet: float = 0.0       # total_payout / base stake (paytable & max-win unit)
 
 
 class SlotStateMachine:
@@ -78,7 +81,8 @@ class SlotStateMachine:
 
         if feature_buy == FeatureBuyType.XBET_SONAR_2X:
             actual_bet = base_bet * 2.0
-            emit("FEATURE_ACTIVATED", {"type": "XBET_SONAR_2X", "cost": actual_bet, "start_level": 1})
+            emit("FEATURE_ACTIVATED", {"type": "XBET_SONAR_2X", "cost": actual_bet, "start_level": 1,
+                                      "start_points": self.gauge.accumulated_points})
         elif feature_buy == FeatureBuyType.STANDARD_BONUS_100X:
             actual_bet = base_bet * 100.0
             is_bonus = True
@@ -86,8 +90,8 @@ class SlotStateMachine:
             self.gauge.current_level = DepthLevel.LEVEL_3_ABYSS
             self.gauge.highest_level = DepthLevel.LEVEL_3_ABYSS
             self.gauge.accumulated_points = DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_3_ABYSS]
-            self.gauge.spins_banked = 6
-            emit("FEATURE_ACTIVATED", {"type": "STANDARD_BONUS_100X", "cost": actual_bet, "spins": 6})
+            self.gauge.spins_banked = GAME_RULES["standard_bonus_spins"]
+            emit("FEATURE_ACTIVATED", {"type": "STANDARD_BONUS_100X", "cost": actual_bet, "spins": GAME_RULES["standard_bonus_spins"]})
         elif feature_buy == FeatureBuyType.ULTRA_BONUS_350X:
             actual_bet = base_bet * 350.0
             is_bonus = True
@@ -97,18 +101,18 @@ class SlotStateMachine:
             self.gauge.current_level = DepthLevel.LEVEL_5_CORE
             self.gauge.highest_level = DepthLevel.LEVEL_5_CORE
             self.gauge.accumulated_points = DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_5_CORE]
-            self.gauge.spins_banked = 8
-            emit("FEATURE_ACTIVATED", {"type": "ULTRA_BONUS_350X", "cost": actual_bet, "spins": 8, "grid": "6x5"})
+            self.gauge.spins_banked = GAME_RULES["ultra_bonus_spins"]
+            emit("FEATURE_ACTIVATED", {"type": "ULTRA_BONUS_350X", "cost": actual_bet, "spins": GAME_RULES["ultra_bonus_spins"], "grid": "6x5"})
             emit("GRID_EXPANSION_6X5", {
                 "new_rows": 5,
                 "new_cols": 6,
-                "new_ways": 7776,
-                "doubled_multiplier": 2,
+                "new_ways": 5 ** 6,  # 6 reels x 5 rows = 15,625 ways
+                "doubled_multiplier": GAME_RULES["core_global_multiplier"],
             })
         elif feature_buy == FeatureBuyType.MYSTERY_BUY_200X:
             actual_bet = base_bet * 200.0
-            if self.rng.random_float() < 0.40:
-                # 40% chance Ultra Bonus (60% Standard) for exact 96% mathematical parity
+            if self.rng.random_float() < GAME_RULES["mystery_ultra_probability"]:
+                # Ultra share of the Mystery buy (remainder Standard)
                 is_bonus = True
                 is_ultra = True
                 grid_cols = 6
@@ -116,23 +120,23 @@ class SlotStateMachine:
                 self.gauge.current_level = DepthLevel.LEVEL_5_CORE
                 self.gauge.highest_level = DepthLevel.LEVEL_5_CORE
                 self.gauge.accumulated_points = DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_5_CORE]
-                self.gauge.spins_banked = 8
-                emit("FEATURE_ACTIVATED", {"type": "MYSTERY_ULTRA_AWARDED", "cost": actual_bet, "spins": 8})
+                self.gauge.spins_banked = GAME_RULES["ultra_bonus_spins"]
+                emit("FEATURE_ACTIVATED", {"type": "MYSTERY_ULTRA_AWARDED", "cost": actual_bet, "spins": GAME_RULES["ultra_bonus_spins"]})
                 emit("GRID_EXPANSION_6X5", {
                     "new_rows": 5,
                     "new_cols": 6,
-                    "new_ways": 7776,
-                    "doubled_multiplier": 2,
+                    "new_ways": 5 ** 6,  # 6 reels x 5 rows = 15,625 ways
+                    "doubled_multiplier": GAME_RULES["core_global_multiplier"],
                 })
             else:
-                # 65% chance Standard Bonus
+                # Standard Bonus (1 - mystery_ultra_probability)
                 is_bonus = True
                 self.gauge.starting_level = DepthLevel.LEVEL_3_ABYSS
                 self.gauge.current_level = DepthLevel.LEVEL_3_ABYSS
                 self.gauge.highest_level = DepthLevel.LEVEL_3_ABYSS
                 self.gauge.accumulated_points = DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_3_ABYSS]
-                self.gauge.spins_banked = 6
-                emit("FEATURE_ACTIVATED", {"type": "MYSTERY_STANDARD_AWARDED", "cost": actual_bet, "spins": 6})
+                self.gauge.spins_banked = GAME_RULES["standard_bonus_spins"]
+                emit("FEATURE_ACTIVATED", {"type": "MYSTERY_STANDARD_AWARDED", "cost": actual_bet, "spins": GAME_RULES["standard_bonus_spins"]})
         else:
             actual_bet = base_bet
 
@@ -149,7 +153,7 @@ class SlotStateMachine:
                 self.gauge.consume_spin()
 
             # Active spin multiplier: base 1x, or 2x in Ultra Mode
-            current_spin_base_mult = 2 if (is_ultra or self.gauge.current_level == DepthLevel.LEVEL_5_CORE) else 1
+            current_spin_base_mult = GAME_RULES["core_global_multiplier"] if (is_ultra or self.gauge.current_level == DepthLevel.LEVEL_5_CORE) else 1
             tumble_step = 0
 
             # Re-arm the Leviathan creature assistance for every spin at depth!
@@ -172,12 +176,12 @@ class SlotStateMachine:
             if self.gauge.current_level == DepthLevel.LEVEL_5_CORE and grid.cols < 6:
                 grid.expand_grid(5, 6, self.rng, self.gauge.current_level)
                 is_ultra = True
-                current_spin_base_mult = 2
+                current_spin_base_mult = GAME_RULES["core_global_multiplier"]
                 emit("GRID_EXPANSION_6X5", {
                     "new_rows": 5,
                     "new_cols": 6,
-                    "new_ways": 7776,
-                    "doubled_multiplier": 2,
+                    "new_ways": 5 ** 6,  # 6 reels x 5 rows = 15,625 ways
+                    "doubled_multiplier": GAME_RULES["core_global_multiplier"],
                 })
 
             # Populate initial grid for this spin (Pearls only spawn at Level 3+ or in Bonus mode)
@@ -189,37 +193,69 @@ class SlotStateMachine:
             while True:
                 total_cascades += 1
 
-                # Hydrothermal Vents check (Only active at Level 3+)
-                active_vents = self.vents.trigger_eruptions(
-                    self.gauge.current_level,
-                    is_bonus=(is_bonus or is_free_spin),
-                    rng=self.rng
-                )
-                if active_vents:
-                    emit("VENTS_ERUPTED", {"active_vents": active_vents})
-
                 # Multiplier configuration:
-                # Level 5 (Ultra Mode): 2x base multiplier across 6x5 grid (plus Vents & Roaming Wild).
+                # Level 5 (Ultra Mode): global multiplier across 6x5 grid (plus Vents & creature wilds).
                 # Level 0-4: 1x base multiplier (Hydrothermal Vents active at Level 3+).
                 if self.gauge.current_level == DepthLevel.LEVEL_5_CORE or is_ultra:
-                    active_mult = 2
+                    active_mult = GAME_RULES["core_global_multiplier"]
                 else:
                     active_mult = 1
 
                 summary: EvaluationSummary = self.evaluator.evaluate(
                     grid=grid,
                     base_bet=base_bet,
-                    column_multipliers=active_vents,
+                    column_multipliers=None,
                     global_multiplier=active_mult,
                 )
 
+                # Hydrothermal Vents (Level 3+) are rolled only on a step that already wins.
+                # Vents only multiply existing ways, so this is RTP-neutral versus rolling on
+                # every step, but the client never sees vents erupt on a dead tumble.
                 if summary.wins:
-                    total_payout += summary.total_payout
+                    active_vents = self.vents.trigger_eruptions(
+                        self.gauge.current_level,
+                        is_bonus=(is_bonus or is_free_spin),
+                        rng=self.rng
+                    )
+                    if active_vents:
+                        emit("VENTS_ERUPTED", {"active_vents": active_vents})
+                        summary = self.evaluator.evaluate(
+                            grid=grid,
+                            base_bet=base_bet,
+                            column_multipliers=active_vents,
+                            global_multiplier=active_mult,
+                        )
+
+                if summary.wins:
+                    step_payout = summary.total_payout
+                    capped_now = False
+                    if total_payout + step_payout >= max_win_cap:
+                        step_payout = max_win_cap - total_payout
+                        capped_now = True
+                    total_payout += step_payout
                     tumble_step += 1
 
-                    # Check Max Win Cap
-                    if total_payout >= max_win_cap:
-                        total_payout = max_win_cap
+                    if capped_now:
+                        # Emit the final (clipped) win so the client can animate it, then the cap.
+                        emit("WIN_EVALUATION", {
+                            "wins": [
+                                {
+                                    "symbol": w.symbol.value,
+                                    "reels": w.reels_matched,
+                                    "ways": w.ways_count,
+                                    "payout": w.total_payout,
+                                    "coords": w.winning_coordinates,
+                                }
+                                for w in summary.wins
+                            ],
+                            "step_payout": round(step_payout, 4),
+                            "cumulative_payout": round(total_payout, 4),
+                            "points_earned": 0,
+                            "accumulated_points": self.gauge.accumulated_points,
+                            "depth_level": self.gauge.current_level.value,
+                            "depth_meters": DEPTH_METADATA[self.gauge.current_level]["depth_meters"],
+                            "cascade_multiplier": active_mult,
+                        })
                         max_win_hit = True
                         emit("MAX_WIN_CAP_TRIGGERED", {"max_win": max_win_cap})
                         break
@@ -241,7 +277,7 @@ class SlotStateMachine:
                             for w in summary.wins
                         ],
                         "step_payout": summary.total_payout,
-                        "cumulative_payout": total_payout,
+                        "cumulative_payout": round(total_payout, 4),
                         "points_earned": summary.total_pressure_points,
                         "accumulated_points": self.gauge.accumulated_points,
                         "depth_level": self.gauge.current_level.value,
@@ -273,9 +309,9 @@ class SlotStateMachine:
                         if ascended and not is_ultra:
                             grid.expand_grid(5, 6, self.rng, DepthLevel.LEVEL_5_CORE)
                             is_ultra = True
-                            current_spin_base_mult = 2
+                            current_spin_base_mult = GAME_RULES["core_global_multiplier"]
                             emit("ULTRA_ASCENSION_ACHIEVED", {
-                                "doubled_multiplier": 2,
+                                "doubled_multiplier": GAME_RULES["core_global_multiplier"],
                                 "grid": "6x5",
                             })
 
@@ -326,6 +362,7 @@ class SlotStateMachine:
         emit("SPIN_COMPLETE", {
             "total_payout": round(total_payout, 4),
             "final_multiplier": round(total_payout / actual_bet, 2),
+            "win_x_base_bet": round(total_payout / base_bet, 2),
             "final_level": self.gauge.current_level.value,
             "depth_meters": final_meta["depth_meters"],
         })
@@ -341,4 +378,6 @@ class SlotStateMachine:
             depth_name=final_meta["name"],
             total_cascades=total_cascades,
             events=events,
+            base_bet=base_bet,
+            win_x_base_bet=round(total_payout / base_bet, 2),
         )

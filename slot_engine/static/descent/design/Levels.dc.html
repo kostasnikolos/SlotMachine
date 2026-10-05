@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Descent — Depth Levels</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#020509}
+a{color:#3ff5ff}a:hover{color:#9ffaff}
+.lbl{font-size:11px;letter-spacing:.24em;color:#7fa3b3;text-transform:uppercase}
+.mono{font-family:'JetBrains Mono',monospace}
+.card{position:relative;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#03080e}
+.view{position:relative;height:300px;overflow:hidden}
+.shaft{position:absolute;top:-20px;width:34px;height:340px;background:linear-gradient(180deg,rgba(140,210,240,.22),rgba(140,210,240,0));transform:skewX(-14deg)}
+.floor{position:absolute;left:-10px;right:-10px;bottom:-2px;height:70px;background:#010204;clip-path:polygon(0 60%,10% 35%,22% 52%,35% 28%,48% 46%,60% 22%,74% 44%,86% 30%,100% 50%,100% 100%,0 100%)}
+.vent{position:absolute;left:10%;right:10%;bottom:-60px;height:160px;border-radius:50%;background:radial-gradient(ellipse at 50% 60%,rgba(255,110,20,.55),rgba(255,110,20,0) 70%)}
+.wallL{position:absolute;left:-2px;top:0;bottom:0;width:58px;background:#000;clip-path:polygon(0 0,70% 0,45% 18%,80% 36%,50% 55%,90% 74%,55% 100%,0 100%)}
+.wallR{position:absolute;right:-2px;top:0;bottom:0;width:58px;background:#000;clip-path:polygon(30% 0,100% 0,100% 100%,40% 100%,10% 80%,48% 62%,16% 42%,52% 22%)}
+.eye{position:absolute;width:10px;height:10px;border-radius:50%;background:#ff5a2a;box-shadow:0 0 16px 4px rgba(255,90,40,.8)}
+.rune{position:relative;flex:1;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:16px;color:#d9c7a0;border:1px solid rgba(63,245,255,.28);background:rgba(63,245,255,.05);overflow:hidden}
+.rune.purged{color:#5a3a34;border-color:rgba(255,42,75,.5);background:rgba(255,42,75,.08)}
+.rune.purged::after{content:'';position:absolute;left:-10%;right:-10%;top:50%;height:2px;background:#ff2a4b;transform:rotate(-28deg)}
+.fp{width:14px;height:14px;border-radius:3px;background:rgba(63,245,255,.07);border:1px solid rgba(63,245,255,.16)}
+.fp.on{background:#ff7a1a;border-color:#ffb27a;box-shadow:0 0 8px rgba(255,122,26,.7)}
+.sw{width:30px;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
+.un{display:flex;gap:9px;align-items:baseline;font-size:13px;line-height:1.4;color:#cfe3ea}
+.un::before{content:'';flex:none;width:7px;height:7px;margin-top:5px;transform:rotate(45deg);background:#ff7a1a}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; box-sizing: border-box; padding: 48px 50px; display: flex; flex-direction: column; gap: 28px; background: #020509; font-family: 'Chakra Petch', sans-serif; color: #cfeef5">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; letter-spacing: 0.55em; color: #3ff5ff; font-weight: 600">THE DESCENT · VISUAL SPEC</span>
+<span style="font-size: 44px; font-weight: 700; letter-spacing: 0.08em; color: #f0fdff">Depth levels: the world gets darker as you dive</span>
+</div>
+<span class="mono" style="font-size: 14px; color: #7fa3b3; text-align: right; line-height: 1.6">Rules from slot_engine/config (96% rebalance)<br>Depth resets every paid round</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; flex: 1">
+<sc-for list="{{levels}}" as="L" hint-placeholder-count="6">
+<div class="card" style="border: 1px solid {{L.border}}; box-shadow: 0 0 30px {{L.glow}}">
+<div class="view" style="background: {{L.bg}}">
+<sc-if value="{{L.shafts}}" hint-placeholder-val="{{ true }}"><div class="shaft" style="left: 22%; opacity: {{L.shaftA}}"></div><div class="shaft" style="left: 58%; opacity: {{L.shaftA}}"></div></sc-if>
+<sc-if value="{{L.vents}}" hint-placeholder-val="{{ false }}"><div class="vent"></div></sc-if>
+<sc-if value="{{L.floor}}" hint-placeholder-val="{{ false }}"><div class="floor"></div></sc-if>
+<sc-if value="{{L.walls}}" hint-placeholder-val="{{ false }}"><div class="wallL"></div><div class="wallR"></div></sc-if>
+<sc-if value="{{L.eyes}}" hint-placeholder-val="{{ false }}"><div class="eye" style="left: 56%; top: 46%; opacity: {{L.eyeA}}"></div><div class="eye" style="left: 64%; top: 47%; opacity: {{L.eyeA}}"></div></sc-if>
+<sc-if value="{{L.cracks}}" hint-placeholder-val="{{ false }}"><svg width="100%" height="100%" viewBox="0 0 290 300" preserveAspectRatio="none" style="position: absolute; inset: 0" fill="none" stroke="#ffb8c2" stroke-width="1" stroke-opacity="0.6"><path d="M0 0 L40 36 L58 30 L84 70 L120 82"></path><path d="M40 36 L46 80 L30 120"></path><path d="M290 0 L250 44 L262 80 L224 118"></path><path d="M290 300 L240 262 L250 226 L210 200"></path><path d="M0 300 L44 256 L36 220"></path></svg></sc-if>
+<div style="position: absolute; left: 18px; top: 16px; display: flex; flex-direction: column">
+<span class="mono" style="font-size: 54px; font-weight: 600; line-height: 1; color: #fff; text-shadow: 0 0 22px {{L.accent}}">L{{L.n}}</span>
+<span class="mono" style="font-size: 15px; color: #e6fbff">{{L.depth}}</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 16px 18px 18px">
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 19px; font-weight: 700; letter-spacing: 0.08em; color: #fff">{{L.name}}</span>
+<span class="mono" style="font-size: 12px; color: #ffb27a">{{L.gate}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span class="lbl">Runic seals</span>
+<div style="display: flex; gap: 4px"><sc-for list="{{L.runes}}" as="r" hint-placeholder-count="5"><div class="{{r.cls}}">{{r.g}}</div></sc-for></div>
+</div>
+<div style="display: flex; gap: 12px; align-items: center">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; flex: none"><sc-for list="{{L.fp}}" as="f" hint-placeholder-count="9"><div class="{{f.cls}}"></div></sc-for></div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.06em; color: #ffd2ad">{{L.creature}}</span>
+<span style="font-size: 12px; line-height: 1.35; color: #b89a86">{{L.creatureFx}}</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{L.unlocks}}" as="u" hint-placeholder-count="3"><span class="un">{{u.t}}</span></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: auto">
+<span class="lbl">Palette · light {{L.light}}</span>
+<div style="display: flex; gap: 6px"><sc-for list="{{L.swatches}}" as="w" hint-placeholder-count="4"><div class="sw" style="background: {{w.c}}"></div></sc-for></div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const hex = (a) => '#' + a.map((x) => Math.round(x).toString(16).padStart(2, '0')).join('');
+    const vis = [
+      { top: [14, 52, 84], mid: [3, 20, 36], bot: [0, 6, 12] },
+      { top: [7, 32, 56], mid: [2, 13, 26], bot: [0, 3, 8] },
+      { top: [3, 16, 32], mid: [1, 7, 16], bot: [0, 2, 5] },
+      { top: [2, 7, 14], mid: [1, 4, 8], bot: [9, 4, 2] },
+      { top: [14, 3, 7], mid: [6, 1, 3], bot: [12, 2, 2] },
+      { top: [34, 2, 9], mid: [12, 0, 4], bot: [20, 2, 2] }
+    ];
+    const accent = ['#3ff5ff', '#3ff5ff', '#60ceff', '#3ff5ff', '#ff6058', '#ff2a4b'];
+    const data = [
+      { name: 'Sunlight Zone', m: '0 m', gate: 'START OF EVERY PAID ROUND', light: '100%', creature: 'No contact', size: [0, 0], fx: 'The Leviathan is a far silhouette', unlocks: ['All 11 symbols on a 5×5 grid', '3,125 ways'] },
+      { name: 'Twilight Zone', m: '500 m', gate: '15 PRESSURE POINTS · OR xBET', light: '80%', creature: 'The Lurker', size: [1, 1], fx: '1×1 wild · lows next to it become equipment', unlocks: ['+1 free spin', 'Rune 10 purged', 'Lifeline armed on dead spins'] },
+      { name: 'Midnight Zone', m: '2,000 m', gate: '80 PRESSURE POINTS', light: '60%', creature: 'The Stalker', size: [2, 1], fx: '2×1 wild · nearby equipment becomes predators', unlocks: ['+1 free spin', 'Rune J purged', 'No more sunlight shafts'] },
+      { name: 'The Abyssal Plains', m: '5,000 m', gate: '225 PTS · ABYSSAL DESCENT BUY', light: '40%', creature: 'Abyssal Maelstrom', size: [2, 2], fx: '2×2 wilds · up to ×3 each', unlocks: ['+4 free spins', 'Rune Q purged', 'Hydrothermal vents, reels 2–4', 'Purged lows refill as equipment & predators'] },
+      { name: 'Hadal Trench', m: '8,000 m', gate: '585 PRESSURE POINTS', light: '30%', creature: "The Kraken's Grasp", size: [3, 3], fx: '3×3 · ×3 wild core, apex corners', unlocks: ['+2 free spins', 'Rune K purged', 'Trench walls, red alarm light', 'Reels richer still: mids & highs only'] },
+      { name: "The Leviathan's Core", m: '11,000 m', gate: '1,130 PTS · 5 PEARLS · AWAKENING BUY', light: '20%', creature: 'The Leviathan Awakened', size: [2, 2], fx: '2×2 wilds · 2× global multiplier', unlocks: ['+4 free spins', 'All low runes purged', '6×5 grid · 15,625 ways · 2×', 'Cracked glass, crimson strobe'] }
+    ];
+    const runes = ['10', 'J', 'Q', 'K', 'A'];
+    const levels = data.map((d, n) => {
+      const v = vis[n];
+      const [h, w] = d.size;
+      const r0 = Math.floor((3 - h) / 2), c0 = Math.floor((3 - w) / 2);
+      const fp = [];
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) fp.push({ cls: h && r >= r0 && r < r0 + h && c >= c0 && c < c0 + w ? 'fp on' : 'fp' });
+      return {
+        n, name: d.name, depth: d.m, gate: d.gate, light: d.light, accent: accent[n],
+        border: n >= 4 ? 'rgba(255,60,80,0.35)' : 'rgba(63,245,255,0.22)',
+        glow: n >= 4 ? 'rgba(255,42,75,0.12)' : 'rgba(63,245,255,0.06)',
+        bg: 'linear-gradient(180deg,' + hex(v.top) + ',' + hex(v.mid) + ' 55%,' + hex(v.bot) + ')',
+        shafts: n <= 2, shaftA: [1, 0.55, 0.18][n] || 0, vents: n >= 3, floor: n >= 2, walls: n >= 4, eyes: n >= 1, eyeA: [0, 0.25, 0.4, 0.55, 0.75, 1][n], cracks: n === 5,
+        runes: runes.map((g, j) => ({ g, cls: j < n ? 'rune purged' : 'rune' })),
+        fp, creature: d.creature, creatureFx: d.fx,
+        unlocks: d.unlocks.map((t) => ({ t })),
+        swatches: [{ c: hex(v.top) }, { c: hex(v.mid) }, { c: hex(v.bot) }, { c: accent[n] }]
+      };
+    });
+    return { levels };
+  }
+}
+</script>
+</body>
+</html>

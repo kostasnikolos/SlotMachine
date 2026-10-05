@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from typing import List, Optional
-from slot_engine.config.symbols import DepthLevel, DEPTH_LEVEL_THRESHOLDS, DEPTH_METADATA
+from slot_engine.config.symbols import DepthLevel, DEPTH_LEVEL_THRESHOLDS, DEPTH_METADATA, GAME_RULES
 
 
 @dataclass
@@ -37,7 +37,9 @@ class DepthGauge:
             self.starting_level = DepthLevel.LEVEL_1_TWILIGHT
             self.current_level = DepthLevel.LEVEL_1_TWILIGHT
             self.highest_level = DepthLevel.LEVEL_1_TWILIGHT
-            self.accumulated_points = DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_1_TWILIGHT]
+            self.accumulated_points = max(
+                GAME_RULES["xbet_start_points"], DEPTH_LEVEL_THRESHOLDS[DepthLevel.LEVEL_1_TWILIGHT]
+            )
             self.spins_banked = 0
             self.pending_lifeline = True
         else:
@@ -98,11 +100,11 @@ class DepthGauge:
             return False
 
         self.pearls_collected += count
-        if self.pearls_collected >= 5 and self.current_level < DepthLevel.LEVEL_5_CORE:
+        if self.pearls_collected >= GAME_RULES["pearls_for_ascension"] and self.current_level < DepthLevel.LEVEL_5_CORE:
             # Ascend immediately to Level 5!
             self.current_level = DepthLevel.LEVEL_5_CORE
             self.highest_level = DepthLevel.LEVEL_5_CORE
-            self.spins_banked += 2  # +2 Oxygen respins awarded upon Ultra Ascension!
+            self.spins_banked += GAME_RULES["ascension_spins"]
             self.pending_lifeline = True
             return True
         return False

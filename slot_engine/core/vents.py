@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional
 from slot_engine.config.symbols import DepthLevel
 from slot_engine.core.rng import SlotRNG
+from slot_engine.config.weights import VENT_ERUPTION_PROBABILITY
 
 
 @dataclass
@@ -37,9 +38,9 @@ class HydrothermalVents:
 
         # In Level 3+ or bonus, calibrated eruption chance per eligible column
         if current_level == DepthLevel.LEVEL_5_CORE:
-            eruption_probability = 0.30
+            eruption_probability = VENT_ERUPTION_PROBABILITY["core"]
         else:
-            eruption_probability = 0.32 if is_bonus else 0.15
+            eruption_probability = VENT_ERUPTION_PROBABILITY["bonus" if is_bonus else "natural"]
 
         for col in self.eligible_columns:
             if rng.random_float() < eruption_probability:

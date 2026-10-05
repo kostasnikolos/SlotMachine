@@ -41,11 +41,11 @@ class SymbolType(str, Enum):
 
 class DepthLevel(int, Enum):
     LEVEL_0_SUNLIGHT = 0   # 0m, Base state
-    LEVEL_1_TWILIGHT = 1   # 500m, 15 pts, 10 removed, 1x1 Maw, +2 spins
-    LEVEL_2_MIDNIGHT = 2   # 2,000m, 35 pts, J removed, 2x1 Maw, +2 spins
-    LEVEL_3_ABYSS = 3      # 5,000m, 65 pts, Q removed, 2x2 Maw, Vents active (Standard Bonus)
-    LEVEL_4_HADAL = 4      # 8,000m, 100 pts, K removed, 3x3 Tentacle xSplit, +2 spins
-    LEVEL_5_CORE = 5       # 11,000m, 140 pts, A removed, 6x5 grid, Ultra Bonus (8 spins)
+    LEVEL_1_TWILIGHT = 1   # 500m, 15 pts, 10 removed, 1x1 Maw, +1 spin
+    LEVEL_2_MIDNIGHT = 2   # 2,000m, 80 pts, J removed, 2x1 Maw, +1 spin
+    LEVEL_3_ABYSS = 3      # 5,000m, 225 pts, Q removed, 2x2 Maelstrom, Vents (+4 natural / 6 bought)
+    LEVEL_4_HADAL = 4      # 8,000m, 585 pts, K removed, 3x3 Tentacles, +2 spins (xSplit NOT implemented)
+    LEVEL_5_CORE = 5       # 11,000m, 1130 pts, A removed, 6x5 grid (15,625 ways), +4 / Ultra 8 spins
 
 
 class FeatureBuyType(str, Enum):
@@ -53,7 +53,7 @@ class FeatureBuyType(str, Enum):
     XBET_SONAR_2X = "XBET_SONAR_2X"                 # 2.0x bet (starts at Level 1 with 10s removed)
     STANDARD_BONUS_100X = "STANDARD_BONUS_100X"     # 100x bet (Level 3 Abyssal Descent, 6 spins)
     ULTRA_BONUS_350X = "ULTRA_BONUS_350X"           # 350x bet (Level 5 Leviathan Awakening, 8 spins)
-    MYSTERY_BUY_200X = "MYSTERY_BUY_200X"           # 200x bet (65% Standard / 35% Ultra)
+    MYSTERY_BUY_200X = "MYSTERY_BUY_200X"           # 200x bet (Standard / Ultra split: GAME_RULES["mystery_ultra_probability"])
 
 
 # Symbol categories for quick validation & filtering
@@ -78,34 +78,55 @@ SYMBOL_CATEGORIES: Dict[SymbolType, SymbolCategory] = {
 # Paytable expressed as multiplier of total base bet for 3, 4, 5, and 6 consecutive matching reels
 # (Reels 1-5 in base, Reels 1-6 in Ultra Bonus 6x5 mode)
 SYMBOL_PAYTABLE: Dict[SymbolType, Dict[int, float]] = {
-    SymbolType.HIGH_LEVIATHAN: {3: 0.15, 4: 0.40, 5: 1.20, 6: 3.50},
-    SymbolType.HIGH_SQUID:     {3: 0.10, 4: 0.25, 5: 0.80, 6: 2.20},
-    SymbolType.HIGH_ANGLER:    {3: 0.08, 4: 0.20, 5: 0.60, 6: 1.60},
-    SymbolType.HIGH_VIPER:     {3: 0.06, 4: 0.15, 5: 0.45, 6: 1.20},
-    SymbolType.MID_COMPASS:    {3: 0.04, 4: 0.10, 5: 0.30, 6: 0.80},
-    SymbolType.MID_HELMET:     {3: 0.03, 4: 0.08, 5: 0.25, 6: 0.60},
-    SymbolType.LOW_A:          {3: 0.02, 4: 0.05, 5: 0.15, 6: 0.40},
-    SymbolType.LOW_K:          {3: 0.018, 4: 0.045, 5: 0.12, 6: 0.30},
-    SymbolType.LOW_Q:          {3: 0.015, 4: 0.04, 5: 0.10, 6: 0.25},
-    SymbolType.LOW_J:          {3: 0.012, 4: 0.03, 5: 0.08, 6: 0.20},
-    SymbolType.LOW_10:         {3: 0.01, 4: 0.025, 5: 0.06, 6: 0.15},
+    # REBALANCE: flatter ladder (apex 5-reel ~6x a low instead of 20x) and 6-reel pays only
+    # just above 5-reel pays. Deep levels are rich because they are dense in mids/highs and
+    # multipliers, not because individual symbols pay 10-20x more than lows.
+    SymbolType.HIGH_LEVIATHAN: {3: 0.10, 4: 0.25, 5: 0.50, 6: 0.52},
+    SymbolType.HIGH_SQUID:     {3: 0.07, 4: 0.16, 5: 0.32, 6: 0.33},
+    SymbolType.HIGH_ANGLER:    {3: 0.06, 4: 0.13, 5: 0.26, 6: 0.27},
+    SymbolType.HIGH_VIPER:     {3: 0.05, 4: 0.11, 5: 0.22, 6: 0.23},
+    SymbolType.MID_COMPASS:    {3: 0.04, 4: 0.09, 5: 0.18, 6: 0.19},
+    SymbolType.MID_HELMET:     {3: 0.035, 4: 0.08, 5: 0.15, 6: 0.16},
+    SymbolType.LOW_A:          {3: 0.03, 4: 0.06, 5: 0.12, 6: 0.13},
+    SymbolType.LOW_K:          {3: 0.025, 4: 0.05, 5: 0.10, 6: 0.11},
+    SymbolType.LOW_Q:          {3: 0.025, 4: 0.05, 5: 0.10, 6: 0.11},
+    SymbolType.LOW_J:          {3: 0.02, 4: 0.04, 5: 0.08, 6: 0.09},
+    SymbolType.LOW_10:         {3: 0.02, 4: 0.04, 5: 0.08, 6: 0.09},
+}
+
+
+# Round-level rules for feature buys, multipliers and the creature (single source of truth;
+# previously hard-coded in state_machine.py / creature.py).
+GAME_RULES: Dict[str, Any] = {
+    "standard_bonus_spins": 6,          # STANDARD_BONUS_100X free spins (starts at Level 3)
+    "ultra_bonus_spins": 8,             # ULTRA_BONUS_350X free spins (starts at Level 5, 6x5)
+    "mystery_ultra_probability": 0.40,  # MYSTERY_BUY_200X -> Ultra share (rest Standard)
+    "xbet_start_points": 55,            # XBET_SONAR_2X starts at Level 1 with 55/80 pts toward Level 2
+    "core_global_multiplier": 2,        # Level 5 / Ultra global win multiplier
+    "core_wild_multiplier": 1,          # Level 5 2x2 Leviathan wild cell multiplier (global 2x still applies)
+    "hadal_center_wild_multiplier": 3,  # Level 4 3x3 Tentacle centre wild multiplier
+    "creature_respins_awarded": 0,      # Reported in CREATURE_LIFELINE_STRIKE; strikes do NOT add spins
+    "pearls_for_ascension": 5,          # Pearls needed in a round to ascend to Level 5
+    "ascension_spins": 2,               # Spins added on pearl ascension
 }
 
 
 # Pressure points awarded to Depth Gauge when symbols are burned in cascades
 # NOTE: Low-paying symbols award 0 points (cash only), protecting base-game payouts!
 SYMBOL_PRESSURE_POINTS: Dict[SymbolType, int] = {
+    # Awarded once per winning combination (symbol), not per cell. The WILD_MAW value is the
+    # bonus added to any wild-assisted combination. Scaled x5 vs. the original 1/2/3/+1.
     SymbolType.LOW_10: 0,
     SymbolType.LOW_J: 0,
     SymbolType.LOW_Q: 0,
     SymbolType.LOW_K: 0,
     SymbolType.LOW_A: 0,
-    SymbolType.MID_HELMET: 1,
-    SymbolType.MID_COMPASS: 1,
-    SymbolType.HIGH_VIPER: 2,
-    SymbolType.HIGH_ANGLER: 2,
-    SymbolType.HIGH_SQUID: 2,
-    SymbolType.HIGH_LEVIATHAN: 3,
+    SymbolType.MID_HELMET: 5,
+    SymbolType.MID_COMPASS: 5,
+    SymbolType.HIGH_VIPER: 10,
+    SymbolType.HIGH_ANGLER: 10,
+    SymbolType.HIGH_SQUID: 10,
+    SymbolType.HIGH_LEVIATHAN: 15,
     SymbolType.WILD_MAW: 5,
     SymbolType.PEARL_TOKEN: 0,
     SymbolType.DEAD_SEDIMENT: 0,
@@ -115,11 +136,11 @@ SYMBOL_PRESSURE_POINTS: Dict[SymbolType, int] = {
 # Thresholds of accumulated pressure points required to breach each depth level
 DEPTH_LEVEL_THRESHOLDS: Dict[DepthLevel, int] = {
     DepthLevel.LEVEL_0_SUNLIGHT: 0,
-    DepthLevel.LEVEL_1_TWILIGHT: 15,
-    DepthLevel.LEVEL_2_MIDNIGHT: 35,
-    DepthLevel.LEVEL_3_ABYSS: 65,      # Unlocks Abyssal Descent (Standard Bonus Milestone)
-    DepthLevel.LEVEL_4_HADAL: 160,
-    DepthLevel.LEVEL_5_CORE: 260,      # Unlocks Leviathan Awakening (Ultra Bonus Milestone)
+    DepthLevel.LEVEL_1_TWILIGHT: 15,   # base: ~1 in 5 rounds
+    DepthLevel.LEVEL_2_MIDNIGHT: 80,   # base: ~1 in 29 rounds
+    DepthLevel.LEVEL_3_ABYSS: 225,     # Unlocks Abyssal Descent (Standard Bonus Milestone), base ~1 in 690
+    DepthLevel.LEVEL_4_HADAL: 585,     # Standard bonus reaches it ~50% of the time
+    DepthLevel.LEVEL_5_CORE: 1130,     # Leviathan Awakening (Ultra Milestone), Standard ~12%
 }
 
 
@@ -165,7 +186,7 @@ DEPTH_METADATA: Dict[DepthLevel, Dict[str, Any]] = {
         "ambient_lighting": 0.4,
         "creature_footprint": (2, 2),
         "purged_symbols": [SymbolType.LOW_10, SymbolType.LOW_J, SymbolType.LOW_Q],
-        "spins_awarded_natural": 2,
+        "spins_awarded_natural": 4,
         "spins_awarded_buy": 6,
         "audio_cue": "VENT_ERUPTION_WARNING",
         "description": "Low Q removed. Standard Bonus Milestone: 2x2 Maelstrom Wild with multipliers + Hydrothermal Vents erupt under reels 2, 3, 4!"
@@ -179,7 +200,7 @@ DEPTH_METADATA: Dict[DepthLevel, Dict[str, Any]] = {
         "purged_symbols": [SymbolType.LOW_10, SymbolType.LOW_J, SymbolType.LOW_Q, SymbolType.LOW_K],
         "spins_awarded_natural": 2,
         "audio_cue": "EMERGENCY_ALARM_RED",
-        "description": "Low K removed. 3x3 Eldritch Tentacles zone triggers xSplit on passing wins, doubling ways."
+        "description": "Low K removed. 3x3 Eldritch Tentacles convert a zone to Apex/Squid around a 3x wild."
     },
     DepthLevel.LEVEL_5_CORE: {
         "name": "The Leviathan's Core",
@@ -191,6 +212,6 @@ DEPTH_METADATA: Dict[DepthLevel, Dict[str, Any]] = {
         "spins_awarded_natural": 4,
         "spins_awarded_buy": 8,
         "audio_cue": "LEVIATHAN_ROAR_SHATTER",
-        "description": "ULTRA BONUS: Viewport breaks! 6x5 grid (7,776 ways), 100% low runes purged, 2x multiplier doubling, Persistent Sticky Roaming Leviathan Wild."
+        "description": "ULTRA BONUS: Viewport breaks! 6x5 grid (6 reels x 5 rows = 15,625 ways), 100% low runes purged, 2x global multiplier, 2x2 Leviathan wild strike on each dead spin."
     },
 }

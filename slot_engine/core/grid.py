@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set, Tuple
 from slot_engine.config.symbols import SymbolType, DepthLevel
-from slot_engine.config.weights import BONUS_PEARL_TOKEN_PROBABILITY
+from slot_engine.config import weights as _weights
 from slot_engine.core.rng import SlotRNG
 
 CellCoordinate = Tuple[int, int]  # (row, col)
@@ -36,7 +36,7 @@ class GridMatrix:
             for c in range(self.cols):
                 sym = rng.sample_symbol(level)
                 self.cells[r][c] = sym
-                if is_bonus and rng.random_float() < BONUS_PEARL_TOKEN_PROBABILITY:
+                if is_bonus and rng.random_float() < _weights.BONUS_PEARL_TOKEN_PROBABILITY:
                     self.pearl_tokens.add((r, c))
 
     def get_symbol(self, row: int, col: int) -> SymbolType:
@@ -137,7 +137,7 @@ class GridMatrix:
                 new_sym = rng.sample_symbol(level)
                 self.cells[target_row][c] = new_sym
                 has_p = False
-                if is_bonus and rng.random_float() < BONUS_PEARL_TOKEN_PROBABILITY:
+                if is_bonus and rng.random_float() < _weights.BONUS_PEARL_TOKEN_PROBABILITY:
                     has_p = True
                     self.pearl_tokens.add((target_row, c))
 

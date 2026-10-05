@@ -133,9 +133,10 @@ class WaysEvaluator:
             # Nolimit City rule: Points are awarded per winning combination (not per coordinate)
             # Lows = 0 pts, Mids = 1 pt, Highs = 2 pts, Apex = 3 pts
             points_for_win = SYMBOL_PRESSURE_POINTS.get(target_symbol, 0)
-            # Check if any Wild contributed to this win (+1 bonus pressure point)
+            # Wild-assisted win: bonus pressure from the WILD_MAW entry of the points table
+            # (previously a hard-coded +1 while the table's WILD_MAW value was never read)
             if any(grid.get_symbol(r, c) == SymbolType.WILD_MAW for r, c in winning_coords_for_symbol):
-                points_for_win += 1
+                points_for_win += SYMBOL_PRESSURE_POINTS.get(SymbolType.WILD_MAW, 0)
             total_points += points_for_win
 
             wins.append(

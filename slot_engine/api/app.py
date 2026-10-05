@@ -18,6 +18,7 @@ from slot_engine.config.symbols import (
     SYMBOL_PRESSURE_POINTS,
     DEPTH_LEVEL_THRESHOLDS,
     DEPTH_METADATA,
+    GAME_RULES,
 )
 from slot_engine.config.rtp_profiles import get_active_rtp_profile
 from slot_engine.core.state_machine import SlotStateMachine
@@ -65,7 +66,9 @@ def outcome_to_dict(outcome) -> Dict[str, Any]:
         "bet": outcome.bet,
         "feature_type": outcome.feature_type.value,
         "total_payout": round(outcome.total_payout, 2),
-        "payout_multiplier": round(outcome.payout_multiplier, 2),
+        "payout_multiplier": round(outcome.payout_multiplier, 2),   # vs. round cost (bet)
+        "base_bet": outcome.base_bet,
+        "win_x_base_bet": outcome.win_x_base_bet,                  # vs. base stake (big-win tiers)
         "max_win_capped": outcome.max_win_capped,
         "final_depth_level": outcome.final_depth_level.value,
         "depth_name": outcome.depth_name,
@@ -83,10 +86,19 @@ def outcome_to_dict(outcome) -> Dict[str, Any]:
 
 @app.get("/")
 async def serve_index():
-    index_path = STATIC_DIR / "index.html"
+    # The Descent frontend, generated from descent/design/Main.dc.html by scripts/descent/dc_to_web.py
+    index_path = STATIC_DIR / "descent" / "index.html"
     if index_path.exists():
         return FileResponse(str(index_path))
     return {"status": "The Descent Slot Engine Online", "docs": "/docs"}
+
+
+@app.get("/legacy")
+async def serve_legacy_index():
+    index_path = STATIC_DIR / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    raise HTTPException(status_code=404, detail="Legacy frontend not found")
 
 
 @app.get("/api/slot/health")
@@ -121,10 +133,10 @@ async def get_paytable():
             for level, meta in DEPTH_METADATA.items()
         },
         "feature_buys": {
-            FeatureBuyType.XBET_SONAR_2X.value: {"cost_mult": 2.0, "name": "Abyssal Sonar xBet", "desc": "Start directly at Level 1 (Twilight Zone, 500m) with 10s purged!"},
-            FeatureBuyType.STANDARD_BONUS_100X.value: {"cost_mult": 100.0, "name": "Abyssal Descent (Standard)", "desc": "Level 3 Abyss (5,000m), 6 Free Spins, Hydrothermal Vents active!"},
-            FeatureBuyType.ULTRA_BONUS_350X.value: {"cost_mult": 350.0, "name": "Leviathan Awakening (Ultra)", "desc": "Level 5 Core (11,000m), 6x5 Grid (7,776 ways), 8 Spins, 2x Doubled Multiplier, 100% Lows purged!"},
-            FeatureBuyType.MYSTERY_BUY_200X.value: {"cost_mult": 200.0, "name": "Mystery Trench Abyss", "desc": "60% chance Standard Bonus / 40% chance Ultra Bonus!"},
+            FeatureBuyType.XBET_SONAR_2X.value: {"cost_mult": 2.0, "name": "Abyssal Sonar xBet", "desc": f"Start directly at Level 1 (Twilight Zone, 500m) with 10s purged and {GAME_RULES['xbet_start_points']} pressure points!"},
+            FeatureBuyType.STANDARD_BONUS_100X.value: {"cost_mult": 100.0, "name": "Abyssal Descent (Standard)", "desc": f"Level 3 Abyss (5,000m), {GAME_RULES['standard_bonus_spins']} Free Spins, Hydrothermal Vents active!"},
+            FeatureBuyType.ULTRA_BONUS_350X.value: {"cost_mult": 350.0, "name": "Leviathan Awakening (Ultra)", "desc": f"Level 5 Core (11,000m), 6x5 Grid (15,625 ways), {GAME_RULES['ultra_bonus_spins']} Spins, {GAME_RULES['core_global_multiplier']}x Global Multiplier, 100% Lows purged!"},
+            FeatureBuyType.MYSTERY_BUY_200X.value: {"cost_mult": 200.0, "name": "Mystery Trench Abyss", "desc": f"{round(100 * (1 - GAME_RULES['mystery_ultra_probability']))}% chance Standard Bonus / {round(100 * GAME_RULES['mystery_ultra_probability'])}% chance Ultra Bonus!"},
         }
     }
 

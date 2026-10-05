@@ -3,7 +3,11 @@
 import random
 from typing import Dict, List, Optional, Sequence, Tuple, TypeVar
 from slot_engine.config.symbols import SymbolType, DepthLevel
-from slot_engine.config.weights import LEVEL_WEIGHT_DISTRIBUTIONS, VENT_MULTIPLIER_WEIGHTS
+from slot_engine.config.weights import (
+    LEVEL_WEIGHT_DISTRIBUTIONS,
+    VENT_MULTIPLIER_WEIGHTS,
+    CREATURE_WILD_MULT_WEIGHTS,
+)
 
 T = TypeVar("T")
 
@@ -47,6 +51,12 @@ class SlotRNG:
         """Sample a Hydrothermal Vent multiplier (2x, 3x, or 5x)."""
         values = [v for v, _ in VENT_MULTIPLIER_WEIGHTS]
         weights = [w for _, w in VENT_MULTIPLIER_WEIGHTS]
+        return self._rng.choices(values, weights=weights, k=1)[0]
+
+    def sample_creature_wild_multiplier(self) -> int:
+        """Sample a Maelstrom wild multiplier (independent table from the vents)."""
+        values = [v for v, _ in CREATURE_WILD_MULT_WEIGHTS]
+        weights = [w for _, w in CREATURE_WILD_MULT_WEIGHTS]
         return self._rng.choices(values, weights=weights, k=1)[0]
 
     def random_choice(self, sequence: Sequence[T]) -> T:
