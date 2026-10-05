@@ -108,6 +108,40 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .bbtn{height:50px;border-radius:10px;border:1px solid currentColor;background:rgba(255,255,255,.04);font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;cursor:pointer}
 .bbtn:hover{background:rgba(255,255,255,.1)}
 .feat .title{font-size:76px;font-weight:700;letter-spacing:.12em;text-shadow:0 0 40px currentColor;animation:crush .8s cubic-bezier(.2,1.5,.35,1)}
+.bwback{position:absolute;inset:0;z-index:8;pointer-events:none;background:radial-gradient(ellipse at 47% 46%,rgba(0,14,24,.4),rgba(0,0,0,.86));animation:fadein .4s ease-out}
+.bwback.t2{background:radial-gradient(ellipse at 47% 46%,rgba(40,12,0,.42),rgba(0,0,0,.88))}
+.bwback.t3{background:radial-gradient(ellipse at 47% 46%,rgba(48,0,8,.44),rgba(0,0,0,.9))}
+.bwback.t4{background:radial-gradient(ellipse at 47% 46%,rgba(0,26,50,.46),rgba(0,0,0,.9))}
+.bwback.max{background:radial-gradient(ellipse at 47% 46%,rgba(30,0,4,.6),#000 70%)}
+.bwfront{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;gap:80px;cursor:pointer;--bw:63,245,255}
+.bwfront.t2{--bw:255,122,26}.bwfront.t3,.bwfront.max{--bw:255,42,75}.bwfront.t4{--bw:150,220,255}
+.bwcol{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.bwkicker{font-size:16px;font-weight:600;letter-spacing:.6em;color:rgba(var(--bw),.95)}
+.bwtitle{font-size:104px;font-weight:700;letter-spacing:.08em;line-height:1.05;color:#f2fdff;text-shadow:0 0 40px rgba(var(--bw),.9),0 0 100px rgba(var(--bw),.55)}
+.bwtitle.a1{animation:surface .9s cubic-bezier(.2,1.2,.4,1)}
+@keyframes surface{from{transform:translateY(120px);opacity:0;filter:blur(10px)}to{transform:translateY(0);opacity:1;filter:blur(0)}}
+.bwtitle.a2{animation:implode .6s cubic-bezier(.2,1.5,.35,1)}
+@keyframes implode{0%{transform:scale(2.4);opacity:0;filter:blur(14px)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
+.bwtitle.a3{animation:scare .7s cubic-bezier(.2,1.6,.3,1)}
+@keyframes scare{0%{transform:scale(.4);opacity:0}40%{transform:scale(1.14);opacity:1;color:#ff8a9a}100%{transform:scale(1)}}
+.bwtitle.a4{animation:wave .8s cubic-bezier(.2,1.2,.3,1) .35s both}
+@keyframes wave{from{transform:translateX(-70%) skewX(-18deg);opacity:0}to{transform:translateX(0) skewX(0);opacity:1}}
+.bwtitle.amax{animation:abyss 1.8s ease-out}
+@keyframes abyss{from{letter-spacing:.6em;opacity:0;filter:blur(16px)}to{letter-spacing:.08em;opacity:1;filter:blur(0)}}
+.bwamt{font-family:'JetBrains Mono',monospace;font-size:136px;font-weight:600;line-height:1.05;color:#fff;text-shadow:0 0 34px rgba(var(--bw),.9),0 0 80px rgba(var(--bw),.4)}
+.bwamt.pa{animation:punchA .32s ease-out}.bwamt.pb{animation:punchB .32s ease-out}
+.bwamt.jit.pa{animation:punchA .32s ease-out,jitter .09s linear .32s infinite}.bwamt.jit.pb{animation:punchB .32s ease-out,jitter .09s linear .32s infinite}
+@keyframes punchA{50%{transform:scale(1.3)}}@keyframes punchB{50%{transform:scale(1.3)}}
+@keyframes jitter{25%{transform:translate(3px,-2px)}50%{transform:translate(-3px,2px)}75%{transform:translate(2px,3px)}}
+.bwx{font-family:'JetBrains Mono',monospace;font-size:24px;color:rgba(var(--bw),1);letter-spacing:.1em}
+.pip{display:flex;flex-direction:column;gap:2px;min-width:150px;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);font-size:12px;font-weight:600;letter-spacing:.18em;color:#5f8395}
+.pip.on{border-color:rgb(var(--bw));color:#fff;box-shadow:0 0 18px rgba(var(--bw),.45)}
+.bwhint{margin-top:22px;font-size:13px;letter-spacing:.45em;color:#8fb2c2;animation:blink 1.6s ease-in-out infinite}
+.bwgauge{position:relative;width:22px;height:420px;border-radius:11px;overflow:hidden;border:1px solid rgba(var(--bw),.55);background:rgba(0,0,0,.45)}
+.bwfill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgb(var(--bw)),rgba(var(--bw),.15));box-shadow:0 0 20px rgb(var(--bw))}
+.hud.shake{animation:shake .45s linear}
+@keyframes shake{10%{transform:translate(-6px,3px)}30%{transform:translate(5px,-4px)}50%{transform:translate(-4px,-3px)}70%{transform:translate(4px,4px)}90%{transform:translate(-2px,1px)}}
+@media (prefers-reduced-motion: reduce){.hud.shake,.bwamt.jit.pa,.bwamt.jit.pb{animation:none}}
 .big .amt{font-family:'JetBrains Mono',monospace;font-size:110px;font-weight:600;color:#fff;text-shadow:0 0 40px rgba(255,122,26,.9)}
 .big .tier{font-size:64px;font-weight:700;letter-spacing:.2em;color:#ffd2ad;text-shadow:0 0 40px rgba(255,122,26,.8);animation:crush .7s cubic-bezier(.2,1.5,.35,1),throb 1.2s ease-in-out .7s infinite}
 @keyframes throb{50%{transform:scale(1.06)}}

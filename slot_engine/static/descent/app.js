@@ -78,11 +78,426 @@ class DescentGame extends DCLogic {
       strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '' }, creatureState: 'DORMANT', levZ: 0,
       lu: { show: false, meters: '0', name: '', level: 0, points: 0, rewards: [] },
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
-      big: { show: false, tier: '', amt: '', sub: '' }, shatter: false, buyOpen: false,
-      spinning: false, auto: false, turbo: false, xbet: false, dirLevel: 0,
+      bw: { show: false, cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', meters: '', depthPct: '0', pips: [], hint: '', punch: 'pa', jit: '' }, shake: '', shatter: false, buyOpen: false,
+      spinning: false, auto: false, turbo: false, xbet: false, dirLevel: 0, muted: false,
       blipX: 72, blipY: 48, range: 640, bearing: 74
     };
   }
+
+  // ---------- sound: procedural Web Audio (rebuilt from sound.js + scripts/audio/generate_*.py) ----------
+  // Starts on the first tap/click (browsers block audio before a gesture). Nothing is loaded from files.
+  makeAudio() {
+    const A = { ctx: null, muted: false, level: 0, swimV: 0 };
+    const now = () => A.ctx.currentTime;
+    const gain = (v, to) => { const g = A.ctx.createGain(); g.gain.value = v; if (to) g.connect(to); return g; };
+    const osc = (type, f) => { const o = A.ctx.createOscillator(); o.type = type; o.frequency.value = f; return o; };
+    const filt = (type, f, q) => { const b = A.ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q) b.Q.value = q; return b; };
+    const noise = (loop) => { const s = A.ctx.createBufferSource(); s.buffer = A.noiseBuf; s.loop = !!loop; return s; };
+    // one-shot envelope: attack a, hold peak, exponential decay d
+    const env = (g, t, a, peak, d) => { g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+    const wet = (node, amt) => { if (A.verb && amt) { const s = gain(amt, A.verb); node.connect(s); } };
+
+    A.init = () => {
+      if (A.ctx) { if (A.ctx.state === 'suspended') A.ctx.resume(); return; }
+      const C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return;
+      A.ctx = new C();
+      const comp = A.ctx.createDynamicsCompressor();
+      comp.threshold.value = -14; comp.ratio.value = 4;
+      comp.connect(A.ctx.destination);
+      A.master = gain(A.muted ? 0 : 0.85, comp);
+      A.sfx = gain(1, A.master);
+      A.amb = gain(0.6, A.master);
+      const len = A.ctx.sampleRate * 2;
+      A.noiseBuf = A.ctx.createBuffer(1, len, A.ctx.sampleRate);
+      const nd = A.noiseBuf.getChannelData(0);
+      for (let i = 0; i < len; i++) nd[i] = Math.random() * 2 - 1;
+      // dark underwater reverb: decaying, low-passed noise impulse
+      const ir = A.ctx.createBuffer(2, A.ctx.sampleRate * 3, A.ctx.sampleRate);
+      for (let ch = 0; ch < 2; ch++) {
+        const d = ir.getChannelData(ch);
+        let lp = 0;
+        for (let i = 0; i < d.length; i++) { lp += 0.08 * ((Math.random() * 2 - 1) - lp); d[i] = lp * Math.pow(1 - i / d.length, 2.6) * 3; }
+      }
+      A.verb = A.ctx.createConvolver();
+      A.verb.buffer = ir;
+      A.verb.connect(gain(0.55, A.master));
+      A.startAmbient();
+    };
+
+    A.setMuted = (m) => {
+      A.muted = m;
+      if (A.ctx) A.master.gain.setTargetAtTime(m ? 0 : 0.85, now(), 0.08);
+    };
+
+    // ambience: abyssal drone + water bed + oxygen-mask breathing; all deepen with the level
+    A.startAmbient = () => {
+      const t = now();
+      A.drone = [osc('sine', 45), osc('sine', 45 * 1.5 + 0.4)];
+      A.droneF = filt('lowpass', 120);
+      A.droneG = gain(0.0001, A.amb);
+      A.drone.forEach((o) => { o.connect(A.droneF); o.start(t); });
+      A.droneF.connect(A.droneG);
+      A.droneG.gain.setTargetAtTime(0.14, t, 1.5);
+      const bed = noise(true), bf = filt('lowpass', 420), bg = gain(0.05, A.amb);
+      const lfo = osc('sine', 0.09), lg = gain(0.03);
+      lfo.connect(lg); lg.connect(bg.gain); lfo.start(t);
+      bed.connect(bf); bf.connect(bg); bed.start(t);
+      A.bedF = bf;
+      // the swimming leviathan: a band-passed water rush that follows its speed
+      const sw = noise(true), sf = filt('bandpass', 220, 0.9);
+      A.swimG = gain(0.0001, A.amb);
+      sw.connect(sf); sf.connect(A.swimG); sw.start(t);
+      A.swimF = sf;
+      A.nextBreath = t + 1.5;
+      A.ambTimer = setInterval(A.tickAmbient, 250);
+    };
+
+    A.tickAmbient = () => {
+      if (!A.ctx || A.ctx.state !== 'running') return;
+      const t = now();
+      if (t + 0.4 > A.nextBreath) { A.breath(A.nextBreath); A.nextBreath += [5, 4.6, 4.2, 3.8, 3.4, 3.0][A.level]; }
+      // hull creaks get more frequent with depth; the Core has a slow heartbeat
+      if (A.level >= 1 && Math.random() < 0.012 * A.level) A.creak();
+      if (A.level >= 5 && !A.beatAt) A.beatAt = t;
+      if (A.level >= 5 && t > A.beatAt) { A.heartbeat(t + 0.05); A.beatAt = t + 1.15; }
+      if (A.level < 5) A.beatAt = 0;
+    };
+
+    A.setLevel = (l) => {
+      A.level = l;
+      if (!A.ctx) return;
+      const t = now();
+      A.drone[0].frequency.setTargetAtTime(45 - l * 3, t, 1.2);
+      A.drone[1].frequency.setTargetAtTime((45 - l * 3) * 1.5 + 0.4, t, 1.2);
+      A.droneF.frequency.setTargetAtTime(120 - l * 12, t, 1.2);
+      A.droneG.gain.setTargetAtTime(0.14 + l * 0.03, t, 1.2);
+      A.bedF.frequency.setTargetAtTime(420 - l * 55, t, 1.2);
+    };
+
+    // oxygen-mask breathing (scripts/audio/generate_breath.py): filtered-noise inhale, valve click, exhale through bubbles
+    A.breath = (t) => {
+      const ins = noise(), fi = filt('bandpass', 700, 1.2), gi = gain(0.0001, A.amb);
+      fi.frequency.setValueAtTime(500, t); fi.frequency.linearRampToValueAtTime(1300, t + 1.5);
+      gi.gain.setValueAtTime(0.0001, t); gi.gain.linearRampToValueAtTime(0.05 + A.level * 0.006, t + 1.0); gi.gain.linearRampToValueAtTime(0.0001, t + 1.6);
+      ins.connect(fi); fi.connect(gi); ins.start(t, Math.random()); ins.stop(t + 1.7);
+      A.click(t + 1.65, 0.05);
+      const ex = noise(), fe = filt('lowpass', 900), ge = gain(0.0001, A.amb);
+      fe.frequency.setValueAtTime(900, t + 1.8); fe.frequency.linearRampToValueAtTime(380, t + 3.0);
+      ge.gain.setValueAtTime(0.0001, t + 1.8); ge.gain.linearRampToValueAtTime(0.06, t + 2.0); ge.gain.linearRampToValueAtTime(0.0001, t + 3.1);
+      ex.connect(fe); fe.connect(ge); ex.start(t + 1.8, Math.random()); ex.stop(t + 3.2);
+      for (let i = 0; i < 9; i++) A.bubble(t + 1.9 + i * 0.12 + Math.random() * 0.06, 260 + Math.random() * 380, 0.035, A.amb);
+    };
+
+    A.click = (t, v) => {
+      const o = osc('square', 2400), g = gain(0.0001, A.sfx);
+      env(g, t, 0.001, v || 0.04, 0.03);
+      o.connect(g); o.start(t); o.stop(t + 0.05);
+    };
+
+    // a single bubble: short upward-gliding sine
+    A.bubble = (t, f, v, to) => {
+      const o = osc('sine', f), g = gain(0.0001, to || A.sfx);
+      o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 2.2, t + 0.07);
+      env(g, t, 0.004, v, 0.07);
+      o.connect(g); o.start(t); o.stop(t + 0.1);
+    };
+
+    A.creak = () => {
+      const t = now(), o = osc('sawtooth', 70 + Math.random() * 40), f = filt('bandpass', 420, 6), g = gain(0.0001, A.amb);
+      o.frequency.linearRampToValueAtTime(55 + Math.random() * 30, t + 0.9);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.035, t + 0.3); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+      o.connect(f); f.connect(g); wet(g, 0.5); o.start(t); o.stop(t + 1.2);
+    };
+
+    A.heartbeat = (t) => {
+      [0, 0.28].forEach((dt, i) => {
+        const o = osc('sine', 55), g = gain(0.0001, A.amb);
+        o.frequency.setValueAtTime(70, t + dt); o.frequency.exponentialRampToValueAtTime(38, t + dt + 0.18);
+        env(g, t + dt, 0.01, i ? 0.12 : 0.18, 0.2);
+        o.connect(g); o.start(t + dt); o.stop(t + dt + 0.3);
+      });
+    };
+
+    // called every frame with how fast / how visible the creature is
+    A.swim = (v) => {
+      if (!A.ctx || !A.swimG) return;
+      A.swimV += (v - A.swimV) * 0.08;
+      const t = now();
+      A.swimG.gain.setTargetAtTime(0.0001 + A.swimV * 0.09, t, 0.1);
+      A.swimF.frequency.setTargetAtTime(160 + A.swimV * 520, t, 0.1);
+    };
+
+    // heavy reel slap (scripts/audio/generate_spank.py)
+    A.spank = (v) => {
+      if (!A.ctx) return;
+      const t = now(), o = osc('sine', 200), g = gain(0.0001, A.sfx);
+      o.frequency.setValueAtTime(200, t); o.frequency.exponentialRampToValueAtTime(50, t + 0.12);
+      env(g, t, 0.002, (v || 1) * 0.32, 0.22);
+      o.connect(g); o.start(t); o.stop(t + 0.3);
+      const n = noise(), f = filt('lowpass', 1800), ng = gain(0.0001, A.sfx);
+      env(ng, t, 0.001, (v || 1) * 0.2, 0.05);
+      n.connect(f); f.connect(ng); n.start(t, Math.random()); n.stop(t + 0.08);
+    };
+
+    // chain paying out into the deep (scripts/audio/generate_chain.py); heavy = the deepest descents
+    A.chain = (heavy) => {
+      if (!A.ctx) return;
+      const t0 = now(), n = heavy ? 22 : 9, base = heavy ? 520 : 820;
+      let t = t0;
+      for (let i = 0; i < n; i++) {
+        const k = i / n, pitch = base * (1 - k * (heavy ? 0.45 : 0.25)) * (0.94 + Math.random() * 0.12);
+        [1, 1.414, 1.732, 2.14, 3.1].forEach((r, j) => {
+          const o = osc('sine', pitch * r), g = gain(0.0001, A.sfx);
+          env(g, t, 0.001, (heavy ? 0.06 : 0.045) / (j + 1) * (1 - k * 0.5), 0.12 + Math.random() * 0.08);
+          o.connect(g); wet(g, 0.6); o.start(t); o.stop(t + 0.3);
+        });
+        const cn = noise(), cf = filt('highpass', 2500), cg = gain(0.0001, A.sfx);
+        env(cg, t, 0.001, 0.05, 0.03);
+        cn.connect(cf); cf.connect(cg); cn.start(t, Math.random()); cn.stop(t + 0.05);
+        t += (heavy ? 0.16 : 0.09) * (1 + k * 1.2) * (0.8 + Math.random() * 0.4);
+      }
+      // drag of the chain through water, then the anchor hitting bottom
+      const dn = noise(), df = filt('bandpass', 300, 0.7), dg = gain(0.0001, A.sfx);
+      dg.gain.setValueAtTime(0.0001, t0); dg.gain.linearRampToValueAtTime(heavy ? 0.12 : 0.06, t0 + 0.4); dg.gain.exponentialRampToValueAtTime(0.0001, t);
+      dn.connect(df); df.connect(dg); dn.start(t0, Math.random()); dn.stop(t + 0.1);
+      if (heavy) A.boom(t, 1.2);
+      return t - t0;
+    };
+
+    // symbols sinking out of the grid
+    A.sink = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('lowpass', 1400), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(1400, t); f.frequency.exponentialRampToValueAtTime(140, t + 0.7);
+      env(g, t, 0.05, 0.12, 0.65);
+      n.connect(f); f.connect(g); wet(g, 0.4); n.start(t, Math.random()); n.stop(t + 0.8);
+      const o = osc('sine', 90), og = gain(0.0001, A.sfx);
+      o.frequency.exponentialRampToValueAtTime(32, t + 0.6);
+      env(og, t, 0.02, 0.16, 0.6);
+      o.connect(og); o.start(t); o.stop(t + 0.7);
+    };
+
+    A.boom = (t, v) => {
+      t = t || now();
+      const o = osc('sine', 80), g = gain(0.0001, A.sfx);
+      o.frequency.setValueAtTime(90, t); o.frequency.exponentialRampToValueAtTime(26, t + 0.9);
+      env(g, t, 0.005, 0.5 * (v || 1), 1.1);
+      o.connect(g); o.start(t); o.stop(t + 1.3);
+      const n = noise(), f = filt('lowpass', 700), ng = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(90, t + 0.8);
+      env(ng, t, 0.003, 0.3 * (v || 1), 0.8);
+      n.connect(f); f.connect(ng); wet(ng, 0.7); n.start(t, Math.random()); n.stop(t + 1);
+    };
+
+    A.win = (x) => {
+      if (!A.ctx) return;
+      const t = now(), n = Math.min(14, 3 + Math.round(Math.log2(1 + x) * 3));
+      for (let i = 0; i < n; i++) A.bubble(t + i * 0.045, 300 + Math.random() * 500 + i * 30, 0.07);
+      const o = osc('sine', 60), g = gain(0.0001, A.sfx);
+      o.frequency.exponentialRampToValueAtTime(30, t + 0.6);
+      env(g, t, 0.08, 0.22, 0.5);
+      o.connect(g); o.start(t); o.stop(t + 0.7);
+    };
+
+    // winning symbols dissolve: fizz + steam
+    A.fizz = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('bandpass', 2600, 1.4), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(3000, t); f.frequency.exponentialRampToValueAtTime(900, t + 0.6);
+      env(g, t, 0.02, 0.08, 0.6);
+      n.connect(f); f.connect(g); n.start(t, Math.random()); n.stop(t + 0.7);
+      for (let i = 0; i < 6; i++) A.bubble(t + Math.random() * 0.5, 500 + Math.random() * 700, 0.04);
+    };
+
+    A.land = () => { if (!A.ctx) return; const t = now(); if (A.lastLand && t - A.lastLand < 0.06) return; A.lastLand = t; A.spank(0.55); };
+
+    A.vent = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('lowpass', 260), g = gain(0.0001, A.sfx);
+      env(g, t, 0.15, 0.22, 1.0);
+      n.connect(f); f.connect(g); n.start(t, Math.random()); n.stop(t + 1.3);
+      const h = noise(), hf = filt('bandpass', 1800, 1.5), hg = gain(0.0001, A.sfx);
+      env(hg, t + 0.1, 0.05, 0.09, 0.6);
+      h.connect(hf); hf.connect(hg); h.start(t + 0.1, Math.random()); h.stop(t + 0.9);
+    };
+
+    A.absorb = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('bandpass', 200, 1.5), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(200, t); f.frequency.exponentialRampToValueAtTime(900, t + 0.3);
+      env(g, t, 0.08, 0.12, 0.3);
+      n.connect(f); f.connect(g); n.start(t, Math.random()); n.stop(t + 0.45);
+    };
+
+    A.ping = () => {
+      if (!A.ctx) return;
+      const t = now(), o = osc('sine', 880), g = gain(0.0001, A.sfx);
+      env(g, t, 0.005, 0.07, 1.4);
+      o.connect(g); wet(g, 0.9); o.start(t); o.stop(t + 1.5);
+    };
+
+    A.roar = (v) => {
+      if (!A.ctx) return;
+      const t = now();
+      const s = osc('sine', 55), sg = gain(0.0001, A.sfx);
+      s.frequency.linearRampToValueAtTime(26, t + 1.4);
+      env(sg, t, 0.08, 0.45 * (v || 1), 1.3);
+      s.connect(sg); s.start(t); s.stop(t + 1.6);
+      const r = osc('sawtooth', 92), r2 = osc('sawtooth', 96.5), f = filt('bandpass', 420, 2.5), rg = gain(0.0001, A.sfx);
+      r.frequency.linearRampToValueAtTime(42, t + 1.3); r2.frequency.linearRampToValueAtTime(44, t + 1.3);
+      f.frequency.setValueAtTime(700, t); f.frequency.linearRampToValueAtTime(240, t + 1.3);
+      env(rg, t, 0.12, 0.2 * (v || 1), 1.2);
+      r.connect(f); r2.connect(f); f.connect(rg); wet(rg, 0.8);
+      r.start(t); r2.start(t); r.stop(t + 1.5); r2.stop(t + 1.5);
+    };
+
+    A.plunge = () => {
+      if (!A.ctx) return;
+      const t = now(), o = osc('sine', 180), g = gain(0.0001, A.sfx);
+      o.frequency.exponentialRampToValueAtTime(42, t + 0.4);
+      env(g, t, 0.005, 0.35, 0.4);
+      o.connect(g); o.start(t); o.stop(t + 0.5);
+      const n = noise(), f = filt('lowpass', 2400), ng = gain(0.0001, A.sfx);
+      f.frequency.exponentialRampToValueAtTime(200, t + 0.5);
+      env(ng, t, 0.005, 0.25, 0.5);
+      n.connect(f); f.connect(ng); wet(ng, 0.6); n.start(t, Math.random()); n.stop(t + 0.6);
+      for (let i = 0; i < 12; i++) A.bubble(t + 0.15 + Math.random() * 0.8, 200 + Math.random() * 500, 0.05);
+    };
+
+    A.geyser = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('lowpass', 300), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(300, t); f.frequency.exponentialRampToValueAtTime(5000, t + 0.25); f.frequency.exponentialRampToValueAtTime(600, t + 1.6);
+      env(g, t, 0.06, 0.4, 1.6);
+      n.connect(f); f.connect(g); wet(g, 0.7); n.start(t, Math.random()); n.stop(t + 1.8);
+      A.boom(t, 0.8);
+    };
+
+    A.shimmer = () => {
+      if (!A.ctx) return;
+      const t = now();
+      [523, 659, 784, 1046, 1318].forEach((f, i) => {
+        const o = osc('sine', f), g = gain(0.0001, A.sfx);
+        env(g, t + i * 0.06, 0.01, 0.05, 0.9);
+        o.connect(g); wet(g, 1); o.start(t + i * 0.06); o.stop(t + i * 0.06 + 1);
+      });
+    };
+
+    A.alarm = () => {
+      if (!A.ctx) return;
+      const t = now();
+      [0, 0.45, 0.9].forEach((dt) => {
+        const o = osc('sawtooth', 440), f = filt('lowpass', 1400), g = gain(0.0001, A.sfx);
+        o.frequency.setValueAtTime(440, t + dt); o.frequency.linearRampToValueAtTime(330, t + dt + 0.35);
+        env(g, t + dt, 0.02, 0.07, 0.35);
+        o.connect(f); f.connect(g); wet(g, 0.5); o.start(t + dt); o.stop(t + dt + 0.4);
+      });
+    };
+
+    A.shatter = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(), f = filt('highpass', 3000), g = gain(0.0001, A.sfx);
+      env(g, t, 0.002, 0.3, 0.7);
+      n.connect(f); f.connect(g); wet(g, 0.6); n.start(t, Math.random()); n.stop(t + 0.8);
+      for (let i = 0; i < 14; i++) A.click(t + Math.random() * 0.6, 0.03);
+      A.boom(t + 0.05, 1);
+    };
+
+    // build-up under a celebration: rising filtered noise + saw
+    A.riser = (dur) => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(true), f = filt('bandpass', 300, 1.2), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(250, t); f.frequency.exponentialRampToValueAtTime(4200, t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + dur);
+      n.connect(f); f.connect(g); n.start(t); n.stop(t + dur + 0.05);
+      const o = osc('sawtooth', 70), of = filt('lowpass', 400), og = gain(0.0001, A.sfx);
+      o.frequency.exponentialRampToValueAtTime(220, t + dur);
+      of.frequency.exponentialRampToValueAtTime(2400, t + dur);
+      g.gain.setValueAtTime(0.0001, t); og.gain.setValueAtTime(0.0001, t); og.gain.exponentialRampToValueAtTime(0.06, t + dur);
+      o.connect(of); of.connect(og); o.start(t); o.stop(t + dur + 0.05);
+    };
+
+    // tsunami: a long rising wall of water, then the crash
+    A.tsunami = () => {
+      if (!A.ctx) return;
+      const t = now(), n = noise(true), f = filt('lowpass', 150), g = gain(0.0001, A.sfx);
+      f.frequency.setValueAtTime(150, t); f.frequency.exponentialRampToValueAtTime(3200, t + 1.1); f.frequency.exponentialRampToValueAtTime(400, t + 3.2);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 1.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 3.4);
+      n.connect(f); f.connect(g); wet(g, 0.8); n.start(t); n.stop(t + 3.5);
+      A.boom(t + 1.05, 1.3);
+    };
+
+    // count-up tick, pitched by progress
+    A.tick = (p) => { if (A.ctx) A.bubble(now(), 420 + p * 900, 0.045); };
+
+    A.tierUp = (tier) => {
+      if (!A.ctx) return;
+      const lv = 0.6 + 0.2 * (tier || 1);
+      A.boom(now(), 0.9 * lv);
+      const t = now();
+      [196, 247, 294, 392].forEach((f) => {
+        const o = osc('sawtooth', f * (1 + ((tier || 1) - 1) * 0.059)), fl = filt('lowpass', 1600), g = gain(0.0001, A.sfx);
+        env(g, t, 0.02, 0.035 * lv, 1.6);
+        o.connect(fl); fl.connect(g); wet(g, 0.9); o.start(t); o.stop(t + 1.8);
+      });
+    };
+
+    A.ui = () => { if (A.ctx) A.bubble(now(), 700, 0.05); };
+
+    // celebrations duck the ambience so the music of the win sits on top
+    A.duck = (on) => { if (A.ctx) A.amb.gain.setTargetAtTime(on ? 0.15 : 0.6, now(), 0.3); };
+
+    // horror stab when the creature looks at you (Print Studios-style 'scare' sting)
+    A.scare = () => {
+      if (!A.ctx) return;
+      const t = now();
+      [233, 247, 349, 370, 494].forEach((f) => {
+        const o = osc('sawtooth', f), fl = filt('lowpass', 3200), g = gain(0.0001, A.sfx);
+        env(g, t, 0.005, 0.05, 0.9);
+        o.connect(fl); fl.connect(g); wet(g, 0.8); o.start(t); o.stop(t + 1);
+      });
+      const n = noise(), nf = filt('highpass', 1500), ng = gain(0.0001, A.sfx);
+      env(ng, t, 0.002, 0.25, 0.25);
+      n.connect(nf); nf.connect(ng); n.start(t, Math.random()); n.stop(t + 0.3);
+    };
+
+    A.endSting = (tier) => {
+      if (!A.ctx) return;
+      const t = now();
+      A.boom(t, 0.8 + tier * 0.15);
+      [131, 165, 196, 262, 330].slice(0, 2 + tier).forEach((f, i) => {
+        const o = osc('triangle', f), g = gain(0.0001, A.sfx);
+        env(g, t + i * 0.05, 0.03, 0.05, 2.4);
+        o.connect(g); wet(g, 1); o.start(t + i * 0.05); o.stop(t + i * 0.05 + 2.6);
+      });
+      for (let i = 0; i < 18; i++) A.bubble(t + Math.random() * 1.2, 300 + Math.random() * 900, 0.04);
+    };
+
+    // max win: a held abyssal drone until the player acknowledges it
+    A.maxLoop = (on) => {
+      if (!A.ctx) return;
+      const t = now();
+      if (on && !A.maxNodes) {
+        const g = gain(0.0001, A.sfx), f = filt('lowpass', 500);
+        const os = [osc('sawtooth', 55), osc('sawtooth', 55.6), osc('sine', 27.5)];
+        const lfo = osc('sine', 0.25), lg = gain(220);
+        lfo.connect(lg); lg.connect(f.frequency); lfo.start(t);
+        os.forEach((o) => { o.connect(f); o.start(t); });
+        f.connect(g); wet(g, 0.6);
+        g.gain.setTargetAtTime(0.12, t, 0.8);
+        A.maxNodes = { g, os: os.concat([lfo]) };
+      } else if (!on && A.maxNodes) {
+        const M = A.maxNodes;
+        A.maxNodes = null;
+        M.g.gain.setTargetAtTime(0.0001, t, 0.4);
+        M.os.forEach((o) => o.stop(t + 2));
+      }
+    };
+    return A;
+  }
+
+  get aud() { return this._aud || (this._aud = this.makeAudio()); }
 
   // ---------- connection to the Python engine (slot_engine/api/app.py) ----------
   async fetchRound(bet, feature, dirLevel) {
@@ -363,6 +778,7 @@ class DescentGame extends DCLogic {
     (this.timers || []).forEach((id) => clearTimeout(id));
     clearTimeout(this.autoT);
     if (this.L3) this.L3.renderer.dispose();
+    if (this._aud && this._aud.ctx) { clearInterval(this._aud.ambTimer); this._aud.ctx.close(); }
   }
 
   wait(ms) {
@@ -397,6 +813,8 @@ class DescentGame extends DCLogic {
     const cost = bet * (feature ? D.buys[feature].mult : 1);
     if (s.balance < cost) { if (s.auto) this.setState({ auto: false }); return; }
     this.busy = true;
+    this.aud.init();
+    this.aud.chain(false);
     this.surge = Math.max(this.surge || 0, 0.8);
     this.pingNow = true;
     this.setState({ spinning: true, buyOpen: false, balance: +(s.balance - cost).toFixed(2), win: 0, winLabel: '', winCells: [], dimCells: [], pearls: 0,
@@ -411,9 +829,7 @@ class DescentGame extends DCLogic {
     if (this.dead) return;
     const total = outcome.total_payout;
     this.setState({ balance: +(this.state.balance + total).toFixed(2), win: +total.toFixed(2) });
-    const x = outcome.win_x_base_bet != null ? outcome.win_x_base_bet : total / bet;
-    if (outcome.max_win_capped) await this.showBig('MAX WIN', total, '15,000× BET · THE TRENCH IS EMPTY');
-    else if (x >= 20) await this.showBig(x >= 100 ? 'ABYSSAL WIN' : x >= 50 ? 'MASSIVE WIN' : 'BIG WIN', total, this.fmt(x) + '× BET');
+    await this.celebrate(total, outcome.bet, bet, outcome.max_win_capped);
     if (buy) {
       this.setState({ feat: { show: true, kicker: 'EXPEDITION COMPLETE', title: this.money(total), sub: 'DEEPEST · ' + D.levels[ctx.deepest].name,
         detail: 'RETURNING TO THE SURFACE', color: '#ffd2ad' } });
@@ -433,6 +849,7 @@ class DescentGame extends DCLogic {
     const s = this.state;
     if (s.level !== rest || s.cols !== (rest >= 5 ? 6 : 5)) {
       this.setVis(rest);
+      this.aud.setLevel(rest);
       this.setState({ level: rest, meters: D.levels[rest].m, pts: D.levels[rest].pts, gmult: rest >= 5 ? 2 : 1, vents: [] });
       if (s.cols !== (rest >= 5 ? 6 : 5)) {
         this.engOut();
@@ -458,6 +875,8 @@ class DescentGame extends DCLogic {
         this.setVis(d.depth_level);
         this.setState({ level: d.depth_level, meters: d.depth_meters, pts: d.accumulated_points, banked: d.spins_remaining, free: d.is_free_spin,
           gmult: d.spin_multiplier, vents: [], winCells: [], dimCells: [], creatureState: d.depth_level >= 1 ? 'ARMED' : 'DORMANT' });
+        this.aud.setLevel(d.depth_level);
+        this.aud.sink();
         this.engOut();
         await this.wait(380);
         break;
@@ -468,7 +887,7 @@ class DescentGame extends DCLogic {
         break;
       case 'VENTS_ERUPTED':
         // the engine rolls vents on dead steps too, where they change nothing: only show them when a win follows
-        if (ctx.next && ctx.next.event_type === 'WIN_EVALUATION') { this.showVents(d.active_vents); await this.wait(550); }
+        if (ctx.next && ctx.next.event_type === 'WIN_EVALUATION') { this.showVents(d.active_vents); this.aud.vent(); await this.wait(550); }
         break;
       case 'WIN_EVALUATION': {
         const cells = new Set();
@@ -476,6 +895,7 @@ class DescentGame extends DCLogic {
         const top = d.wins.slice().sort((a, b) => b.payout - a.payout)[0];
         const idx = Array.from(cells);
         this.engHit(idx);
+        this.aud.win(d.step_payout / ctx.bet);
         this.surge = Math.max(this.surge, 1.1);
         ctx.deepest = Math.max(ctx.deepest, d.depth_level);
         this.setState({ winCells: idx, win: +d.cumulative_payout.toFixed(2), pts: d.accumulated_points,
@@ -484,11 +904,13 @@ class DescentGame extends DCLogic {
         break;
       }
       case 'LEVEL_UP': await this.levelUpSeq(d); ctx.deepest = Math.max(ctx.deepest, d.new_level); break;
-      case 'PEARLS_COLLECTED': this.setState({ pearls: d.total_pearls }); await this.wait(300); break;
+      case 'PEARLS_COLLECTED': this.setState({ pearls: d.total_pearls }); this.aud.shimmer(); await this.wait(300); break;
       case 'ULTRA_ASCENSION_ACHIEVED': await this.showFeature('ASCENSION'); ctx.deepest = 5; break;
       case 'CASCADE_DROP':
         this.engDissolve(d.removed_coords.map((rc) => rc[0] * this.state.cols + rc[1]));
+        this.aud.fizz();
         await this.wait(720);
+        this.aud.absorb();
         this.G = d.grid;
         this.engApplyCascade(d);
         this.setState({ winCells: [], vents: [] });
@@ -510,16 +932,20 @@ class DescentGame extends DCLogic {
     }[type];
     if (!F) return;
     if (F.mystery) {
+      this.aud.riser(1.4);
       this.setState({ feat: { show: true, kicker: 'MYSTERY TRENCH · 200×', title: '? ? ?', sub: 'THE TRENCH DECIDES', detail: '60% ABYSSAL DESCENT · 40% LEVIATHAN AWAKENING', color: '#c084fc' } });
       await this.wait(1400);
     }
     this.surge = 1.5;
+    this.aud.roar(1);
+    this.aud.boom(null, 1);
     this.setState({ feat: Object.assign({ show: true }, F) });
     await this.wait(2400);
     this.setState({ feat: Object.assign({}, this.state.feat, { show: false }) });
   }
 
   async expandGrid() {
+    this.aud.shatter();
     this.setState({ shatter: true });
     this.surge = 1.6;
     this.engOut();
@@ -549,6 +975,11 @@ class DescentGame extends DCLogic {
     this.surge = Math.max(this.surge, 1.5);
     this.dive = 1;
     this.setVis(d.new_level);
+    this.aud.setLevel(d.new_level);
+    this.aud.chain(d.new_level >= 4);
+    this.aud.boom(null, 0.7 + d.new_level * 0.08);
+    if (d.new_level >= 4) this.aud.alarm();
+    if (d.new_level === 5) this.aud.roar(1.3);
     this.setState({ level: d.new_level, pts: d.accumulated_points, creatureState: 'ARMED',
       lu: { show: true, meters: this.fmt(from), name: L.name, level: d.new_level, points: d.accumulated_points,
         rewards: rewards.map((text, i) => ({ text, delay: (0.9 + i * 0.22).toFixed(2) })) } });
@@ -595,16 +1026,20 @@ class DescentGame extends DCLogic {
     await this.waitRaw(1100);
     // 2. it dives into the water
     this.spawnWater('splash', sx, sy, zw, zh);
+    this.aud.plunge();
     await this.waitRaw(150);
     this.setState({ levZ: 0, creatureState: 'SUBMERGED' });
     await this.waitRaw(1350);
     // 3. the surface bursts and it breaches out toward the screen
     this.spawnWater('geyser', sx, sy, zw, zh);
+    this.aud.geyser();
+    this.aud.roar(1.1);
     this.splash();
     this.dripOn = true;
     this.setState({ levZ: 6, creatureState: 'BREACHING' });
     await this.waitRaw(600);
     // 4. as it arcs away, the wilds surface from the same water; it leaves in full view, water streaming off its tail
+    this.aud.shimmer();
     for (const t of d.transmuted) {
       this.engTransmute(t.coord[0] * cols + t.coord[1], t.new_symbol, t.multiplier, true);
       await this.waitRaw(70);
@@ -651,21 +1086,267 @@ class DescentGame extends DCLogic {
     for (let j = 0; j < 10; j++) E.parts.push({ k: 'mist', x: R.x + (Math.random() - 0.5) * R.w, y: R.y + (Math.random() - 0.5) * R.h * 0.5, vx: (Math.random() - 0.5) * 120, vy: -60 - Math.random() * 90, r: 40 + Math.random() * 40, gr: 140, life: 1.2 + Math.random() * 0.6, max: 1.8 });
   }
 
-  async showBig(tier, amount, sub) {
-    this.surge = 1.4;
-    this.setState({ big: { show: true, tier, amt: this.money(0), sub } });
-    const t0 = performance.now(), dur = 1800 * (this.state.turbo ? 0.5 : 1);
+  // ---------- big-win celebration (tiers × base bet; only for wins above what was staked) ----------
+  bwLadder() {
+    return [
+      { at: 50, name: 'DEEP WIN', cls: 't1', fx: 'bloom', kicker: 'THE DEEP STIRS' },
+      { at: 100, name: 'CRUSH DEPTH', cls: 't2', fx: 'implode', kicker: 'THE HULL GIVES WAY' },
+      { at: 500, name: 'LEVIATHAN WIN', cls: 't3', fx: 'reveal', kicker: 'IT HAS SEEN YOU' },
+      { at: 1000, name: 'HADAL WIN', cls: 't4', fx: 'tsunami', kicker: 'THE TRENCH ERUPTS' }
+    ];
+  }
+
+  async celebrate(total, stake, baseBet, capped) {
+    if (!(total > stake)) return;                      // a return at or below the stake is never celebrated
+    const D = this.defs();
+    const x = total / baseBet;
+    const isMax = !!capped || x >= D.maxWin;
+    if (x < 50 && !isMax) return;                       // smaller wins keep the inline win chip
+    const L = this.bwLadder();
+    const stops = [0, 50, 100, 500, 1000, D.maxWin];
+    const segDur = [3, 4, 4.5, 5, 6];
+    const k = this.state.turbo ? 0.5 : 1;
+    const segs = [];
+    for (let i = 0; i < stops.length - 1; i++) {
+      const a = stops[i], b = stops[i + 1];
+      if (x <= a) break;
+      const end = Math.min(x, b), frac = (end - a) / (b - a);
+      segs.push({ i, a, b: end, dur: Math.max(1.2, segDur[i] * (end < b ? Math.max(0.35, frac) : 1)) * k });
+    }
+    const A = this.aud;
+    A.init();
+    A.duck(true);
+    this.bwSkip = false;
+    this.bwClose = null;
+    this.bwArmed = false;
+    this.bwFx = { t: 0, parts: [], events: [], tier: 1, max: false };
+    this.timers.push(setTimeout(() => { this.bwArmed = true; }, 500));
+    const pips = (tier) => L.map((p, j) => ({ name: p.name, at: this.fmt(p.at) + '×', cls: j < tier ? 'pip on' : 'pip' }));
+    const view = (tier, v, extra) => {
+      const T = L[Math.min(4, tier) - 1];
+      const m = Math.min(11000, v * 10);
+      return Object.assign({ show: true, cls: T.cls, title: T.name, kicker: T.kicker, titleAnim: 'a' + tier,
+        amount: this.money(v * baseBet), xStr: this.fmt(v) + '× BET', meters: this.fmt(m) + (m >= 11000 ? ' M · THE FLOOR' : ' M'),
+        depthPct: (Math.min(1, v / 1100) * 100).toFixed(1), pips: pips(tier), hint: 'TAP TO SKIP', punch: this.state.bw.punch, jit: '' }, extra || {});
+    };
+    const enterTier = (tier) => {
+      const T = L[tier - 1];
+      this.bwFx.tier = tier;
+      this.bwFx.events.push({ kind: T.fx, t: 0 });
+      A.tierUp(tier);
+      if (tier === 2) { A.creak(); A.chain(false); }
+      if (tier === 3) { A.scare(); A.roar(1.2); this.levFly(); this.setState({ shake: 'shake' }); this.timers.push(setTimeout(() => this.setState({ shake: '' }), 500)); }
+      if (tier === 4) { A.tsunami(); A.roar(1.4); }
+      this.setState({ levZ: tier >= 3 ? 9 : this.state.levZ, bw: Object.assign({}, this.state.bw, { punch: this.state.bw.punch === 'pa' ? 'pb' : 'pa' }) });
+    };
+    this.setState({ bw: view(1, 0, { punch: 'pa' }) });
+    enterTier(1);
+    let tier = 1, v = 0;
+    for (const sg of segs) {
+      if (this.dead) return;
+      const st = Math.max(1, sg.i);
+      if (st > tier) { tier = st; enterTier(tier); }
+      if (this.bwSkip) break;
+      if (sg.dur > 1.5) A.riser(sg.dur);
+      const t0 = performance.now();
+      let lastTick = 0;
+      await new Promise((res) => {
+        const step = () => {
+          if (this.dead) return res();
+          const p = Math.min(1, (performance.now() - t0) / (sg.dur * 1000));
+          const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+          v = sg.a + (sg.b - sg.a) * e;
+          if (performance.now() - lastTick > 90) { lastTick = performance.now(); A.tick(Math.min(1, v / Math.max(x, 1))); }
+          this.setState({ bw: view(tier, v, { jit: p > 0.6 ? 'jit' : '', punch: this.state.bw.punch }) });
+          if (p >= 1 || this.bwSkip) res(); else requestAnimationFrame(step);
+        };
+        step();
+      });
+      if (this.bwSkip) break;
+    }
+    // skipped: jump to the final amount and the final tier
+    const finalTier = segs.length ? Math.max(1, Math.min(4, segs[segs.length - 1].i)) : 1;
+    if (finalTier > tier) { tier = finalTier; enterTier(tier); }
+    v = x;
+    if (isMax) {
+      this.bwFx.max = true;
+      this.bwFx.events.push({ kind: 'max', t: 0 });
+      A.maxLoop(true);
+      this.levFly();
+      this.setState({ levZ: 9, bw: view(4, D.maxWin, { cls: 'max', title: 'THE ABYSS', kicker: 'MAXIMUM WIN', titleAnim: 'amax', xStr: this.fmt(D.maxWin) + '× BET · THE ROUND ENDS', hint: 'TAP TO CONTINUE', jit: '', pips: pips(4) }) });
+    } else {
+      A.endSting(tier);
+      this.setState({ bw: view(tier, v, { hint: 'TAP TO CONTINUE', jit: '' }) });
+    }
+    // hold: tap closes (after 1 s); auto-close after 5 s, except max win which waits for the player
+    const endAt = performance.now();
     await new Promise((res) => {
-      const tick = () => {
-        if (this.dead) return res();
-        const k = Math.min(1, (performance.now() - t0) / dur);
-        this.setState({ big: Object.assign({}, this.state.big, { amt: this.money(amount * (1 - Math.pow(1 - k, 2))) }) });
-        if (k < 1) requestAnimationFrame(tick); else res();
-      };
-      tick();
+      this.bwClose = () => { if (performance.now() - endAt > 1000 || this.bwSkip) res(); };
+      this.bwSkip = false;
+      if (!isMax) this.timers.push(setTimeout(res, 5000));
     });
-    await this.wait(1300);
-    this.setState({ big: Object.assign({}, this.state.big, { show: false }) });
+    this.bwClose = null;
+    A.maxLoop(false);
+    A.duck(false);
+    this.bwFx = null;
+    this.setState({ levZ: 0, shake: '', bw: Object.assign({}, this.state.bw, { show: false }) });
+    await this.wait(250);
+  }
+
+  onBigWinTap() {
+    if (!this.bwArmed) return;
+    if (this.bwClose) this.bwClose();
+    else this.bwSkip = true;
+  }
+
+  // the Leviathan swims across behind the counter
+  levFly() {
+    this.isStriking = true;
+    this.strikeAnim = { u0: this.levT || 0, dur: 9, kind: 'fly' };
+    this.timers.push(setTimeout(() => { this.isStriking = false; }, 4700));
+  }
+
+  // full-screen celebration effects, drawn above everything while a big win is up
+  bwFrame(dt) {
+    if (!this.bwCanvas || !this.bwCanvas.isConnected) this.bwCanvas = document.querySelector('canvas[data-bwfx]');
+    const c = this.bwCanvas;
+    if (!c) return;
+    const g = c.getContext('2d');
+    const W = c.width, H = c.height;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, W, H);
+    const B = this.bwFx;
+    if (!B) return;
+    B.t += dt;
+    const cx = W * 0.47, cy = H * 0.46;
+    const tierCol = [[63, 245, 255], [63, 245, 255], [255, 122, 26], [255, 42, 75], [150, 220, 255]][B.tier] || [63, 245, 255];
+    const rgba = (cl, a) => 'rgba(' + cl[0] + ',' + cl[1] + ',' + cl[2] + ',' + Math.max(0, a) + ')';
+    // bubble / plankton bed rising behind everything, denser per tier
+    for (let i = 0; i < 1 + B.tier; i++) {
+      if (Math.random() < 0.3) B.parts.push({ k: 'b', x: Math.random() * W, y: H + 10, vy: -(60 + Math.random() * 160) * (1 + B.tier * 0.2), r: 1.5 + Math.random() * (2 + B.tier * 0.8), w: Math.random() * 6.28, life: 7, max: 7 });
+    }
+    g.globalCompositeOperation = 'lighter';
+    // bloom behind the counter, pulsing
+    const pulse = 0.5 + 0.5 * Math.sin(B.t * 3);
+    const bl = g.createRadialGradient(cx, cy, 0, cx, cy, 520);
+    bl.addColorStop(0, rgba(tierCol, 0.16 + 0.08 * pulse));
+    bl.addColorStop(1, rgba(tierCol, 0));
+    g.fillStyle = bl;
+    g.fillRect(cx - 520, cy - 520, 1040, 1040);
+    for (let j = B.parts.length - 1; j >= 0; j--) {
+      const p = B.parts[j];
+      p.life -= dt;
+      if (p.life <= 0 || p.y < -20) { B.parts.splice(j, 1); continue; }
+      if (p.k === 'b') {
+        p.w += dt * 2; p.y += p.vy * dt; p.x += Math.sin(p.w) * 30 * dt;
+        g.fillStyle = rgba(tierCol, 0.5 * Math.min(1, p.life));
+        g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.2832); g.fill();
+      } else if (p.k === 's') {
+        p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 600 * dt;
+        g.fillStyle = rgba(p.c, Math.min(1, p.life * 1.5));
+        g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.2832); g.fill();
+      }
+    }
+    if (B.parts.length > 1200) B.parts.splice(0, B.parts.length - 1200);
+    for (let j = B.events.length - 1; j >= 0; j--) {
+      const E = B.events[j];
+      E.t += dt;
+      const t = E.t;
+      if (E.kind === 'bloom' && t < 1.6) {
+        // the deep lights up: rings of bioluminescence open outward
+        for (let r = 0; r < 3; r++) {
+          const u = Math.min(1, (t - r * 0.18) / 1.2);
+          if (u <= 0) continue;
+          g.strokeStyle = rgba([63, 245, 255], 0.5 * (1 - u));
+          g.lineWidth = 3;
+          g.beginPath(); g.arc(cx, cy, 80 + u * 700, 0, 6.2832); g.stroke();
+        }
+      } else if (E.kind === 'implode' && t < 1.8) {
+        // pressure implosion: rings crush inward, then the shockwave bursts out of the counter
+        if (t < 0.5) {
+          const u = t / 0.5;
+          for (let r = 0; r < 3; r++) {
+            g.strokeStyle = rgba([255, 122, 26], 0.45 * u);
+            g.lineWidth = 6;
+            g.beginPath(); g.arc(cx, cy, (1 - u) * (1100 - r * 160) + 60, 0, 6.2832); g.stroke();
+          }
+        } else {
+          const u = (t - 0.5) / 1.3;
+          g.strokeStyle = rgba([255, 200, 140], 0.9 * (1 - u));
+          g.lineWidth = 40 * (1 - u) + 2;
+          g.beginPath(); g.arc(cx, cy, 40 + u * 1300, 0, 6.2832); g.stroke();
+          g.fillStyle = rgba([255, 140, 40], 0.25 * (1 - u));
+          g.fillRect(0, 0, W, H);
+          if (!E.sparked) {
+            E.sparked = true;
+            for (let i = 0; i < 160; i++) { const a = Math.random() * 6.283, sp = 300 + Math.random() * 1100; B.parts.push({ k: 's', x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, r: 2 + Math.random() * 3, c: [255, 160, 60], life: 1.2, max: 1.2 }); }
+          }
+        }
+      } else if (E.kind === 'reveal' && t < 3.2) {
+        // it opens its eyes above the title
+        if (t < 0.15) { g.fillStyle = 'rgba(255,30,50,0.35)'; g.fillRect(0, 0, W, H); }
+        const a = t < 0.6 ? t / 0.6 : t > 2.4 ? Math.max(0, (3.2 - t) / 0.8) : 1;
+        const blink = Math.abs(Math.sin(t * 1.3)) < 0.06 ? 0.1 : 1;
+        for (const ex of [cx - 170, cx + 170]) {
+          const eg = g.createRadialGradient(ex, 170, 0, ex, 170, 150);
+          eg.addColorStop(0, 'rgba(255,170,90,' + 0.9 * a + ')');
+          eg.addColorStop(0.2, 'rgba(255,60,30,' + 0.5 * a + ')');
+          eg.addColorStop(1, 'rgba(255,40,20,0)');
+          g.fillStyle = eg;
+          g.fillRect(ex - 150, 20, 300, 300);
+          g.fillStyle = 'rgba(20,0,0,' + a * 0.9 + ')';
+          g.beginPath(); g.ellipse(ex, 170, 8, 34 * blink, 0, 0, 6.2832); g.fill();
+        }
+      } else if (E.kind === 'tsunami' && t < 3) {
+        // a wall of water sweeps across the screen, crest foaming, then drains away
+        const sweep = Math.min(1, t / 0.9);
+        const front = -W * 0.25 + sweep * W * 1.5;
+        const drain = t > 1.2 ? Math.max(0, 1 - (t - 1.2) / 1.6) : 1;
+        g.globalCompositeOperation = 'source-over';
+        g.beginPath();
+        g.moveTo(-10, H + 10);
+        for (let y = H + 10; y >= -10; y -= 20) {
+          const curl = y < H * 0.4 ? Math.pow((H * 0.4 - y) / (H * 0.4), 2) * 260 : 0;
+          g.lineTo(front + Math.sin(y * 0.012 + t * 6) * 60 + curl, y);
+        }
+        g.lineTo(-10, -10);
+        g.closePath();
+        const wg = g.createLinearGradient(front - 900, 0, front, 0);
+        wg.addColorStop(0, 'rgba(2,20,40,' + 0.82 * drain + ')');
+        wg.addColorStop(0.85, 'rgba(10,70,110,' + 0.7 * drain + ')');
+        wg.addColorStop(1, 'rgba(120,210,240,' + 0.6 * drain + ')');
+        g.fillStyle = wg;
+        g.fill();
+        // caustic light dancing through the water
+        g.globalCompositeOperation = 'lighter';
+        g.strokeStyle = 'rgba(140,230,255,' + 0.08 * drain + ')';
+        g.lineWidth = 2;
+        for (let i = 0; i < 14; i++) {
+          g.beginPath();
+          for (let xx = -20; xx < Math.min(W, front); xx += 40) {
+            const yy = (i / 14) * H + Math.sin(xx * 0.01 + t * 2 + i) * 30;
+            if (xx === -20) g.moveTo(xx, yy); else g.lineTo(xx, yy);
+          }
+          g.stroke();
+        }
+        if (sweep < 1) {
+          for (let i = 0; i < 18; i++) {
+            const yy = Math.random() * H, curl = yy < H * 0.4 ? Math.pow((H * 0.4 - yy) / (H * 0.4), 2) * 260 : 0;
+            B.parts.push({ k: 's', x: front + curl + Math.sin(yy * 0.012 + t * 6) * 60, y: yy, vx: 200 + Math.random() * 600, vy: -300 - Math.random() * 600, r: 2 + Math.random() * 4, c: [220, 245, 255], life: 0.9, max: 0.9 });
+          }
+        }
+        if (!E.geyser && t > 0.9) { E.geyser = true; this.spawnWater('geyser', cx, cy + 120, 520, 240); }
+      } else if (E.kind === 'max') {
+        // crimson pressure rings pulse out of the abyss for as long as the screen is up
+        const u = (t % 1.6) / 1.6;
+        g.strokeStyle = rgba([255, 42, 75], 0.5 * (1 - u));
+        g.lineWidth = 4;
+        g.beginPath(); g.arc(cx, cy, 120 + u * 900, 0, 6.2832); g.stroke();
+      } else if (E.kind !== 'max' && t > 3.2) {
+        B.events.splice(j, 1);
+      }
+    }
+    g.globalCompositeOperation = 'source-over';
   }
 
   // ---------- Director (preview tools, not part of the game) ----------
@@ -675,6 +1356,8 @@ class DescentGame extends DCLogic {
     const D = this.defs();
     const cols = n >= 5 ? 6 : 5;
     this.setVis(n);
+    this.aud.setLevel(n);
+    this.aud.sink();
     this.setState({ dirLevel: n, level: n, meters: D.levels[n].m, pts: D.levels[n].pts, gmult: n >= 5 ? 2 : 1, vents: [], creatureState: n >= 1 ? 'ARMED' : 'DORMANT' });
     this.engOut();
     await this.wait(380);
@@ -726,8 +1409,9 @@ class DescentGame extends DCLogic {
     if (this.busy) return;
     this.busy = true;
     const bet = this.defs().bets[this.state.betIdx];
-    const x = [24, 63, 180][Math.floor(Math.random() * 3)];
-    await this.showBig(x >= 100 ? 'ABYSSAL WIN' : x >= 50 ? 'MASSIVE WIN' : 'BIG WIN', bet * x, x + '× BET');
+    const demo = [68, 214, 742, 1880, 15000];
+    const x = demo[(this.bwDemo = ((this.bwDemo === undefined ? -1 : this.bwDemo) + 1) % demo.length)];
+    await this.celebrate(bet * x, bet, bet, x >= 15000);
     this.busy = false;
   }
 
@@ -1054,6 +1738,7 @@ void main(){
           if (!c.landed) {
             c.landed = true;
             c.squash = 1;
+            this.aud.land();
             this.burst(c.x, c.y0, 'puff');
             const sy = D.sym[c.sym];
             if (sy.wild) { c.flash = 1; this.burst(c.x, c.y0, 'glint'); }
@@ -1463,7 +2148,13 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     const S = this.strikeAnim;
     if (S) {
       const k = (u - S.u0) / S.dur;
-      if (k > 0 && k < 1) {
+      if (S.kind === 'fly' && k > 0 && k < 1) {
+        const sm = (e) => e * e * (3 - 2 * e);
+        const p = [-1250 + 2500 * k, 60 * Math.sin(k * Math.PI * 2) - 20, -260 + 480 * Math.sin(k * Math.PI)];
+        const w = k < 0.12 ? sm(k / 0.12) : k > 0.88 ? sm((1 - k) / 0.12) : 1;
+        return [x + (p[0] - x) * w, y + (p[1] - y) * w, z + (p[2] - z) * w];
+      }
+      if (S.kind !== 'fly' && k > 0 && k < 1) {
         const sm = (e) => e * e * (3 - 2 * e);
         const lerp3 = (a, b, e) => [a[0] + (b[0] - a[0]) * e, a[1] + (b[1] - a[1]) * e, a[2] + (b[2] - a[2]) * e];
         const A = [S.x + 60, S.y + 70, 220], B = [S.x, S.y - 10, -1000], C = [S.x - 40, S.y - 40, -1500], Dp = [S.x, S.y + 20, 320];
@@ -1687,9 +2378,15 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
 
       // sonar pings from the creature
       const hd = lev ? lev.head : { x: W * 0.75, y: H * 0.5 };
+      if (lev && this._aud) {
+        const pv = this.prevHead || hd, sp = Math.hypot(hd.x - pv.x, hd.y - pv.y) / Math.max(dt, 0.001);
+        this._aud.swim(Math.min(1, sp / 700) * (0.25 + 0.75 * lev.reveal));
+      }
+      this.prevHead = { x: hd.x, y: hd.y };
       pingT -= dt;
       if (pingT <= 0 || this.pingNow) {
         pings.push({ x: hd.x, y: hd.y, r: 10, a: 1 });
+        if (this._aud) this._aud.ping();
         pingT = 5 + Math.random() * 3;
         this.pingNow = false;
       }
@@ -1786,6 +2483,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       }
 
       this.symFrame(dt);
+      this.bwFrame(dt);
 
       radarT -= dt;
       if (radarT <= 0) {
@@ -2050,7 +2748,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
         this.setState({ xbet: !this.state.xbet });
         this.timers.push(setTimeout(() => { if (!this.busy) this.restToIdle(); }, 50));
       },
-      onOpenBuy: () => { if (!this.busy) this.setState({ buyOpen: true }); },
+      onOpenBuy: () => { if (!this.busy) { this.aud.init(); this.aud.ui(); this.setState({ buyOpen: true }); } },
       onCloseBuy: () => this.setState({ buyOpen: false }),
       buyOpen: s.buyOpen,
       buyCards: [
@@ -2063,7 +2761,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
         buyCard('ULTRA_BONUS_350X', 'LEVIATHAN AWAKENING', '#ff2a4b', 'rgba(255,42,75,0.22)',
           'Breach the Core at 11,000 m. The viewport shatters into a 6×5 grid (15,625 ways). 8 free spins, every low rune purged, 2× global multiplier.')
       ],
-      lu: s.lu, feat: s.feat, big: s.big, shatter: s.shatter,
+      lu: s.lu, feat: s.feat, bw: s.bw, shake: s.shake, onBigWinTap: () => this.onBigWinTap(), shatter: s.shatter,
       onMove: (e) => {
         const c = this.E ? this.E.c : document.querySelector('canvas[data-sym]');
         if (!c) return;
@@ -2071,13 +2769,17 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
         if (!r.width) return;
         this.mouse = { x: (e.clientX - r.left) / r.width * c.width, y: (e.clientY - r.top) / r.height * c.height, t: performance.now() };
       },
-      onLeave: () => { this.mouse = null; }
+      onLeave: () => { this.mouse = null; },
+      onFirstTouch: () => this.aud.init(),
+      soundCls: this.state.muted ? '' : 'on',
+      soundAria: this.state.muted ? 'Sound off, turn on' : 'Sound on, turn off',
+      onSound: () => { const m = !this.state.muted; this.aud.init(); this.aud.setMuted(m); this.setState({ muted: m }); }
     };
   }
 }
 
 function template($v) {
-  return html`<div class="hud" style="position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000307; --a: ${$v.accentRgb}" onPointerMove=${$v.onMove} onPointerLeave=${$v.onLeave}>
+  return html`<div class="hud ${$v.shake}" style="position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000307; --a: ${$v.accentRgb}" onPointerMove=${$v.onMove} onPointerLeave=${$v.onLeave} onPointerDown=${$v.onFirstTouch}>
 
 <canvas data-lev="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none"></canvas>
 <canvas data-lev3d="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: ${$v.levZ}"></canvas>
@@ -2104,7 +2806,7 @@ ${($v.dirLevels || []).map((dl, $index) => html`<button class=${dl.cls} aria-lab
 </div>
 ` : null}
 <div style="display: flex; gap: 10px">
-<button class="ibtn" aria-label="Sound"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"></path><path d="M16.5 9a4 4 0 0 1 0 6"></path><path d="M19 6a8 8 0 0 1 0 12"></path></svg></button>
+<button class="ibtn ${$v.soundCls}" aria-label=${$v.soundAria} onClick=${$v.onSound}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"></path><path d="M16.5 9a4 4 0 0 1 0 6"></path><path d="M19 6a8 8 0 0 1 0 12"></path></svg></button>
 <button class="ibtn" aria-label="Game rules"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7.5v.5"></path></svg></button>
 <button class="ibtn" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg></button>
 </div>
@@ -2281,17 +2983,26 @@ ${$v.feat.show ? html`
 </div>
 ` : null}
 
-${$v.big.show ? html`
-<div class="ov lu big">
-<div class="flash"></div>
-<div class="card">
-<span class="tier">${$v.big.tier}</span>
-<span class="amt">${$v.big.amt}</span>
-<span class="lbl" style="font-size: 15px">${$v.big.sub}</span>
+${$v.bw.show ? html`<div class="bwback ${$v.bw.cls}"></div>` : null}
+${$v.bw.show ? html`
+<div class="bwfront ${$v.bw.cls}" onClick=${$v.onBigWinTap}>
+<div class="bwcol">
+<span class="bwkicker">${$v.bw.kicker}</span>
+<span class="bwtitle ${$v.bw.titleAnim}">${$v.bw.title}</span>
+<span class="bwamt ${$v.bw.punch} ${$v.bw.jit}">${$v.bw.amount}</span>
+<span class="bwx">${$v.bw.xStr}</span>
+<div style="display: flex; gap: 10px; margin-top: 22px">
+${($v.bw.pips || []).map((p, $index) => html`<div class=${p.cls}><span>${p.name}</span><span class="mono">${p.at}</span></div>`)}
+</div>
+<span class="bwhint">${$v.bw.hint}</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<span class="lbl" style="font-size: 11px">Depth of win</span>
+<div class="bwgauge"><div class="bwfill" style="height: ${$v.bw.depthPct}%"></div></div>
+<span class="mono" style="font-size: 16px; color: #e6fbff">${$v.bw.meters}</span>
 </div>
 </div>
 ` : null}
-
 ${$v.shatter ? html`<div class="shatter"></div>` : null}
 
 ${$v.buyOpen ? html`
@@ -2318,6 +3029,7 @@ ${($v.buyCards || []).map((b, $index) => html`
 </div>
 ` : null}
 
+<canvas data-bwfx="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: 11"></canvas>
 </div>`;
 }
 
