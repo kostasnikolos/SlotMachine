@@ -29,21 +29,36 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .dot.warn{background:#ff7a1a;box-shadow:0 0 10px #ff7a1a}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .frame{position:absolute;box-sizing:border-box;border:1px solid rgba(var(--a),.22);border-radius:16px;background:rgba(0,2,5,.34);box-shadow:0 0 0 1px rgba(0,0,0,.7),0 0 26px rgba(var(--a),.08),inset 0 0 90px rgba(0,0,0,.75);transition:left .7s cubic-bezier(.2,.8,.2,1),width .7s cubic-bezier(.2,.8,.2,1)}
-.cell{position:relative;border-radius:8px;background:rgba(0,4,8,.42);border:1px solid rgba(var(--a),.07);backdrop-filter:blur(2px);transition:opacity .25s,border-color .25s,box-shadow .25s}
-.cell::after{content:'';position:absolute;inset:0;border-radius:8px;background:linear-gradient(180deg,rgba(var(--a),.03),rgba(var(--a),0) 45%);pointer-events:none}
-.cell.win{border-color:rgba(255,122,26,.95);box-shadow:0 0 26px rgba(255,122,26,.5),inset 0 0 34px rgba(255,122,26,.28);animation:winp 1.1s ease-in-out infinite}
-@keyframes winp{0%,100%{box-shadow:0 0 18px rgba(255,122,26,.35),inset 0 0 24px rgba(255,122,26,.18)}50%{box-shadow:0 0 34px rgba(255,122,26,.7),inset 0 0 40px rgba(255,122,26,.38)}}
+.cell{position:relative;border-radius:50%;background:radial-gradient(circle,rgba(0,3,7,.7) 0,rgba(0,3,7,.7) 44%,rgba(var(--a),.06) 46%,rgba(0,3,7,0) 58%);transition:opacity .25s}
+.cell.win{background:radial-gradient(circle,rgba(255,122,26,.34) 0,rgba(255,122,26,.16) 48%,rgba(255,122,26,0) 70%);animation:winp 1.1s ease-in-out infinite}
+@keyframes winp{0%,100%{opacity:.7}50%{opacity:1}}
 .cell.dim{opacity:.32}
+/* one continuous body of water behind all symbols (WebGL, see wbgFrame); the circular .cell sockets above are only the no-WebGL fallback */
+.wbg{position:absolute;left:-19px;top:-19px;width:calc(100% + 38px);height:calc(100% + 38px);border-radius:15px;pointer-events:none}
+.frame>.c,.frame>.chip{z-index:3}
 .chip{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 16px;border-radius:999px;background:#010306;border:1px solid rgba(var(--a),.2);font-size:11px;letter-spacing:.3em;color:#8fb3bf}
 .chip.free{border-color:#ff7a1a;color:#ffd2ad;box-shadow:0 0 22px rgba(255,122,26,.35)}
 .vent{position:absolute;bottom:-17px;transform:translateX(-50%);padding:5px 12px;border-radius:8px;background:#1a0700;border:1px solid #ff7a1a;color:#ffd2ad;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;box-shadow:0 0 24px rgba(255,122,26,.7);animation:ventin .45s cubic-bezier(.2,1.6,.4,1)}
 @keyframes ventin{from{transform:translateX(-50%) scale(.2);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
-.strike{position:absolute;z-index:7;box-sizing:border-box;border-radius:10px;border:2px solid #ff7a1a;box-shadow:0 0 40px rgba(255,122,26,.8),inset 0 0 40px rgba(255,122,26,.45);animation:strikein .5s cubic-bezier(.2,1.4,.4,1),strikep .5s ease-in-out .5s infinite alternate;pointer-events:none}
-@keyframes strikein{from{transform:scale(1.6);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes strikep{to{box-shadow:0 0 70px rgba(255,122,26,1),inset 0 0 60px rgba(255,122,26,.6)}}
-.strikecard{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 14px);white-space:nowrap;text-align:center;padding:10px 20px;border-radius:12px;background:rgba(14,4,0,.92);border:1px solid #ff7a1a;box-shadow:0 0 30px rgba(255,122,26,.5);animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
-/* strikes in the top row show their card under the zone */
-.strikecard.below{bottom:auto;top:calc(100% + 14px)}
+/* lifeline / undertow telegraph: no boxes. The zone is shown on the reels themselves (shader pulse, shadow, water);
+   only a whispered name drifts up out of the dark beside it */
+.strike{position:absolute;z-index:7;pointer-events:none}
+.whisper{position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);white-space:nowrap;text-align:center;pointer-events:none;transition:opacity .7s ease,filter .7s ease,transform .9s cubic-bezier(.3,.7,.3,1)}
+/* strikes in the top row whisper under the zone */
+.whisper.below{bottom:auto;top:calc(100% + 2px)}
+.whisper.gone{opacity:0;filter:blur(10px);transform:translateX(-50%) translateY(18px) scale(1.12)}
+/* zones at the grid's edges keep their name over the reels instead of spilling out of the frame */
+.whisper.al{left:0;transform:none}
+.whisper.ar{left:auto;right:0;transform:none}
+.whisper.al.gone,.whisper.ar.gone{transform:translateY(18px) scale(1.12)}
+.whisper .wk{font-size:11px;letter-spacing:.62em;color:rgba(150,190,185,.55);text-shadow:0 0 10px #000,0 0 3px #000;opacity:0;animation:wkin 1.6s ease .15s forwards}
+.whisper .wn{font-size:34px;font-weight:600;line-height:1.15;letter-spacing:.34em;color:#dbe8e4;text-shadow:0 0 22px rgba(0,0,0,1),0 0 6px rgba(0,0,0,1),0 0 30px rgba(110,255,215,.18);animation:wflick 4.2s steps(1) 1.6s infinite}
+.whisper .wn span{display:inline-block;white-space:pre;opacity:0;animation:wlet 1.25s cubic-bezier(.2,.7,.2,1) forwards}
+.whisper .wb{font-size:12px;font-style:italic;letter-spacing:.32em;color:rgba(170,205,198,.62);text-shadow:0 0 12px #000,0 0 3px #000;opacity:0;animation:wkin 1.8s ease .9s forwards}
+.whisper.ut .wn{font-size:26px;letter-spacing:.5em;color:#b9cfca;text-shadow:0 0 18px #000,0 0 5px #000,0 0 26px rgba(90,140,120,.25)}
+@keyframes wlet{0%{opacity:0;filter:blur(12px);transform:translateY(10px) scale(1.4)}55%{opacity:.85}100%{opacity:1;filter:blur(0);transform:none}}
+@keyframes wkin{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:blur(0)}}
+@keyframes wflick{0%,100%{opacity:1}31%{opacity:.55}33%{opacity:1}71%{opacity:.8}72%{opacity:.35}74%{opacity:1}}
 @keyframes cardin{from{transform:translateX(-50%) translateY(12px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
 .sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(var(--a),0) 0deg,rgba(var(--a),0) 270deg,rgba(var(--a),.38) 359deg,rgba(var(--a),0) 360deg);animation:rot 4s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
@@ -212,14 +227,15 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <div style="display: grid; grid-template-columns: repeat({{cols}}, minmax(0, 1fr)); grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 8px; width: {{gridW}}px; height: 772px">
 <sc-for list="{{slots}}" as="sl" hint-placeholder-count="25"><div class="{{sl.cls}}"></div></sc-for>
 </div>
+<canvas data-wbg="1" class="wbg" width="810" height="810" aria-hidden="true"></canvas>
 <canvas data-sym="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: 772px; pointer-events: none"></canvas>
 <canvas data-fx="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: 772px; pointer-events: none"></canvas>
 <sc-if value="{{strike.show}}" hint-placeholder-val="{{ false }}">
 <div class="strike" style="left: {{strike.x}}px; top: {{strike.y}}px; width: {{strike.w}}px; height: {{strike.h}}px">
-<div class="strikecard {{strike.cardCls}}">
-<div style="font-size: 12px; letter-spacing: 0.3em; color: #ffb27a">LEVIATHAN LIFELINE</div>
-<div style="font-size: 24px; font-weight: 700; letter-spacing: 0.14em; color: #fff">{{strike.name}}</div>
-<div style="font-size: 13px; letter-spacing: 0.12em; color: #ffd2ad">{{strike.blurb}}</div>
+<div class="whisper {{strike.cardCls}}">
+<div class="wk">{{strike.kicker}}</div>
+<div class="wn"><sc-for list="{{strike.letters}}" as="l" hint-placeholder-count="12"><span style="animation-delay: {{l.d}}s">{{l.ch}}</span></sc-for></div>
+<div class="wb">{{strike.blurb}}</div>
 </div>
 </div>
 </sc-if>
@@ -322,16 +338,10 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </sc-if>
 
 <sc-if value="{{ut.show}}" hint-placeholder-val="{{ false }}">
-<div style="position: absolute; left: {{ut.x}}px; top: {{ut.y}}px; width: {{ut.w}}px; height: {{ut.h}}px; z-index: 3; pointer-events: none">
-<div style="position: absolute; inset: -6px; border-radius: 14px; border: 2px solid rgba(90,150,165,0.5); box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,10,16,0.85)"></div>
-<div style="position: absolute; inset: 0; border-radius: 10px; overflow: hidden">
-<div style="position: absolute; left: 0; right: 0; bottom: 0; height: {{ut.waterH}}%; opacity: {{ut.waterOp}}; transition: height {{ut.waterT}} cubic-bezier(.3,.7,.3,1), opacity 0.6s ease; background: linear-gradient(to top, rgba(0,8,14,0.94), rgba(4,30,42,0.82)); border-top: 2px solid rgba(120,170,180,0.45); box-shadow: 0 -6px 18px rgba(0,0,0,0.7)"></div>
-<div style="position: absolute; inset: 0; opacity: {{ut.foamOp}}; transition: opacity 0.5s ease; background: radial-gradient(ellipse at 30% 40%, rgba(150,170,170,0.55), rgba(70,90,95,0.32) 55%, rgba(20,34,40,0.2)), radial-gradient(ellipse at 75% 65%, rgba(170,185,185,0.4), rgba(120,140,140,0) 60%)"></div>
-<sc-for list="{{ut.blobs}}" as="b" hint-placeholder-count="18"><div style="position: absolute; left: {{b.x}}%; top: {{b.y}}%; width: {{b.s}}px; height: {{b.s}}px; margin-left: -{{b.m}}px; margin-top: -{{b.m}}px; border-radius: 50%; background: radial-gradient(circle at 38% 34%, rgba(200,212,210,0.75), rgba(130,150,150,0.6) 30%, rgba(60,78,82,0.4) 55%, rgba(170,185,185,0.5) 64%, rgba(80,100,104,0) 71%); transform: scale({{ut.foamK}}); opacity: {{ut.foamOp}}; transition: transform 0.55s cubic-bezier(.2,1.4,.4,1) {{b.d}}s, opacity 0.5s ease {{b.d}}s"></div></sc-for>
-</div>
-<div style="position: absolute; left: 50%; top: {{ut.cardTop}}px; transform: translateX(-50%); white-space: nowrap; text-align: center; padding: 8px 18px; border-radius: 12px; background: rgba(0,4,8,0.95); border: 1px solid rgba(110,160,170,0.45); box-shadow: 0 0 26px rgba(0,0,0,0.9)">
-<div style="font-size: 20px; font-weight: 700; letter-spacing: 0.3em; color: #eafcff">{{ut.title}}</div>
-<div style="font-size: 12px; letter-spacing: 0.16em; color: #a9e9f5">{{ut.sub}}</div>
+<div class="strike" style="left: {{ut.x}}px; top: {{ut.y}}px; width: {{ut.w}}px; height: {{ut.h}}px; z-index: 3">
+<div class="whisper ut {{ut.cls}}">
+<div class="wn"><sc-for list="{{ut.letters}}" as="l" hint-placeholder-count="8"><span style="animation-delay: {{l.d}}s">{{l.ch}}</span></sc-for></div>
+<div class="wb">{{ut.sub}}</div>
 </div>
 </div>
 </sc-if>
@@ -445,7 +455,7 @@ class Component extends DCLogic {
     return {
       grid: g, cols: 5, level: 0, meters: 0, pts: 0, banked: 0, free: false, inFeature: false, gmult: 1, pearls: 0,
       balance: 1000, betIdx: 2, win: 0, winLabel: '', winCells: [], dimCells: [], vents: [],
-      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '' }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s',
+      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', kicker: '', letters: [], cardCls: '' }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s',
       lu: { show: false, meters: '0', name: '', level: 0, points: 0, rewards: [] },
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
       bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '' }, shake: '', shatter: false, buyOpen: false,
@@ -1718,10 +1728,14 @@ class Component extends DCLogic {
     this.surge = 1.2;
     this.engDim(others, true);
     this.levStrike(r0 + h / 2, c0 + w / 2);
-    // 1. it swims in over the reels to the strike zone; the water there starts to churn
+    // 1. it swims in over the reels to the strike zone; the water there starts to churn, its shadow pools over the
+    //    chosen symbols and they start to tremble and glow from within (no box: see levTelegraph / featStep / featFx)
     if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: 4.3, splashed: false };
+    this.levTelegraph(foot, px, py, w, h, cols);
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
-      strike: { show: true, x: c0 * 156, y: r0 * 156, w: w * 156 - 8, h: h * 156 - 8, name: C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '' } });
+      strike: { show: true, x: c0 * 156, y: r0 * 156, w: w * 156 - 8, h: h * 156 - 8, name: C.name, blurb: C.blurb,
+        kicker: 'SOMETHING RISES', letters: this.whisperLetters(C.name, 0.35, 0.075),
+        cardCls: (r0 === 0 ? 'below' : '') + this.whisperAlign(c0, w, cols, C.name.length * 34) } });
     await this.waitK(0.16);
     // 2. it rears over the cells and its jaws gape open
     this.levSfx('jawOpen') || this.levSfx('roar', 0.8);
@@ -1730,7 +1744,8 @@ class Component extends DCLogic {
     await this.waitK(0.34);
     this.levSfx('chomp') || this.levSfx('boom');
     this.levBite(foot, px, py, w, h, sx, sy, zw, zh);
-    this.setState({ shake: 'shake' });
+    if (this.E && this.E.tel) this.E.tel.bit = true;
+    this.setState({ shake: 'shake', strike: Object.assign({}, this.state.strike, { cardCls: (this.state.strike.cardCls || '') + ' gone' }) });
     this.timers.push(setTimeout(() => this.setState({ shake: '' }), 460));
     await this.waitK(0.392);
     // 4. it tears away, down and out into the deep in one sweep, fading into the dark
@@ -1767,6 +1782,7 @@ class Component extends DCLogic {
     this.setState({ levOp: 1, levOpT: '1.8s' });
     await this.waitRaw(150);
     this.engDim(others, false);
+    if (this.E) this.E.tel = null;
     this.setState({ creatureState: 'SPENT', dimCells: [], strike: Object.assign({}, this.state.strike, { show: false }) });
     await this.waitRaw(250);
   }
@@ -1777,6 +1793,27 @@ class Component extends DCLogic {
     if (!A || !A.ctx || typeof A[name] !== 'function') return false;
     try { A[name](...args); } catch (e) { return false; }
     return true;
+  }
+
+  // the lifeline's telegraph state (no box): the creature's shadow pools over the chosen cells, which tremble and glow
+  // from within in time with a heartbeat; drawn by featStep (shader uniforms) and featFx (fx canvas)
+  levTelegraph(foot, px, py, w, h, cols) {
+    const E = this.E;
+    if (!E || E.fail) return;
+    const idx = Array.from(foot);
+    E.tel = { idx, cells: idx.map((i) => { const p = this.cellCenter(i, cols); return { x: p[0], y: p[1] }; }),
+      px, py, w, h, t: 0, k: 0, ph: 0, beat: 0, bit: false };
+  }
+
+  // ' al' / ' ar' when a name centred on the zone would spill past the grid's left / right edge (approx width in px)
+  whisperAlign(c0, w, cols, tw) {
+    const cx = (c0 + w / 2) * 156, gw = cols * 156 - 8;
+    return cx - tw / 2 < 0 ? ' al' : cx + tw / 2 > gw ? ' ar' : '';
+  }
+
+  // letters of a whispered name, each fading up out of the dark a beat after the last
+  whisperLetters(name, d0, step) {
+    return Array.from(String(name || '')).map((ch, i) => ({ ch, d: (d0 + i * step).toFixed(2) }));
   }
 
   // the bite: footprint symbols are dragged into the closing jaws and vanish; dark water bursts out
@@ -2951,21 +2988,33 @@ class Component extends DCLogic {
     });
   }
 
-  // the block's symbols sink down out of their cells: dropping, shrinking, darkening and fading into the water
+  // the block's symbols are pulled down into their whirlpools: dropping, spinning, shrinking and darkening into the murk
   utSink(idx, ms) {
     const E = this.E;
     if (!E || E.fail) return this.wait(ms);
     const cells = idx.map((i) => E.cells[i]).filter((c) => c && c.state !== 'gone');
+    const dir = E.ut ? E.ut.dir : 1;
     for (const c of cells) {
-      c.hitT = -1; c.disT = -1; c.darkT = 0.55; c.flash = 0;
-      c.ex = c.x + (Math.random() - 0.5) * 24; c.ey = c.y + 150 + Math.random() * 30;
-      c.eatSpin = (Math.random() - 0.5) * 0.5; c.eatT = 0;
+      c.hitT = -1; c.disT = -1; c.darkT = 0.45; c.flash = 0;
+      c.ex = c.x + (Math.random() - 0.5) * 16; c.ey = c.y + 70 + Math.random() * 30;
+      c.eatSpin = dir * (2.4 + Math.random() * 0.9); c.eatT = 0;
     }
     return this.utEvery(ms, (k) => {
-      // eatT drives the existing swallow pose (offset toward ex/ey, shrink, fade); here it is a slow downward sink
+      // eatT drives the existing swallow pose (offset toward ex/ey, shrink, spin, fade); here it is a slow spiral down the drain
       for (const c of cells) if (c.state !== 'gone') c.eatT = k < 1 ? 0.44 * k : 0.46;
-      if (Math.random() < 0.7) for (const c of cells) E.parts.push(this.bubble(c.x + (Math.random() - 0.5) * 200, c.y + 60 + Math.random() * 80));
+      if (Math.random() < 0.5) for (const c of cells) E.parts.push(this.bubble(c.x + (Math.random() - 0.5) * 140, c.y + 40 + Math.random() * 60));
     });
+  }
+
+  // per-cell undertow field drawn by featFx: murky water wells up around each round symbol, a whirlpool turns under it,
+  // closes over it, dark scum foams on top, then drains away (no rectangles anywhere)
+  utFx(foot, cols) {
+    const E = this.E && !this.E.fail ? this.E : null;
+    if (!E) return null;
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    E.ut = { dir, t: 0, spin: 0, murk: 0, murkT: 0, close: 0, closeT: 0, swirl: 0, swirlT: 0, end: false,
+      cells: foot.map((i) => { const p = this.cellCenter(i, cols); return { i, x: p[0], y: p[1], seed: Math.random() * 20 }; }) };
+    return E.ut;
   }
 
   async undertowSeq(d) {
@@ -2976,60 +3025,55 @@ class Component extends DCLogic {
     const fset = new Set(foot);
     const others = [];
     for (let i = 0; i < 5 * cols; i++) if (!fset.has(i)) others.push(i);
-    // screen rect of the block (HUD px) and its centre/size on the 2x symbol canvas
+    // screen rect of the block (HUD px) for the whispered name
     const fl = cols >= 6 ? 476 : 554;
     const bx = fl + 20 + c0 * 156, by = 124 + r0 * 156, bw = w * 156 - 8, bh = h * 156 - 8;
-    const X0 = c0 * 312, Y0 = r0 * 312, CW = w * 312 - 16, CH = h * 312 - 16;
-    const px = X0 + CW / 2, py = Y0 + CH / 2;
     const E = this.E && !this.E.fail ? this.E : null;
-    const blobs = [];
-    const nb = 26 * foot.length;
-    for (let j = 0; j < nb; j++) blobs.push({ x: (4 + Math.random() * 92).toFixed(1), y: (4 + Math.random() * 92).toFixed(1),
-      s: 0, m: 0, d: (Math.random() * 0.3).toFixed(2) });
-    for (const b of blobs) { b.s = Math.round(18 + Math.random() * 48); b.m = Math.round(b.s / 2); }
-    const base = { show: true, x: bx, y: by, w: bw, h: bh, waterH: 0, waterT: '0.55s', waterOp: 1, foamK: 0.15, foamOp: 0, blobs,
-      title: 'UNDERTOW', sub: 'THE CURRENT DRAGS ' + foot.length + ' SYMBOLS UNDER', cardTop: r0 === 0 ? bh + 14 : -82 };
+    const U = this.utFx(foot, cols);
+    const base = { show: true, x: bx, y: by, w: bw, h: bh, letters: this.whisperLetters('UNDERTOW', 0.1, 0.07),
+      sub: 'the current takes ' + foot.length, cls: (r0 === 0 ? 'below' : '') + this.whisperAlign(c0, w, cols, 8 * 34) };
     const ut = (o) => this.setState({ ut: Object.assign({}, this.state.ut || base, o) });
 
-    // 1. the reels jolt; the block is singled out and the water over it starts to churn
+    // 1. the reels jolt; the water under the block starts to turn: a whirlpool opens beneath every symbol
     this.setState({ shake: 'shake', ut: base });
     this.timers.push(setTimeout(() => this.setState({ shake: '' }), 460));
     this.surge = Math.max(this.surge || 0, 1.1);
     this.utSfx('boom', null, 0.55);
     this.utSfx('plunge');
     this.engDim(others, true);
-    if (E) {
-      for (const i of foot) { const c = E.cells[i]; if (c) { c.flash = 0.9; c.darkT = 1; E.parts.push({ k: 'ring', x: c.x, y: c.y, r: 90, life: 0.8, max: 0.8, c: 1 }); } }
-      E.rip = { x: px, y: py, w: CW, h: CH, t: 0, hold: 2.3, splashed: false };
+    if (U) {
+      U.murkT = 0.55; U.swirlT = 0.45;
+      for (const q of U.cells) {
+        for (let j = 0; j < 3; j++) E.parts.push({ k: 'ring', x: q.x, y: q.y, r: 150, life: 0.7 + j * 0.25, max: 0.7 + j * 0.25, c: 3, inw: 1 });
+        const c = E.cells[q.i]; if (c) c.darkT = 0.8;
+      }
     }
     await this.waitRaw(40);
-    // 2. water wells up around them and floods the block
-    ut({ waterH: 100 });
+    // 2. murky water wells up around the symbols; the current spirals in, tugging them, tilting them
     this.utSfx('sink');
-    this.spawnWater('splash', bx + bw / 2, by + bh, bw, bh * 0.4);
+    if (U) { U.murkT = 1; U.swirlT = 1; }
     await this.utEvery(560, () => {
-      if (!E) return;
-      for (let j = 0; j < 3; j++) E.parts.push(this.bubble(X0 + Math.random() * CW, Y0 + CH - Math.random() * 40));
-      // spray climbing the block's edges
-      const side = Math.random() < 0.5 ? X0 - 10 : X0 + CW + 10;
-      E.parts.push({ k: 'drop', x: side + (Math.random() - 0.5) * 30, y: Y0 + CH - Math.random() * CH * 0.4, vx: (side < px ? -1 : 1) * Math.random() * 60,
-        vy: -500 - Math.random() * 500, r: 2 + Math.random() * 4, life: 0.8 + Math.random() * 0.4, max: 1.2 });
+      if (!U) return;
+      for (const q of U.cells) {
+        for (let j = 0; j < 2; j++) E.parts.push(this.utStreak(q, U.dir, 120 + Math.random() * 90));
+        if (Math.random() < 0.06) E.parts.push({ k: 'ring', x: q.x, y: q.y, r: 170, life: 0.8, max: 0.8, c: 3, inw: 1 });
+      }
     });
-    // 3. the symbols sink out of their cells
+    // 3. the symbols are dragged down the drain while the murk closes over them
     this.utSfx('plunge');
-    await this.utSink(foot, 640);
-    // 4. foam boils up and covers the block
+    if (U) U.closeT = 1;
+    const sink = this.utSink(foot, 640);
+    if (U) await this.utEvery(640, () => { for (const q of U.cells) if (Math.random() < 0.8) E.parts.push(this.utStreak(q, U.dir, 60 + Math.random() * 120)); });
+    await sink;
+    // 4. dark scum boils up over each hole in clumps
     this.utSfx('fizz');
-    ut({ foamK: 1, foamOp: 1 });
-    if (E) {
-      for (let j = 0; j < 10 * foot.length; j++) E.parts.push({ k: 'bubble', x: X0 + Math.random() * CW, y: Y0 + Math.random() * CH, vx: 0, vy: -40 - Math.random() * 90,
-        r: 2 + Math.random() * 6, w: Math.random() * 6.28, life: 0.8 + Math.random() * 0.8, max: 1.6 });
-      for (let j = 0; j < 3 * foot.length; j++) E.parts.push({ k: 'mist', x: X0 + Math.random() * CW, y: Y0 + Math.random() * CH, vx: (Math.random() - 0.5) * 40, vy: -20 - Math.random() * 30,
-        r: 40 + Math.random() * 40, gr: 60, life: 1 + Math.random() * 0.5, max: 1.5 });
+    if (U) {
+      U.swirlT = 0.35;
+      for (const q of U.cells) this.utFoam(q);
     }
     await this.wait(500);
-    // 5. the foam breaks up, the water drains and the new symbols surface one by one
-    ut({ foamK: 1.3, foamOp: 0, waterT: '0.7s', waterH: 0, waterOp: 0.4 });
+    // 5. the scum breaks up, the whirlpools still, the murk drains and the new symbols surface one by one
+    if (U) { U.closeT = 0; U.swirlT = 0; }
     this.utSfx('shimmer');
     const fin = this.gridCells(d.grid);
     const order = foot.slice().sort((a, b) => (a % cols) - (b % cols) || a - b);
@@ -3038,11 +3082,223 @@ class Component extends DCLogic {
       this.utSfx('wildRise');
       await this.waitRaw(110);
     }
+    if (U) { U.murkT = 0; U.end = true; }
     this.G = d.grid;
+    ut({ cls: base.cls + ' gone' });
     await this.wait(420);
     this.engDim(others, false);
     ut({ show: false });
     await this.wait(120);
+  }
+
+  // one strand of the whirlpool: a streak orbiting the symbol, spiralling inward and down
+  utStreak(q, dir, rr) {
+    return { k: 'swirl', cx: q.x, cy: q.y + 8, a: Math.random() * 6.283, rr, va: dir * (2.2 + Math.random() * 1.6), vr: 70 + Math.random() * 90,
+      len: 0.35 + Math.random() * 0.5, lw: 1.5 + Math.random() * 2.5, life: 0.7 + Math.random() * 0.5, max: 1.2 };
+  }
+
+  // grey-green scum: a few organic clumps of dull bubbles over the hole, swelling in, then bursting away
+  utFoam(q) {
+    const E = this.E;
+    if (!E) return;
+    const nc = 6 + Math.floor(Math.random() * 3);
+    for (let k = 0; k < nc; k++) {
+      const a = Math.random() * 6.283, d = Math.sqrt(Math.random()) * 105;
+      const cx = q.x + Math.cos(a) * d, cy = q.y + Math.sin(a) * d * 0.9;
+      const n = 4 + Math.floor(Math.random() * 4), big = 22 + Math.random() * 22;
+      for (let j = 0; j < n; j++) {
+        const b = Math.random() * 6.283, e = Math.random() * big * 0.9;
+        E.parts.push({ k: 'foam', x: cx + Math.cos(b) * e, y: cy + Math.sin(b) * e, vx: (Math.random() - 0.5) * 10, vy: -6 - Math.random() * 10,
+          r: (0.45 + Math.random() * 0.55) * big, d: Math.random() * 0.25, life: 1.05 + Math.random() * 0.4, max: 1.45 });
+      }
+    }
+  }
+
+  // per-frame state of the telegraph/undertow presentation, written onto the cells the shader quad reads
+  // (fdx/fdy/frot: tremble and tilt, fPulse: glow from within, fSwirl: twist toward the drain, fRip: water churning
+  // centred on that symbol, fDark: the shadow falling over it)
+  featStep(dt, T) {
+    const E = this.E;
+    for (const c of E.cells) if (c) { c.fdx = 0; c.fdy = 0; c.frot = 0; c.fPulse = 0; c.fSwirl = 0; c.fRip = 0; c.fDark = 1; }
+    E.pc = null;
+    const tel = E.tel;
+    if (tel) {
+      tel.t += dt;
+      const S = this.strikeAnim;
+      // follows the creature: 0 when it appears, 1 when the jaws close (bite at k = 0.34 of the strike path)
+      const p = Math.max(0, Math.min(1, S ? (this.levT - S.u0) / S.dur / 0.34 : tel.t / 3));
+      // (it starts to gather the moment the creature is sighted, then tracks the swim to the bite)
+      const tk = tel.bit ? 0 : Math.max(p, Math.min(0.3, tel.t * 0.6));
+      tel.k += (tk - tel.k) * Math.min(1, dt * (tel.bit ? 4 : 7));
+      tel.ph += dt * (0.8 + 1.9 * tel.k);
+      // a heartbeat: lub-dub, quickening as the creature closes in
+      const ph = tel.ph % 1, b = Math.exp(-Math.pow(ph * 13, 2)) + 0.6 * Math.exp(-Math.pow((ph - 0.2) * 13, 2));
+      tel.beat = b;
+      const k = tel.k, k2 = k * k;
+      const red = Math.max(0, Math.min(1, (k - 0.72) / 0.28));
+      E.pc = [0.3 + 0.7 * red, 1.0 - 0.62 * red, 0.78 - 0.62 * red];
+      for (const i of tel.idx) {
+        const c = E.cells[i];
+        if (!c) continue;
+        const sd = c.seed || 0;
+        c.fPulse = k * (0.25 + 0.75 * b) * 0.9;
+        c.fdx = (Math.sin(T * 37 + sd) + 0.5 * Math.sin(T * 61 + sd * 2)) * 4.5 * k2;
+        c.fdy = (Math.cos(T * 43 + sd) + 0.5 * Math.sin(T * 53 + sd)) * 3 * k2;
+        c.frot = Math.sin(T * 29 + sd) * 0.025 * k2;
+        c.fRip = 0.45 * k;
+        c.fDark = 1 - 0.3 * k;
+        if (!tel.bit) {
+          if (Math.random() < dt * (1.5 + 9 * k)) E.parts.push(this.bubble(c.x + (Math.random() - 0.5) * 150, c.y + 40 + Math.random() * 80));
+          if (Math.random() < dt * 0.9 * k) E.parts.push({ k: 'ring', x: c.x, y: c.y, r: 120, life: 0.9, max: 0.9, c: 3 });
+        }
+      }
+    }
+    const U = E.ut;
+    if (U) {
+      U.t += dt;
+      const ez = (a, b, r) => a + (b - a) * Math.min(1, dt * r);
+      U.murk = ez(U.murk, U.murkT, U.murkT > U.murk ? 3.2 : 2.2);
+      U.close = ez(U.close, U.closeT, 3.4);
+      U.swirl = ez(U.swirl, U.swirlT, 3);
+      U.spin += dt * U.dir * (0.6 + 3 * U.swirl);
+      if (U.end && U.murk < 0.02) { E.ut = null; return; }
+      if (!E.pc) E.pc = [0.22, 0.42, 0.32];
+      for (const q of U.cells) {
+        const c = E.cells[q.i];
+        if (!c) continue;
+        const sw = U.swirl;
+        c.fSwirl = U.dir * sw * (0.35 + 0.65 * U.close);
+        c.frot = U.dir * sw * 0.16 + Math.sin(T * 6 + q.seed) * 0.05 * sw;
+        c.fdy = sw * 8 + Math.sin(T * 23 + q.seed) * 2.5 * sw;
+        c.fdx = Math.sin(T * 17 + q.seed) * 2 * sw;
+        c.fRip = 0.7 * sw;
+        c.fPulse = 0.25 * sw * (1 - U.close);
+        c.fDark = 1 - 0.25 * U.murk;
+      }
+    }
+  }
+
+  // canvas-side presentation (on the grid fx canvas, under the particles): the creature's shadow pooling round the
+  // chosen symbols with a faint eye reflected in the water; the undertow's murk, whirlpool arms and drain
+  featFx(f, T) {
+    const E = this.E;
+    const tel = E.tel;
+    if (tel && tel.k > 0.01) {
+      const k = tel.k;
+      f.globalCompositeOperation = 'source-over';
+      // a broad shadow drifting over the zone as the body passes above
+      const zr = Math.max(tel.w, tel.h) * 230 + 120;
+      const sx = tel.px + Math.sin(T * 0.7) * 50 * k, sy = tel.py + Math.cos(T * 0.53) * 30 * k;
+      let g = f.createRadialGradient(sx, sy, zr * 0.15, sx, sy, zr);
+      g.addColorStop(0, 'rgba(0,3,6,' + (0.32 * k) + ')');
+      g.addColorStop(0.6, 'rgba(0,3,6,' + (0.2 * k) + ')');
+      g.addColorStop(1, 'rgba(0,3,6,0)');
+      f.fillStyle = g;
+      f.beginPath(); f.arc(sx, sy, zr, 0, 6.2832); f.fill();
+      // darkness pooling round each symbol: the round symbol keeps its light, the water around it dies
+      for (const q of tel.cells) {
+        const R = 205 + 30 * k;
+        g = f.createRadialGradient(q.x, q.y, 0, q.x, q.y, R);
+        g.addColorStop(0, 'rgba(0,2,4,0)');
+        g.addColorStop(0.52, 'rgba(0,2,4,' + (0.12 * k) + ')');
+        g.addColorStop(0.72, 'rgba(0,2,4,' + (0.62 * k) + ')');
+        g.addColorStop(1, 'rgba(0,2,4,0)');
+        f.fillStyle = g;
+        f.beginPath(); f.arc(q.x, q.y, R, 0, 6.2832); f.fill();
+      }
+      // halo of the inner glow bleeding into the water, in time with the heartbeat
+      f.globalCompositeOperation = 'lighter';
+      const pc = E.pc || [0.3, 1, 0.78], b = tel.beat || 0;
+      const cs = Math.round(pc[0] * 255) + ',' + Math.round(pc[1] * 255) + ',' + Math.round(pc[2] * 255);
+      for (const q of tel.cells) {
+        g = f.createRadialGradient(q.x, q.y, 90, q.x, q.y, 175);
+        g.addColorStop(0, 'rgba(' + cs + ',0)');
+        g.addColorStop(0.35, 'rgba(' + cs + ',' + (0.1 * k * (0.3 + 0.7 * b)) + ')');
+        g.addColorStop(1, 'rgba(' + cs + ',0)');
+        f.fillStyle = g;
+        f.beginPath(); f.arc(q.x, q.y, 175, 0, 6.2832); f.fill();
+      }
+      // the eye: a faint reflection on the water over the zone, opening as it closes in, gone when it bites
+      const eo = Math.max(0, Math.min(1, (k - 0.3) / 0.45));
+      if (eo > 0.01) {
+        const es = Math.max(230, Math.sqrt(tel.w * tel.h) * 230);
+        const ex = tel.px + Math.sin(T * 1.3) * 8, ey = tel.py - 20 + Math.sin(T * 0.9) * 5;
+        f.save();
+        f.translate(ex, ey);
+        f.scale(1 + 0.04 * Math.sin(T * 2.7), 0.46 + 0.03 * Math.sin(T * 1.9));
+        g = f.createRadialGradient(0, 0, es * 0.12, 0, 0, es);
+        g.addColorStop(0, 'rgba(190,215,140,0)');
+        g.addColorStop(0.3, 'rgba(190,215,140,' + (0.1 * eo) + ')');
+        g.addColorStop(0.55, 'rgba(120,160,90,' + (0.05 * eo) + ')');
+        g.addColorStop(1, 'rgba(120,160,90,0)');
+        f.fillStyle = g;
+        f.beginPath(); f.arc(0, 0, es, 0, 6.2832); f.fill();
+        f.restore();
+        f.globalCompositeOperation = 'source-over';
+        const pw = es * (0.035 + 0.02 * (1 - b)), ph = es * 0.42 * eo;
+        g = f.createRadialGradient(ex, ey, 0, ex, ey, ph);
+        g.addColorStop(0, 'rgba(0,0,0,' + (0.55 * eo) + ')');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        f.fillStyle = g;
+        f.beginPath(); f.ellipse(ex + Math.sin(T * 3.1) * 3, ey, pw, ph, 0, 0, 6.2832); f.fill();
+        f.globalCompositeOperation = 'lighter';
+        f.fillStyle = 'rgba(230,245,210,' + (0.18 * eo) + ')';
+        f.beginPath(); f.ellipse(ex - es * 0.22, ey - es * 0.1, es * 0.05, es * 0.022, -0.3, 0, 6.2832); f.fill();
+      }
+    }
+    const U = E.ut;
+    if (U && U.murk > 0.01) {
+      const m = U.murk, cl = U.close, sw = U.swirl;
+      for (const q of U.cells) {
+        const sd = q.seed;
+        // the murky water: an irregular soft-edged pool welling up from below and closing in on the symbol
+        const Rm = 150 + 50 * m, cy = q.y + (1 - m) * 110, hole = 138 * (1 - cl);
+        f.globalCompositeOperation = 'source-over';
+        for (let pass = 0; pass < 2; pass++) {
+          const sc = pass === 0 ? 1.1 : 1, al = pass === 0 ? 0.35 : 1;
+          f.beginPath();
+          for (let j = 0; j <= 30; j++) {
+            const th = j / 30 * 6.2832;
+            const rr = Rm * sc * (1 + 0.09 * Math.sin(3 * th + T * 1.7 * U.dir + sd) + 0.06 * Math.sin(5 * th - T * 2.3 + sd * 2) + 0.035 * Math.sin(9 * th + T * 3.1 + sd));
+            const px = q.x + Math.cos(th) * rr, py = cy + Math.sin(th) * rr;
+            if (j === 0) f.moveTo(px, py); else f.lineTo(px, py);
+          }
+          const R = Rm * sc * 1.15;
+          const g = f.createRadialGradient(q.x, q.y, 0, q.x, cy, R);
+          const h0 = Math.min(0.9, hole / R);
+          g.addColorStop(0, 'rgba(3,12,11,' + (al * 0.8 * m * cl) + ')');
+          g.addColorStop(h0, 'rgba(3,12,11,' + (al * 0.8 * m * cl) + ')');
+          g.addColorStop(Math.min(0.97, h0 + 0.12), 'rgba(4,16,14,' + (al * 0.8 * m) + ')');
+          g.addColorStop(1, 'rgba(2,8,8,' + (al * 0.92 * m) + ')');
+          f.fillStyle = g;
+          f.fill();
+        }
+        // the drain: a dark eye opening at the centre as the symbol goes down
+        if (cl > 0.02) {
+          const g = f.createRadialGradient(q.x, q.y + 6, 0, q.x, q.y + 6, 90);
+          g.addColorStop(0, 'rgba(0,3,3,' + (0.75 * cl * m) + ')');
+          g.addColorStop(1, 'rgba(0,3,3,0)');
+          f.fillStyle = g;
+          f.beginPath(); f.arc(q.x, q.y + 6, 90, 0, 6.2832); f.fill();
+        }
+        // whirlpool arms: faint pale spirals turning on the surface of the murk
+        if (sw > 0.02) {
+          f.globalCompositeOperation = 'lighter';
+          f.strokeStyle = 'rgba(120,165,150,' + (0.16 * sw * m) + ')';
+          for (let arm = 0; arm < 3; arm++) {
+            f.lineWidth = 3 + arm;
+            f.beginPath();
+            for (let j = 0; j <= 22; j++) {
+              const u = j / 22, th = U.spin * 1.4 + arm * 2.094 + U.dir * u * 5.2;
+              const rr = (Rm - 10) * Math.exp(-2.1 * u);
+              const px = q.x + Math.cos(th) * rr, py = q.y + 6 + Math.sin(th) * rr * 0.92;
+              if (j === 0) f.moveTo(px, py); else f.lineTo(px, py);
+            }
+            f.stroke();
+          }
+        }
+      }
+    }
   }
 
   async dirUndertow() {
@@ -3296,18 +3552,28 @@ uniform vec4 uTile;
 uniform vec3 uLight, uLightCol;
 uniform float uGlow, uDissolve, uHit, uDark, uAlpha, uSeed, uBreath, uRip, uTime;
 uniform vec2 uRipC;
+uniform float uPulse, uSwirl;
+uniform vec3 uPulseC;
 varying vec2 vUv;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y); }
 float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
 void main(){
-  vec2 lq = vec2(vUv.x * 2.0 - 1.0, 1.0 - vUv.y * 2.0);
+  // undertow: the symbol twists toward its drain, strongest at the centre
+  vec2 vU = vUv;
+  if (uSwirl != 0.0) {
+    vec2 sq = vUv - 0.5;
+    float sa = uSwirl * 4.0 * (1.0 - smoothstep(0.0, 0.62, length(sq)));
+    float ca = cos(sa), sn = sin(sa);
+    vU = vec2(ca * sq.x - sn * sq.y, sn * sq.x + ca * sq.y) + 0.5;
+  }
+  vec2 lq = vec2(vU.x * 2.0 - 1.0, 1.0 - vU.y * 2.0);
   vec2 rd = lq - uRipC;
   float rl = length(rd) + 0.0001;
   float rs = sin(rl * 9.0 - uTime * 10.0);
   float rk = uRip * exp(-rl * 0.35);
-  vec2 wuv = vUv + vec2(rd.x, -rd.y) / rl * rs * 0.02 * rk;
+  vec2 wuv = vU + vec2(rd.x, -rd.y) / rl * rs * 0.02 * rk;
   vec2 uv = uTile.xy + clamp(wuv, 0.002, 0.998) * uTile.zw;
   vec3 aux = texture2D(uAux, uv).rgb;
   float mask = aux.r;
@@ -3316,7 +3582,7 @@ void main(){
   vec3 emi = texture2D(uEmi, uv).rgb;
   vec3 nm = texture2D(uNrm, uv).rgb * 2.0 - 1.0;
   vec3 n = normalize(vec3(nm.xy * (1.0 + uBreath * 0.4), max(nm.z, 0.2)));
-  vec3 pos = vec3(vUv.x * 2.0 - 1.0, 1.0 - vUv.y * 2.0, aux.b * 0.1);
+  vec3 pos = vec3(vU.x * 2.0 - 1.0, 1.0 - vU.y * 2.0, aux.b * 0.1);
   vec3 L = uLight - pos; float d = length(L); L /= d;
   float att = 1.0 / (1.0 + 0.08 * d * d);
   float dif = max(dot(n, L), 0.0);
@@ -3329,9 +3595,18 @@ void main(){
   col = mix(col, col * vec3(0.5, 0.82, 1.05) + vec3(0.0, 0.05, 0.08) * (0.6 + 0.4 * rs), clamp(rk * 0.55, 0.0, 0.7));
   col *= uDark;
   float el = dot(emi, vec3(0.333));
+  // lifeline telegraph: a bioluminescent pulse glowing from inside the symbol (its emissive parts, crawling veins, rim)
+  if (uPulse > 0.001) {
+    float vein = smoothstep(0.56, 0.82, fbm(vU * 6.0 + vec2(uSeed, uTime * 0.35)));
+    float core = 1.0 - smoothstep(0.0, 0.95, length(lq));
+    col += uPulseC * uPulse * (0.22 * core + 1.1 * el + 0.5 * vein + 0.45 * rim);
+  }
   col += vec3(1.0, 0.45, 0.08) * uHit * (0.18 + 1.1 * el + 0.5 * sp);
   col = mix(col, col * vec3(1.18, 0.92, 0.72), uHit * 0.5);
   float a = mask * uAlpha;
+  // full-square tiles: the outer corners thin out so the reel water shows through (round coins are unaffected)
+  vec2 eg = min(vUv, 1.0 - vUv);
+  a *= (1.0 - 0.45 * smoothstep(1.0, 1.36, length(lq))) * smoothstep(0.0, 0.05, min(eg.x, eg.y));
   if (uDissolve > 0.0) {
     float nz = fbm(vUv * 5.0 + uSeed) * 0.8 + vUv.y * 0.25;
     float th = uDissolve * 1.15 - 0.05;
@@ -3391,7 +3666,7 @@ void main(){
       else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     });
     const U = {};
-    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uAlb', 'uNrm', 'uEmi', 'uAux']
+    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uPulse', 'uSwirl', 'uPulseC', 'uAlb', 'uNrm', 'uEmi', 'uAux']
       .forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
     gl.uniform1i(U.uAlb, 0); gl.uniform1i(U.uNrm, 1); gl.uniform1i(U.uEmi, 2); gl.uniform1i(U.uAux, 3);
     gl.uniform2f(U.uRes, E.W, E.H);
@@ -3404,6 +3679,7 @@ void main(){
 
   symFrame(dt) {
     if (this.E && !this.E.c.isConnected) this.E = null;
+    try { this.wbgFrame(dt); } catch (e) { if (!this.wbgErr) { this.wbgErr = true; console.warn('reel water', e); } }
     if (!this.E) {
       this.E = this.glSetup();
       if (!this.E) return;
@@ -3480,6 +3756,7 @@ void main(){
     E.outgoing.forEach(step);
     E.cells.forEach((c) => { if (c) step(c); });
 
+    this.featStep(dt, T);
     const live = E.cells.filter((c) => c && c.state !== 'gone');
     const list = E.outgoing.concat(live.filter((c) => c.hitT < 0), live.filter((c) => c.hitT >= 0));
     const half = 139;
@@ -3495,6 +3772,8 @@ void main(){
       gl.uniform3f(U.uLightCol, 1.0 * fl * lk, 0.87 * fl * lk, 0.68 * fl * lk);
       gl.uniform1f(U.uAlpha, 1);
       gl.uniform1f(U.uTime, T);
+      const pc = E.pc || [0, 0, 0];
+      gl.uniform3f(U.uPulseC, pc[0], pc[1], pc[2]);
       // water churning over the lifeline strike zone
       const R = E.rip;
       let ripK = 0;
@@ -3502,7 +3781,8 @@ void main(){
         R.t += dt;
         const hold = R.hold || 2.6;
         ripK = R.t < 0.4 ? R.t / 0.4 : R.t < hold ? 1 : Math.max(0, 1 - (R.t - hold) / 0.8);
-        if (R.t < hold - 0.9) {
+        // (while the lifeline telegraph runs, featStep raises the bubbles and rings from each chosen symbol instead)
+        if (R.t < hold - 0.9 && !E.tel) {
           for (let j = 0; j < 5; j++) E.parts.push(this.bubble(R.x + (Math.random() - 0.5) * R.w * 0.9, R.y + Math.random() * R.h * 0.5));
           if (Math.random() < dt * 4) E.parts.push({ k: 'ring', x: R.x, y: R.y, r: 30, life: 0.8, max: 0.8, c: 2 });
         }
@@ -3511,6 +3791,10 @@ void main(){
       const quad = (c, x, y, h, rot, tile, sc, glow, br, hit, dis, dark) => {
         gl.uniform1f(U.uRip, R ? ripK : 0);
         gl.uniform2f(U.uRipC, R ? (R.x - x) / h : 0, R ? -(R.y - y) / h : 0);
+        // telegraph/undertow: water churning centred on this one symbol, its inner pulse and its twist (featStep)
+        if ((c.fRip || 0) > (R ? ripK : 0)) { gl.uniform1f(U.uRip, c.fRip); gl.uniform2f(U.uRipC, 0, 0); }
+        gl.uniform1f(U.uPulse, c.fPulse || 0);
+        gl.uniform1f(U.uSwirl, c.fSwirl || 0);
         gl.uniform4f(U.uRect, x, y, h, rot);
         gl.uniform1f(U.uScale, sc);
         gl.uniform4f(U.uTile, (tile % 4) / 4, Math.floor(tile / 4) / 4, 0.25, 0.25);
@@ -3537,9 +3821,10 @@ void main(){
         const ea = c.eatT >= 0 ? Math.min(1, c.eatT / 0.45) : 0, ee = ea * ea;
         const al = (c.rise ? 1 - 0.9 * Math.min(1, se * 1.3) : 1) * (1 - ee);
         if (al < 1) gl.uniform1f(U.uAlpha, Math.max(0, al));
-        quad(c, c.x + ((c.ex || c.x) - c.x) * ee, c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half, c.rot + shake + ee * (c.eatSpin || 1.2), sy.t,
+        quad(c, c.x + ((c.ex || c.x) - c.x) * ee + (c.fdx || 0), c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee + (c.fdy || 0), half,
+          c.rot + shake + ee * (c.eatSpin || 1.2) + (c.frot || 0), sy.t,
           sc * (1 - 0.45 * se) * (1 - 0.8 * ee), 0.45 + 0.65 * b * sy.amp + c.flash * 1.6, b * sy.amp,
-          hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35, dis, c.dark * (1 - 0.7 * ee));
+          hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35, dis, c.dark * (1 - 0.7 * ee) * (c.fDark || 1));
         if (al < 1) gl.uniform1f(U.uAlpha, 1);
         // pearl token riding on the cell
         if (c.pearl && dis < 0.5 && !(c.eatT >= 0)) quad(c, c.x + half * 0.62, c.y - half * 0.62, half * 0.3, 0, 7, 1 + 0.08 * Math.sin(T * 4 + c.phase), 1.4 + 0.6 * b, 0, 0, 0, c.dark);
@@ -3575,6 +3860,7 @@ void main(){
       f.fillRect(cx - 150, E.H * 0.25, 300, E.H * 0.75);
       if (Math.random() < 0.9) E.parts.push({ k: 'ember', x: cx + (Math.random() - 0.5) * 240, y: E.H + 10, vx: (Math.random() - 0.5) * 50, vy: -380 - Math.random() * 420, r: 2 + Math.random() * 4, life: 1 + Math.random() * 0.8, max: 1.8 });
     }
+    this.featFx(f, T);
     for (let j = E.parts.length - 1; j >= 0; j--) {
       const p = E.parts[j];
       p.life -= sdt;
@@ -3630,9 +3916,35 @@ void main(){
       } else if (p.k === 'ring') {
         const u = 1 - p.life / p.max;
         f.globalCompositeOperation = 'lighter';
-        f.strokeStyle = p.c === 2 ? 'rgba(215,248,255,' + (a * 0.75) + ')' : p.c ? 'rgba(63,245,255,' + (a * 0.7) + ')' : 'rgba(255,140,40,' + (a * 0.8) + ')';
+        f.strokeStyle = p.c === 3 ? 'rgba(105,150,135,' + (a * 0.42) + ')' : p.c === 2 ? 'rgba(215,248,255,' + (a * 0.75) + ')' : p.c ? 'rgba(63,245,255,' + (a * 0.7) + ')' : 'rgba(255,140,40,' + (a * 0.8) + ')';
         f.lineWidth = 4 * (1 - u) + 1;
-        f.beginPath(); f.arc(p.x, p.y, p.r + u * 160, 0, 6.2832); f.stroke();
+        // inward rings close on a whirlpool's centre instead of spreading out
+        f.beginPath(); f.arc(p.x, p.y, p.inw ? p.r * (1 - u) + 12 : p.r + u * 160, 0, 6.2832); f.stroke();
+      } else if (p.k === 'swirl') {
+        // whirlpool strand: orbits faster as it spirals in, drawn as a short arc
+        p.a += p.va * sdt * (1 + 90 / Math.max(20, p.rr)); p.rr -= p.vr * sdt;
+        if (p.rr < 10) { p.life = 0; continue; }
+        f.globalCompositeOperation = 'lighter';
+        f.strokeStyle = 'rgba(150,195,180,' + (a * 0.3) + ')';
+        f.lineWidth = p.lw;
+        const a0 = p.va > 0 ? p.a - p.len : p.a, a1 = p.va > 0 ? p.a : p.a + p.len;
+        f.beginPath(); f.arc(p.cx, p.cy, p.rr, a0, a1); f.stroke();
+      } else if (p.k === 'foam') {
+        // dull grey-green scum bubble: swells in after its delay, drifts, bursts away at the end of its life
+        const age = p.max - p.life;
+        if (age < p.d) continue;
+        const gk = Math.min(1, (age - p.d) / 0.22), sw = gk < 1 ? 1 - Math.pow(1 - gk, 3) * (1 - 0.3 * Math.sin(gk * 9)) : 1;
+        p.x += p.vx * sdt; p.y += p.vy * sdt;
+        const rr = p.r * sw * (p.life < 0.25 ? 1 + (0.25 - p.life) * 1.6 : 1);
+        const fa = p.life < 0.25 ? p.life / 0.25 : 1;
+        f.globalCompositeOperation = 'source-over';
+        const g = f.createRadialGradient(p.x - rr * 0.25, p.y - rr * 0.3, rr * 0.1, p.x, p.y, rr);
+        g.addColorStop(0, 'rgba(96,110,100,' + (0.8 * fa) + ')');
+        g.addColorStop(0.6, 'rgba(44,56,50,' + (0.85 * fa) + ')');
+        g.addColorStop(0.86, 'rgba(98,114,102,' + (0.7 * fa) + ')');
+        g.addColorStop(1, 'rgba(30,40,36,0)');
+        f.fillStyle = g;
+        f.beginPath(); f.arc(p.x, p.y, rr, 0, 6.2832); f.fill();
       }
     }
     if (E.parts.length > 700) E.parts.splice(0, E.parts.length - 700);
@@ -3653,6 +3965,294 @@ void main(){
       f.fillStyle = 'rgba(255,214,173,' + c.dark + ')';
       f.fillText('×' + c.mult, bx, by + 2);
     }
+  }
+
+  // ---------- reel water: one continuous body of dark water behind every symbol ----------
+  // Replaces the old per-cell glass boxes. A single full-frame WebGL pass (canvas[data-wbg], 1 px per
+  // CSS px, covering the frame's padding too) draws murky water, slow procedural caustics, drifting
+  // marine snow and a soft "socket" for each medallion (contact shadow, water meniscus, lens-bent
+  // caustics) so the coins sit IN the water. Per-socket state (win / dim / occupied / radius) goes in
+  // as a tiny cols x 5 texture; strike ripples (E.rip) and cascade drops bend the water.
+
+  wbgShaders() {
+    const vs = `attribute vec2 aP;
+void main(){ gl_Position = vec4(aP * 2.0 - 1.0, 0.0, 1.0); }`;
+    const fs = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+uniform sampler2D uSt;
+uniform vec2 uRes, uGrid;
+uniform float uTime, uLk, uRed, uWinAny, uRip, uOff;
+uniform vec3 uTop, uBot, uFog, uRim;
+uniform vec2 uLamp;
+uniform vec4 uRipR;
+uniform vec4 uDrop[8];
+float h21(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+vec2 h22(vec2 p){ float n = h21(p); return vec2(n, h21(p + n * 17.3)); }
+float vn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y); }
+// animated cellular web: bright where two drifting seed regions meet (F2 - F1 small) = caustic filaments
+float web(vec2 p, float t){
+  vec2 i = floor(p), f = fract(p);
+  float d1 = 8.0, d2 = 8.0;
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 o = h22(i + g);
+    o = 0.5 + 0.42 * sin(t * (0.6 + 0.5 * o) + 6.2831 * o);
+    float d = length(g + o - f);
+    if (d < d1) { d2 = d1; d1 = d; } else if (d < d2) d2 = d;
+  }
+  float e = 1.0 - smoothstep(0.0, 0.15, d2 - d1);
+  return e * e;
+}
+void main(){
+  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  vec2 g = px - uOff;                       // grid CSS px (0,0 = top-left of the first cell)
+  float t = uTime;
+  // ---- displacement: strike churn + cascade drops ----
+  vec2 disp = vec2(0.0);
+  float rl = 0.0;
+  if (uRip > 0.0) {
+    vec2 d = g - uRipR.xy; float r = length(d) + 0.001;
+    float env = exp(-r / max(uRipR.z, 60.0));
+    float w = sin(r * 0.075 - t * 7.0);
+    disp += d / r * w * 9.0 * uRip * env;
+    rl += max(w, 0.0) * uRip * env;
+  }
+  for (int k = 0; k < 8; k++) {
+    vec4 D = uDrop[k];
+    float age = t - D.z;
+    if (D.w > 0.0 && age > 0.0 && age < 2.2) {
+      vec2 d = g - D.xy; float r = length(d) + 0.001;
+      float x = (r - age * 210.0) / 16.0;
+      float ring = exp(-x * x) * exp(-age * 1.9) * D.w;
+      disp += d / r * ring * 7.0 * sin(x * 2.4);
+      rl += ring;
+    }
+  }
+  vec2 q = g + disp;
+  // ---- socket geometry: nearest seat, its state, distance to the medallion edge ----
+  vec2 cc = clamp(floor((g + 4.0) / 156.0), vec2(0.0), uGrid - 1.0);
+  vec2 ctr = cc * 156.0 + 74.0;
+  vec4 S = texture2D(uSt, (cc + 0.5) / uGrid);
+  float occ = S.b, rad = 58.0 + S.a * 14.0;
+  vec2 lc = g - ctr; float r = length(lc);
+  float e = r - rad;                         // >0 outside the coin
+  if (S.a > 0.9) {                           // full-tile symbols (apex, wild, sediment): rounded-square seat
+    vec2 bq = abs(lc) - vec2(56.0);
+    e = length(max(bq, 0.0)) + min(max(bq.x, bq.y), 0.0) - 12.0;
+  }
+  // the water bulges around each coin like a lens: caustics bend round it
+  q += lc / (r + 0.001) * 7.0 * exp(-abs(e - 5.0) / 7.0) * occ;
+  // ---- water body ----
+  float yv = clamp(px.y / uRes.y, 0.0, 1.0);
+  vec3 col = mix(uTop, uBot, yv);
+  float murk = vn(q * 0.009 + vec2(t * 0.03, -t * 0.02)) * 0.6 + vn(q * 0.021 - vec2(t * 0.05, 0.0)) * 0.4;
+  col = mix(col, uFog, murk * 0.6);
+  // slow caustics, strongest near the surface (top) and in the shallows, almost gone in the trench
+  vec2 cq = q * 0.0082 + 0.6 * vec2(vn(q * 0.005 + t * 0.06), vn(q * 0.005 - t * 0.045 + 7.0));
+  float w1 = web(cq, t * 0.5), w2 = web(cq * 1.55 + 3.1, t * 0.72);
+  // two drifting webs: their crossings flare, the rest stays a faint net; patches of light come and go
+  float ca = w1 * w2 * 1.7 + (w1 + w2) * 0.16;
+  ca *= 0.2 + 0.8 * smoothstep(0.25, 0.85, vn(q * 0.0045 + vec2(t * 0.035, t * 0.05)));
+  float cK = (0.035 + 0.13 * uLk) * (1.15 - 0.55 * yv);
+  vec3 cTint = mix(uRim, vec3(0.75, 0.95, 1.0), 0.35 * uLk);
+  // dive lantern pool (follows the cursor / wanders)
+  vec2 ld = (g - uLamp) / 230.0;
+  float lamp = exp(-dot(ld, ld) * 1.6);
+  col += cTint * ca * (cK + 0.10 * lamp);
+  col += vec3(1.0, 0.86, 0.66) * lamp * 0.035;
+  // reels read as columns of darker current, no hard boxes
+  float gx = abs(fract((g.x + 4.0) / 156.0) - 0.5) * 2.0;
+  col *= 0.8 + 0.2 * smoothstep(1.0, 0.55, gx);
+  // abyss glow welling up from below in the red zones
+  col += vec3(0.55, 0.04, 0.05) * uRed * pow(yv, 2.2) * (0.10 + 0.05 * sin(t * 1.3)) * (0.7 + 0.6 * murk);
+  // ---- win light pooling (3x3 neighbourhood so adjacent winners merge into one pool) ----
+  float pool = 0.0;
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 nc = cc + vec2(float(x), float(y));
+    if (nc.x >= 0.0 && nc.y >= 0.0 && nc.x < uGrid.x && nc.y < uGrid.y) {
+      float w = texture2D(uSt, (nc + 0.5) / uGrid).r;
+      vec2 dd = (g - (nc * 156.0 + 74.0)) / 92.0;
+      pool += w * exp(-dot(dd, dd));
+    }
+  }
+  pool = min(pool, 1.4);
+  float pulse = 0.78 + 0.22 * sin(t * 5.7);
+  // dim water around losers while a win is shown, and dim seats themselves
+  col *= mix(1.0, 0.62, uWinAny) * mix(0.55, 1.0, S.g);
+  vec3 warm = vec3(1.0, 0.46, 0.1);
+  col += warm * pool * pulse * (0.16 + 0.6 * ca);
+  // ---- socket: contact shadow, wet meniscus rim, hollow when empty ----
+  float lit = 0.55 + 0.45 * dot(normalize(lc + 0.001), normalize(uLamp - ctr + 0.001));
+  float ao = exp(-max(e, 0.0) / 13.0) * smoothstep(-3.0, 1.0, e);
+  col *= 1.0 - 0.72 * ao * occ;
+  float men = exp(-pow((e - 2.2) / 1.7, 2.0));
+  float halo = exp(-pow((e - 9.0) / 7.0, 2.0));
+  float wv = 0.6 + 0.4 * sin(atan(lc.y, lc.x) * 5.0 + t * 1.3 + cc.x * 2.0 + cc.y);
+  vec3 rimC = mix(cTint, warm, clamp(S.r, 0.0, 1.0));
+  col += rimC * occ * (men * (0.07 + 0.22 * lit * (0.35 + uLk) + 0.6 * ca + 0.7 * S.r * pulse) * wv + halo * (0.025 + 0.12 * ca + 0.18 * S.r * pulse)) * mix(0.4, 1.0, S.g);
+  // empty seat (symbol falling / gone): a dark hollow with a faint inner lip
+  float hole = (1.0 - occ) * smoothstep(1.0, -6.0, e);
+  col = mix(col, col * 0.3, hole);
+  col += cTint * (1.0 - occ) * exp(-pow((e + 3.0) / 2.0, 2.0)) * 0.08;
+  // ripple highlights
+  col += mix(vec3(0.5, 0.9, 1.0), uRim, 0.3) * rl * 0.18;
+  // ---- marine snow, two parallax layers drifting down through the reels ----
+  for (int k = 0; k < 2; k++) {
+    float fk = float(k);
+    float sz = 34.0 + fk * 22.0;
+    vec2 sp = (g + vec2(sin(t * 0.21 + fk) * 14.0, -t * (7.0 + fk * 9.0))) / sz;
+    vec2 id = floor(sp);
+    float hh = h21(id + fk * 31.0);
+    vec2 o = h22(id + 5.0 + fk) * 0.7 + 0.15;
+    float dd = length(fract(sp) - o) * sz;
+    col += mix(vec3(0.55, 0.7, 0.72), uRim, 0.25) * step(0.82, hh) * smoothstep(1.2 + fk * 0.6, 0.0, dd) * (0.10 + 0.08 * fk) * (0.5 + 0.5 * uLk + 0.4 * lamp);
+  }
+  // ---- frame vignette: the water darkens into the frame edges ----
+  vec2 ev = min(px, uRes - px);
+  float edge = min(ev.x, ev.y);
+  col *= 0.35 + 0.65 * smoothstep(0.0, 46.0, edge);
+  col += uRim * exp(-edge / 3.0) * 0.06;
+  col += (h21(px + fract(t) * 91.0) - 0.5) * 0.008;   // dither: no banding in the dark gradients
+  gl_FragColor = vec4(max(col, 0.0), 1.0);
+}`;
+    return [vs, fs];
+  }
+
+  wbgSetup(cv) {
+    const W = { cv, drops: [], prev: [], seat: [], t: 0, ms: 0 };
+    const gl = cv.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: false });
+    if (!gl) { W.fail = true; cv.style.display = 'none'; return W; }
+    const src = this.wbgShaders();
+    const sh = (type, s) => {
+      const o = gl.createShader(type);
+      gl.shaderSource(o, s);
+      gl.compileShader(o);
+      if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) console.warn('reel water shader', gl.getShaderInfoLog(o));
+      return o;
+    };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, src[0]));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, src[1]));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn('reel water program', gl.getProgramInfoLog(prog)); W.fail = true; cv.style.display = 'none'; return W; }
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'aP');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const tex = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+    const U = {};
+    ['uSt', 'uRes', 'uGrid', 'uTime', 'uLk', 'uRed', 'uWinAny', 'uRip', 'uOff', 'uTop', 'uBot', 'uFog', 'uRim', 'uLamp', 'uRipR', 'uDrop']
+      .forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
+    gl.uniform1i(U.uSt, 0);
+    W.gl = gl; W.U = U; W.tex = tex; W.px = new Uint8Array(6 * 5 * 4);
+    cv.addEventListener('webglcontextlost', (ev) => { ev.preventDefault(); W.lost = true; });
+    cv.addEventListener('webglcontextrestored', () => { if (this.WB === W) this.WB = null; });
+    return W;
+  }
+
+  // queue a ring of water at (x, y) in symbol-canvas px (2x grid); k = strength
+  wbgDrop(x, y, k) {
+    const W = this.WB;
+    if (!W || W.fail) return;
+    W.drops.push([x / 2, y / 2, W.t, k]);
+    if (W.drops.length > 8) W.drops.shift();
+  }
+
+  wbgFrame(dt) {
+    const cv = document.querySelector('canvas[data-wbg]');
+    if (!cv) return;
+    if (this.WB && (this.WB.cv !== cv || this.WB.lost)) this.WB = null;
+    if (!this.WB) this.WB = this.wbgSetup(cv);
+    const W = this.WB;
+    if (W.fail) return;
+    const t0 = performance.now();
+    const gl = W.gl, U = W.U, E = this.E;
+    const cols = (E && E.cols) || this.state.cols || 5;
+    const w = cols * 156 - 8 + 38, h = 810;
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    W.t += dt;
+    const T = W.t;
+    // per-seat state, eased so pools and rims fade instead of popping
+    const n = cols * 5, px = W.px;
+    let winAny = 0;
+    const k6 = Math.min(1, dt * 6), k10 = Math.min(1, dt * 10);
+    for (let i = 0; i < n; i++) {
+      const c = E && E.cells ? E.cells[i] : null;
+      let s = W.seat[i];
+      if (!s) s = W.seat[i] = { w: 0, d: 1, o: 1, r: 0.7 };
+      const alive = c && c.state !== 'gone';
+      const seated = alive && c.state === 'idle' && Math.abs(c.y - c.y0) < 40 && !(c.eatT >= 0);
+      const win = alive && c.hitT >= 0 ? (c.disT >= 0 ? Math.max(0, 1 - c.disT / 0.7) : 1) : 0;
+      const dis = alive && c.disT >= 0 ? Math.min(1, c.disT / 0.6) : 0;
+      s.w += (win - s.w) * k10;
+      s.d += ((alive ? Math.max(0.28, c.dark) : 1) - s.d) * k6;
+      s.o += ((seated ? 1 - dis : 0) - s.o) * (seated ? k6 : k10);
+      if (alive) {
+        // seat shape from the symbol's aux mask: lows are slightly smaller coins, tiles 0/6/8 fill the square
+        const st = this.defs().sym[c.sym] ? this.defs().sym[c.sym].t : 1;
+        const rt = st === 0 || st === 6 || st === 8 ? 1 : st >= 9 ? 0.45 : 0.7;
+        s.r = rt > 0.9 || s.r > 0.9 ? rt : s.r + (rt - s.r) * k6;
+      }
+      // cascade water: rings where coins splash down into their seat and where winners dissolve
+      const pv = W.prev[i];
+      if (c && pv && pv.c === c) {
+        if (c.landed && !pv.landed) this.wbgDrop(c.x, c.y0, 0.55);
+        if (c.disT >= 0 && pv.dis < 0) this.wbgDrop(c.x, c.y, 1);
+      }
+      W.prev[i] = { c, landed: c ? c.landed : true, dis: c ? c.disT : -1 };
+      winAny = Math.max(winAny, s.w);
+      const col = i % cols, row = Math.floor(i / cols), o = (row * cols + col) * 4;
+      px[o] = Math.round(Math.min(1, s.w) * 255);
+      px[o + 1] = Math.round(Math.min(1, s.d) * 255);
+      px[o + 2] = Math.round(Math.max(0, Math.min(1, s.o)) * 255);
+      px[o + 3] = Math.round(s.r * 255);
+    }
+    gl.viewport(0, 0, w, h);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, W.tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, cols, 5, 0, gl.RGBA, gl.UNSIGNED_BYTE, px.subarray(0, n * 4));
+    const V = this.visAt();
+    const lk = this.levelLight();
+    const c3 = (a, m) => [Math.min(1, a[0] * m / 255), Math.min(1, a[1] * m / 255), Math.min(1, a[2] * m / 255)];
+    const top = c3(V.mid, 1.25), bot = c3(V.bot, 1.0), fog = c3(V.fog, 1.5), rim = c3(V.rim, 1);
+    gl.uniform2f(U.uRes, w, h);
+    gl.uniform2f(U.uGrid, cols, 5);
+    gl.uniform1f(U.uOff, 19);
+    gl.uniform1f(U.uTime, T);
+    gl.uniform1f(U.uLk, lk);
+    gl.uniform1f(U.uRed, V.red || 0);
+    gl.uniform1f(U.uWinAny, Math.min(1, winAny));
+    gl.uniform3f(U.uTop, top[0], top[1], top[2]);
+    gl.uniform3f(U.uBot, bot[0], bot[1], bot[2]);
+    gl.uniform3f(U.uFog, fog[0], fog[1], fog[2]);
+    gl.uniform3f(U.uRim, rim[0], rim[1], rim[2]);
+    gl.uniform2f(U.uLamp, E ? E.lx / 2 : w / 2, E ? E.ly / 2 : 240);
+    // strike churn from the lifeline zone (E.rip is driven by the strike sequence; read-only here)
+    const R = E && E.rip;
+    let rk = 0;
+    if (R) { const hold = R.hold || 2.6; rk = R.t < 0.4 ? R.t / 0.4 : R.t < hold ? 1 : Math.max(0, 1 - (R.t - hold) / 0.8); }
+    gl.uniform1f(U.uRip, rk);
+    gl.uniform4f(U.uRipR, R ? R.x / 2 : 0, R ? R.y / 2 : 0, R ? Math.max(R.w, R.h) / 4 : 100, 0);
+    const D = new Float32Array(32);
+    W.drops = W.drops.filter((d) => T - d[2] < 2.2);
+    W.drops.forEach((d, j) => { D[j * 4] = d[0]; D[j * 4 + 1] = d[1]; D[j * 4 + 2] = d[2]; D[j * 4 + 3] = d[3]; });
+    gl.uniform4fv(U.uDrop, D);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    W.ms += (performance.now() - t0 - W.ms) * 0.05;
   }
 
   // 0..1 ambient light of the current (interpolated) depth level
@@ -5063,7 +5663,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       onDirVents: () => this.dirVents(),
       onDirBigWin: () => this.dirBigWin(),
       onDirUndertow: () => this.dirUndertow(),
-      ut: s.ut || { show: false, x: 0, y: 0, w: 0, h: 0, waterH: 0, waterT: '0s', waterOp: 0, foamK: 0, foamOp: 0, blobs: [], title: '', sub: '', cardTop: 0 },
+      ut: s.ut || { show: false, x: 0, y: 0, w: 0, h: 0, letters: [], sub: '', cls: '' },
       depthStr: ds,
       level: s.level,
       levelName: L.name,

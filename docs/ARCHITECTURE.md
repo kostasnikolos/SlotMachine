@@ -62,7 +62,7 @@ The page is stacked canvases plus DOM, from back to front:
 | `data-lev` | Background |
 | `data-lev3d` | The Three.js Leviathan |
 | `data-levfx` | Leviathan effects |
-| `data-wbg` | Reel water (work copy only, see below) |
+| `data-wbg` | Reel water |
 | `data-sym` | The WebGL symbol renderer |
 | `data-fx` | Particles |
 | `data-bw3d` / `data-bwfx` | The big-win 3D fall and its effects |
@@ -91,14 +91,14 @@ Larger changes are built by parallel builder agents, each on its own copy of `Ma
 
 | Copy | Status |
 |---|---|
-| `water/` | **Done, not merged.** One continuous water shader (`wbgShaders` / `wbgSetup` / `wbgFrame`) behind the reels, in place of boxed glass cells. Caustics, sockets with contact shadows, and win light that pools between adjacent winners. |
-| `telegraph/` | **Unfinished.** Undertow and Leviathan help telegraphs without boxes: an organic whirlpool and foam in place of the orange strike box. |
-| `creature/` | **Unfinished.** Leviathan realism: detail texture, wet specular, shadows and AO, face fixes, slower swimming. |
+| `water/` | **Merged.** One continuous water shader (`wbgShaders` / `wbgSetup` / `wbgFrame`) behind the reels, in place of boxed glass cells. Caustics, sockets with contact shadows, and win light that pools between adjacent winners. |
+| `telegraph/` | **Merged, not reviewed.** Undertow and Leviathan help telegraphs without boxes (organic whirlpool and foam, no orange strike box). The builder was stopped during visual checks, so it still needs a review pass. |
+| `creature/` | **Not started in the design.** The builder only got as far as extending `scripts/descent/build_leviathan.py` (hi-poly normal, AO and thinness bake via pymeshlab). That code is untested, and no assets have been regenerated. |
 | `audio/`, `bigwin/`, `bigwin3d/`, `hud/`, `jaw/`, `undertow/` | Earlier rounds, already merged. Kept for reference. |
 
 ## Roadmap
 
-1. Finish and merge `telegraph` and `creature`, merge `water`, review, rebuild.
+1. Review the merged water and telegraph work; do the Leviathan realism pass (`creature`).
 2. **Near-miss anticipation.** The pressure meter shudders when the player is close to the next level.
 3. **Bioluminescent bloom.** Random multiplier spores on symbols.
 4. **Redo the left depth column** (the "Sunlight Zone" shaft), which currently looks flat.

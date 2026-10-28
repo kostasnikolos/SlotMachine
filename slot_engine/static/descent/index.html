@@ -27,21 +27,36 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .dot.warn{background:#ff7a1a;box-shadow:0 0 10px #ff7a1a}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .frame{position:absolute;box-sizing:border-box;border:1px solid rgba(var(--a),.22);border-radius:16px;background:rgba(0,2,5,.34);box-shadow:0 0 0 1px rgba(0,0,0,.7),0 0 26px rgba(var(--a),.08),inset 0 0 90px rgba(0,0,0,.75);transition:left .7s cubic-bezier(.2,.8,.2,1),width .7s cubic-bezier(.2,.8,.2,1)}
-.cell{position:relative;border-radius:8px;background:rgba(0,4,8,.42);border:1px solid rgba(var(--a),.07);backdrop-filter:blur(2px);transition:opacity .25s,border-color .25s,box-shadow .25s}
-.cell::after{content:'';position:absolute;inset:0;border-radius:8px;background:linear-gradient(180deg,rgba(var(--a),.03),rgba(var(--a),0) 45%);pointer-events:none}
-.cell.win{border-color:rgba(255,122,26,.95);box-shadow:0 0 26px rgba(255,122,26,.5),inset 0 0 34px rgba(255,122,26,.28);animation:winp 1.1s ease-in-out infinite}
-@keyframes winp{0%,100%{box-shadow:0 0 18px rgba(255,122,26,.35),inset 0 0 24px rgba(255,122,26,.18)}50%{box-shadow:0 0 34px rgba(255,122,26,.7),inset 0 0 40px rgba(255,122,26,.38)}}
+.cell{position:relative;border-radius:50%;background:radial-gradient(circle,rgba(0,3,7,.7) 0,rgba(0,3,7,.7) 44%,rgba(var(--a),.06) 46%,rgba(0,3,7,0) 58%);transition:opacity .25s}
+.cell.win{background:radial-gradient(circle,rgba(255,122,26,.34) 0,rgba(255,122,26,.16) 48%,rgba(255,122,26,0) 70%);animation:winp 1.1s ease-in-out infinite}
+@keyframes winp{0%,100%{opacity:.7}50%{opacity:1}}
 .cell.dim{opacity:.32}
+/* one continuous body of water behind all symbols (WebGL, see wbgFrame); the circular .cell sockets above are only the no-WebGL fallback */
+.wbg{position:absolute;left:-19px;top:-19px;width:calc(100% + 38px);height:calc(100% + 38px);border-radius:15px;pointer-events:none}
+.frame>.c,.frame>.chip{z-index:3}
 .chip{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 16px;border-radius:999px;background:#010306;border:1px solid rgba(var(--a),.2);font-size:11px;letter-spacing:.3em;color:#8fb3bf}
 .chip.free{border-color:#ff7a1a;color:#ffd2ad;box-shadow:0 0 22px rgba(255,122,26,.35)}
 .vent{position:absolute;bottom:-17px;transform:translateX(-50%);padding:5px 12px;border-radius:8px;background:#1a0700;border:1px solid #ff7a1a;color:#ffd2ad;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;box-shadow:0 0 24px rgba(255,122,26,.7);animation:ventin .45s cubic-bezier(.2,1.6,.4,1)}
 @keyframes ventin{from{transform:translateX(-50%) scale(.2);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
-.strike{position:absolute;z-index:7;box-sizing:border-box;border-radius:10px;border:2px solid #ff7a1a;box-shadow:0 0 40px rgba(255,122,26,.8),inset 0 0 40px rgba(255,122,26,.45);animation:strikein .5s cubic-bezier(.2,1.4,.4,1),strikep .5s ease-in-out .5s infinite alternate;pointer-events:none}
-@keyframes strikein{from{transform:scale(1.6);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes strikep{to{box-shadow:0 0 70px rgba(255,122,26,1),inset 0 0 60px rgba(255,122,26,.6)}}
-.strikecard{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 14px);white-space:nowrap;text-align:center;padding:10px 20px;border-radius:12px;background:rgba(14,4,0,.92);border:1px solid #ff7a1a;box-shadow:0 0 30px rgba(255,122,26,.5);animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
-/* strikes in the top row show their card under the zone */
-.strikecard.below{bottom:auto;top:calc(100% + 14px)}
+/* lifeline / undertow telegraph: no boxes. The zone is shown on the reels themselves (shader pulse, shadow, water);
+   only a whispered name drifts up out of the dark beside it */
+.strike{position:absolute;z-index:7;pointer-events:none}
+.whisper{position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);white-space:nowrap;text-align:center;pointer-events:none;transition:opacity .7s ease,filter .7s ease,transform .9s cubic-bezier(.3,.7,.3,1)}
+/* strikes in the top row whisper under the zone */
+.whisper.below{bottom:auto;top:calc(100% + 2px)}
+.whisper.gone{opacity:0;filter:blur(10px);transform:translateX(-50%) translateY(18px) scale(1.12)}
+/* zones at the grid's edges keep their name over the reels instead of spilling out of the frame */
+.whisper.al{left:0;transform:none}
+.whisper.ar{left:auto;right:0;transform:none}
+.whisper.al.gone,.whisper.ar.gone{transform:translateY(18px) scale(1.12)}
+.whisper .wk{font-size:11px;letter-spacing:.62em;color:rgba(150,190,185,.55);text-shadow:0 0 10px #000,0 0 3px #000;opacity:0;animation:wkin 1.6s ease .15s forwards}
+.whisper .wn{font-size:34px;font-weight:600;line-height:1.15;letter-spacing:.34em;color:#dbe8e4;text-shadow:0 0 22px rgba(0,0,0,1),0 0 6px rgba(0,0,0,1),0 0 30px rgba(110,255,215,.18);animation:wflick 4.2s steps(1) 1.6s infinite}
+.whisper .wn span{display:inline-block;white-space:pre;opacity:0;animation:wlet 1.25s cubic-bezier(.2,.7,.2,1) forwards}
+.whisper .wb{font-size:12px;font-style:italic;letter-spacing:.32em;color:rgba(170,205,198,.62);text-shadow:0 0 12px #000,0 0 3px #000;opacity:0;animation:wkin 1.8s ease .9s forwards}
+.whisper.ut .wn{font-size:26px;letter-spacing:.5em;color:#b9cfca;text-shadow:0 0 18px #000,0 0 5px #000,0 0 26px rgba(90,140,120,.25)}
+@keyframes wlet{0%{opacity:0;filter:blur(12px);transform:translateY(10px) scale(1.4)}55%{opacity:.85}100%{opacity:1;filter:blur(0);transform:none}}
+@keyframes wkin{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:blur(0)}}
+@keyframes wflick{0%,100%{opacity:1}31%{opacity:.55}33%{opacity:1}71%{opacity:.8}72%{opacity:.35}74%{opacity:1}}
 @keyframes cardin{from{transform:translateX(-50%) translateY(12px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
 .sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(var(--a),0) 0deg,rgba(var(--a),0) 270deg,rgba(var(--a),.38) 359deg,rgba(var(--a),0) 360deg);animation:rot 4s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
@@ -161,7 +176,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </head>
 <body>
 <div id="stage"></div>
-<script src="/static/descent/app.js?v=784055c728"></script>
+<script src="/static/descent/app.js?v=9c3ebaf307"></script>
 <script>
 // letterbox the 1920x1080 stage into the window
 (function () {

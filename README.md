@@ -100,6 +100,7 @@ The build:
 
 ## Documentation
 
+- [docs/NEXT_SESSION_PROMPT.md](docs/NEXT_SESSION_PROMPT.md): setup steps and a ready-to-paste prompt for continuing in a new Claude session.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): how the engine, event timeline, frontend and build fit together, and the current work in progress.
 - [docs/undertow_feature.md](docs/undertow_feature.md): Undertow rules and maths.
 - [docs/big_win_and_sound_design.md](docs/big_win_and_sound_design.md): big-win tiers, skip rules, sound design and research.
