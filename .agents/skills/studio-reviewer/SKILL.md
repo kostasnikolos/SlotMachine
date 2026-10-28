@@ -19,5 +19,9 @@ The Studio Reviewer is the gatekeeper. Your job is to strictly audit the visual 
    - "Your image hasn't changed. You are hitting the Chromium cache. Inject a dynamic timestamp into your HTML script tags."
    - "The geometry is rigid. Your custom vertex shader is either not compiling or the uniforms are cached. Verify your `onBeforeCompile` logic."
 
+## Art Gates (G1–G7)
+
+For any phase that touches art, score every gate in `docs/art_bible.md` §6 from 1–5; PASS needs ≥4 on all of them. Use the Designer's `_sheet_64px_G1.png` and `_sheet_blur_G2.png`, and put our snapshot side by side with the reference frames before scoring G6. Baseline (2026-10-28): the original symbol set fails G2 — under blur every symbol is the same brass ring.
+
 ## Verdict Format
 Always begin your report with a clear **Verdict: PASS** or **Verdict: FAIL**. Follow up with bulleted visual findings, and conclude with actionable corrections for the Builder.

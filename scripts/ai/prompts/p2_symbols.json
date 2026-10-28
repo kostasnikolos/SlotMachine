@@ -1,0 +1,22 @@
+{
+  "phase": "P2",
+  "variants": 4,
+  "style": "Single slot-game symbol, dark painterly digital illustration, horror-industrial deep-sea mood, consistent with the set. Isolated subject centred on a pure flat black #000000 background for cut-out, NO frame, NO border, NO badge, NO background scenery. Strong readable silhouette at small sizes. Key light: bioluminescent cyan #3FE0D0 rim light from upper-left behind the subject; cold, low ambient. Desaturated palette of black, teal-grey, aged brass #B8874A, bone #F2E6CF. Visible brush texture, matte.",
+  "negative": "No text unless asked, no frame, no circle medallion, no border ornament, no background, no watermark, no bright rainbow colours, no cartoon style.",
+  "style_refs": [],
+  "jobs": [
+    {"id": "low_10", "prompt": "The numeral 10 carved deep into a chunk of cracked black basalt stone, chiselled edges catching faint cyan rim light. Glyph fills 70% of the frame."},
+    {"id": "low_j", "prompt": "The letter J carved deep into a chunk of cracked black basalt stone, chiselled edges catching faint cyan rim light. Glyph fills 70% of the frame."},
+    {"id": "low_q", "prompt": "The letter Q carved deep into a chunk of cracked black basalt stone, chiselled edges catching faint cyan rim light. Glyph fills 70% of the frame."},
+    {"id": "low_k", "prompt": "The letter K carved deep into a chunk of cracked black basalt stone, chiselled edges catching faint cyan rim light. Glyph fills 70% of the frame."},
+    {"id": "low_a", "prompt": "The letter A carved deep into a chunk of cracked black basalt stone, chiselled edges catching faint cyan rim light. Glyph fills 70% of the frame."},
+    {"id": "mid_helmet", "prompt": "An antique brass deep-sea diving helmet, three-quarter view, dented and corroded, cracked faceplate with darkness inside, barnacles."},
+    {"id": "mid_compass", "prompt": "A heavy antique brass ship's compass, three-quarter view, needle glowing faint cyan, verdigris corrosion."},
+    {"id": "high_angler", "prompt": "A grotesque deep-sea anglerfish lunging toward the viewer, jaw open with needle teeth, its lure glowing cyan. The creature slightly breaks the square edges of the image."},
+    {"id": "high_squid", "prompt": "A giant vampire squid with tentacles curling outward, pale bone-coloured skin with deep red undertones, cyan photophores. Tentacles slightly break the square edges of the image."},
+    {"id": "high_viper", "prompt": "A viperfish with enormous fangs, side-on striking pose, translucent skin, cyan photophores along the belly."},
+    {"id": "high_leviathan", "prompt": "Head of a colossal eldritch sea serpent leviathan, front three-quarter, jaw open, many eyes glowing cyan. The head slightly breaks the square edges of the image."},
+    {"id": "special_wild_maw", "prompt": "A circular ring of jagged teeth forming a gaping abyssal maw seen head-on, blood-red #E0314B glow deep inside the throat, the word WILD carved in bone-coloured stone across the lower third."},
+    {"id": "special_scatter", "prompt": "A glowing cyan sonar pulse emanating from an ancient brass sounding bell, concentric rings of light, the word SCATTER carved in bone-coloured stone across the lower third."}
+  ]
+}

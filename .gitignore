@@ -25,3 +25,6 @@ venv/
 ENV/
 .DS_Store
 scratch/
+
+# AI generation raw output (only cleaned, approved assets are committed)
+generated/
