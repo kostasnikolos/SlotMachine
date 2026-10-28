@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Descent — Stage v2</title>
+<style>
+  :root { --abyss:#02060A; --trench:#0B1418; --silt:#1E2C31; --bone:#F2E6CF; --mist:#C3D1D4; --bio:#3FE0D0; --brass:#B8874A; --brass2:#D9B77E; }
+  html, body { margin:0; height:100%; background:var(--abyss); overflow:hidden; color:var(--mist);
+    font-family: "Cinzel", "Trajan Pro", Georgia, serif; }
+  #stage { position:fixed; inset:0; display:block; width:100vw; height:100vh; }
+  #hud { position:fixed; left:0; right:0; bottom:0; height:84px; display:flex; align-items:center; justify-content:center;
+    gap:clamp(12px,4vw,48px); padding:0 16px env(safe-area-inset-bottom); box-sizing:border-box;
+    background:linear-gradient(to top, rgba(2,6,10,.92), rgba(2,6,10,0)); }
+  .readout { display:flex; flex-direction:column; align-items:center; min-width:72px; }
+  .readout small { font-size:10px; letter-spacing:.22em; color:#7f9296; }
+  .readout b { font-size:clamp(15px,2vw,20px); font-weight:600; color:var(--bone); letter-spacing:.04em; }
+  .bet { display:flex; align-items:center; gap:8px; }
+  .bet button { width:28px; height:28px; border:1px solid var(--silt); background:transparent; color:var(--brass2); font-size:16px; cursor:pointer; }
+  #spin { width:68px; height:68px; border-radius:50%; border:2px solid var(--brass); cursor:pointer;
+    background:radial-gradient(circle at 40% 35%, #1E2C31, #02060A 70%); color:var(--bone); font:600 12px/1 inherit; letter-spacing:.2em;
+    box-shadow: inset 0 0 0 4px #0B1418, inset 0 0 0 5px rgba(184,135,74,.5); }
+  #spin:disabled { opacity:.5; cursor:default; }
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div id="hud">
+  <div class="readout"><small>BALANCE</small><b id="balance">1,000.00</b></div>
+  <button id="spin" aria-label="Spin">SPIN</button>
+  <div class="readout"><small>BET</small>
+    <div class="bet"><button id="betDown" aria-label="Decrease bet">−</button><b id="bet">1.00</b><button id="betUp" aria-label="Increase bet">+</button></div>
+  </div>
+</div>
+<script>
+  // Load scripts in order, propagating the page's cache-busting query (?v=...) to our own files.
+  (function () {
+    var v = new URLSearchParams(location.search).get('v') || Date.now();
+    var list = ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'manifest.js?v=' + v, 'stage.js?v=' + v];
+    (function next(i) {
+      if (i >= list.length) return;
+      var s = document.createElement('script'); s.src = list[i]; s.onload = function () { next(i + 1); };
+      s.onerror = function () { console.error('failed to load ' + list[i]); window.__RENDER_ERROR = list[i]; };
+      document.body.appendChild(s);
+    })(0);
+  })();
+</script>
+</body>
+</html>

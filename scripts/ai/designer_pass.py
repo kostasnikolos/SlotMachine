@@ -68,17 +68,18 @@ def main():
     src, out = Path(args.src), Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     done = []
-    for f in sorted(src.glob("*.png")):
+    files = sorted(f for ext in ("png", "jpg", "jpeg", "webp") for f in src.glob(f"*.{ext}"))
+    for f in files:
         im = Image.open(f)
         if not args.no_cutout:
             im = cutout(im)
         im = grade(im)
-        im.save(out / f.name)
+        im.save(out / f"{f.stem}.png")
         done.append((f.stem, im))
         print(f"  {f.name}")
 
     if not done:
-        print("No PNGs found.")
+        print("No images found.")
         return
     sheet(done, 220).save(out / "_sheet_contact.png")
     sheet(done, 64).save(out / "_sheet_64px_G1.png")

@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-DEFAULT_MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-2.5-flash-image")
+DEFAULT_MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-nano-banana-2.1")
 
 
 def client():
@@ -33,7 +33,7 @@ def client():
 def list_models(c):
     for m in c.models.list():
         name = m.name.replace("models/", "")
-        if any(k in name for k in ("image", "imagen", "veo")):
+        if any(k in name for k in ("image", "imagen", "veo", "banana", "omni")):
             print(name)
 
 
@@ -86,7 +86,7 @@ def run(c, manifest_path, model, only, variants):
                 else:
                     images = gen_gemini(c, model, prompt, load_refs(manifest, job))
             except Exception as e:  # keep the batch going; the log records the failure
-                print(f"  {job['id']} v{v}: FAILED {type(e).__name__}: {e}")
+                print(f"  {job['id']} v{v}: FAILED {type(e).__name__}: {str(e)[:160]}")
                 log["jobs"].append({"id": job["id"], "variant": v, "error": str(e)})
                 continue
             for i, data in enumerate(images):
