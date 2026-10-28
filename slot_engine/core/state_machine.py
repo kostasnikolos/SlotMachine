@@ -16,6 +16,7 @@ from slot_engine.core.grid import GridMatrix, CellCoordinate
 from slot_engine.core.rng import SlotRNG
 from slot_engine.core.ways_evaluator import WaysEvaluator, EvaluationSummary
 from slot_engine.core.creature import LeviathansMaw
+from slot_engine.core.undertow import Undertow
 from slot_engine.core.vents import HydrothermalVents
 from slot_engine.core.progression import DepthGauge
 
@@ -51,6 +52,7 @@ class SlotStateMachine:
         self.evaluator = WaysEvaluator()
         self.vents = HydrothermalVents()
         self.creature = LeviathansMaw()
+        self.undertow = Undertow()
         self.gauge = DepthGauge()
 
     def execute_spin(
@@ -155,6 +157,7 @@ class SlotStateMachine:
             # Active spin multiplier: base 1x, or 2x in Ultra Mode
             current_spin_base_mult = GAME_RULES["core_global_multiplier"] if (is_ultra or self.gauge.current_level == DepthLevel.LEVEL_5_CORE) else 1
             tumble_step = 0
+            undertows_this_spin = 0
 
             # Re-arm the Leviathan creature assistance for every spin at depth!
             if self.gauge.current_level > DepthLevel.LEVEL_0_SUNLIGHT:
@@ -345,6 +348,16 @@ class SlotStateMachine:
                                 "grid": grid.to_dict(),
                             })
                             # Re-ignite cascade tumble loop!
+                            continue
+
+                    # UNDERTOW: only when no lifeline answered this dead tumble (Level 0, or the
+                    # lifeline is already spent this spin); capped per spin.
+                    if undertows_this_spin < GAME_RULES["undertow_max_per_spin"] and \
+                            self.undertow.roll(self.rng, self.gauge.current_level, bonus_phase=(is_bonus or is_free_spin)):
+                        undertow_ev = self.undertow.strike(grid, self.gauge.current_level, self.rng)
+                        if undertow_ev:
+                            undertows_this_spin += 1
+                            emit("UNDERTOW", undertow_ev.to_dict(grid))
                             continue
 
                     # No more actions for this spin step

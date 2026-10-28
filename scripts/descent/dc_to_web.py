@@ -11,6 +11,8 @@ renderVals(). This script turns the template into an htm/Preact template, keeps 
 swaps canvas asset URLs for files under /static/assets/descent/, and replaces the built-in engine copy with
 calls to /api/slot/spin and /api/slot/buy-bonus (the copy stays as an offline fallback).
 """
+import argparse
+import hashlib
 import json
 import os
 import re
@@ -97,7 +99,13 @@ def convert_template(body):
 
 
 def main():
-    src = open(SRC, encoding='utf-8').read()
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--src', default=SRC, help='design file (default: descent/design/Main.dc.html)')
+    ap.add_argument('--out', default=OUT_DIR, help='output folder under slot_engine/static (default: descent/)')
+    args = ap.parse_args()
+    out_dir = os.path.abspath(args.out)
+    app_url = '/static/' + os.path.relpath(os.path.join(out_dir, 'app.js'), STATIC).replace(os.sep, '/')
+    src = open(args.src, encoding='utf-8').read()
     for k, v in ASSETS.items():
         src = src.replace('/_blob/' + k, A + v)
     dc = src[src.index('<x-dc>') + 6: src.index('</x-dc>')]
@@ -140,6 +148,7 @@ def main():
         "render(html`<${DescentGame} ...${props} />`, document.getElementById('stage'));\n"
         '})();\n'
     )
+    app_url += '?v=' + hashlib.sha1(app.encode('utf-8')).hexdigest()[:10]  # bust browser caches on every rebuild
     page = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -158,7 +167,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:#000}}
 </head>
 <body>
 <div id="stage"></div>
-<script src="/static/descent/app.js"></script>
+<script src="{app_url}"></script>
 <script>
 // letterbox the 1920x1080 stage into the window
 (function () {{
@@ -176,10 +185,11 @@ html,body{{margin:0;height:100%;overflow:hidden;background:#000}}
 </body>
 </html>
 '''
-    open(os.path.join(OUT_DIR, 'app.js'), 'w', encoding='utf-8').write(app)
-    open(os.path.join(OUT_DIR, 'index.html'), 'w', encoding='utf-8').write(page)
+    os.makedirs(out_dir, exist_ok=True)
+    open(os.path.join(out_dir, 'app.js'), 'w', encoding='utf-8').write(app)
+    open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(page)
     left = re.findall(r'/_blob/\w+', app + page)
-    print('wrote', os.path.join(OUT_DIR, 'index.html'), 'and app.js', len(app) // 1024, 'KB;', 'unmapped assets:', left or 'none')
+    print('wrote', os.path.join(out_dir, 'index.html'), 'and app.js', len(app) // 1024, 'KB;', 'unmapped assets:', left or 'none')
 
 
 if __name__ == '__main__':

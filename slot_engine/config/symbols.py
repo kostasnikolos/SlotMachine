@@ -78,20 +78,22 @@ SYMBOL_CATEGORIES: Dict[SymbolType, SymbolCategory] = {
 # Paytable expressed as multiplier of total base bet for 3, 4, 5, and 6 consecutive matching reels
 # (Reels 1-5 in base, Reels 1-6 in Ultra Bonus 6x5 mode)
 SYMBOL_PAYTABLE: Dict[SymbolType, Dict[int, float]] = {
+    # UNDERTOW retune: every pay is x0.96 of the 96% rebalance ladder (rounded to 4 dp) to pay for
+    # the Undertow help (see GAME_RULES["undertow_chance"]).
     # REBALANCE: flatter ladder (apex 5-reel ~6x a low instead of 20x) and 6-reel pays only
     # just above 5-reel pays. Deep levels are rich because they are dense in mids/highs and
     # multipliers, not because individual symbols pay 10-20x more than lows.
-    SymbolType.HIGH_LEVIATHAN: {3: 0.10, 4: 0.25, 5: 0.50, 6: 0.52},
-    SymbolType.HIGH_SQUID:     {3: 0.07, 4: 0.16, 5: 0.32, 6: 0.33},
-    SymbolType.HIGH_ANGLER:    {3: 0.06, 4: 0.13, 5: 0.26, 6: 0.27},
-    SymbolType.HIGH_VIPER:     {3: 0.05, 4: 0.11, 5: 0.22, 6: 0.23},
-    SymbolType.MID_COMPASS:    {3: 0.04, 4: 0.09, 5: 0.18, 6: 0.19},
-    SymbolType.MID_HELMET:     {3: 0.035, 4: 0.08, 5: 0.15, 6: 0.16},
-    SymbolType.LOW_A:          {3: 0.03, 4: 0.06, 5: 0.12, 6: 0.13},
-    SymbolType.LOW_K:          {3: 0.025, 4: 0.05, 5: 0.10, 6: 0.11},
-    SymbolType.LOW_Q:          {3: 0.025, 4: 0.05, 5: 0.10, 6: 0.11},
-    SymbolType.LOW_J:          {3: 0.02, 4: 0.04, 5: 0.08, 6: 0.09},
-    SymbolType.LOW_10:         {3: 0.02, 4: 0.04, 5: 0.08, 6: 0.09},
+    SymbolType.HIGH_LEVIATHAN: {3: 0.096, 4: 0.24, 5: 0.48, 6: 0.4992},
+    SymbolType.HIGH_SQUID:     {3: 0.0672, 4: 0.1536, 5: 0.3072, 6: 0.3168},
+    SymbolType.HIGH_ANGLER:    {3: 0.0576, 4: 0.1248, 5: 0.2496, 6: 0.2592},
+    SymbolType.HIGH_VIPER:     {3: 0.048, 4: 0.1056, 5: 0.2112, 6: 0.2208},
+    SymbolType.MID_COMPASS:    {3: 0.0384, 4: 0.0864, 5: 0.1728, 6: 0.1824},
+    SymbolType.MID_HELMET:     {3: 0.0336, 4: 0.0768, 5: 0.144, 6: 0.1536},
+    SymbolType.LOW_A:          {3: 0.0288, 4: 0.0576, 5: 0.1152, 6: 0.1248},
+    SymbolType.LOW_K:          {3: 0.024, 4: 0.048, 5: 0.096, 6: 0.1056},
+    SymbolType.LOW_Q:          {3: 0.024, 4: 0.048, 5: 0.096, 6: 0.1056},
+    SymbolType.LOW_J:          {3: 0.0192, 4: 0.0384, 5: 0.0768, 6: 0.0864},
+    SymbolType.LOW_10:         {3: 0.0192, 4: 0.0384, 5: 0.0768, 6: 0.0864},
 }
 
 
@@ -108,6 +110,18 @@ GAME_RULES: Dict[str, Any] = {
     "creature_respins_awarded": 0,      # Reported in CREATURE_LIFELINE_STRIKE; strikes do NOT add spins
     "pearls_for_ascension": 5,          # Pearls needed in a round to ascend to Level 5
     "ascension_spins": 2,               # Spins added on pearl ascension
+    # UNDERTOW (helping feature): on a dead tumble, a 1x2 / 2x1 / 2x2 block of symbols is dragged
+    # under the water and fresh symbols (UNDERTOW_SYMBOL_WEIGHTS) surface in their place, then the
+    # tumble is re-evaluated. Ordering: the Leviathan lifeline always acts first; the undertow can
+    # only answer a dead tumble when no lifeline is armed (Level 0, or the lifeline is spent for this
+    # spin). At most `undertow_max_per_spin` per spin (free spins count separately).
+    # Roll per eligible dead tumble: "base" = paid spin at Level 0, "deep" = paid spin at Level 1-4
+    # (xBet / after a level-up; lifeline already spent), "bonus" = free spins / bought bonus at
+    # Level 1-4, "core" = any spin at Level 5 (Ultra 6x5). Tuned with the x0.96 paytable so every
+    # mode stays ~96% (see docs/undertow_feature.md).
+    "undertow_chance": {"base": 0.13, "deep": 0.05, "bonus": 0.125, "core": 0.25},
+    "undertow_max_per_spin": 1,
+    "undertow_block_weights": {"1x2": 35, "2x1": 35, "2x2": 30},  # "HxW" block shape weights
 }
 
 

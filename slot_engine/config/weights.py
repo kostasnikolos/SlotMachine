@@ -148,3 +148,23 @@ CREATURE_WILD_MULT_WEIGHTS: List[Tuple[int, int]] = [
     (2, 20),
     (3, 5),
 ]
+
+
+# UNDERTOW: replacement symbols surfacing after a block is dragged under (see GAME_RULES["undertow_*"]).
+# Leans toward mids/highs; wilds rare. Symbols purged at the active depth (level weight 0) and the
+# symbol that just sank are excluded per cell, so a cell always visibly changes.
+UNDERTOW_SYMBOL_WEIGHTS: Dict[SymbolType, int] = {
+    SymbolType.LOW_10: 4,
+    SymbolType.LOW_J: 4,
+    SymbolType.LOW_Q: 5,
+    SymbolType.LOW_K: 5,
+    SymbolType.LOW_A: 6,
+    SymbolType.MID_HELMET: 14,
+    SymbolType.MID_COMPASS: 14,
+    SymbolType.HIGH_VIPER: 12,
+    SymbolType.HIGH_ANGLER: 11,
+    SymbolType.HIGH_SQUID: 10,
+    SymbolType.HIGH_LEVIATHAN: 9,
+    SymbolType.WILD_MAW: 2,
+    SymbolType.DEAD_SEDIMENT: 0,
+}

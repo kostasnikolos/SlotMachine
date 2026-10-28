@@ -67,6 +67,10 @@ class SlotRNG:
         """Sample k unique elements uniformly without replacement."""
         return self._rng.sample(sequence, k)
 
+    def weighted_choice(self, items: Sequence[T], weights: Sequence[float]) -> T:
+        """Pick one element with the given relative weights."""
+        return self._rng.choices(items, weights=weights, k=1)[0]
+
     def random_float(self) -> float:
         """Uniform float in [0.0, 1.0)."""
         return self._rng.random()

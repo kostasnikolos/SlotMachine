@@ -3,15 +3,24 @@
 
 For each part: parse GLB -> weld + quadric decimation that preserves UVs (pymeshlab)
 -> rebuild per-vertex UVs/normals -> downsized textures + a cyan-vein emissive map
--> write a compact GLB. Re-run any time:
-    pip install pymeshlab numpy pillow && python3 scripts/descent/build_leviathan.py
+-> bake the hi-poly onto the low-poly UV atlas: an object-space normal map (all of the
+   sculpted relief the decimation threw away), ray-traced ambient occlusion and a
+   thinness (shape-diameter) map -> write the web assets. Re-run any time:
+    pip install pymeshlab numpy pillow scipy && python3 scripts/descent/build_leviathan.py [head|body|tail ...]
 Inputs: the raw Tripo GLBs in artifacts/. Outputs: slot_engine/static/assets/descent/lev_*.json + lev_*_{base,normal,mr,emissive}.jpg
+
+Map layout (flagged in lev_*.json so older JSON keeps the old meaning):
+  normal  'nrm': 'object'  -> RGB = hi-poly normal in creature space (x along the spine, y dorsal, z side), *0.5+0.5
+  mr      'mr': 'ao-rough-thin' -> R = baked ambient occlusion, G = roughness (Tripo), B = thinness (1 = thin: spines, teeth, fins)
+  head    'eyes': [{c, n, r}] -> eye centres / outward normals / radii in head creature space (from the painted red irises)
 """
 import io
 import json
 import os
 import struct
 import sys
+
+import tempfile
 
 import numpy as np
 import pymeshlab
@@ -26,6 +35,8 @@ PARTS = [
     ('tail', 'dragon tail 3d model_Clone1.glb', 16000),
 ]
 TEX = 2048
+BAKE = 2048       # baked normal / AO / thinness resolution
+AO_RAYS = 128
 
 # Creature space written into the GLBs: x = along the spine (0 = joint, + toward the tail),
 # y = dorsal, z = side, all in units of the body radius, so the swim shader can bend them.
@@ -115,6 +126,104 @@ def decimate(pos, uv, idx, target):
     return nv.astype(np.float32), nuv.astype(np.float32), nn.astype(np.float32), nf.astype(np.uint32)
 
 
+def creature_normals(name, n):
+    """Source-space normals -> creature space (same axis swap as to_creature_space)."""
+    if RIG[name]['kind'] == 'rigid':
+        return n
+    return np.stack([-n[..., 2], n[..., 1], n[..., 0]], -1)
+
+
+def bake_maps(name, pos, idx, v, t, f):
+    """Bake the hi-poly onto the decimated mesh's UV atlas.
+    Returns (object-space normal image in creature space, AO [0..1] image, thinness [0..1] image), all BAKE^2,
+    oriented like the glTF textures (row 0 = v 0)."""
+    ms = pymeshlab.MeshSet()
+    ms.add_mesh(pymeshlab.Mesh(vertex_matrix=pos, face_matrix=idx))
+    ms.meshing_remove_duplicate_vertices()
+    ms.compute_normal_per_vertex()
+    ms.compute_scalar_ambient_occlusion(rays=AO_RAYS)
+    ao = ms.current_mesh().vertex_scalar_array().copy()
+    ms.compute_scalar_by_shape_diameter_function_per_vertex(rays=48, cone_amplitude=90)
+    sdf = ms.current_mesh().vertex_scalar_array().copy()
+    hi = ms.current_mesh()
+    hv, hf, hn = hi.vertex_matrix(), hi.face_matrix(), hi.vertex_normal_matrix()
+    ao = np.clip(ao / 16.0, 0, 1)                                    # fraction of the hemisphere that sees open water
+    sdf = np.where(np.isfinite(sdf), sdf, 10.0) / RIG[name]['r']     # local thickness in body radii (no hit = open = thick)
+    thin = np.clip(1 - (sdf - 0.06) / 0.5, 0, 1) ** 1.5
+    col = np.stack([ao, thin, np.zeros_like(ao), np.ones_like(ao)], 1)
+    ms2 = pymeshlab.MeshSet()
+    ms2.add_mesh(pymeshlab.Mesh(vertex_matrix=hv, face_matrix=hf, v_normals_matrix=hn, v_color_matrix=col))
+    ms2.add_mesh(pymeshlab.Mesh(vertex_matrix=v.astype(np.float64), face_matrix=f.astype(np.int32),
+                                w_tex_coords_matrix=t[f.reshape(-1)].astype(np.float64)))
+    out = {}
+    with tempfile.TemporaryDirectory() as tmp:
+        cwd = os.getcwd()
+        os.chdir(tmp)
+        try:
+            for key, attr in (('nrm', 'Vertex Normal'), ('col', 'Vertex Color')):
+                ms2.transfer_attributes_to_texture_per_vertex(sourcemesh=0, targetmesh=1, attributeenum=attr, textname=key + '.png',
+                                                              textw=BAKE, texth=BAKE, overwrite=False, pullpush=True,
+                                                              upperbound=pymeshlab.PercentageValue(2))
+            ms2.set_current_mesh(1)
+            ms2.save_current_mesh(os.path.join(tmp, 'lo.obj'))
+            print('  baked', sorted(os.listdir(tmp)), flush=True)
+            for key in ('nrm', 'col'):
+                out[key] = np.asarray(Image.open(os.path.join(tmp, key + '.png')).convert('RGB'))[::-1].astype(np.float32) / 255
+        finally:
+            os.chdir(cwd)
+    nrm = creature_normals(name, out['nrm'] * 2 - 1)
+    nrm /= np.linalg.norm(nrm, axis=-1, keepdims=True) + 1e-6
+    nimg = Image.fromarray(np.clip((nrm * 0.5 + 0.5) * 255 + 0.5, 0, 255).astype(np.uint8))
+    return nimg, out['col'][..., 0], out['col'][..., 1]
+
+
+def find_eyes(name, pos, uv, idx, base):
+    """Eye centres from the painted red irises (head only), in creature space."""
+    if name != 'head':
+        return None
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    a = np.asarray(base.convert('RGB')).astype(np.float32) / 255
+    h = a.shape[0]
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    red = np.clip((r - np.maximum(g, b) - 0.18) * 3.5, 0, 1) * np.clip((r - 0.35) * 3, 0, 1)
+    m = red[np.clip((uv[:, 1] * h).astype(int), 0, h - 1), np.clip((uv[:, 0] * h).astype(int), 0, h - 1)] > 0.3
+    e = np.concatenate([idx[:, [0, 1]], idx[:, [1, 2]], idx[:, [2, 0]]])
+    e = e[m[e[:, 0]] & m[e[:, 1]]]
+    sel = np.where(m)[0]
+    lut = np.full(len(pos), -1)
+    lut[sel] = np.arange(len(sel))
+    n, lab = connected_components(coo_matrix((np.ones(len(e)), (lut[e[:, 0]], lut[e[:, 1]])), shape=(len(sel), len(sel))))
+    # outward normals of the hi-poly at those vertices
+    fn = np.cross(pos[idx[:, 1]] - pos[idx[:, 0]], pos[idx[:, 2]] - pos[idx[:, 0]])
+    vn = np.zeros_like(pos)
+    for k in range(3):
+        np.add.at(vn, idx[:, k], fn)
+    rig = RIG[name]
+    eyes = []
+    for k in range(n):
+        ids = sel[lab == k]
+        if len(ids) < 200:
+            continue
+        c = (pos[ids].mean(0) - np.array(rig['anchor'])) / rig['r']
+        nn = vn[ids].sum(0)
+        nn /= np.linalg.norm(nn) + 1e-9
+        rad = float(np.linalg.norm((pos[ids] - pos[ids].mean(0)) / rig['r'], axis=1).max())
+        eyes.append({'c': c.round(4).tolist(), 'n': nn.round(4).tolist(), 'r': round(rad, 4)})
+    # merge painted islands of the same eye (one per side)
+    out = []
+    for side in (-1, 1):
+        g_ = [e_ for e_ in eyes if np.sign(e_['c'][2]) == side]
+        if not g_:
+            continue
+        w = np.array([e_['r'] for e_ in g_])
+        c = np.average([e_['c'] for e_ in g_], 0, w)
+        nn = np.average([e_['n'] for e_ in g_], 0, w)
+        nn /= np.linalg.norm(nn)
+        out.append({'c': c.round(4).tolist(), 'n': nn.round(4).tolist(), 'r': round(float(max(w)), 4)})
+    return out
+
+
 def emissive_from_base(base):
     """Cyan cracks: saturated, blue-green dominant pixels -> glow map."""
     a = np.asarray(base.convert('RGB').resize((1024, 1024), Image.LANCZOS)).astype(np.float32) / 255
@@ -197,7 +306,7 @@ def write_glb(path, v, uv, n, f, tex):
         fh.write(struct.pack('<II', len(bb), 0x004E4942) + bb)
 
 
-def write_web(name, v, uv, n, f, tex):
+def write_web(name, v, uv, n, f, tex, extra=None):
     """Artifact-friendly copy: compact JSON geometry (base64 typed arrays) + one JPG per map."""
     import base64
     used = np.unique(f)
@@ -209,7 +318,7 @@ def write_web(name, v, uv, n, f, tex):
            'uv': b64(np.round(np.clip(uv, 0, 1) * 65535).astype(np.uint16)),
            'idx': b64(f.astype(np.uint16 if len(v) < 65536 else np.uint32).reshape(-1)),
            'idx32': bool(len(v) >= 65536),
-           'min': v.min(0).round(4).tolist(), 'max': v.max(0).round(4).tolist()}
+           'min': v.min(0).round(4).tolist(), 'max': v.max(0).round(4).tolist(), **(extra or {})}
     with open(os.path.join(OUT, f'lev_{name}.json'), 'w') as fh:
         json.dump(geo, fh, separators=(',', ':'))
     for k, raw in tex.items():
@@ -225,10 +334,17 @@ def main():
         pos, uv, idx, imgs = read_glb(os.path.join(SRC, src))
         print(name, 'src', len(pos), 'verts', len(idx), 'tris', {k: v.size for k, v in imgs.items()}, flush=True)
         v, t, n, f = decimate(pos, uv, idx, target)
+        nimg, ao, thin = bake_maps(name, pos, idx, v, t, f)
+        eyes = find_eyes(name, pos, uv, idx, imgs['base'])
         v, n, f = to_creature_space(name, v, n, f)
-        tex = {'base': jpg(grade_base(imgs['base']), TEX), 'normal': jpg(imgs['normal'], TEX, 92), 'mr': jpg(imgs['mr'], 1024),
+        rough = np.asarray(imgs['mr'].convert('RGB').resize((BAKE, BAKE), Image.LANCZOS))[..., 1]
+        mr = Image.fromarray(np.stack([np.clip(ao * 255 + 0.5, 0, 255).astype(np.uint8), rough,
+                                       np.clip(thin * 255 + 0.5, 0, 255).astype(np.uint8)], -1))
+        tex = {'base': jpg(grade_base(imgs['base']), TEX), 'normal': jpg(nimg, BAKE, 95), 'mr': jpg(mr, BAKE, 92),
                'emissive': jpg(emissive_from_base(imgs['base']), 1024)}
-        write_web(name, v, t, n, f, tex)
+        extra = {'nrm': 'object', 'mr': 'ao-rough-thin', **({'eyes': eyes} if eyes else {})}
+        write_web(name, v, t, n, f, tex, extra)
+        print(' eyes', eyes, flush=True) if eyes else None
         print(' ->', name, len(v), 'verts', len(f), 'tris', flush=True)
 
 
