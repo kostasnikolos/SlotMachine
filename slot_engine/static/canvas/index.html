@@ -6,17 +6,31 @@
 <script src="./support.js"></script>
 <script src="assets/three.js"></script>
 <script src="../js/feel.js"></script>
+<script src="audio_dark.js"></script>
 <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#dc-root{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}</style>
 <script>
-// The artboard is a fixed 1920x1080 stage: scale it to fit the window and keep it centred.
+// The artboard is a fixed stage: 1920x1080 in landscape, 1080x1920 in portrait (chosen from the window shape,
+// forceable with ?orient=portrait|landscape). It is scaled to fit the window and kept centred.
 (function () {
+  function orient() {
+    var q = /[?&]orient=(portrait|landscape)/.exec(location.search);
+    if (q) return q[1];
+    return window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+  }
+  window.__dcOrient = orient;
   function fit() {
     var root = document.getElementById('dc-root');
     if (!root) return;
-    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    root.style.transform = 'translate(' + (-960 * s) + 'px,' + (-540 * s) + 'px) scale(' + s + ')';
+    var por = orient() === 'portrait', W = por ? 1080 : 1920, H = por ? 1920 : 1080;
+    var s = Math.min(window.innerWidth / W, window.innerHeight / H);
+    root.style.width = W + 'px';
+    root.style.height = H + 'px';
+    root.style.transform = 'translate(' + (-W / 2 * s) + 'px,' + (-H / 2 * s) + 'px) scale(' + s + ')';
+    document.documentElement.setAttribute('data-orient', por ? 'portrait' : 'landscape');
   }
+  window.__dcFit = fit;
   window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
   document.addEventListener('DOMContentLoaded', function () { fit(); setTimeout(fit, 300); setTimeout(fit, 1500); });
 })();
 </script>
@@ -174,16 +188,39 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .hud.d4 .panel,.hud.d5 .panel,.hud.d4 .frame,.hud.d5 .frame{animation:hflick 5.3s steps(1) infinite}
 @keyframes hflick{0%,100%{opacity:1}31%{opacity:.82}32%{opacity:1}33%{opacity:.9}34%{opacity:1}77%{opacity:.88}78%{opacity:1}}
 @media (prefers-reduced-motion: reduce){.hud.d4 .panel,.hud.d5 .panel,.hud.d4 .frame,.hud.d5 .frame,.hud.d5 .depthnum,.lu::after{animation:none}}
+/* ---- portrait stage (1080x1920): same recipe, bigger touch targets, one instrument strip under the frame ---- */
+.por header .ibtn{min-width:64px;height:64px}
+.por footer .ibtn{min-width:88px;height:88px;font-size:15px;letter-spacing:.18em}
+.por footer .sbtn{width:88px;min-width:88px;height:88px}
+.por .wallet{align-items:center;justify-content:space-between;padding:0 8px}
+.por .wv{font-size:30px}.por .wk{font-size:12px}
+.por .depthnum{font-size:58px}
+.por .zonenm{font-size:12px}
+.por .radar{width:150px;height:150px}
+.por .icorow{height:48px;padding:0 10px}
+.por .hico{width:56px;height:38px;font-size:16px}
+.por .pd{width:12px;height:12px}
+.por .lu .depth{font-size:96px}.por .lu .name{font-size:40px;line-height:1.1}
+.por .feat .title{font-size:58px;text-align:center;line-height:1.1}
+.por .bwfront{padding-top:0}.por .bwcol{padding:40px 30px}
+.por .bwtitle{font-size:78px}.por .bwamt{font-size:108px}
+.por .bcards{flex-wrap:wrap;justify-content:center;max-width:960px}
+.por .bcard{width:450px;padding:28px;gap:14px}
+.por .bcard .t{font-size:22px}.por .bcard .p{font-size:36px}
+.por .bcard .d{font-size:17px;min-height:132px}
+.por .bbtn{height:68px;font-size:17px}
+.por .modal .ibtn{min-width:160px;height:76px;font-size:15px}
+.por .rw{font-size:16px;padding:9px 14px}
 </style>
 </helmet>
-<div class="hud {{shake}} {{deepCls}}" style="position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000307; --a: {{accentRgb}}; --shakeMs: {{shakeMs}}" onPointerMove="{{onMove}}" onPointerLeave="{{onLeave}}" onPointerDown="{{onFirstTouch}}">
+<div class="hud {{shake}} {{deepCls}} {{orientCls}}" style="position: relative; width: {{rootW}}px; height: {{rootH}}px; overflow: hidden; background: #000307; --a: {{accentRgb}}; --shakeMs: {{shakeMs}}" onPointerMove="{{onMove}}" onPointerLeave="{{onLeave}}" onPointerDown="{{onFirstTouch}}">
 
-<canvas data-lev="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none"></canvas>
-<canvas data-lev3d="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: {{levZ}}; opacity: {{levOp}}; transition: opacity {{levOpT}}"></canvas>
-<canvas data-levfx="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: {{levZ}}"></canvas>
+<canvas data-lev="1" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none"></canvas>
+<canvas data-lev3d="1" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: {{levZ}}; opacity: {{levOp}}; transition: opacity {{levOpT}}"></canvas>
+<canvas data-levfx="1" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: {{levZ}}"></canvas>
 <sc-if value="{{scanlines}}" hint-placeholder-val="{{ true }}"><div class="scan"></div></sc-if>
 
-<header style="position: absolute; left: 48px; right: 48px; top: 0; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid rgba(var(--a),0.06)">
+<header style="position: absolute; left: {{margin}}px; right: {{margin}}px; top: 0; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid rgba(var(--a),0.06)">
 <div style="display: flex; align-items: center; gap: 16px">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" class="acc" style="opacity: 0.75; filter: drop-shadow(0 0 4px rgba(var(--a),0.4))"><path d="M22 3 L39 13 V31 L22 41 L5 31 V13 Z"></path><path d="M10 22 C15 14 29 14 34 22 C29 30 15 30 10 22 Z"></path><path d="M22 16 C20 19 20 25 22 28 C24 25 24 19 22 16 Z" fill="#ff7a1a" stroke="#ff7a1a"></path></svg>
 <div style="display: flex; flex-direction: column; gap: 2px">
@@ -210,6 +247,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </div>
 </header>
 
+<sc-if value="{{landscape}}" hint-placeholder-val="{{ true }}">
 <section class="panel pl" style="left: 48px; top: 120px; width: 330px; height: 796px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px">
 <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
 <div style="display: flex; flex-direction: column; gap: 2px">
@@ -221,16 +259,17 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </div>
 <canvas data-abyss="1" width="564" height="1300" aria-hidden="true" style="display: block; width: 282px; height: 650px; margin-top: auto; border-radius: 10px"></canvas>
 </section>
+</sc-if>
 
-<section class="frame" style="left: {{frameLeft}}px; top: 104px; width: {{frameW}}px; height: 812px; padding: 19px">
+<section class="frame" style="left: {{frameLeft}}px; top: {{frameTop}}px; width: {{frameW}}px; height: {{frameH}}px; padding: 19px">
 <div class="c tl" style="width: 30px; height: 30px; border-top-left-radius: 16px"></div><div class="c tr" style="width: 30px; height: 30px; border-top-right-radius: 16px"></div><div class="c bl" style="width: 30px; height: 30px; border-bottom-left-radius: 16px"></div><div class="c br" style="width: 30px; height: 30px; border-bottom-right-radius: 16px"></div>
 <div class="{{topChipCls}}" style="top: -15px">{{topChip}}</div>
-<div style="position: relative; width: {{gridW}}px; height: 772px">
-<div style="display: grid; grid-template-columns: repeat({{cols}}, minmax(0, 1fr)); grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 8px; width: {{gridW}}px; height: 772px">
+<div style="position: relative; width: {{gridW}}px; height: {{gridH}}px; margin-top: {{gridTop}}px">
+<div style="display: grid; grid-template-columns: repeat({{cols}}, minmax(0, 1fr)); grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 8px; width: {{gridW}}px; height: {{gridH}}px">
 <sc-for list="{{slots}}" as="sl" hint-placeholder-count="25"><div class="{{sl.cls}}"></div></sc-for>
 </div>
-<canvas data-sym="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: 772px; pointer-events: none"></canvas>
-<canvas data-fx="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: 772px; pointer-events: none"></canvas>
+<canvas data-sym="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: {{gridH}}px; pointer-events: none"></canvas>
+<canvas data-fx="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: {{gridH}}px; pointer-events: none"></canvas>
 <sc-if value="{{strike.show}}" hint-placeholder-val="{{ false }}">
 <div class="strike" style="left: {{strike.x}}px; top: {{strike.y}}px; width: {{strike.w}}px; height: {{strike.h}}px">
 <div class="strikecard {{strike.cardCls}}">
@@ -249,6 +288,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 
 </section>
 
+<sc-if value="{{landscape}}" hint-placeholder-val="{{ true }}">
 <section class="panel pr" style="right: 48px; top: 120px; width: 330px; height: 796px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
 <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
 <div style="display: flex; justify-content: center">
@@ -280,7 +320,53 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <div class="hico {{ventIcoCls}}" title="Hydrothermal vents"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"></path><path d="M8 21l2-7h4l2 7"></path><path d="M11 10c-1-2 1-3 0-5"></path><path d="M14 10c-1-2 1-3 0-5"></path></svg></div>
 </div>
 </section>
+</sc-if>
 
+<sc-if value="{{portrait}}" hint-placeholder-val="{{ false }}">
+<section class="panel ps" style="left: 36px; top: {{stripTop}}px; width: 1008px; height: 332px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px">
+<div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+<div style="display: flex; align-items: center; gap: 20px; height: 222px">
+<div style="width: 300px; flex: none; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span class="mono depthnum">{{depthStr}}</span>
+<span class="mono acc" style="font-size: 18px; opacity: 0.7">m</span>
+</div>
+<span class="zonenm">{{levelName}}</span>
+</div>
+<canvas data-abyss="1" data-horiz="1" width="1300" height="564" aria-hidden="true" style="display: block; width: 300px; height: 130px; border-radius: 10px"></canvas>
+</div>
+<div class="radar">
+<div style="position: absolute; inset: 28px; border-radius: 50%; border: 1px solid rgba(var(--a),0.1)"></div>
+<div style="position: absolute; inset: 56px; border-radius: 50%; border: 1px solid rgba(var(--a),0.1)"></div>
+<div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(var(--a),0.09)"></div>
+<div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(var(--a),0.09)"></div>
+<div class="sweep"></div>
+<div class="blip" style="left: {{blipX}}%; top: {{blipY}}%"></div>
+<div style="position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: #9fb8c2"></div>
+</div>
+<div class="lifeline">
+<canvas data-creature="1" width="564" height="252" aria-hidden="true" style="display: block; width: 282px; height: 126px"></canvas>
+<div style="position: absolute; left: 12px; right: 12px; bottom: 9px; display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span class="crname">{{creatureName}}</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; opacity: 0.85">
+<sc-for list="{{footprint}}" as="f" hint-placeholder-count="9"><div class="{{f.cls}}"></div></sc-for>
+</div>
+</div>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center">
+<canvas data-gauge="1" width="564" height="600" aria-label="{{gaugeAria}}" role="img" style="display: block; width: 196px; height: 208px"></canvas>
+</div>
+</div>
+<div class="icorow">
+<div class="hico {{multIcoCls}}" title="Global multiplier"><span class="mono">{{gmultStr}}</span></div>
+<div class="pearls" title="Pearls"><sc-for list="{{pearlDots}}" as="pd" hint-placeholder-count="5"><span class="{{pd.cls}}"></span></sc-for></div>
+<div class="hico {{ventIcoCls}}" title="Hydrothermal vents"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"></path><path d="M8 21l2-7h4l2 7"></path><path d="M11 10c-1-2 1-3 0-5"></path><path d="M14 10c-1-2 1-3 0-5"></path></svg></div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{landscape}}" hint-placeholder-val="{{ true }}">
 <footer style="position: absolute; left: 48px; right: 48px; bottom: 22px; height: 130px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 32px">
 <div class="wallet">
 <div class="wl"><span class="wk">Balance</span><span class="mono wv">{{balanceStr}}</span></div>
@@ -309,7 +395,38 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <button class="ibtn buy" onClick="{{onOpenBuy}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8 5v8l-8 5-8-5V8z"></path><path d="M12 8v8"></path><path d="M8.5 10l3.5 6 3.5-6"></path></svg>BONUS BUY</button>
 </div>
 </footer>
-<canvas data-hudfx="1" width="1920" height="1080" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none"></canvas>
+</sc-if>
+<sc-if value="{{portrait}}" hint-placeholder-val="{{ false }}">
+<footer style="position: absolute; left: 36px; right: 36px; bottom: 22px; display: flex; flex-direction: column; gap: 16px">
+<div class="wallet">
+<div class="wl"><span class="wk">Balance</span><span class="mono wv">{{balanceStr}}</span></div>
+<div class="wl"><span class="wk">Win</span><span class="mono wv" style="color: {{winColor}}">{{winStr}}</span></div>
+</div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 20px; height: 160px">
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(var(--a),0.22); background: rgba(2,10,18,0.7)">
+<button class="ibtn sbtn" aria-label="Decrease bet" onClick="{{onBetDown}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+<div style="display: flex; flex-direction: column; align-items: center; min-width: 92px; gap: 2px">
+<span class="lbl" style="font-size: 11px">{{betLabel}}</span>
+<span class="mono" style="font-size: 24px; font-weight: 600; color: #eafcff">{{betStr}}</span>
+</div>
+<button class="ibtn sbtn" aria-label="Increase bet" onClick="{{onBetUp}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button>
+</div>
+<button class="spinbtn {{spinCls}}" aria-label="Spin" onClick="{{onSpin}}">
+<svg class="ring" viewBox="0 0 160 160" fill="none"><circle cx="80" cy="80" r="77" stroke="currentColor" class="acc" stroke-opacity="0.55" stroke-width="1.5" stroke-dasharray="4 10"></circle><path d="M80 3 A77 77 0 0 1 157 80" stroke="currentColor" class="acc" stroke-width="2.5" stroke-linecap="round"></path><path d="M80 157 A77 77 0 0 1 3 80" stroke="#ff7a1a" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<svg class="ico" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 8px rgba(var(--a),0.9))"><path d="M20 12a8 8 0 1 1-2.34-5.66"></path><path d="M20 4v5h-5"></path></svg>
+</button>
+<div style="display: flex; justify-content: flex-end; gap: 14px">
+<button class="ibtn {{autoCls}}" aria-label="Autoplay" onClick="{{onAuto}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3"></path><path d="M20 12a8 8 0 0 1-14 5.3"></path><path d="M18 3v4h-4"></path><path d="M6 21v-4h4"></path></svg></button>
+<button class="ibtn {{turboCls}}" aria-label="Turbo" onClick="{{onTurbo}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg></button>
+</div>
+</div>
+<div style="display: flex; gap: 14px">
+<button class="ibtn {{xbetCls}}" style="flex: 1" onClick="{{onXbet}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path d="M5.6 5.6a9 9 0 0 0 0 12.8"></path><path d="M18.4 5.6a9 9 0 0 1 0 12.8"></path></svg>xBET SONAR 2×</button>
+<button class="ibtn buy" style="flex: 1" onClick="{{onOpenBuy}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8 5v8l-8 5-8-5V8z"></path><path d="M12 8v8"></path><path d="M8.5 10l3.5 6 3.5-6"></path></svg>BONUS BUY</button>
+</div>
+</footer>
+</sc-if>
+<canvas data-hudfx="1" width="{{rootW}}" height="{{rootH}}" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none"></canvas>
 
 <sc-if value="{{lu.show}}" hint-placeholder-val="{{ false }}">
 <div class="ov lu">
@@ -319,7 +436,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <span class="depth">{{lu.meters}} M</span>
 <span class="name">{{lu.name}}</span>
 <span class="lbl" style="font-size: 14px">LEVEL {{lu.level}} OF 5 · {{lu.points}} PRESSURE POINTS</span>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 1100px; margin-top: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: {{luRewardsW}}px; margin-top: 18px">
 <sc-for list="{{lu.rewards}}" as="r" hint-placeholder-count="3"><div class="rw" style="animation-delay: {{r.delay}}s"><span class="dia"></span>{{r.text}}</div></sc-for>
 </div>
 </div>
@@ -353,7 +470,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </div>
 </sc-if>
 
-<canvas data-bw3d="1" class="bwlayer {{bw.stage}}" width="1280" height="720" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: 8; background: #000"></canvas>
+<canvas data-bw3d="1" class="bwlayer {{bw.stage}}" width="1280" height="720" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: 8; background: #000"></canvas>
 <sc-if value="{{bw.show}}" hint-placeholder-val="{{ false }}">
 <div class="bwfront {{bw.cls}} {{bw.stage}}" onClick="{{onBigWinTap}}">
 <div class="bwcol {{bw.slam}}">
@@ -375,7 +492,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <span style="font-size: 40px; font-weight: 700; letter-spacing: 0.14em; color: #fff">ABYSSAL EXPEDITIONS</span>
 <span class="mono" style="font-size: 14px; color: #a9c4cf">BET {{betStr}} · BALANCE {{balanceStr}}</span>
 </div>
-<div style="display: flex; gap: 18px">
+<div class="bcards" style="display: flex; gap: 18px">
 <sc-for list="{{buyCards}}" as="b" hint-placeholder-count="4">
 <div class="bcard" style="border-color: {{b.color}}; box-shadow: 0 0 34px {{b.glow}}">
 <span class="t" style="color: {{b.color}}">{{b.title}}</span>
@@ -391,7 +508,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </div>
 </sc-if>
 
-<canvas data-bwfx="1" class="bwlayer {{bw.stage}}" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: 11"></canvas>
+<canvas data-bwfx="1" class="bwlayer {{bw.stage}}" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: 11"></canvas>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"bioluminescence":{"editor":"color","default":"#3ff5ff","options":["#3ff5ff","#7cffb2","#9d8cff","#ff7a1a"],"section":"Leviathan"},"leviathanScale":{"editor":"range","default":1,"min":0.6,"max":1.5,"step":0.05,"section":"Leviathan"},"glow":{"editor":"range","default":1,"min":0,"max":2,"step":0.1,"section":"Leviathan"},"presence":{"editor":"range","default":0.15,"min":0,"max":1,"step":0.05,"section":"Leviathan"},"scanlines":{"editor":"boolean","default":true,"section":"HUD"},"director":{"editor":"boolean","default":true,"section":"HUD"},"$preview":{"width":1920,"height":1080}}'>
@@ -467,8 +584,57 @@ class Component extends DCLogic {
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
       bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '' }, shake: '', shatter: false, buyOpen: false,
       spinning: false, auto: false, turbo: false, xbet: false, dirLevel: 0, muted: false,
-      blipX: 72, blipY: 48, range: 640, bearing: 74
+      blipX: 72, blipY: 48, range: 640, bearing: 74,
+      portrait: this.isPortrait()
     };
+  }
+
+  // ---------- stage geometry: 1920x1080 landscape or 1080x1920 portrait (window shape, or ?orient=) ----------
+  isPortrait() {
+    try {
+      if (window.__dcOrient) return window.__dcOrient() === 'portrait';
+      return window.innerHeight > window.innerWidth;
+    } catch (e) { return false; }
+  }
+
+  // everything that places the reels on the stage reads from here (template, strike/undertow overlays, HUD particles, the 3D strike)
+  geo(colsIn) {
+    const s = this.state, cols = colsIn || s.cols, por = !!s.portrait;
+    if (!por) {
+      const gridW = cols * 156 - 8, frameW = gridW + 40;
+      return { por, W: 1920, H: 1080, cols, pitch: 156, cell: 148, gridW, gridH: 772, gridTop: 0, frameLeft: Math.round(960 - frameW / 2), frameTop: 104, frameW, frameH: 812, margin: 48, stripTop: 0 };
+    }
+    const frameW = 1008, gridW = 968, pitch = (gridW + 8) / cols, cell = pitch - 8, gridH = 5 * pitch - 8, frameH = 1008;
+    return { por, W: 1080, H: 1920, cols, pitch, cell, gridW, gridH, gridTop: (968 - gridH) / 2, frameLeft: 36, frameTop: 112, frameW, frameH, margin: 36, stripTop: 1160 };
+  }
+  // stage x/y of a cell's top-left corner
+  cellXY(c, r, G) { const g = G || this.geo(); return [g.frameLeft + 20 + c * g.pitch, g.frameTop + 20 + g.gridTop + r * g.pitch]; }
+
+  // the window was resized / rotated: swap the stage, then re-fit every canvas that caches its size
+  onOrient() {
+    const por = this.isPortrait();
+    if (por === !!this.state.portrait) return;
+    this.setState({ portrait: por });
+    this.timers.push(setTimeout(() => this.afterOrient(), 0));
+  }
+  afterOrient() {
+    if (this.dead) return;
+    const g = this.geo();
+    if (window.__dcFit) window.__dcFit();
+    // the Leviathan renderer keeps its context: new drawing-buffer size, same camera distance, vertical fov from the stage height
+    if (this.L3) {
+      const L = this.L3;
+      L.renderer.setSize(g.W, g.H, false);
+      L.camera.aspect = g.W / g.H;
+      L.camera.fov = 2 * Math.atan((g.H / 2) / L.D) * 180 / Math.PI;
+      L.camera.updateProjectionMatrix();
+    }
+    // the big-win scene renders at a fixed internal size per orientation: rebuild it lazily (disposes the old context's resources)
+    if (this.B3) { this.bw3dDispose(); this.bwWarmed = false; this.bwWarmT = 0; }
+    this.bwDirty = true;
+    if (this.hudS) { this.hudS.fxDirty = true; this.hudS.fly = []; }
+    this.terrain = null;
+    this.mouse = null;
   }
 
   // ---------- sound: procedural Web Audio (rebuilt from sound.js + scripts/audio/generate_*.py) ----------
@@ -1157,7 +1323,15 @@ class Component extends DCLogic {
     return A;
   }
 
-  get aud() { return this._aud || (this._aud = this.makeAudio()); }
+  get aud() {
+    if (!this._aud) {
+      this._aud = this.makeAudio();
+      // Dark procedural sound set (audio_dark.js); ?audio=classic keeps the original bubbles.
+      if (window.DarkAudio && !/[?&]audio=classic(&|$)/.test(location.search)) window.DarkAudio.install(this._aud);
+      window.__aud = this._aud; // debug handle (audio lab / checks)
+    }
+    return this._aud;
+  }
 
   // ---------- local engine: same rules and event timeline as slot_engine/core/state_machine.py ----------
 
@@ -1463,12 +1637,18 @@ class Component extends DCLogic {
     this.visTarget = 0;
     this.startLoop();
     this.feelBoot();
+    this._onOrient = () => this.onOrient();
+    window.addEventListener('resize', this._onOrient);
+    window.addEventListener('orientationchange', this._onOrient);
   }
 
   componentWillUnmount() {
     this.dead = true;
     cancelAnimationFrame(this.raf);
     window.removeEventListener('keydown', this._feelKey);
+    window.removeEventListener('resize', this._onOrient);
+    window.removeEventListener('orientationchange', this._onOrient);
+    if (this.B3) this.bw3dDispose();
     (this.timers || []).forEach((id) => clearTimeout(id));
     clearTimeout(this.autoT);
     if (this.L3) this.L3.renderer.dispose();
@@ -1767,7 +1947,8 @@ class Component extends DCLogic {
   }
 
   showVents(active) {
-    const vents = Object.keys(active).map((c) => ({ c: +c, r: +c + 1, x: 19 + (+c) * 156 + 74, m: active[c] }));
+    const G = this.geo();
+    const vents = Object.keys(active).map((c) => ({ c: +c, r: +c + 1, x: Math.round(19 + (+c) * G.pitch + G.cell / 2), m: active[c] }));
     if (this.E) this.E.vents = active;
     this.setState({ vents });
   }
@@ -1842,8 +2023,9 @@ class Component extends DCLogic {
     const others = [];
     for (let i = 0; i < 5 * cols; i++) if (!foot.has(i)) others.push(i);
     const px = (c0 + w / 2) * 312 - 8, py = (r0 + h / 2) * 312 - 8;
-    const fl = this.state.cols >= 6 ? 476 : 554;
-    const sx = fl + 20 + (c0 + w / 2) * 156 - 4, sy = 124 + (r0 + h / 2) * 156 - 4, zw = w * 156, zh = h * 156;
+    const G = this.geo();
+    const [sx0, sy0] = this.cellXY(c0 + w / 2, r0 + h / 2, G);
+    const sx = sx0 - 4, sy = sy0 - 4, zw = w * G.pitch, zh = h * G.pitch;
     this.isStriking = true;
     this.levRecede = false;
     this.surge = 1.2;
@@ -1852,7 +2034,7 @@ class Component extends DCLogic {
     // 1. it swims in over the reels to the strike zone; the water there starts to churn
     if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: 4.3, splashed: false };
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
-      strike: { show: true, x: c0 * 156, y: r0 * 156, w: w * 156 - 8, h: h * 156 - 8, name: C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '' } });
+      strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '' } });
     await this.waitK(0.16);
     // 2. it rears over the cells and its jaws gape open
     this.levSfx('jawOpen') || this.levSfx('roar', 0.8);
@@ -2173,7 +2355,8 @@ class Component extends DCLogic {
     let seed = 11 + ((Math.random() * 5000) | 0);
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
     // the faceplate cracks from one point on impact: radial fractures and two broken rings around it
-    const ox = 1920 * (rnd() < 0.5 ? 0.12 + rnd() * 0.12 : 0.76 + rnd() * 0.12), oy = 1080 * (0.12 + rnd() * 0.22);
+    const G0 = this.geo();
+    const ox = G0.W * (rnd() < 0.5 ? 0.12 + rnd() * 0.12 : 0.76 + rnd() * 0.12), oy = G0.H * (0.12 + rnd() * 0.22);
     const cracks = [], rings = [];
     for (let b = 0; b < 12; b++) {
       let cx = ox, cy = oy, a = b / 12 * 6.2832 + (rnd() - 0.5) * 0.45;
@@ -2364,13 +2547,14 @@ class Component extends DCLogic {
     try {
       renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
     } catch (e) { console.warn('big win: WebGL unavailable', e); this.B3fail = true; return null; }
-    const RW = 1280, RH = 720;
+    const porB = this.geo().por;
+    const RW = porB ? 720 : 1280, RH = porB ? 1280 : 720;
     renderer.setPixelRatio(1);
     renderer.setSize(RW, RH, false);
     renderer.setClearColor(0x000000, 1);
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000, 0.04);
-    const camera = new THREE.PerspectiveCamera(66, RW / RH, 0.05, 420);
+    const camera = new THREE.PerspectiveCamera(porB ? 84 : 66, RW / RH, 0.05, 420);
     camera.rotation.order = 'YXZ';
     const col = () => new THREE.Color(0, 0, 0);
     const U = { uT: { value: 0 }, uF: { value: 0 }, uFogC: { value: col() }, uFogD: { value: 0.05 }, uLamp: { value: 1 }, uAmb: { value: 0 },
@@ -3133,8 +3317,9 @@ class Component extends DCLogic {
     const others = [];
     for (let i = 0; i < 5 * cols; i++) if (!fset.has(i)) others.push(i);
     // screen rect of the block (HUD px) and its centre/size on the 2x symbol canvas
-    const fl = cols >= 6 ? 476 : 554;
-    const bx = fl + 20 + c0 * 156, by = 124 + r0 * 156, bw = w * 156 - 8, bh = h * 156 - 8;
+    const G = this.geo(cols);
+    const [bx, by] = this.cellXY(c0, r0, G);
+    const bw = w * G.pitch - 8, bh = h * G.pitch - 8;
     const X0 = c0 * 312, Y0 = r0 * 312, CW = w * 312 - 16, CH = h * 312 - 16;
     const px = X0 + CW / 2, py = Y0 + CH / 2;
     const E = this.E && !this.E.fail ? this.E : null;
@@ -3959,16 +4144,18 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     try {
       renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, premultipliedAlpha: true });
     } catch (e) { console.warn('leviathan: WebGL unavailable', e); return; }
+    const G = this.geo();
     renderer.setPixelRatio(1);
-    renderer.setSize(1920, 1080, false);
+    renderer.setSize(G.W, G.H, false);
     renderer.setClearColor(0x000000, 0);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x01070f, 0.0003);
+    // camera distance is fixed (same lighting / fog on the creature in both orientations); the vertical fov comes from the stage height
     const D = 540 / Math.tan(15 * Math.PI / 180);
-    const camera = new THREE.PerspectiveCamera(30, 1920 / 1080, 10, 9000);
+    const camera = new THREE.PerspectiveCamera(2 * Math.atan((G.H / 2) / D) * 180 / Math.PI, G.W / G.H, 10, 9000);
     camera.position.set(0, 0, D);
     const hemi = new THREE.HemisphereLight(0x2a5a7a, 0x020406, 0.9);
     scene.add(hemi);
@@ -4141,13 +4328,14 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
 
   // send the head up out of the deep through a grid position (row/col centre, in cells)
   levStrike(rowC, colC) {
-    const frameLeft = this.state.cols >= 6 ? 476 : 554;
-    const sx = frameLeft + 20 + colC * 156 - 4, sy = 124 + rowC * 156 - 4;
+    const G = this.geo();
+    const [sx0, sy0] = this.cellXY(colC, rowC, G);
+    const sx = sx0 - 4, sy = sy0 - 4;
     const u0 = this.levT || 0;
-    const X = sx - 960, Y = 540 - sy;
+    const X = sx - G.W / 2, Y = G.H / 2 - sy;
     // which way it is swimming in from decides which way it faces when it strikes
     this.strikeAnim = null;
-    const lurk = this.levPath(u0, 1920, 1080, 0);
+    const lurk = this.levPath(u0, G.W, G.H, 0);
     const f = lurk[0] > X ? -1 : 1;
     const Dc = this.L3 ? this.L3.D : 540 / Math.tan(15 * Math.PI / 180);
     const at = (px, py, z) => { const sc = (Dc - z) / Dc; return [px * sc, py * sc, z]; };  // screen offset -> world at depth z
@@ -4172,22 +4360,26 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     for (let i = 0; i < 14; i++) motes.push({ x: Math.random(), y: Math.random(), r: 20 + Math.random() * 60, p: Math.random() * 6.28 });
     const heat = [];
     for (let i = 0; i < 70; i++) heat.push({ x: 0.3 + Math.random() * 0.4, y: Math.random(), s: Math.random(), p: Math.random() * 6.28 });
-    // seeded silhouettes: abyssal floor, trench walls, glass cracks
-    let seed = 7;
-    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-    const floor = [], wallL = [], wallR = [];
-    for (let x = -40; x <= 1960; x += 40) floor.push([x, 1080 - (70 + rnd() * 70 + Math.sin(x * 0.004) * 40)]);
-    for (let y = -40; y <= 1120; y += 40) { wallL.push([70 + rnd() * 70 + Math.sin(y * 0.006) * 50, y]); wallR.push([1920 - (70 + rnd() * 70 + Math.sin(y * 0.005 + 2) * 50), y]); }
-    const cracks = [];
-    for (const [ox, oy, ang] of [[0, 0, 0.6], [1920, 0, 2.5], [0, 1080, -0.6], [1920, 1080, -2.5], [960, 0, 1.57], [1920, 540, 3.1]]) {
-      for (let b = 0; b < 3; b++) {
-        let x = ox, y = oy, a = ang + (rnd() - 0.5) * 0.9;
-        const pts = [[x, y]];
-        const n = 6 + Math.floor(rnd() * 6);
-        for (let j = 0; j < n; j++) { a += (rnd() - 0.5) * 0.8; const l = 30 + rnd() * 60; x += Math.cos(a) * l; y += Math.sin(a) * l; pts.push([x, y]); }
-        cracks.push(pts);
+    // seeded silhouettes: abyssal floor, trench walls, glass cracks (rebuilt when the stage size changes)
+    const mkTerrain = (TW, TH) => {
+      let seed = 7;
+      const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+      const floor = [], wallL = [], wallR = [];
+      for (let x = -40; x <= TW + 40; x += 40) floor.push([x, TH - (70 + rnd() * 70 + Math.sin(x * 0.004) * 40)]);
+      for (let y = -40; y <= TH + 40; y += 40) { wallL.push([70 + rnd() * 70 + Math.sin(y * 0.006) * 50, y]); wallR.push([TW - (70 + rnd() * 70 + Math.sin(y * 0.005 + 2) * 50), y]); }
+      const cracks = [];
+      for (const [ox, oy, ang] of [[0, 0, 0.6], [TW, 0, 2.5], [0, TH, -0.6], [TW, TH, -2.5], [TW / 2, 0, 1.57], [TW, TH / 2, 3.1]]) {
+        for (let b = 0; b < 3; b++) {
+          let x = ox, y = oy, a = ang + (rnd() - 0.5) * 0.9;
+          const pts = [[x, y]];
+          const n = 6 + Math.floor(rnd() * 6);
+          for (let j = 0; j < n; j++) { a += (rnd() - 0.5) * 0.8; const l = 30 + rnd() * 60; x += Math.cos(a) * l; y += Math.sin(a) * l; pts.push([x, y]); }
+          cracks.push(pts);
+        }
       }
-    }
+      return { W: TW, H: TH, floor, wallL, wallR, cracks };
+    };
+    let floor, wallL, wallR, cracks;
     const trail = [];
     const pings = [];
     let last = performance.now(), t = 40, pingT = 1.5, radarT = 0, spriteKey = '', spr = null;
@@ -4201,6 +4393,8 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       if (!c) return;
       const ctx = c.getContext('2d');
       const W = c.width, H = c.height;
+      if (!this.terrain || this.terrain.W !== W || this.terrain.H !== H) this.terrain = mkTerrain(W, H);
+      ({ floor, wallL, wallR, cracks } = this.terrain);
       let dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
       last = now;
       // hit-stop: the whole picture holds for a few frames on a heavy impact (feel T.hitStopMs / T.tierHitStopMs)
@@ -4731,13 +4925,14 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       const dp = s.pts - H.lastPts;
       if (dp > 0 && cf && cg && s.winCells.length) {
         // points are drawn out of the winning cells and fly into the gauge
-        const cols = s.cols, gridW = cols * 156 - 8, fl = Math.round(960 - (gridW + 40) / 2);
-        const rr = cf.getBoundingClientRect(), gr = cg.getBoundingClientRect(), sc = rr.width / 1920 || 1;
+        const cols = s.cols, G = this.geo();
+        const rr = cf.getBoundingClientRect(), gr = cg.getBoundingClientRect(), sc = rr.width / G.W || 1;
         const gx = (gr.left + gr.width / 2 - rr.left) / sc, gy = (gr.top + gr.height / 2 - rr.top) / sc;
         const n = Math.min(28, 5 + dp);
         for (let j = 0; j < n; j++) {
           const i = s.winCells[j % s.winCells.length];
-          const x0 = fl + 20 + (i % cols) * 156 + 74 + (Math.random() - 0.5) * 70, y0 = 124 + Math.floor(i / cols) * 156 + 74 + (Math.random() - 0.5) * 70;
+          const [cx0, cy0] = this.cellXY(i % cols, Math.floor(i / cols), G);
+          const x0 = cx0 + G.cell / 2 + (Math.random() - 0.5) * 70, y0 = cy0 + G.cell / 2 + (Math.random() - 0.5) * 70;
           H.fly.push({ x0, y0, cx: (x0 + gx) / 2 + (Math.random() - 0.5) * 200, cy: Math.min(y0, gy) - 120 - Math.random() * 200, x1: gx + (Math.random() - 0.5) * 30, y1: gy + (Math.random() - 0.5) * 30,
             t: -j * 0.025 - 0.18, dur: 0.6 + Math.random() * 0.3, px: x0, py: y0 });
         }
@@ -4766,8 +4961,25 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
   }
 
   hudAbyss(g, H, dt, t, acc) {
+    const horiz = g.canvas.getAttribute('data-horiz') === '1';
+    if (!horiz) { H.horiz = false; this.hudAbyssDraw(g, H, dt, t, acc); return; }
+    // portrait: the same column, painted offscreen and laid on its side (surface left, Core right); glyphs are counter-rotated
+    if (!H.offH) { H.offH = document.createElement('canvas'); H.offH.width = 564; H.offH.height = 1300; }
+    H.horiz = true;
+    this.hudAbyssDraw(H.offH.getContext('2d'), H, dt, t, acc);
+    const gc = g.canvas;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, gc.width, gc.height);
+    g.translate(0, gc.height);
+    g.rotate(-Math.PI / 2);
+    g.drawImage(H.offH, 0, 0);
+    g.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  hudAbyssDraw(g, H, dt, t, acc) {
     const D = this.defs(), s = this.state, V = D.vis;
     const W = 282, Hh = 650, top = 26, band = (Hh - 60) / 5.45;
+    const txt = (str, x, y) => { if (!H.horiz) { g.fillText(str, x, y); return; } g.save(); g.translate(x, y); g.rotate(Math.PI / 2); g.fillText(str, 0, 0); g.restore(); };
     const lv = s.level, dn = (this.visCur || 0) / 5;
     const rgba = (c, a) => 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + a + ')';
     const zc = [[16, 56, 80], [7, 34, 58], [4, 18, 36], [14, 10, 12], [38, 5, 12], [58, 2, 10]];
@@ -4854,7 +5066,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       const y = top + Math.min(5, j + 1) * band + (j === 4 ? 26 : 0) - 16, x = j % 2 ? W - 42 : 42;
       g.globalAlpha = 0.5;
       g.fillStyle = '#8a4a3a';
-      g.fillText(D.sym[D.lows[j]].g, x, y);
+      txt(D.sym[D.lows[j]].g, x, y);
       g.strokeStyle = 'rgba(255,60,60,0.5)';
       g.lineWidth = 1;
       g.beginPath(); g.moveTo(x - 12, y + 7); g.lineTo(x - 2, y - 1); g.lineTo(x + 3, y + 3); g.lineTo(x + 12, y - 8); g.stroke();
@@ -4951,7 +5163,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
         g.shadowColor = 'rgba(255,60,50,0.9)';
         g.shadowBlur = R.t < hold ? 10 + 10 * Math.sin(R.t * 30) : 6;
         g.fillStyle = R.t < hold ? '#ffd2ad' : '#ff5a4a';
-        g.fillText(sh.gl, 0, 2);
+        txt(sh.gl, 0, 2);
         g.restore();
       }
       if (R.t > hold && R.t < hold + 0.25) {
@@ -5177,7 +5389,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
   hudFly(g, H, dt, acc) {
     if (!H.fly.length && !H.fxDirty) return;
     g.setTransform(1, 0, 0, 1, 0, 0);
-    g.clearRect(0, 0, 1920, 1080);
+    g.clearRect(0, 0, g.canvas.width, g.canvas.height);
     H.fxDirty = H.fly.length > 0;
     if (!H.flySpr) {
       const c = document.createElement('canvas'); c.width = c.height = 48;
@@ -5212,8 +5424,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     const L = D.levels[s.level];
     const bet = D.bets[s.betIdx];
     const cols = s.cols;
-    const gridW = cols * 156 - 8;
-    const frameW = gridW + 40;
+    const G = this.geo();
     const winSet = new Set(s.winCells), dimSet = new Set(s.dimCells);
     const slots = [];
     for (let i = 0; i < 5 * cols; i++) slots.push({ cls: winSet.has(i) ? 'cell win' : (dimSet.has(i) || (s.winCells.length && !winSet.has(i))) ? 'cell dim' : 'cell' });
@@ -5247,7 +5458,8 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       accentRgb: L.accent,
       levZ: s.levZ, levOp: s.levOp, levOpT: s.levOpT,
       scanlines: this.props.scanlines ?? true,
-      director: this.props.director ?? true,
+      director: (this.props.director ?? true) && !G.por,
+      portrait: G.por, landscape: !G.por, orientCls: G.por ? 'por' : 'land', rootW: G.W, rootH: G.H, margin: G.margin, stripTop: G.stripTop, luRewardsW: G.por ? 900 : 1100,
       dirLevels: D.levels.map((z, n) => ({ n, aria: 'Preview level ' + n, cls: n === s.dirLevel ? 'dbtn on' : 'dbtn', go: () => this.dirGoLevel(n) })),
       onDirLevelUp: () => this.dirLevelUp(),
       onDirStrike: () => this.dirStrike(),
@@ -5265,7 +5477,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       hullColor: s.level >= 5 ? '#ff2a4b' : s.level >= 3 ? '#ffb27a' : '#e6fbff',
       lightStr: Math.round(L.light * 100) + '%',
       sedStr: String(s.banked),
-      frameLeft: Math.round(960 - frameW / 2), frameW, gridW, cols, symPx: gridW * 2, slots,
+      frameLeft: G.frameLeft, frameTop: G.frameTop, frameW: G.frameW, frameH: G.frameH, gridW: G.gridW, gridH: G.gridH, gridTop: G.gridTop, cols, symPx: cols * 312 - 16, slots,
       topChipCls: freeChip ? 'chip free' : 'chip',
       topChip: (this.online === false ? 'OFFLINE ENGINE · ' : '') + (freeChip ? 'FREE SPINS · ' + s.banked + ' LEFT · ' + L.name : this.fmt(ways) + ' WAYS · ' + L.name),
       strike: s.strike,

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dark Audio Lab</title>
+<style>
+  :root { --bg: #07090d; --fg: #cfd6dd; --dim: #6f7a86; --card: #0e131a; --line: #1c2430; --acc: #3fa7d6; }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--fg); font: 13px/1.4 system-ui, Segoe UI, sans-serif; }
+  h1 { font-size: 16px; margin: 0 0 8px; font-weight: 600; }
+  .bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; }
+  button { background: #141b25; color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px; cursor: pointer; font: inherit; }
+  button:hover { border-color: var(--acc); }
+  button.primary { background: #16405a; border-color: var(--acc); }
+  #status { color: var(--dim); margin-left: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 10px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
+  .card h2 { font-size: 12px; margin: 0 0 4px; font-weight: 600; display: flex; justify-content: space-between; }
+  .card h2 span { color: var(--dim); font-weight: 400; }
+  .card h2 span.bad { color: #ff6b6b; }
+  canvas { display: block; width: 100%; background: #04060a; border-radius: 3px; }
+  canvas.wave { height: 70px; margin-bottom: 3px; }
+  canvas.spec { height: 120px; }
+  .leg { color: var(--dim); font-size: 11px; margin-top: 3px; }
+</style>
+</head>
+<body>
+<h1>Dark Audio Lab - <code>audio_dark.js</code> recipes rendered offline (48 kHz)</h1>
+<div class="bar">
+  <button id="renderAll" class="primary">Render all</button>
+  <button id="mute">Live context: start</button>
+  <span id="status">idle</span>
+</div>
+<div class="bar" id="live"></div>
+<div class="grid" id="grid"></div>
+
+<script src="audio_dark.js"></script>
+<script>
+// ---- a minimal A with the same shape as makeAudio()'s (copied helpers; no ambience scheduler) ------------------------
+function makeMini() {
+  const A = { ctx: null, muted: false, level: 0, swimV: 0, ambBase: 0.32, desc: null };
+  const now = () => A.ctx.currentTime;
+  const gain = (v, to) => { const g = A.ctx.createGain(); g.gain.value = v; if (to) g.connect(to); return g; };
+  const osc = (type, f) => { const o = A.ctx.createOscillator(); o.type = type; o.frequency.value = f; return o; };
+  const filt = (type, f, q) => { const b = A.ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q) b.Q.value = q; return b; };
+  const env = (g, t, a, peak, d) => { g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  A.init = (ctxOverride) => {
+    if (A.ctx) { if (A.ctx.state === 'suspended' && !(A.ctx instanceof OfflineAudioContext)) A.ctx.resume(); return; }
+    const C = window.AudioContext || window.webkitAudioContext;
+    A.ctx = ctxOverride || new C();
+    const sr = A.ctx.sampleRate;
+    const lim = A.ctx.createDynamicsCompressor();
+    lim.threshold.value = -6; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = 0.001; lim.release.value = 0.15;
+    const trim = gain(0.5, A.ctx.destination); lim.connect(trim);
+    const glue = A.ctx.createDynamicsCompressor();
+    glue.threshold.value = -20; glue.knee.value = 10; glue.ratio.value = 3; glue.attack.value = 0.01; glue.release.value = 0.3;
+    glue.connect(lim);
+    const shelf = filt('highshelf', 4200); shelf.gain.value = -7; shelf.connect(glue);
+    const hp = filt('highpass', 30, 0.7); hp.connect(shelf);
+    A.master = gain(A.muted ? 0 : 0.85, hp);
+    A.sfx = gain(1, A.master);
+    A.amb = gain(A.ambBase, A.master);
+    const len = sr * 2;
+    A.noiseBuf = A.ctx.createBuffer(1, len, sr);
+    const nd = A.noiseBuf.getChannelData(0);
+    for (let i = 0; i < len; i++) nd[i] = Math.random() * 2 - 1;
+    const blen = sr * 6;
+    A.brownBuf = A.ctx.createBuffer(1, blen, sr);
+    const bd = A.brownBuf.getChannelData(0);
+    let b = 0, pk = 0;
+    for (let i = 0; i < blen; i++) { b = (b + 0.02 * (Math.random() * 2 - 1)) / 1.02; bd[i] = b; pk = Math.max(pk, Math.abs(b)); }
+    for (let i = 0; i < blen; i++) bd[i] = bd[i] / pk * 0.9;
+    const ir = A.ctx.createBuffer(2, sr * 3, sr);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = ir.getChannelData(ch); let lp = 0;
+      for (let i = 0; i < d.length; i++) { lp += 0.06 * ((Math.random() * 2 - 1) - lp); d[i] = lp * Math.pow(1 - i / d.length, 2.4) * 3; }
+    }
+    A.verb = A.ctx.createConvolver(); A.verb.buffer = ir; A.verb.connect(gain(0.5, A.master));
+    A.ambWet = gain(A.ambBase, A.verb);
+    // a stand-in for the bed so ducking is visible: quiet low-passed brown noise into A.amb
+    const w = A.ctx.createBufferSource(); w.buffer = A.brownBuf; w.loop = true;
+    const wf = filt('lowpass', 300, 1.3), wg = gain(0.075, A.amb); w.connect(wf); wf.connect(wg); w.start(now());
+  };
+  A.setMuted = (m) => { A.muted = m; if (A.ctx) A.master.gain.setTargetAtTime(m ? 0 : 0.85, now(), 0.08); };
+  A.setLevel = (l) => { A.level = Math.max(0, Math.min(5, (+l || 0) | 0)); };
+  A.bubble = (t, f, v, to) => {
+    const o = osc('sine', f), g = gain(0.0001, to || A.sfx), d = 0.05 + 18 / f;
+    o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 1.45, t + d);
+    env(g, t, 0.006, v, d); o.connect(g); o.start(t); o.stop(t + d + 0.05);
+  };
+  A.duck = (on) => {
+    if (!A.ctx) return;
+    const v = on ? A.ambBase * 0.25 : A.ambBase;
+    A.amb.gain.setTargetAtTime(v, now(), 0.3); if (A.ambWet) A.ambWet.gain.setTargetAtTime(v, now(), 0.3);
+  };
+  return A;
+}
+
+// ---- the sounds: name -> { dur, run(A, ctx) }; `at` schedules a call at a later offline time via suspend() ------------
+const SR = 48000;
+const SOUNDS = [
+  { name: 'dissolve', dur: 1.5, run: (A) => A.dissolve() },
+  { name: 'land_0', dur: 1.5, run: (A) => A.land(0) },
+  { name: 'cascade_x5', dur: 4.5, run: (A, at) => { A.spin(); A.land(); for (let i = 1; i < 5; i++) at(0.6 * i, () => A.land()); } },
+  { name: 'chomp', dur: 2.5, run: (A) => A.chomp() },
+  { name: 'riser', dur: 2.5, run: (A) => A.riser(1.5) },
+  { name: 'impact', dur: 3.0, run: (A) => A.impact() },
+  { name: 'roar_strike', dur: 5.0, run: (A) => A.roar(1) },
+  { name: 'win_2x', dur: 2.5, run: (A) => A.win(2) },
+  { name: 'win_50x', dur: 3.5, run: (A) => A.win(50) },
+  { name: 'levelUp', dur: 4.0, run: (A) => A.levelUp() },
+  { name: 'drone_levels_1to4', dur: 8.0, run: (A, at) => { A.setLevel(1); at(2, () => A.setLevel(2)); at(4, () => A.setLevel(3)); at(6, () => A.setLevel(4)); }, noTransition: true },
+  { name: 'tier_1', dur: 2.5, run: (A) => A.tier(1) },
+  { name: 'tier_2', dur: 4.0, run: (A) => A.tier(2) },
+  { name: 'tier_3', dur: 5.0, run: (A) => A.tier(3) },
+  { name: 'tier_4', dur: 5.5, run: (A) => A.tier(4) },
+  { name: 'ticks_countup', dur: 2.5, run: (A, at) => { for (let i = 0; i < 16; i++) at(0.12 * i, () => A.tick(i / 15)); } },
+  { name: 'ui', dur: 0.8, run: (A) => A.ui() },
+  { name: 'shimmer', dur: 3.0, run: (A) => A.shimmer() },
+  { name: 'sink', dur: 2.0, run: (A) => A.sink() },
+  { name: 'wildRise', dur: 3.5, run: (A) => A.wildRise() },
+  { name: 'endSting_3', dur: 4.5, run: (A) => A.endSting(3) },
+];
+
+function cardFor(s) {
+  let c = document.getElementById('card_' + s.name);
+  if (c) return c;
+  c = document.createElement('div'); c.className = 'card'; c.id = 'card_' + s.name;
+  c.innerHTML = '<h2>' + s.name + ' <span class="pk">-</span></h2><canvas class="wave" width="860" height="140"></canvas><canvas class="spec" width="860" height="240"></canvas><div class="leg">top: waveform (L+R)/2, ' + s.dur + ' s. bottom: spectrogram 20 Hz - 8 kHz (log), -90..0 dB</div>';
+  document.getElementById('grid').appendChild(c);
+  return c;
+}
+
+async function renderOne(s) {
+  const ctx = new OfflineAudioContext(2, Math.ceil(SR * s.dur), SR);
+  const A = makeMini(); A.init(ctx); window.DarkAudio.install(A);
+  // the drone demo must not fire the level-up transition: prime the hook at level 0 first
+  if (s.noTransition) A.levelUp = () => {};
+  const pending = [];
+  const at = (t, fn) => { pending.push(ctx.suspend(t).then(() => { fn(); return ctx.resume(); })); };
+  s.run(A, at);
+  const buf = await ctx.startRendering();
+  await Promise.all(pending);
+  return buf;
+}
+
+// ---- analysis + drawing -----------------------------------------------------------------------------------------
+function fft(re, im) { // in-place radix-2
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) { let bit = n >> 1; for (; j & bit; bit >>= 1) j ^= bit; j ^= bit; if (i < j) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; } }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang);
+    for (let i = 0; i < n; i += len) {
+      let cr = 1, ci = 0;
+      for (let k = 0; k < len / 2; k++) {
+        const ar = re[i + k + len / 2] * cr - im[i + k + len / 2] * ci, ai = re[i + k + len / 2] * ci + im[i + k + len / 2] * cr;
+        re[i + k + len / 2] = re[i + k] - ar; im[i + k + len / 2] = im[i + k] - ai; re[i + k] += ar; im[i + k] += ai;
+        const nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr;
+      }
+    }
+  }
+}
+
+function draw(card, buf) {
+  const L = buf.getChannelData(0), R = buf.numberOfChannels > 1 ? buf.getChannelData(1) : L, n = L.length, sr = buf.sampleRate;
+  let peak = 0; for (let i = 0; i < n; i++) peak = Math.max(peak, Math.abs(L[i]), Math.abs(R[i]));
+  const mono = new Float32Array(n); for (let i = 0; i < n; i++) mono[i] = 0.5 * (L[i] + R[i]);
+  // waveform
+  const wc = card.querySelector('.wave'), wx = wc.getContext('2d'), W = wc.width, H = wc.height;
+  wx.fillStyle = '#04060a'; wx.fillRect(0, 0, W, H);
+  wx.strokeStyle = '#1c2430'; wx.beginPath(); wx.moveTo(0, H / 2); wx.lineTo(W, H / 2); wx.stroke();
+  wx.fillStyle = '#3fa7d6';
+  const per = n / W;
+  for (let x = 0; x < W; x++) {
+    let lo = 1, hi = -1; const a = Math.floor(x * per), b = Math.min(n, Math.floor((x + 1) * per) + 1);
+    for (let i = a; i < b; i++) { if (mono[i] < lo) lo = mono[i]; if (mono[i] > hi) hi = mono[i]; }
+    wx.fillRect(x, H / 2 - hi * H / 2, 1, Math.max(1, (hi - lo) * H / 2));
+  }
+  // spectrogram: 2048-pt Hann, log-frequency rows 20 Hz..8 kHz
+  const sc = card.querySelector('.spec'), sx = sc.getContext('2d'), SW = sc.width, SH = sc.height, N = 2048, hop = Math.max(256, Math.floor((n - N) / SW));
+  const img = sx.createImageData(SW, SH), px = img.data, re = new Float32Array(N), im = new Float32Array(N), win = new Float32Array(N);
+  for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / N);
+  const rows = new Int32Array(SH + 1);
+  for (let y = 0; y <= SH; y++) rows[y] = Math.round(20 * Math.pow(400, 1 - y / SH) / sr * N);
+  for (let x = 0; x < SW; x++) {
+    const off = Math.floor(x / SW * Math.max(1, n - N));
+    for (let i = 0; i < N; i++) { re[i] = (mono[off + i] || 0) * win[i]; im[i] = 0; }
+    fft(re, im);
+    for (let y = 0; y < SH; y++) {
+      const b0 = Math.min(rows[y + 1], N / 2 - 1), b1 = Math.max(rows[y], b0 + 1);
+      let m = 0; for (let b = b0; b < b1; b++) m = Math.max(m, re[b] * re[b] + im[b] * im[b]);
+      const db = 10 * Math.log10(m / (N * N / 16) + 1e-12), v = Math.max(0, Math.min(1, (db + 90) / 90));
+      const o = (y * SW + x) * 4;
+      px[o] = Math.round(255 * Math.pow(v, 1.6)); px[o + 1] = Math.round(190 * Math.pow(v, 2.4)); px[o + 2] = Math.round(60 + 160 * v * (1 - v)); px[o + 3] = 255;
+    }
+  }
+  sx.putImageData(img, 0, 0);
+  return peak;
+}
+
+function toWav16(buf) {
+  const ch = buf.numberOfChannels, n = buf.length, sr = buf.sampleRate, out = new ArrayBuffer(44 + n * ch * 2), v = new DataView(out);
+  const str = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  str(0, 'RIFF'); v.setUint32(4, 36 + n * ch * 2, true); str(8, 'WAVE'); str(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+  v.setUint16(22, ch, true); v.setUint32(24, sr, true); v.setUint32(28, sr * ch * 2, true); v.setUint16(32, ch * 2, true); v.setUint16(34, 16, true);
+  str(36, 'data'); v.setUint32(40, n * ch * 2, true);
+  const chans = []; for (let c = 0; c < ch; c++) chans.push(buf.getChannelData(c));
+  let o = 44;
+  for (let i = 0; i < n; i++) for (let c = 0; c < ch; c++) { const s = Math.max(-1, Math.min(1, chans[c][i])); v.setInt16(o, s < 0 ? s * 32768 : s * 32767, true); o += 2; }
+  const bytes = new Uint8Array(out); let b64 = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) b64 += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(b64);
+}
+
+window.__LAB = { done: false, results: {} };
+async function renderAll() {
+  const st = document.getElementById('status');
+  window.__LAB = { done: false, results: {} };
+  for (const s of SOUNDS) {
+    st.textContent = 'rendering ' + s.name + ' ...';
+    const card = cardFor(s);
+    try {
+      const buf = await renderOne(s);
+      const peak = draw(card, buf), db = 20 * Math.log10(peak || 1e-9);
+      const tag = card.querySelector('.pk'); tag.textContent = 'peak ' + peak.toFixed(3) + ' (' + db.toFixed(1) + ' dBFS)';
+      tag.className = 'pk' + (db > -3 ? ' bad' : '');
+      window.__LAB.results[s.name] = { peak, peakDb: db, wav: toWav16(buf) };
+    } catch (e) {
+      card.querySelector('.pk').textContent = 'ERROR ' + e; card.querySelector('.pk').className = 'pk bad';
+      window.__LAB.results[s.name] = { error: String(e) };
+    }
+  }
+  st.textContent = 'done: ' + SOUNDS.length + ' sounds';
+  window.__LAB.done = true;
+}
+document.getElementById('renderAll').onclick = renderAll;
+
+// ---- live buttons -----------------------------------------------------------------------------------------------
+let LIVE = null;
+function liveA() { if (!LIVE) { LIVE = makeMini(); LIVE.init(); window.DarkAudio.install(LIVE); } else LIVE.init(); return LIVE; }
+document.getElementById('mute').onclick = () => { liveA(); document.getElementById('mute').textContent = 'Live context: running'; };
+const lv = document.getElementById('live');
+SOUNDS.forEach((s) => {
+  const b = document.createElement('button'); b.textContent = s.name;
+  b.onclick = () => { const A = liveA(); const at = (t, fn) => setTimeout(fn, t * 1000); s.run(A, at); };
+  lv.appendChild(b);
+});
+SOUNDS.forEach(cardFor);
+</script>
+</body>
+</html>
