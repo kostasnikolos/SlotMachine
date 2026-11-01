@@ -18,7 +18,7 @@ Read this first on any PC. Newest entry on top. Each entry: date, branch, what c
 - Bonus buy verified through the API (STANDARD_BONUS_100X: 41 events incl. strike + vents, balance 1000 → 956 for a 56 payout, no errors). xBet not yet exercised. API has no UNDERTOW event.
 - Director bar: still drives the simulator's levels; with the API, L1–L5 jump buttons only change visuals. Decide whether to keep it behind a flag.
 - Mobile/portrait layout for the canvas front end (it is a fixed 1920×1080 artboard; needs a scale-to-fit wrapper at minimum).
-- Game feel (`feel.js` timings, UK/DE profiles) is not applied to the canvas front end yet.
+- Game feel applied to the canvas front end (loads `../js/feel.js`; `?profile=mga|ukgc|de`): cycle padding at end, turbo/autoplay off + slam ignored + quiet LDWs under ukgc/de, cascade step ≈1.0–1.2s with chain factor, hit-stop 4–5 frames + 250ms shake on Wild Maw / Leviathan / big cascade / tier, ladder 15/40/100/500× with exact skip. Checker: `python scripts/canvas/feel_check_canvas.py --profiles mga,ukgc` → OVERALL PASS (re-run by the orchestrator). Canvas's own ladder (50/100/500/1000×) and 2.1s cascade step were replaced by the teardown numbers.
 
 ---
 

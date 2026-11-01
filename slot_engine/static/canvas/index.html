@@ -5,6 +5,7 @@
 <title>The Descent — Game Screen</title>
 <script src="./support.js"></script>
 <script src="assets/three.js"></script>
+<script src="../js/feel.js"></script>
 <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#dc-root{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}</style>
 <script>
 // The artboard is a fixed 1920x1080 stage: scale it to fit the window and keep it centred.
@@ -137,6 +138,8 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .bwx{font-family:'JetBrains Mono',monospace;font-size:24px;color:rgba(var(--bw),1);letter-spacing:.1em;text-shadow:0 2px 12px rgba(0,0,0,.9)}
 .bwhint{margin-top:22px;font-size:16px;letter-spacing:.45em;color:#d6eef5;animation:blink 1.6s ease-in-out infinite}
 .hud.shake{animation:shake .45s linear}
+.hud.shake.feel{animation:shake var(--shakeMs,.25s) linear}
+.ibtn.off{opacity:.3;pointer-events:none;filter:grayscale(1)}
 @keyframes shake{10%{transform:translate(-6px,3px)}30%{transform:translate(5px,-4px)}50%{transform:translate(-4px,-3px)}70%{transform:translate(4px,4px)}90%{transform:translate(-2px,1px)}}
 @media (prefers-reduced-motion: reduce){.hud.shake,.bwamt.jit.pa,.bwamt.jit.pb,.bwhint,.bwcol.slam{animation:none}.bwtitle.a1,.bwtitle.a2,.bwtitle.a3,.bwtitle.a4,.bwtitle.amax{animation:fadein .4s ease-out}}
 .big .amt{font-family:'JetBrains Mono',monospace;font-size:110px;font-weight:600;color:#fff;text-shadow:0 0 40px rgba(255,122,26,.9)}
@@ -173,7 +176,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 @media (prefers-reduced-motion: reduce){.hud.d4 .panel,.hud.d5 .panel,.hud.d4 .frame,.hud.d5 .frame,.hud.d5 .depthnum,.lu::after{animation:none}}
 </style>
 </helmet>
-<div class="hud {{shake}} {{deepCls}}" style="position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000307; --a: {{accentRgb}}" onPointerMove="{{onMove}}" onPointerLeave="{{onLeave}}" onPointerDown="{{onFirstTouch}}">
+<div class="hud {{shake}} {{deepCls}}" style="position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000307; --a: {{accentRgb}}; --shakeMs: {{shakeMs}}" onPointerMove="{{onMove}}" onPointerLeave="{{onLeave}}" onPointerDown="{{onFirstTouch}}">
 
 <canvas data-lev="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none"></canvas>
 <canvas data-lev3d="1" width="1920" height="1080" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; pointer-events: none; z-index: {{levZ}}; opacity: {{levOp}}; transition: opacity {{levOpT}}"></canvas>
@@ -1459,15 +1462,79 @@ class Component extends DCLogic {
     this.visCur = 0;
     this.visTarget = 0;
     this.startLoop();
+    this.feelBoot();
   }
 
   componentWillUnmount() {
     this.dead = true;
     cancelAnimationFrame(this.raf);
+    window.removeEventListener('keydown', this._feelKey);
     (this.timers || []).forEach((id) => clearTimeout(id));
     clearTimeout(this.autoT);
     if (this.L3) this.L3.renderer.dispose();
     if (this._aud && this._aud.ctx) { clearInterval(this._aud.ambTimer); this._aud.ctx.close(); }
+  }
+
+  // ---------- game feel (docs/game_feel_teardown.md; timing table + jurisdiction profile from ../js/feel.js) ----------
+  get F() { return window.FEEL || null; }
+  get FP() { return this.F ? this.F.profile : { id: 'none', minCycleMs: 0, allowTurbo: true, allowSlamStop: true, allowAutoplay: true, celebrateAtOrBelowStake: true }; }
+  get FT() {
+    if (this.F) return this.F.T;
+    return this._ft || (this._ft = { highlightMs: 450, explodeMs: 250, dropMs: 300, dropColStaggerMs: 20, pauseMs: 120, minWinVisibleMs: 300,
+      hitStopMs: 67, tierHitStopMs: 83, shakePx: 6, shakeMs: 250, flashMs: 33, skipAfterMs: 500, holdAfterCountMs: 1000,
+      tiers: [{ id: 'big', mult: 15, countMs: 3000 }, { id: 'mega', mult: 40, countMs: 5000 }, { id: 'epic', mult: 100, countMs: 8000 }, { id: 'abyssal', mult: 500, countMs: 12000 }] });
+  }
+  flog(type, data) { if (this.F) this.F.log(type, data); }
+  chainFactor(step) { return this.F ? this.F.chainFactor(step) : 1; }
+  tierFor(x) { let r = null; for (const t of this.FT.tiers) if (x >= t.mult) r = t; return r; }
+
+  feelBoot() {
+    const P = this.FP;
+    this.cycle = null;
+    this.hs = null;
+    if (!P.allowTurbo && this.state.turbo) this.setState({ turbo: false });
+    if (!P.allowAutoplay && this.state.auto) this.setState({ auto: false });
+    this._feelKey = (e) => { if (e.code === 'Space' && !e.repeat && this.busy) { e.preventDefault(); this.cycleInput(); } };
+    window.addEventListener('keydown', this._feelKey);
+    window.__canvasGame = this;
+    if (this.F) { window.__FEEL_READY = true; this.F.log('ready', { profile: P.id, front: 'canvas' }); }
+  }
+
+  // input while a round runs: skip during the count-up, slam the grid drop (only where the profile allows it)
+  cycleInput() {
+    const C = this.cycle;
+    if (!C) return;
+    C.inputF = this.F ? this.F.frame() : 0;
+    if (this.bwFx) { this.onBigWinTap(); return; }
+    if (C.phase === 'reels') {
+      if (this.FP.allowSlamStop) { this.flog('slam', {}); this.engSlam(); }
+      else this.flog('slamIgnored', { profile: this.FP.id });
+    }
+  }
+
+  // heavy impact on its contact frame: hit-stop (the whole picture freezes for T.hitStopMs) + the HUD shake, decaying within T.shakeMs
+  heavyImpact(kind, ms) {
+    const T = this.FT, t0 = performance.now();
+    if (this.F) this.F.onImpact(kind, { heavy: true });
+    this.hs = { kind, until: t0 + ms, t0, frames: 0 };
+    this.flog('hitStopStart', { kind, plannedMs: ms });
+    this.flog('shakeStart', { kind, px: T.shakePx });
+    clearTimeout(this.shakeT);
+    this.setState({ shake: 'shake feel' });
+    this.shakeT = setTimeout(() => { this.setState({ shake: '' }); this.flog('shakeEnd', { kind, ms: Math.round(performance.now() - t0) }); }, T.shakeMs);
+    this.timers.push(this.shakeT);
+  }
+
+  // <= 2 frames of white on a tier change
+  flashFrame() {
+    if (!this.flashEl) {
+      const f = document.createElement('div');
+      f.style.cssText = 'position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:99999';
+      document.body.appendChild(f);
+      this.flashEl = f;
+    }
+    this.flashEl.style.opacity = '0.45';
+    this.timers.push(setTimeout(() => { this.flashEl.style.opacity = '0'; }, this.FT.flashMs));
   }
 
   wait(ms) {
@@ -1475,11 +1542,12 @@ class Component extends DCLogic {
     return new Promise((res) => { this.timers.push(setTimeout(res, ms * k)); });
   }
 
-  waitSettled() {
+  waitSettled(maxMs) {
+    const t0 = performance.now();
     return new Promise((res) => {
       const chk = () => {
         const E = this.E;
-        if (this.dead || !E || E.fail || E.cells.every((c) => !c || c.state === 'idle' || c.state === 'gone')) res();
+        if (this.dead || !E || E.fail || E.cells.every((c) => !c || c.state === 'idle' || c.state === 'gone') || (maxMs && performance.now() - t0 >= maxMs)) res();
         else this.timers.push(setTimeout(chk, 40));
       };
       chk();
@@ -1502,6 +1570,9 @@ class Component extends DCLogic {
     const cost = bet * (feature ? D.buys[feature].mult : 1);
     if (s.balance < cost) { if (s.auto) this.setState({ auto: false }); return; }
     this.busy = true;
+    const P = this.FP, pressT = performance.now(), kind = buy ? 'bonus' : 'spin';
+    this.cycle = { kind, pressT, stake: cost, phase: 'reels' };
+    this.flog('press', { kind, profile: P.id, bet, stake: cost, turbo: !!(P.allowTurbo && s.turbo), front: 'canvas' });
     this.aud.init();
     this.aud.chain(false);
     this.surge = Math.max(this.surge || 0, 0.8);
@@ -1527,12 +1598,16 @@ class Component extends DCLogic {
       } catch (e) { console.warn('[canvas] API spin failed, using local simulator', e); }
     }
     if (!outcome) outcome = this.engRound(bet, feature, feature ? 0 : s.dirLevel);
-    const ctx = { bet, outcome, deepest: s.level };
+    // RTS 14F: a return at or below the stake shows its lines and amount but gets no celebration sound or VFX
+    const ctx = { bet, outcome, deepest: s.level, step: 0, open: null, quiet: (outcome.total_payout || 0) <= cost && !P.celebrateAtOrBelowStake };
     for (let i = 0; i < outcome.events.length; i++) {
       if (this.dead) return;
       ctx.next = outcome.events[i + 1];
+      const ti = performance.now(), et = outcome.events[i].event_type;
       try { await this.playEvent(outcome.events[i], ctx); }
       catch (e) { console.error('[canvas] event playback failed', outcome.events[i].event_type, e); }
+      // beats inside an open cascade step that are not the step itself (level-up, pearls) are excluded from its duration
+      if (ctx.open && et !== 'WIN_EVALUATION' && et !== 'CASCADE_DROP') ctx.open.inter += performance.now() - ti;
     }
     if (this.dead) return;
     const total = outcome.total_payout;
@@ -1545,9 +1620,16 @@ class Component extends DCLogic {
       this.setState({ feat: Object.assign({}, this.state.feat, { show: false }) });
     }
     await this.restToIdle();
+    // the profile's minimum game cycle (ukgc 2.5 s, de 5 s) is met by padding the END: reels and cascades are never slowed
+    const el = performance.now() - pressT, pad = Math.max(0, P.minCycleMs - el);
+    this.flog('pad', { ms: Math.round(pad), beforePadMs: Math.round(el) });
+    if (pad) await this.waitRaw(pad);
     this.roundsPlayed = (this.roundsPlayed || 0) + 1;
     this.busy = false;
     this.setState({ spinning: false, inFeature: false, free: false, banked: 0 });
+    this.flog('cycleEnd', { kind, cycleMs: Math.round(performance.now() - pressT), won: total, stake: cost, minCycleMs: P.minCycleMs });
+    this.cycle = null;
+    window.__FEEL_CYCLE_DONE = (window.__FEEL_CYCLE_DONE || 0) + 1;
     if (this.state.auto) this.autoT = setTimeout(() => { if (this.state.auto) this.spin(); }, this.state.turbo ? 350 : 800);
   }
 
@@ -1596,39 +1678,55 @@ class Component extends DCLogic {
         if (d.cols !== this.state.cols) { this.setState({ cols: d.cols }); await this.wait(150); }
         this.engDropGrid(d);
         await this.waitSettled();
+        if (this.cycle && this.cycle.phase === 'reels') this.cycle.phase = 'timeline';
         break;
       case 'VENTS_ERUPTED':
         // the engine rolls vents on dead steps too, where they change nothing: only show them when a win follows
         if (ctx.next && ctx.next.event_type === 'WIN_EVALUATION') { this.showVents(d.active_vents); this.aud.vent(); await this.wait(550); }
         break;
       case 'WIN_EVALUATION': {
+        const T = this.FT;
+        ctx.step++;
+        const f = this.chainFactor(ctx.step);
+        ctx.open = { step: ctx.step, f, t0: performance.now(), inter: 0, pay: d.step_payout || 0 };
+        this.flog('stepStart', { step: ctx.step, factor: Math.round(f * 100) / 100 });
         const cells = new Set();
         for (const w of d.wins) for (const rc of w.coords) cells.add(rc[0] * this.state.cols + rc[1]);
         const top = d.wins.slice().sort((a, b) => b.payout - a.payout)[0];
         const idx = Array.from(cells);
         this.engHit(idx);
-        this.aud.win(d.step_payout / ctx.bet);
-        this.surge = Math.max(this.surge, 1.1);
+        if (ctx.quiet) { this.flog('win', { celebrate: false, step: ctx.step, total: d.cumulative_payout, stake: this.cycle ? this.cycle.stake : ctx.bet }); this.aud.ui(); }
+        else { this.flog('celebrationSound', { voice: 'win' }); this.aud.win(d.step_payout / ctx.bet); this.surge = Math.max(this.surge, 1.1); }
         ctx.deepest = Math.max(ctx.deepest, d.depth_level);
         this.setState({ winCells: idx, win: +d.cumulative_payout.toFixed(2), pts: d.accumulated_points,
           winLabel: D.sym[top.symbol].name + ' · ' + top.reels + ' REELS · ' + this.fmt(top.ways) + ' WAYS' + (d.points_earned ? ' · +' + d.points_earned + ' PTS' : '') });
-        await this.wait(760);
+        this.flog('stepWin', { step: ctx.step, total: d.cumulative_payout });
+        await this.wait(T.highlightMs); // the highlight + running total are never compressed, whatever the chain length
         break;
       }
       case 'LEVEL_UP': await this.levelUpSeq(d); ctx.deepest = Math.max(ctx.deepest, d.new_level); break;
       case 'PEARLS_COLLECTED': this.setState({ pearls: d.total_pearls }); this.aud.shimmer(); await this.wait(300); break;
       case 'ULTRA_ASCENSION_ACHIEVED': await this.showFeature('ASCENSION'); ctx.deepest = 5; break;
-      case 'CASCADE_DROP':
-        this.engDissolve(d.removed_coords.map((rc) => rc[0] * this.state.cols + rc[1]));
+      case 'CASCADE_DROP': {
+        // one cascade step = highlight (WIN_EVALUATION) + explode + drop + pause, ~1.1 s; long chains speed up explode/drop/pause only
+        const T = this.FT, O = ctx.open, f = O ? O.f : 1, k = this.state.turbo ? 0.5 : 1;
+        const removed = d.removed_coords.map((rc) => rc[0] * this.state.cols + rc[1]);
+        // heavy only when the step really is big: >= 5x bet paid or >= 14 symbols cleared
+        if ((O && O.pay >= 5 * ctx.bet) || removed.length >= 14) this.heavyImpact('bigCascade', T.hitStopMs);
+        else if (this.F) this.F.onImpact('explode', { n: removed.length });
+        const explodeMs = T.explodeMs * f;
+        this.engDissolve(removed, 0.7 / (explodeMs * k / 1000) / (this.state.turbo ? 1.7 : 1)); // the dissolve plays out inside the explode budget
         this.aud.fizz();
-        await this.wait(720);
+        await this.wait(explodeMs);
         this.aud.absorb();
         this.G = d.grid;
-        this.engApplyCascade(d);
+        this.engApplyCascade(d, f);
         this.setState({ winCells: [], vents: [] });
-        await this.waitSettled();
-        await this.wait(120);
+        await this.waitSettled(T.dropMs * f * k * 1.15); // time-boxed: a straggler finishes landing under the next highlight
+        await this.wait(T.pauseMs * f);
+        if (O) { this.flog('stepEnd', { step: O.step, ms: Math.round(performance.now() - O.t0 - O.inter), interMs: Math.round(O.inter) }); ctx.open = null; }
         break;
+      }
       case 'CREATURE_LIFELINE_STRIKE': await this.strikeSeq(d, this.state.level); break;
       case 'UNDERTOW': await this.undertowSeq(d); break;
       default: break;
@@ -1763,8 +1861,7 @@ class Component extends DCLogic {
     await this.waitK(0.34);
     this.levSfx('chomp') || this.levSfx('boom');
     this.levBite(foot, px, py, w, h, sx, sy, zw, zh);
-    this.setState({ shake: 'shake' });
-    this.timers.push(setTimeout(() => this.setState({ shake: '' }), 460));
+    this.heavyImpact('leviathan', this.FT.hitStopMs);
     await this.waitK(0.392);
     // 4. it tears away, down and out into the deep in one sweep, fading into the dark
     this.levRecede = true;
@@ -1893,16 +1990,34 @@ class Component extends DCLogic {
     ];
   }
 
+  // tier thresholds (bet multiples) from the feel table: big 15x, mega 40x, epic 100x, abyssal 500x, then the max win
+  bwStops() { return [0].concat(this.FT.tiers.map((t) => t.mult), [this.defs().maxWin]); }
+
   async celebrate(total, stake, baseBet, capped) {
-    if (!(total > stake)) return;                      // a return at or below the stake is never celebrated
-    const D = this.defs();
+    if (!(total > 0)) return;
+    if (!(total > stake)) { this.flog('win', { celebrate: false, total, stake }); return; } // a return at or below the stake is never celebrated
+    const D = this.defs(), T = this.FT;
     const x = total / baseBet;
     const isMax = !!capped || x >= D.maxWin;
-    if (x < 50 && !isMax) return;                       // smaller wins keep the inline win chip
+    const topTier = this.tierFor(x);
+    if (!topTier && !isMax) return;                     // wins below the first tier keep the inline win chip
     const L = this.bwLadder();
-    const stops = [0, 50, 100, 500, 1000, D.maxWin];
-    const segDur = [3, 4, 4.5, 5, 6];
+    const stops = this.bwStops();
+    // segment durations from the tier count-up times (cumulative 3 / 5 / 8 / 12 s), then 6 s up to the max win
+    const cum = T.tiers.map((t) => t.countMs / 1000);
+    const segDur = cum.map((c, i) => (i ? c - cum[i - 1] : c)).concat([6]);
     const k = this.state.turbo ? 0.5 : 1;
+    let reached = 0;
+    const finalReach = Math.min(4, isMax ? 4 : stops.filter((v, i) => i > 0 && i <= 4 && x >= v).length);
+    const reach = (v, skipped) => {
+      while (reached < finalReach && (skipped || v >= stops[reached + 1])) {
+        reached++;
+        const tt = T.tiers[reached - 1];
+        this.flog('tier', { id: tt.id, threshold: tt.mult, mult: Math.round(v * 100) / 100, skipped: !!skipped });
+        this.heavyImpact('tier', T.tierHitStopMs);
+        this.flashFrame();
+      }
+    };
     const segs = [];
     for (let i = 0; i < stops.length - 1; i++) {
       const a = stops[i], b = stops[i + 1];
@@ -1919,7 +2034,7 @@ class Component extends DCLogic {
     this.bwArmed = false;
     this.bwFx = this.bwNew();
     const B = this.bwFx;
-    this.timers.push(setTimeout(() => { this.bwArmed = true; }, 500));
+    this.timers.push(setTimeout(() => { this.bwArmed = true; }, T.skipAfterMs));
     // only the tier reached so far is ever shown: its title, the count and the multiple
     const view = (tier, v, extra) => {
       const T = L[Math.min(4, tier) - 1];
@@ -1941,6 +2056,7 @@ class Component extends DCLogic {
     this.setState({ bw: view(1, 0, { punch: 'pa' }) });
     enterTier(1);
     let tier = 1, v = 0;
+    this.flog('countStart', { target: total, mult: Math.round(x * 100) / 100, durMs: Math.round(segs.reduce((a, g) => a + g.dur, 0) * 1000), tier: topTier ? topTier.id : null });
     for (const sg of segs) {
       if (this.dead) return;
       const st = Math.max(1, sg.i);
@@ -1955,6 +2071,7 @@ class Component extends DCLogic {
           const p = Math.min(1, (performance.now() - t0) / (sg.dur * 1000));
           const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
           v = sg.a + (sg.b - sg.a) * e;
+          reach(v, false);
           B.target = this.bwDepthAt(v);               // the camera is lowered as the number climbs
           if (performance.now() - lastTick > 140) { lastTick = performance.now(); A.tick(Math.min(1, v / Math.max(x, 1))); }
           this.setState({ bw: view(tier, v, { jit: p > 0.6 && !B.rm ? 'jit' : '', punch: this.state.bw.punch }) });
@@ -1965,10 +2082,12 @@ class Component extends DCLogic {
       if (this.bwSkip) break;
     }
     // skipped: jump to the final amount and the final tier; the camera plunges straight down to its depth
-    if (this.bwSkip) B.fast = true;
+    const skipped = !!this.bwSkip;
+    if (skipped) B.fast = true;
     const finalTier = segs.length ? Math.max(1, Math.min(4, segs[segs.length - 1].i)) : 1;
     if (finalTier > tier) { tier = finalTier; enterTier(tier); }
     v = x;
+    reach(x, skipped);
     B.target = this.bwDepthAt(isMax ? D.maxWin : v);
     B.hold = true;
     // the count has stopped: the fall slams into the floor (boom + chain lurch + chain bed cut at impact, in bwStep)
@@ -1983,6 +2102,8 @@ class Component extends DCLogic {
       A.endSting(tier);
       this.setState({ bw: view(tier, v, { hint: 'TAP TO CONTINUE', jit: '', slam: 'slam' }) });
     }
+    this.flog('countEnd', { value: total, shownText: this.money(total), skipped });
+    if (skipped) this.flog('skipLanded', { value: total });
     // hold: tap closes (after 1 s); auto-close after 5 s, except max win which waits for the player
     const endAt = performance.now();
     await new Promise((res) => {
@@ -2003,9 +2124,11 @@ class Component extends DCLogic {
   }
 
   onBigWinTap() {
-    if (!this.bwArmed) return;
+    const C = this.cycle;
+    if (C) C.inputF = this.F ? this.F.frame() : 0;
+    if (!this.bwArmed) { this.flog('skipTooEarly', {}); return; }
     if (this.bwClose) this.bwClose();
-    else this.bwSkip = true;
+    else if (!this.bwSkip) { this.bwSkip = true; this.flog('skipInput', { inputF: C ? C.inputF : 0 }); }
   }
 
   // the Leviathan swims across behind the counter
@@ -2017,7 +2140,7 @@ class Component extends DCLogic {
 
   // win multiple → camera depth in metres; each tier sits deeper (50× just under the surface … max at the Core)
   bwDepthAt(x) {
-    const X = [0, 50, 100, 500, 1000, this.defs().maxWin];
+    const X = this.bwStops();
     const M = [6, 230, 1000, 4300, 8000, 11000];
     for (let i = 0; i < X.length - 1; i++) if (x <= X[i + 1]) return M[i] + (M[i + 1] - M[i]) * Math.max(0, (x - X[i]) / (X[i + 1] - X[i]));
     return M[M.length - 1];
@@ -3198,6 +3321,7 @@ class Component extends DCLogic {
     const E = this.E;
     if (!E || E.fail) return;
     E.cols = G.cols;
+    E.drop = { kind: 'grid', rows: G.rows, col: {}, hit: {}, maw: false, t0: performance.now() };
     E.cells = this.gridCells(G).map((g, i) => {
       const c = this.mkCell(g.sym, i, G.cols, g.mult, g.pearl);
       this.setFall(c, c.y0 - 5 * 312 - 120, 0.1 + (i % G.cols) * 0.1 + (4 - Math.floor(i / G.cols)) * 0.045);
@@ -3222,10 +3346,33 @@ class Component extends DCLogic {
     for (const i of idx) if (E.cells[i]) E.cells[i].darkT = on ? 0.28 : 1;
   }
 
-  engDissolve(idx) {
+  engDissolve(idx, rate) {
     const E = this.E;
     if (!E || E.fail) return;
-    for (const i of idx) { const c = E.cells[i]; if (c) { c.disT = 0; c.hitT = c.hitT < 0 ? 0 : c.hitT; } }
+    for (const i of idx) { const c = E.cells[i]; if (c) { c.disT = 0; c.disRate = rate || 1; c.hitT = c.hitT < 0 ? 0 : c.hitT; } }
+  }
+
+  // slam stop (mga only): the columns still falling drop at once
+  engSlam() {
+    const E = this.E;
+    if (!E || E.fail) return;
+    for (const c of E.cells) if (c && c.state === 'fall') c.delay = 0;
+    E.rate = 2.5;
+  }
+
+  // a symbol touches down: column stops (base drop), drop impacts (cascade), Wild Maw hit-stop
+  onLand(c, E) {
+    const d = E.drop;
+    if (!d) return;
+    const col = c.i % E.cols, C = this.cycle;
+    if (d.kind === 'grid') {
+      d.col[col] = (d.col[col] || 0) + 1;
+      if (d.col[col] === d.rows) {
+        this.flog('reelStop', { col, atMs: Math.round(performance.now() - (C ? C.pressT : d.t0)), turbo: !!this.state.turbo });
+        if (this.F) this.F.onImpact('reelStop', { col });
+      }
+    } else if (!d.hit[col]) { d.hit[col] = 1; if (this.F) this.F.onImpact('drop', { col }); }
+    if (C && !d.maw && this.defs().sym[c.sym].wild) { d.maw = true; this.heavyImpact('wildMaw', this.FT.hitStopMs); }
   }
 
   engTransmute(i, sym, mult, surface) {
@@ -3245,10 +3392,14 @@ class Component extends DCLogic {
   }
 
   // survivors fall into the gaps, new symbols sink in from above (positions from the CASCADE_DROP payload)
-  engApplyCascade(d) {
+  engApplyCascade(d, f) {
     const E = this.E;
     if (!E || E.fail) return;
     const G = d.grid, cols = G.cols;
+    // refill pacing from the feel table: per-column stagger T.dropColStaggerMs; the fall runs at a fixed higher rate so the drop fits T.dropMs
+    const cs = this.FT.dropColStaggerMs / 1000;
+    E.rate = 2.6;
+    E.drop = { kind: 'cascade', rows: G.rows, col: {}, hit: {}, maw: false, t0: performance.now() };
     const fin = this.gridCells(G);
     const nc = new Array(G.rows * cols).fill(null);
     const moved = new Set();
@@ -3257,7 +3408,7 @@ class Component extends DCLogic {
       const c = E.cells[fi];
       if (!c) continue;
       c.i = ti; c.y0 = this.cellCenter(ti, cols)[1];
-      this.setFall(c, c.y, (ti % cols) * 0.03);
+      this.setFall(c, c.y, (ti % cols) * cs);
       nc[ti] = c; moved.add(fi);
     }
     const removed = new Set(d.removed_coords.map((rc) => rc[0] * cols + rc[1]));
@@ -3268,7 +3419,7 @@ class Component extends DCLogic {
       const ti = n.coord[0] * cols + n.coord[1];
       const k = perCol[n.coord[1]];
       const c = this.mkCell(n.symbol, ti, cols, fin[ti].mult, n.has_pearl);
-      this.setFall(c, c.y0 - k * 312 - 90, 0.08 + n.coord[1] * 0.05 + (k - 1 - n.coord[0]) * 0.07);
+      this.setFall(c, c.y0 - k * 312 - 90, 0.03 + n.coord[1] * cs + (k - 1 - n.coord[0]) * 0.05);
       nc[ti] = c;
     }
     nc.forEach((c, i) => { if (c) { c.sym = fin[i].sym; c.mult = fin[i].mult; c.pearl = fin[i].pearl; c.darkT = 1; } });
@@ -3449,7 +3600,7 @@ void main(){
     // the canvas widens for the 6x5 Core grid
     if (E.c.width !== E.W) { E.W = E.c.width; E.fx.width = E.W; }
     const D = this.defs();
-    const sdt = dt * (this.state.turbo ? 1.7 : 1);
+    const sdt = dt * (this.state.turbo ? 1.7 : 1) * (E.rate || 1);
     this.symT += dt;
     const T = this.symT;
     // dive lantern: follows the cursor, otherwise wanders slowly over the reels
@@ -3477,6 +3628,7 @@ void main(){
           if (!c.landed) {
             c.landed = true;
             c.squash = 1;
+            this.onLand(c, E);
             this.aud.land();
             this.burst(c.x, c.y0, 'puff');
             const sy = D.sym[c.sym];
@@ -3493,7 +3645,7 @@ void main(){
       }
       if (c.hitT >= 0) c.hitT += sdt;
       if (c.disT >= 0) {
-        c.disT += sdt;
+        c.disT += sdt * (c.disRate || 1);
         const rock = c.sym === 'DEAD_SEDIMENT';
         if (c.disT < 0.7) {
           if (rock) {
@@ -3512,6 +3664,7 @@ void main(){
     E.outgoing = E.outgoing.filter((c) => c.state !== 'gone');
     E.outgoing.forEach(step);
     E.cells.forEach((c) => { if (c) step(c); });
+    if (E.rate && !E.cells.some((c) => c && c.state === 'fall')) E.rate = 0; // slam / cascade rate ends when the grid has settled
 
     const live = E.cells.filter((c) => c && c.state !== 'gone');
     const list = E.outgoing.concat(live.filter((c) => c.hitT < 0), live.filter((c) => c.hitT >= 0));
@@ -4048,8 +4201,13 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       if (!c) return;
       const ctx = c.getContext('2d');
       const W = c.width, H = c.height;
-      const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
+      let dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
       last = now;
+      // hit-stop: the whole picture holds for a few frames on a heavy impact (feel T.hitStopMs / T.tierHitStopMs)
+      if (this.hs) {
+        if (now < this.hs.until) { this.hs.frames++; dt = 0; }
+        else { this.flog('hitStopEnd', { kind: this.hs.kind, actualMs: Math.round(now - this.hs.t0), frames: this.hs.frames }); this.hs = null; }
+      }
       const P = this.props || {};
       const k = P.leviathanScale ?? 1, gk = P.glow ?? 1, acc = P.bioluminescence || '#3ff5ff';
       if (acc !== spriteKey) { spriteKey = acc; spr = this.makeSprites(acc); }
@@ -5144,16 +5302,18 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       onBetDown: () => { if (!this.busy) this.setState({ betIdx: Math.max(0, this.state.betIdx - 1) }); },
       onBetUp: () => { if (!this.busy) this.setState({ betIdx: Math.min(D.bets.length - 1, this.state.betIdx + 1) }); },
       spinCls: s.spinning ? 'busy' : '',
-      onSpin: () => this.spin(),
-      autoCls: s.auto ? 'on' : '',
+      onSpin: () => { if (this.busy) this.cycleInput(); else this.spin(); },
+      shakeMs: this.FT.shakeMs + 'ms',
+      autoCls: !this.FP.allowAutoplay ? 'off' : s.auto ? 'on' : '',
       onAuto: () => {
+        if (!this.FP.allowAutoplay) return;
         const on = !this.state.auto;
         this.setState({ auto: on });
         if (!on) clearTimeout(this.autoT);
         else if (!this.busy) setTimeout(() => this.spin(), 0);
       },
-      turboCls: s.turbo ? 'on' : '',
-      onTurbo: () => this.setState({ turbo: !this.state.turbo }),
+      turboCls: !this.FP.allowTurbo ? 'off' : s.turbo ? 'on' : '',
+      onTurbo: () => { if (this.FP.allowTurbo) this.setState({ turbo: !this.state.turbo }); },
       xbetCls: s.xbet ? 'on' : '',
       onXbet: () => {
         if (this.busy) return;
