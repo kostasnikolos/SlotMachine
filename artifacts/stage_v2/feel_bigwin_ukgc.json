@@ -1,0 +1,468 @@
+[
+ {
+  "t": 210.2,
+  "f": 1,
+  "type": "profile",
+  "profile": "ukgc",
+  "minCycleMs": 2600,
+  "tiers": [
+   15,
+   40,
+   100,
+   500
+  ],
+  "hitStopMs": 67,
+  "tierHitStopMs": 83,
+  "shakeMs": 250
+ },
+ {
+  "t": 2280.1,
+  "f": 121,
+  "type": "ready",
+  "profile": "ukgc",
+  "demos": [
+   "bigwin"
+  ]
+ },
+ {
+  "t": 2333.4,
+  "f": 124,
+  "type": "press",
+  "demo": "bigwin",
+  "profile": "ukgc",
+  "bet": 1,
+  "scriptedMult": 112
+ },
+ {
+  "t": 2682,
+  "f": 145,
+  "type": "slamIgnored",
+  "profile": "ukgc"
+ },
+ {
+  "t": 3229.5,
+  "f": 178,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901
+ },
+ {
+  "t": 3229.6,
+  "f": 178,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 3396.5,
+  "f": 188,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068
+ },
+ {
+  "t": 3396.5,
+  "f": 188,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 3396.5,
+  "f": 188,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 3396.5,
+  "f": 188,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 3396.5,
+  "f": 188,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 3480,
+  "f": 193,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 84,
+  "frames": 4
+ },
+ {
+  "t": 3630.1,
+  "f": 202,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1235
+ },
+ {
+  "t": 3630.3,
+  "f": 202,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 3646.6,
+  "f": 203,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 250
+ },
+ {
+  "t": 3780,
+  "f": 211,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1385
+ },
+ {
+  "t": 3780,
+  "f": 211,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 3946.9,
+  "f": 221,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1552
+ },
+ {
+  "t": 3946.9,
+  "f": 221,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 4064.7,
+  "f": 228,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 4064.8,
+  "f": 228,
+  "type": "stepWin",
+  "step": 1,
+  "total": 4
+ },
+ {
+  "t": 4514.7,
+  "f": 255,
+  "type": "impact",
+  "kind": "explode",
+  "step": 1
+ },
+ {
+  "t": 4947.8,
+  "f": 281,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 0
+ },
+ {
+  "t": 4981.2,
+  "f": 283,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 2
+ },
+ {
+  "t": 5014.5,
+  "f": 285,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 3
+ },
+ {
+  "t": 5031.3,
+  "f": 286,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 4
+ },
+ {
+  "t": 5198.4,
+  "f": 296,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1134
+ },
+ {
+  "t": 5198.4,
+  "f": 296,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 5198.6,
+  "f": 296,
+  "type": "stepWin",
+  "step": 2,
+  "total": 22
+ },
+ {
+  "t": 5648.9,
+  "f": 323,
+  "type": "impact",
+  "kind": "explode",
+  "step": 2
+ },
+ {
+  "t": 6081.9,
+  "f": 349,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 0
+ },
+ {
+  "t": 6098.6,
+  "f": 350,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 1
+ },
+ {
+  "t": 6115.3,
+  "f": 351,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 2
+ },
+ {
+  "t": 6148.6,
+  "f": 353,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 3
+ },
+ {
+  "t": 6165.4,
+  "f": 354,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 4
+ },
+ {
+  "t": 6333.2,
+  "f": 364,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1135
+ },
+ {
+  "t": 6333.2,
+  "f": 364,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 6333.3,
+  "f": 364,
+  "type": "stepWin",
+  "step": 3,
+  "total": 112
+ },
+ {
+  "t": 6783.6,
+  "f": 391,
+  "type": "impact",
+  "kind": "explode",
+  "step": 3
+ },
+ {
+  "t": 7216.2,
+  "f": 417,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 0
+ },
+ {
+  "t": 7283.1,
+  "f": 421,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 3
+ },
+ {
+  "t": 7299.7,
+  "f": 422,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 4
+ },
+ {
+  "t": 7467.6,
+  "f": 432,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1134
+ },
+ {
+  "t": 7467.9,
+  "f": 432,
+  "type": "countStart",
+  "target": 112,
+  "mult": 112,
+  "durMs": 8000,
+  "tier": "epic"
+ },
+ {
+  "t": 8100.6,
+  "f": 470,
+  "type": "tier",
+  "id": "big",
+  "threshold": 15,
+  "mult": 15.11,
+  "skipped": false
+ },
+ {
+  "t": 8100.6,
+  "f": 470,
+  "type": "impact",
+  "kind": "tier",
+  "heavy": true
+ },
+ {
+  "t": 8100.6,
+  "f": 470,
+  "type": "hitStopStart",
+  "kind": "tier",
+  "plannedMs": 83
+ },
+ {
+  "t": 8100.6,
+  "f": 470,
+  "type": "shakeStart",
+  "kind": "tier",
+  "px": 6
+ },
+ {
+  "t": 8183.8,
+  "f": 475,
+  "type": "hitStopEnd",
+  "kind": "tier",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 8367.4,
+  "f": 486,
+  "type": "shakeEnd",
+  "kind": "tier",
+  "ms": 267
+ },
+ {
+  "t": 8720.9,
+  "f": 507,
+  "type": "skipInput",
+  "inputF": 507
+ },
+ {
+  "t": 8721,
+  "f": 507,
+  "type": "tier",
+  "id": "epic",
+  "threshold": 100,
+  "mult": 112,
+  "skipped": true
+ },
+ {
+  "t": 8721,
+  "f": 507,
+  "type": "impact",
+  "kind": "tier",
+  "heavy": true
+ },
+ {
+  "t": 8721,
+  "f": 507,
+  "type": "hitStopStart",
+  "kind": "tier",
+  "plannedMs": 83
+ },
+ {
+  "t": 8721,
+  "f": 507,
+  "type": "shakeStart",
+  "kind": "tier",
+  "px": 6
+ },
+ {
+  "t": 8721.1,
+  "f": 507,
+  "type": "countEnd",
+  "value": 112,
+  "shownText": "112.00",
+  "skipped": true
+ },
+ {
+  "t": 8721.1,
+  "f": 507,
+  "type": "skipLanded",
+  "value": 112
+ },
+ {
+  "t": 8817.7,
+  "f": 513,
+  "type": "hitStopEnd",
+  "kind": "tier",
+  "actualMs": 97,
+  "frames": 5
+ },
+ {
+  "t": 8984.4,
+  "f": 523,
+  "type": "shakeEnd",
+  "kind": "tier",
+  "ms": 263
+ },
+ {
+  "t": 9802.8,
+  "f": 572,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 7469
+ },
+ {
+  "t": 9803.4,
+  "f": 572,
+  "type": "cycleEnd",
+  "demo": "bigwin",
+  "cycleMs": 7470,
+  "won": 112,
+  "minCycleMs": 2600
+ }
+]

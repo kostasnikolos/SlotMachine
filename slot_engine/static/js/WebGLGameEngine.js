@@ -46,6 +46,13 @@ class WebGLGameEngine {
         
         this.onWindowResize();
         window.addEventListener('resize', this.onWindowResize.bind(this), false);
+        // Layout can change without a window resize (fonts, panels, 6x5 expansion): re-align then too.
+        if (window.ResizeObserver) {
+            const grid = document.getElementById('slot-grid');
+            const ro = new ResizeObserver(() => this.onWindowResize());
+            ro.observe(this.canvas.parentElement);
+            if (grid) ro.observe(grid);
+        }
     }
 
     async init() {
@@ -170,6 +177,7 @@ class WebGLGameEngine {
                 }
             }
         }
+        if (!this.isSpinning) this.alignToCells();
     }
 
     startSpin() {
@@ -214,12 +222,43 @@ class WebGLGameEngine {
         this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
 
+        if (this.alignToCells()) return;
+
         const vFov = this.camera.fov * Math.PI / 180;
         const hFov = 2 * Math.atan(Math.tan(vFov / 2) * this.camera.aspect);
         const requiredZ = 55 / (2 * Math.tan(hFov / 2));
         const requiredZVert = 55 / (2 * Math.tan(vFov / 2));
-        
+
         this.camera.position.z = Math.max(72, requiredZ, requiredZVert);
+    }
+
+    // Place the camera so the 3D symbol grid lands exactly on the HTML cells (#cell-r-c), at any window size.
+    alignToCells(snapZ = true) {
+        const rows = this.rows || this.gridSize;
+        const cols = this.cols || this.gridSize;
+        const first = document.getElementById('cell-0-0');
+        const last = document.getElementById(`cell-${rows - 1}-${cols - 1}`);
+        if (!first || !last) return false;
+
+        const canvasRect = this.canvas.getBoundingClientRect();
+        const a = first.getBoundingClientRect();
+        const b = last.getBoundingClientRect();
+        if (!canvasRect.width || !canvasRect.height || b.right <= a.left) return false;
+
+        // World extent of the grid: plane centres are symbolSpacing apart, each plane is 10 units wide.
+        const worldW = (cols - 1) * this.symbolSpacing + 10;
+        const pxPerUnit = (b.right - a.left) / worldW;
+        const visibleH = canvasRect.height / pxPerUnit;
+        const z = visibleH / (2 * Math.tan(this.camera.fov * Math.PI / 360));
+
+        // Shift the camera so the grid centre sits on the cells' centre.
+        const dx = (a.left + b.right) / 2 - (canvasRect.left + canvasRect.width / 2);
+        const dy = (a.top + b.bottom) / 2 - (canvasRect.top + canvasRect.height / 2);
+        this.camera.position.x = -dx / pxPerUnit;
+        this.camera.position.y = dy / pxPerUnit;
+        if (snapZ) this.camera.position.z = z;
+        this.baseCameraZ = z;
+        return true;
     }
 
     render(time) {
@@ -247,6 +286,9 @@ class WebGLGameEngine {
                 }
             });
         } else {
+            // Cells can move without a resize (HUD banners showing/hiding): re-measure a few times a second.
+            this.alignTick = (this.alignTick || 0) + 1;
+            if (this.alignTick % 10 === 0) this.alignToCells(false);
             if (this.baseCameraZ !== undefined) {
                 this.camera.position.z += (this.baseCameraZ - this.camera.position.z) * dt * 5.0;
             }

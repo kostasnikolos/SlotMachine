@@ -589,6 +589,7 @@ class SlotGame {
 
     audio.playSpin();
     if (window.oceanAmbient) window.oceanAmbient.scatterFish();
+    if (window.webglEngine) window.webglEngine.startSpin();
 
     try {
       const res = await fetch('/api/slot/spin', {
@@ -627,6 +628,7 @@ class SlotGame {
     this.updateStats();
     this.isSpinning = true;
     this.spinBtn.disabled = true;
+    if (window.webglEngine) window.webglEngine.startSpin();
 
     try {
       const res = await fetch('/api/slot/buy-bonus', {
@@ -814,12 +816,10 @@ class SlotGame {
     }
     
     if (window.webglEngine && gridData.grid) {
+      // updateGrid lands the reels (stops the spin started on the button press); never restart it here,
+      // or the 3D layer keeps spinning over the finished board.
       window.webglEngine.updateGrid(gridData.grid);
-      if (this.isSpinning) {
-        window.webglEngine.startSpin();
-      } else {
-        window.webglEngine.startCascade();
-      }
+      window.webglEngine.startCascade();
     }
 
     await new Promise(r => setTimeout(r, (cols * 45 + 160) * speed));

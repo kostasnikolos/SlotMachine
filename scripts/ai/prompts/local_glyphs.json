@@ -1,0 +1,19 @@
+{
+  "phase": "P2-local",
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "controlnet": "controlnet_union_sdxl_promax.safetensors",
+  "font": "C:/Windows/Fonts/georgiab.ttf",
+  "steps": 30,
+  "cfg": 6.0,
+  "control_strength": 0.85,
+  "control_end": 0.8,
+  "style": "dark painterly digital painting, slot game symbol, a single chunk of cracked black basalt stone floating on a pure black background, a letter deeply chiselled into its face, weathered rough rock texture, faint bioluminescent cyan rim light from upper left, deep shadows inside the carving, desaturated teal-grey and black palette, matte, visible brush texture, centered, isolated",
+  "negative": "photo, 3d render, plastic, glossy, text, watermark, signature, frame, border, medallion, gold, bright colors, rainbow, blurry, lowres, extra letters, cartoon, background scenery",
+  "jobs": [
+    {"id": "low_10", "glyph": "10", "prompt": "the number 10 carved into the stone"},
+    {"id": "low_j", "glyph": "J", "prompt": "the letter J carved into the stone"},
+    {"id": "low_q", "glyph": "Q", "prompt": "the letter Q carved into the stone"},
+    {"id": "low_k", "glyph": "K", "prompt": "the letter K carved into the stone"},
+    {"id": "low_a", "glyph": "A", "prompt": "the letter A carved into the stone"}
+  ]
+}

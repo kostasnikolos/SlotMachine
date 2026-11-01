@@ -1,0 +1,538 @@
+[
+ {
+  "t": 216.5,
+  "f": 1,
+  "type": "profile",
+  "profile": "ukgc",
+  "minCycleMs": 2600,
+  "tiers": [
+   15,
+   40,
+   100,
+   500
+  ],
+  "hitStopMs": 67,
+  "tierHitStopMs": 83,
+  "shakeMs": 250
+ },
+ {
+  "t": 2311,
+  "f": 120,
+  "type": "ready",
+  "profile": "ukgc",
+  "demos": [
+   "cascade"
+  ]
+ },
+ {
+  "t": 2382.3,
+  "f": 124,
+  "type": "press",
+  "demo": "cascade",
+  "profile": "ukgc",
+  "bet": 1,
+  "scriptedMult": 6.799999999999999
+ },
+ {
+  "t": 2730,
+  "f": 145,
+  "type": "slamIgnored",
+  "profile": "ukgc"
+ },
+ {
+  "t": 3276.8,
+  "f": 178,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 900
+ },
+ {
+  "t": 3276.9,
+  "f": 178,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 3443.9,
+  "f": 188,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068
+ },
+ {
+  "t": 3443.9,
+  "f": 188,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 3444.2,
+  "f": 188,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 3444.2,
+  "f": 188,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 3444.2,
+  "f": 188,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 3527.1,
+  "f": 193,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 3677.1,
+  "f": 202,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1234
+ },
+ {
+  "t": 3677.1,
+  "f": 202,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 3710.6,
+  "f": 204,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 266
+ },
+ {
+  "t": 3827.2,
+  "f": 211,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1384
+ },
+ {
+  "t": 3827.2,
+  "f": 211,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 3994,
+  "f": 221,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1551
+ },
+ {
+  "t": 3994,
+  "f": 221,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 4111.6,
+  "f": 228,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 4111.8,
+  "f": 228,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.4
+ },
+ {
+  "t": 4562.4,
+  "f": 255,
+  "type": "impact",
+  "kind": "explode",
+  "step": 1
+ },
+ {
+  "t": 4994.8,
+  "f": 281,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 0
+ },
+ {
+  "t": 5028.3,
+  "f": 283,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 2
+ },
+ {
+  "t": 5061.6,
+  "f": 285,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 3
+ },
+ {
+  "t": 5078.3,
+  "f": 286,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 4
+ },
+ {
+  "t": 5245.7,
+  "f": 296,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1134
+ },
+ {
+  "t": 5245.7,
+  "f": 296,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 5245.9,
+  "f": 296,
+  "type": "stepWin",
+  "step": 2,
+  "total": 1
+ },
+ {
+  "t": 5696.1,
+  "f": 323,
+  "type": "impact",
+  "kind": "explode",
+  "step": 2
+ },
+ {
+  "t": 6129.1,
+  "f": 349,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 0
+ },
+ {
+  "t": 6145.8,
+  "f": 350,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 1
+ },
+ {
+  "t": 6162.5,
+  "f": 351,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 2
+ },
+ {
+  "t": 6195.9,
+  "f": 353,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 3
+ },
+ {
+  "t": 6212.5,
+  "f": 354,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 4
+ },
+ {
+  "t": 6380.1,
+  "f": 364,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1134
+ },
+ {
+  "t": 6380.1,
+  "f": 364,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 6380.3,
+  "f": 364,
+  "type": "stepWin",
+  "step": 3,
+  "total": 1.9
+ },
+ {
+  "t": 6830.2,
+  "f": 391,
+  "type": "impact",
+  "kind": "explode",
+  "step": 3
+ },
+ {
+  "t": 7296.7,
+  "f": 419,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 2
+ },
+ {
+  "t": 7330.3,
+  "f": 421,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 3
+ },
+ {
+  "t": 7346.8,
+  "f": 422,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 4
+ },
+ {
+  "t": 7514.4,
+  "f": 432,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1134
+ },
+ {
+  "t": 7514.4,
+  "f": 432,
+  "type": "stepStart",
+  "step": 4,
+  "factor": 0.92
+ },
+ {
+  "t": 7514.6,
+  "f": 432,
+  "type": "stepWin",
+  "step": 4,
+  "total": 3.1
+ },
+ {
+  "t": 7964.8,
+  "f": 459,
+  "type": "impact",
+  "kind": "explode",
+  "step": 4
+ },
+ {
+  "t": 8397.7,
+  "f": 485,
+  "type": "impact",
+  "kind": "drop",
+  "step": 4,
+  "col": 2
+ },
+ {
+  "t": 8447.8,
+  "f": 488,
+  "type": "impact",
+  "kind": "drop",
+  "step": 4,
+  "col": 4
+ },
+ {
+  "t": 8598.9,
+  "f": 497,
+  "type": "stepEnd",
+  "step": 4,
+  "ms": 1085
+ },
+ {
+  "t": 8598.9,
+  "f": 497,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
+ },
+ {
+  "t": 8599,
+  "f": 497,
+  "type": "stepWin",
+  "step": 5,
+  "total": 4.7
+ },
+ {
+  "t": 9048.7,
+  "f": 524,
+  "type": "impact",
+  "kind": "explode",
+  "step": 5
+ },
+ {
+  "t": 9415.2,
+  "f": 546,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 0
+ },
+ {
+  "t": 9431.8,
+  "f": 547,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 1
+ },
+ {
+  "t": 9448.7,
+  "f": 548,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 2
+ },
+ {
+  "t": 9465.3,
+  "f": 549,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 3
+ },
+ {
+  "t": 9481.9,
+  "f": 550,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 4
+ },
+ {
+  "t": 9649.7,
+  "f": 560,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1051
+ },
+ {
+  "t": 9649.7,
+  "f": 560,
+  "type": "stepStart",
+  "step": 6,
+  "factor": 0.76
+ },
+ {
+  "t": 9649.8,
+  "f": 560,
+  "type": "stepWin",
+  "step": 6,
+  "total": 6.8
+ },
+ {
+  "t": 10100,
+  "f": 587,
+  "type": "impact",
+  "kind": "explode",
+  "step": 6
+ },
+ {
+  "t": 10449.4,
+  "f": 608,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 0
+ },
+ {
+  "t": 10466.1,
+  "f": 609,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 2
+ },
+ {
+  "t": 10482.7,
+  "f": 610,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 3
+ },
+ {
+  "t": 10499.4,
+  "f": 611,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 4
+ },
+ {
+  "t": 10633.4,
+  "f": 619,
+  "type": "stepEnd",
+  "step": 6,
+  "ms": 984
+ },
+ {
+  "t": 10633.7,
+  "f": 619,
+  "type": "countStart",
+  "target": 6.8,
+  "mult": 6.8,
+  "durMs": 1200,
+  "tier": null
+ },
+ {
+  "t": 11834.3,
+  "f": 691,
+  "type": "countEnd",
+  "value": 6.8,
+  "shownText": "6.80",
+  "skipped": false
+ },
+ {
+  "t": 12835.7,
+  "f": 751,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 10453
+ },
+ {
+  "t": 12836.4,
+  "f": 751,
+  "type": "cycleEnd",
+  "demo": "cascade",
+  "cycleMs": 10454,
+  "won": 6.8,
+  "minCycleMs": 2600
+ }
+]

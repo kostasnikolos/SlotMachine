@@ -18,16 +18,18 @@ window.STAGE_MANIFEST = {
     'Q':       { tier: 'low',  v2: '../assets/v2/symbols/low_q.png',  placeholder: 'glyph:Q',  scale: 0.72 },
     'K':       { tier: 'low',  v2: '../assets/v2/symbols/low_k.png',  placeholder: 'glyph:K',  scale: 0.72 },
     'A':       { tier: 'low',  v2: '../assets/v2/symbols/low_a.png',  placeholder: 'glyph:A',  scale: 0.72 },
-    helmet:    { tier: 'mid',  v2: '../assets/v2/symbols/mid_helmet.png',  placeholder: '../assets/sym_mid_helmet.jpg',  normal: '../assets/v2/symbols/mid_helmet_normal.png',  scale: 1.0 },
-    compass:   { tier: 'mid',  v2: '../assets/v2/symbols/mid_compass.png', placeholder: '../assets/sym_mid_compass.jpg', normal: '../assets/v2/symbols/mid_compass_normal.png', scale: 1.0 },
-    angler:    { tier: 'high', v2: '../assets/v2/symbols/high_angler.png',    placeholder: '../assets/sym_high_angler.jpg',    normal: '../assets/v2/symbols/high_angler_normal.png',    scale: 1.16 },
-    squid:     { tier: 'high', v2: '../assets/v2/symbols/high_squid.png',     placeholder: '../assets/sym_high_squid.jpg',     normal: '../assets/v2/symbols/high_squid_normal.png',     scale: 1.16 },
-    viper:     { tier: 'high', v2: '../assets/v2/symbols/high_viper.png',     placeholder: '../assets/sym_high_viper.jpg',     normal: '../assets/v2/symbols/high_viper_normal.png',     scale: 1.16 },
+    helmet:    { tier: 'mid',  v2: '../assets/v2/symbols/mid_helmet.png',  placeholder: '../assets/sym_mid_helmet.jpg',  normal: '../assets/v2/symbols/mid_helmet_normal.png',  scale: 0.98 },
+    compass:   { tier: 'mid',  v2: '../assets/v2/symbols/mid_compass.png', placeholder: '../assets/sym_mid_compass.jpg', normal: '../assets/v2/symbols/mid_compass_normal.png', scale: 0.98 },
+    angler:    { tier: 'high', v2: '../assets/v2/symbols/high_angler.png',    placeholder: '../assets/sym_high_angler.jpg',    normal: '../assets/v2/symbols/high_angler_normal.png',    scale: 1.15 },
+    squid:     { tier: 'high', v2: '../assets/v2/symbols/high_squid.png',     placeholder: '../assets/sym_high_squid.jpg',     normal: '../assets/v2/symbols/high_squid_normal.png',     scale: 1.15 },
+    viper:     { tier: 'high', v2: '../assets/v2/symbols/high_viper.png',     placeholder: '../assets/sym_high_viper.jpg',     normal: '../assets/v2/symbols/high_viper_normal.png',     scale: 1.15 },
     leviathan: { tier: 'high', v2: '../assets/v2/symbols/high_leviathan.png', placeholder: '../assets/sym_high_leviathan.jpg', normal: '../assets/v2/symbols/high_leviathan_normal.png', scale: 1.18 },
     wild:      { tier: 'special', v2: '../assets/v2/symbols/special_wild_maw.png', placeholder: '../assets/sym_wild_maw.jpg', normal: '../assets/v2/symbols/special_wild_maw_normal.png', scale: 1.0 },
+    // NOTE: scatter has no v2 art yet; the 'Abyssal Pearl' placeholder still carries baked text.
     scatter:   { tier: 'special', v2: '../assets/v2/symbols/special_scatter.png',  placeholder: '../assets/token_abyssal_pearl.jpg', scale: 1.0 }
   },
   scalePlaceholder: 0.96,
+  v2ArtFill: 0.93, // visible art spans 93% of the v2 PNG canvas; scales below are visible coverage of the cell
   uvInsetPlaceholder: 0.05,
   // Hard-coded 5x5 showcase board (rows top -> bottom). No math/API dependency.
   board: [

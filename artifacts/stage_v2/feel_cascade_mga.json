@@ -1,0 +1,537 @@
+[
+ {
+  "t": 359.3,
+  "f": 1,
+  "type": "profile",
+  "profile": "mga",
+  "minCycleMs": 0,
+  "tiers": [
+   15,
+   40,
+   100,
+   500
+  ],
+  "hitStopMs": 67,
+  "tierHitStopMs": 83,
+  "shakeMs": 250
+ },
+ {
+  "t": 2472.8,
+  "f": 99,
+  "type": "ready",
+  "profile": "mga",
+  "demos": [
+   "cascade"
+  ]
+ },
+ {
+  "t": 2544,
+  "f": 103,
+  "type": "press",
+  "demo": "cascade",
+  "profile": "mga",
+  "bet": 1,
+  "scriptedMult": 6.799999999999999
+ },
+ {
+  "t": 2891.3,
+  "f": 124,
+  "type": "slam"
+ },
+ {
+  "t": 3371.7,
+  "f": 153,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 830,
+  "atMs": 834
+ },
+ {
+  "t": 3371.8,
+  "f": 153,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 3422,
+  "f": 156,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 870,
+  "atMs": 884
+ },
+ {
+  "t": 3422,
+  "f": 156,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 3422,
+  "f": 156,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 3422.1,
+  "f": 156,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 3422.1,
+  "f": 156,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 3505.2,
+  "f": 161,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 3521.8,
+  "f": 162,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 910,
+  "atMs": 917
+ },
+ {
+  "t": 3521.9,
+  "f": 162,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 3555.2,
+  "f": 164,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 950,
+  "atMs": 951
+ },
+ {
+  "t": 3555.2,
+  "f": 164,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 3605.2,
+  "f": 167,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 990,
+  "atMs": 1001
+ },
+ {
+  "t": 3605.2,
+  "f": 167,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 3672,
+  "f": 171,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 250
+ },
+ {
+  "t": 3723,
+  "f": 174,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 3723.3,
+  "f": 174,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.4
+ },
+ {
+  "t": 4173.3,
+  "f": 201,
+  "type": "impact",
+  "kind": "explode",
+  "step": 1
+ },
+ {
+  "t": 4606.2,
+  "f": 227,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 0
+ },
+ {
+  "t": 4639.5,
+  "f": 229,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 2
+ },
+ {
+  "t": 4672.9,
+  "f": 231,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 3
+ },
+ {
+  "t": 4689.6,
+  "f": 232,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 4
+ },
+ {
+  "t": 4857.1,
+  "f": 242,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1134
+ },
+ {
+  "t": 4857.1,
+  "f": 242,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 4857.2,
+  "f": 242,
+  "type": "stepWin",
+  "step": 2,
+  "total": 1
+ },
+ {
+  "t": 5307.8,
+  "f": 269,
+  "type": "impact",
+  "kind": "explode",
+  "step": 2
+ },
+ {
+  "t": 5740.4,
+  "f": 295,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 0
+ },
+ {
+  "t": 5757.1,
+  "f": 296,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 1
+ },
+ {
+  "t": 5773.9,
+  "f": 297,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 2
+ },
+ {
+  "t": 5807.2,
+  "f": 299,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 3
+ },
+ {
+  "t": 5823.9,
+  "f": 300,
+  "type": "impact",
+  "kind": "drop",
+  "step": 2,
+  "col": 4
+ },
+ {
+  "t": 5991.7,
+  "f": 310,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1135
+ },
+ {
+  "t": 5991.7,
+  "f": 310,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 5991.9,
+  "f": 310,
+  "type": "stepWin",
+  "step": 3,
+  "total": 1.9
+ },
+ {
+  "t": 6442.1,
+  "f": 337,
+  "type": "impact",
+  "kind": "explode",
+  "step": 3
+ },
+ {
+  "t": 6908.1,
+  "f": 365,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 2
+ },
+ {
+  "t": 6941.6,
+  "f": 367,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 3
+ },
+ {
+  "t": 6958.2,
+  "f": 368,
+  "type": "impact",
+  "kind": "drop",
+  "step": 3,
+  "col": 4
+ },
+ {
+  "t": 7125.9,
+  "f": 378,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1134
+ },
+ {
+  "t": 7126,
+  "f": 378,
+  "type": "stepStart",
+  "step": 4,
+  "factor": 0.92
+ },
+ {
+  "t": 7126.1,
+  "f": 378,
+  "type": "stepWin",
+  "step": 4,
+  "total": 3.1
+ },
+ {
+  "t": 7575.9,
+  "f": 405,
+  "type": "impact",
+  "kind": "explode",
+  "step": 4
+ },
+ {
+  "t": 8009.2,
+  "f": 431,
+  "type": "impact",
+  "kind": "drop",
+  "step": 4,
+  "col": 2
+ },
+ {
+  "t": 8059.2,
+  "f": 434,
+  "type": "impact",
+  "kind": "drop",
+  "step": 4,
+  "col": 4
+ },
+ {
+  "t": 8210.2,
+  "f": 443,
+  "type": "stepEnd",
+  "step": 4,
+  "ms": 1084
+ },
+ {
+  "t": 8210.2,
+  "f": 443,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
+ },
+ {
+  "t": 8210.4,
+  "f": 443,
+  "type": "stepWin",
+  "step": 5,
+  "total": 4.7
+ },
+ {
+  "t": 8660.1,
+  "f": 470,
+  "type": "impact",
+  "kind": "explode",
+  "step": 5
+ },
+ {
+  "t": 9026.6,
+  "f": 492,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 0
+ },
+ {
+  "t": 9043.3,
+  "f": 493,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 1
+ },
+ {
+  "t": 9059.9,
+  "f": 494,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 2
+ },
+ {
+  "t": 9076.6,
+  "f": 495,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 3
+ },
+ {
+  "t": 9093.3,
+  "f": 496,
+  "type": "impact",
+  "kind": "drop",
+  "step": 5,
+  "col": 4
+ },
+ {
+  "t": 9260.8,
+  "f": 506,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1051
+ },
+ {
+  "t": 9260.8,
+  "f": 506,
+  "type": "stepStart",
+  "step": 6,
+  "factor": 0.76
+ },
+ {
+  "t": 9261,
+  "f": 506,
+  "type": "stepWin",
+  "step": 6,
+  "total": 6.8
+ },
+ {
+  "t": 9711.1,
+  "f": 533,
+  "type": "impact",
+  "kind": "explode",
+  "step": 6
+ },
+ {
+  "t": 10060.7,
+  "f": 554,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 0
+ },
+ {
+  "t": 10077.4,
+  "f": 555,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 2
+ },
+ {
+  "t": 10094.1,
+  "f": 556,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 3
+ },
+ {
+  "t": 10110.7,
+  "f": 557,
+  "type": "impact",
+  "kind": "drop",
+  "step": 6,
+  "col": 4
+ },
+ {
+  "t": 10244.8,
+  "f": 565,
+  "type": "stepEnd",
+  "step": 6,
+  "ms": 984
+ },
+ {
+  "t": 10245.1,
+  "f": 565,
+  "type": "countStart",
+  "target": 6.8,
+  "mult": 6.8,
+  "durMs": 1200,
+  "tier": null
+ },
+ {
+  "t": 11445.6,
+  "f": 637,
+  "type": "countEnd",
+  "value": 6.8,
+  "shownText": "6.80",
+  "skipped": false
+ },
+ {
+  "t": 12446.7,
+  "f": 697,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 9903
+ },
+ {
+  "t": 12447.4,
+  "f": 697,
+  "type": "cycleEnd",
+  "demo": "cascade",
+  "cycleMs": 9904,
+  "won": 6.8,
+  "minCycleMs": 0
+ }
+]

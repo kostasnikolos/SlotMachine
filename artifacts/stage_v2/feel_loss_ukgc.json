@@ -1,0 +1,209 @@
+[
+ {
+  "t": 230.3,
+  "f": 1,
+  "type": "profile",
+  "profile": "ukgc",
+  "minCycleMs": 2600,
+  "tiers": [
+   15,
+   40,
+   100,
+   500
+  ],
+  "hitStopMs": 67,
+  "tierHitStopMs": 83,
+  "shakeMs": 250
+ },
+ {
+  "t": 2304.2,
+  "f": 119,
+  "type": "ready",
+  "profile": "ukgc",
+  "demos": [
+   "loss"
+  ]
+ },
+ {
+  "t": 2357.1,
+  "f": 122,
+  "type": "press",
+  "demo": "loss",
+  "profile": "ukgc",
+  "bet": 1,
+  "scriptedMult": 0.6
+ },
+ {
+  "t": 2706.5,
+  "f": 143,
+  "type": "slamIgnored",
+  "profile": "ukgc"
+ },
+ {
+  "t": 3253.3,
+  "f": 176,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901
+ },
+ {
+  "t": 3253.6,
+  "f": 176,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 3420.1,
+  "f": 186,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068
+ },
+ {
+  "t": 3420.1,
+  "f": 186,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 3586.9,
+  "f": 196,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1234
+ },
+ {
+  "t": 3586.9,
+  "f": 196,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 3737,
+  "f": 205,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1385
+ },
+ {
+  "t": 3737,
+  "f": 205,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 3903.8,
+  "f": 215,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1551
+ },
+ {
+  "t": 3903.9,
+  "f": 215,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 4021.6,
+  "f": 222,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 4021.9,
+  "f": 222,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.6
+ },
+ {
+  "t": 4471.6,
+  "f": 249,
+  "type": "impact",
+  "kind": "explode",
+  "step": 1
+ },
+ {
+  "t": 4904.6,
+  "f": 275,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 0
+ },
+ {
+  "t": 4921.4,
+  "f": 276,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 1
+ },
+ {
+  "t": 4938.1,
+  "f": 277,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 2
+ },
+ {
+  "t": 4971.4,
+  "f": 279,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 3
+ },
+ {
+  "t": 4988.1,
+  "f": 280,
+  "type": "impact",
+  "kind": "drop",
+  "step": 1,
+  "col": 4
+ },
+ {
+  "t": 5156,
+  "f": 290,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1134
+ },
+ {
+  "t": 5156.2,
+  "f": 290,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.6,
+  "mult": 0.6
+ },
+ {
+  "t": 5156.2,
+  "f": 290,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 2799
+ },
+ {
+  "t": 5156.6,
+  "f": 290,
+  "type": "cycleEnd",
+  "demo": "loss",
+  "cycleMs": 2800,
+  "won": 0.6,
+  "minCycleMs": 2600
+ }
+]

@@ -73,6 +73,7 @@ Score 1–5 per line. **PASS requires ≥4 on every line.** Reviewer compares ou
 | G5 | Cohesion | Symbols, frame and backdrop look painted by one hand (palette, brush, grain). |
 | G6 | Reference parity | Next to 3 reference frames, a stranger cannot pick ours as the cheap one. |
 | G7 | Budget | Total texture payload ≤ 15MB; 60fps on a mid-range phone. |
+| G8 | Game feel | The 7-point gate in `docs/game_feel_teardown.md`, checked on 60fps captured video: jurisdiction minimum cycle, no loss celebrations, audio within ±1 frame of impacts, cascade pacing, hit-stop on heavy impacts, win tiers and skip, honest anticipation. |
 
 Reference board (descriptive, for scoring): Nolimit City *Mental*, *Das xBoot*, *Tombstone RIP*; Push Gaming *Razor Returns*; Pragmatic Play *Gates of Olympus* (for readability only).
 

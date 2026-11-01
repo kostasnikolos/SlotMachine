@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -87,6 +87,16 @@ async def serve_index():
     if index_path.exists():
         return FileResponse(str(index_path))
     return {"status": "The Descent Slot Engine Online", "docs": "/docs"}
+
+
+@app.get("/canvas")
+async def serve_canvas():
+    """The Design-canvas front end (slot_engine/static/canvas), driven by the real engine."""
+    # Redirect rather than serve: the page loads support.js and assets/ by relative path.
+    canvas_path = STATIC_DIR / "canvas" / "index.html"
+    if canvas_path.exists():
+        return RedirectResponse(url="/static/canvas/index.html")
+    raise HTTPException(status_code=404, detail="canvas front end not built")
 
 
 @app.get("/api/slot/health")

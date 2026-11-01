@@ -20,11 +20,18 @@ SATURATION = 0.72
 HIGHLIGHT_CAP = 0.94
 
 
-def cutout(img, lo=0.04, hi=0.16):
-    """Soft luminance key: pixels darker than `lo` become transparent, brighter than `hi` opaque."""
-    rgb = np.asarray(img.convert("RGB"), dtype=np.float32) / 255
-    lum = rgb.max(axis=2)
-    alpha = np.clip((lum - lo) / (hi - lo), 0, 1)
+def cutout(img, lo=0.025, hi=0.12):
+    """Soft luminance key: pixels darker than `lo` become transparent, brighter than `hi` opaque.
+
+    The key is measured on a blurred copy so compression noise in glows doesn't step, and the matte is
+    closed (dilate then erode) so dark scales inside a silhouette don't punch speckled holes.
+    """
+    img = img.convert("RGB")
+    rgb = np.asarray(img, dtype=np.float32) / 255
+    lum = np.asarray(img.filter(ImageFilter.GaussianBlur(2)), dtype=np.float32).max(axis=2) / 255
+    matte = Image.fromarray((np.clip((lum - lo) / (hi - lo), 0, 1) * 255).astype(np.uint8), "L")
+    matte = matte.filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.MinFilter(9)).filter(ImageFilter.GaussianBlur(1.5))
+    alpha = np.asarray(matte, dtype=np.float32) / 255
     # Un-premultiply against black so edges don't keep a dark fringe.
     safe = np.maximum(alpha, 1e-3)[..., None]
     rgb = np.clip(rgb / safe, 0, 1) * (alpha[..., None] > 0)
@@ -32,11 +39,26 @@ def cutout(img, lo=0.04, hi=0.16):
     return Image.fromarray((out * 255).astype(np.uint8), "RGBA")
 
 
-def grade(img):
+TIER_SATURATION = {"low": 0.72, "mid": 0.8, "high": 1.0, "special": 1.05}
+
+
+def trim(img, pad=0.04):
+    """Crop to the alpha bounding box, then pad back to a square so the subject fills the cell."""
+    box = img.getchannel("A").point(lambda v: 255 if v > 24 else 0).getbbox()
+    if not box:
+        return img
+    img = img.crop(box)
+    side = int(max(img.size) * (1 + pad * 2))
+    sq = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    sq.paste(img, ((side - img.width) // 2, (side - img.height) // 2))
+    return sq
+
+
+def grade(img, saturation=SATURATION):
     arr = np.asarray(img.convert("RGBA"), dtype=np.float32) / 255
     rgb, a = arr[..., :3], arr[..., 3:]
     grey = rgb @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
-    rgb = grey[..., None] + (rgb - grey[..., None]) * SATURATION
+    rgb = grey[..., None] + (rgb - grey[..., None]) * saturation
     shadow = (1 - grey)[..., None] ** 2
     rgb = rgb * (1 - shadow * 0.35) + SHADOW_TINT * shadow * 0.35
     rgb = np.minimum(rgb, HIGHLIGHT_CAP)
@@ -71,9 +93,10 @@ def main():
     files = sorted(f for ext in ("png", "jpg", "jpeg", "webp") for f in src.glob(f"*.{ext}"))
     for f in files:
         im = Image.open(f)
+        tier = f.stem.split("_")[0]
         if not args.no_cutout:
-            im = cutout(im)
-        im = grade(im)
+            im = trim(cutout(im))
+        im = grade(im, TIER_SATURATION.get(tier, SATURATION))
         im.save(out / f"{f.stem}.png")
         done.append((f.stem, im))
         print(f"  {f.name}")

@@ -328,17 +328,48 @@
   var clipTop = new THREE.Plane(new THREE.Vector3(0, -1, 0), IN), clipBot = new THREE.Plane(new THREE.Vector3(0, 1, 0), IN);
   var symMats = {}, symbols = [], board = M.board.map(function (r) { return r.slice(); });
   function cellPos(r, c) { return new THREE.Vector2(-HALF + CELL / 2 + c * (CELL + GAP), HALF - CELL / 2 - r * (CELL + GAP)); }
+  // Symbols keep their own colour: albedo is carried by a self-lit emissive term (tier-scaled), the cyan key only adds
+  // a lit-edge rim from the upper-left (alpha-edge test toward the key) instead of multiply-tinting the paint.
+  var TIER_SELF = { low: 0.04, mid: 0.62, high: 0.88, special: 1.05 }, TIER_DIFFUSE = { low: 1.0, mid: 0.3, high: 0.25, special: 0.2 };
+  var TIER_RIM = { low: 0.0, mid: 0.35, high: 0.6, special: 0.5 };
   function buildSymbolMats(texs) {
     Object.keys(M.symbols).forEach(function (id, i) {
       var e = M.symbols[id], t = texs[i * 2], n = texs[i * 2 + 1];
       var isV2 = !!t.isV2, glyph = !!t.isGlyph;
       if (!isV2 && !glyph) { var ins = M.uvInsetPlaceholder; t.offset.set(ins, ins); t.repeat.set(1 - 2 * ins, 1 - 2 * ins); if (n) { n.offset.copy(t.offset); n.repeat.copy(t.repeat); } }
-      var mat = new THREE.MeshStandardMaterial({ map: t, normalMap: n || null, bumpMap: glyph ? t : null, bumpScale: 0.04,
-        roughness: e.tier === 'low' ? 0.85 : 0.55, metalness: e.tier === 'mid' ? 0.35 : 0.1, transparent: isV2 || glyph, alphaTest: 0.02,
-        emissive: lin('#ffffff'), emissiveMap: t, emissiveIntensity: { low: 0.04, mid: 0.16, high: 0.34, special: 0.42 }[e.tier], clippingPlanes: [clipTop, clipBot] });
+      var dif = TIER_DIFFUSE[e.tier];
+      var mat = new THREE.MeshStandardMaterial({ map: t, normalMap: n || null, bumpMap: glyph ? t : null, bumpScale: 0.04, color: new THREE.Color(dif, dif, dif),
+        roughness: e.tier === 'low' ? 0.85 : 0.5, metalness: 0.0, transparent: isV2 || glyph, alphaTest: 0.02, depthWrite: !(isV2 || glyph) || e.tier === 'low',
+        emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: TIER_SELF[e.tier], clippingPlanes: [clipTop, clipBot] });
       if (n) mat.normalScale.set(0.6, -0.6);
-      symMats[id] = { mat: mat, scale: (isV2 || glyph) ? e.scale : M.scalePlaceholder, tier: e.tier };
+      if (isV2 && TIER_RIM[e.tier] > 0) {
+        var rimK = TIER_RIM[e.tier];
+        mat.onBeforeCompile = function (sh) {
+          sh.uniforms.uRim = U.uGrade; sh.uniforms.uRimK = { value: rimK };
+          sh.fragmentShader = 'uniform vec3 uRim; uniform float uRimK;\n' + sh.fragmentShader.replace('#include <emissivemap_fragment>',
+            '#include <emissivemap_fragment>\n float aC = texture2D(map, vUv).a, aL = texture2D(map, vUv + vec2(-0.014, 0.014)).a;\n' +
+            ' totalEmissiveRadiance += uRim * uRimK * aC * (1.0 - aL);');
+        };
+      }
+      // v2 PNGs carry ~3.5% transparent padding per side: scale so the visible art hits the tier's cell coverage
+      symMats[id] = { mat: mat, scale: isV2 ? e.scale / (M.v2ArtFill || 1) : glyph ? e.scale : M.scalePlaceholder, tier: e.tier };
     });
+  }
+  // back-glow + drop-shadow halo that lifts highs/specials off the backplane (children follow position/scale/squash)
+  var haloGeo = new THREE.PlaneGeometry(1, 1);
+  var shadowTex = (function () { var c = mkCanvas(128, 128), x = c.getContext('2d'), g = x.createRadialGradient(64, 64, 8, 64, 64, 62);
+    g.addColorStop(0, 'rgba(0,0,0,0.75)'); g.addColorStop(0.6, 'rgba(0,0,0,0.4)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
+  var haloShadowMat = new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, clippingPlanes: [clipTop, clipBot] });
+  var haloGlowMat = new THREE.MeshBasicMaterial({ map: glowTex, color: lin(PAL.bio), transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, clippingPlanes: [clipTop, clipBot] });
+  function decorate(mesh, id) {
+    var h = mesh.userData.halo;
+    if (!h) {
+      var sh = new THREE.Mesh(haloGeo, haloShadowMat); sh.position.set(0.07, -0.09, -0.05); sh.scale.set(0.95, 0.95, 1); sh.renderOrder = 1;
+      var gl = new THREE.Mesh(haloGeo, haloGlowMat); gl.position.set(-0.03, 0.03, -0.06); gl.scale.set(1.1, 1.1, 1); gl.renderOrder = 1;
+      mesh.add(sh, gl); h = mesh.userData.halo = [sh, gl]; mesh.renderOrder = 2;
+    }
+    var on = symMats[id].tier === 'high' || symMats[id].tier === 'special';
+    h[0].visible = h[1].visible = on;
   }
   var quad = new THREE.PlaneGeometry(CELL, CELL);
   function placeBoard(fromAbove) {
@@ -347,7 +378,7 @@
     for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
       var d = symMats[board[r][c]], m = new THREE.Mesh(quad, d.mat), p = cellPos(r, c);
       m.position.set(p.x, fromAbove ? p.y + GW + 1.5 : p.y, d.tier === 'high' ? 0.14 : 0.1);
-      m.scale.setScalar(d.scale); scene.add(m);
+      m.scale.setScalar(d.scale); decorate(m, board[r][c]); scene.add(m);
       symbols.push({ mesh: m, r: r, c: c, base: d.scale, yT: p.y, yS: m.position.y, t0: now + 0.25 + c * 0.09 + (N - 1 - r) * 0.035, landed: !fromAbove });
     }
   }
@@ -379,7 +410,8 @@
       'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0); }',
       'void main(){ vec3 c = texture2D(tScene, vUv).rgb * uExposure;',
       '  float l = dot(c, vec3(0.2126,0.7152,0.0722));',
-      '  c = mix(c, c * (0.75 + 0.6*uGrade/max(max(uGrade.r,uGrade.g),uGrade.b)), 0.18);', // depth tint
+      '  float mx = max(max(c.r,c.g),c.b), sat = mx > 1e-4 ? (mx - min(min(c.r,c.g),c.b)) / mx : 0.0;',
+      '  c = mix(c, c * (0.75 + 0.6*uGrade/max(max(uGrade.r,uGrade.g),uGrade.b)), 0.18 * (1.0 - smoothstep(0.25, 0.6, sat)));', // depth tint; saturated symbol paint is protected
       '  c += uGrade * 0.012 * (1.0 - smoothstep(0.0, 0.2, l));', // lift shadows toward grade colour
       '  vec2 q = (vUv-0.5)*vec2(uAspect,1.0); float v = smoothstep(1.05, 0.35, length(q)*1.15);',
       '  c *= mix(0.25, 1.0, v);',
@@ -405,7 +437,7 @@
     var portrait = camera.aspect < 0.8, tx = FCX;
     var needH = FH * 1.05 / avail, needW = portrait ? FW + 0.4 : FW * 1.06; // portrait: whole frame incl. trim, ~62px cells
     var d = Math.max(needH / (2 * tan), needW / (2 * tan * camera.aspect)) + (portrait ? 0 : 0.6);
-    var visH = 2 * d * tan, shift = (DOM_PX / H) * visH / 2;
+    var visH = 2 * d * tan, shift = (DOM_PX / H) * visH / 2; if (window.STAGE) window.STAGE.worldPerPx = visH / H;
     var ty = Math.max(FCY - shift, -FR.B - 0.3 - 2 * shift + visH / 2); // seat frame just above the DOM bar
     camTarget.set(tx, ty, 0); camBase.set(tx - 0.25, ty + 0.35, d); U.uRes.value.set(W * pr, H * pr);
     camera.updateProjectionMatrix();
@@ -427,7 +459,12 @@
   }
   function setRitual(f) { state.ritual = f; U.uRitual.value = f; }
   function setSeals(n) { state.seals = n; seals.forEach(function (s, i) { s.material.emissiveIntensity = i < n ? 2.2 : 0.06; }); }
-  window.STAGE = { setDepth: setDepth, setRitual: setRitual, setSeals: setSeals, state: state, scene: scene, camera: camera };
+  window.STAGE = { setDepth: setDepth, setRitual: setRitual, setSeals: setSeals, state: state, scene: scene, camera: camera,
+    // hooks for director.js (spin / cascade / feel): per-frame callbacks, camera shake offset, symbol materials + grid geometry
+    hooks: [], shake: new THREE.Vector3(), worldPerPx: 0.01, symMats: symMats, cellPos: cellPos, quad: quad, clip: [clipTop, clipBot],
+    geo: { N: N, CELL: CELL, GAP: GAP, HALF: HALF, IN: IN }, board: board,
+    decorate: decorate,
+    clearSymbols: function () { symbols.forEach(function (s) { scene.remove(s.mesh); }); symbols = []; } };
 
   // ---------- DOM (layer 6) ----------
   var balance = 1000, bets = [0.2, 0.5, 1, 2, 5, 10], bi = 2;
@@ -448,7 +485,8 @@
   function frame() {
     var t = clock.getElapsedTime(); U.uTime.value = t;
     var px = mouse.x * 0.35 + Math.sin(t * 0.21) * 0.12, py = -mouse.y * 0.2 + Math.sin(t * 0.17) * 0.06;
-    camera.position.set(camBase.x + px, camBase.y + py, camBase.z); camera.lookAt(camTarget);
+    camera.position.set(camBase.x + px, camBase.y + py, camBase.z).add(window.STAGE.shake); camera.lookAt(camTarget.clone().add(window.STAGE.shake));
+    for (var hi = 0; hi < window.STAGE.hooks.length; hi++) window.STAGE.hooks[hi](t);
     creature.position.set(creatureBase.x + Math.sin(t * 0.13) * 0.35, creatureBase.y + Math.sin(t * 0.19) * 0.2, -6);
     keyLight.intensity = 2.6 + Math.sin(t * 0.8) * 0.25;
     sonarRing.rotation.z = t * 0.05;

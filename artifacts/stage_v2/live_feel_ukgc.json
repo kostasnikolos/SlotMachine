@@ -1,0 +1,2841 @@
+[
+ {
+  "t": 215.7,
+  "f": 1,
+  "type": "profile",
+  "profile": "ukgc",
+  "minCycleMs": 2600,
+  "tiers": [
+   15,
+   40,
+   100,
+   500
+  ],
+  "hitStopMs": 67,
+  "tierHitStopMs": 83,
+  "shakeMs": 250
+ },
+ {
+  "t": 704.6,
+  "f": 13,
+  "type": "ready",
+  "profile": "ukgc"
+ },
+ {
+  "t": 1590,
+  "f": 66,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false
+ },
+ {
+  "t": 1905.8,
+  "f": 86,
+  "type": "slamIgnored",
+  "profile": "ukgc"
+ },
+ {
+  "t": 2471.8,
+  "f": 120,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 2471.9,
+  "f": 120,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 2638.5,
+  "f": 130,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068,
+  "turbo": false
+ },
+ {
+  "t": 2638.5,
+  "f": 130,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 2805.2,
+  "f": 140,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1234,
+  "turbo": false
+ },
+ {
+  "t": 2805.2,
+  "f": 140,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 2955.4,
+  "f": 149,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1385,
+  "turbo": false
+ },
+ {
+  "t": 2955.4,
+  "f": 149,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 3122.3,
+  "f": 159,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1551,
+  "turbo": false
+ },
+ {
+  "t": 3122.3,
+  "f": 159,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 3240.4,
+  "f": 166,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 3240.5,
+  "f": 166,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.14
+ },
+ {
+  "t": 3705.9,
+  "f": 193,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 4140.8,
+  "f": 220,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 4156.8,
+  "f": 221,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 4173.2,
+  "f": 222,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 4206.6,
+  "f": 224,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 4390.1,
+  "f": 235,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1150,
+  "interMs": 0
+ },
+ {
+  "t": 4390.2,
+  "f": 235,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 4390.2,
+  "f": 235,
+  "type": "stepWin",
+  "step": 2,
+  "total": 0.34
+ },
+ {
+  "t": 4856.5,
+  "f": 262,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 5290.6,
+  "f": 289,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 5307.4,
+  "f": 290,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 5324.3,
+  "f": 291,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 5357.7,
+  "f": 293,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 5374.2,
+  "f": 294,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 5541.2,
+  "f": 304,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1151,
+  "interMs": 0
+ },
+ {
+  "t": 5541.2,
+  "f": 304,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 5541.2,
+  "f": 304,
+  "type": "stepWin",
+  "step": 3,
+  "total": 0.41200000000000003
+ },
+ {
+  "t": 6007.3,
+  "f": 331,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 6441.7,
+  "f": 358,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 6458.5,
+  "f": 359,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 6475.5,
+  "f": 360,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 6692.2,
+  "f": 373,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1151,
+  "interMs": 0
+ },
+ {
+  "t": 6692.3,
+  "f": 373,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.41,
+  "stake": 1
+ },
+ {
+  "t": 6692.3,
+  "f": 373,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 5104
+ },
+ {
+  "t": 6692.4,
+  "f": 373,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 5104,
+  "won": 0.41,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 6895.3,
+  "f": 385,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false
+ },
+ {
+  "t": 7792.8,
+  "f": 437,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 7792.8,
+  "f": 437,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 7959.6,
+  "f": 447,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068,
+  "turbo": false
+ },
+ {
+  "t": 7959.6,
+  "f": 447,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 7959.8,
+  "f": 447,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 7960,
+  "f": 447,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 7960,
+  "f": 447,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 8043,
+  "f": 452,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 8193.2,
+  "f": 461,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1234,
+  "turbo": false
+ },
+ {
+  "t": 8193.2,
+  "f": 461,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 8226.5,
+  "f": 463,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 267
+ },
+ {
+  "t": 8343.4,
+  "f": 470,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1384,
+  "turbo": false
+ },
+ {
+  "t": 8343.4,
+  "f": 470,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 8510.1,
+  "f": 480,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1551,
+  "turbo": false
+ },
+ {
+  "t": 8510.1,
+  "f": 480,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 8627.3,
+  "f": 487,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 8627.3,
+  "f": 487,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.186
+ },
+ {
+  "t": 8627.4,
+  "f": 487,
+  "type": "celebrationSound",
+  "voice": "playWin"
+ },
+ {
+  "t": 9093.2,
+  "f": 514,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 9527.8,
+  "f": 541,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 9544.6,
+  "f": 542,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 9561.1,
+  "f": 543,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 9594.5,
+  "f": 545,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 9611,
+  "f": 546,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 9777.9,
+  "f": 556,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1151,
+  "interMs": 0
+ },
+ {
+  "t": 9777.9,
+  "f": 556,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 9778,
+  "f": 556,
+  "type": "stepWin",
+  "step": 2,
+  "total": 1.626
+ },
+ {
+  "t": 9778,
+  "f": 556,
+  "type": "celebrationSound",
+  "voice": "playWin"
+ },
+ {
+  "t": 10244.1,
+  "f": 583,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 10678.6,
+  "f": 610,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 10695.5,
+  "f": 611,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 10712,
+  "f": 612,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 10745.5,
+  "f": 614,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 10762.1,
+  "f": 615,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 10928.9,
+  "f": 625,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1151,
+  "interMs": 0
+ },
+ {
+  "t": 10929,
+  "f": 625,
+  "type": "countStart",
+  "target": 1.63,
+  "mult": 1.63,
+  "durMs": 1200,
+  "tier": null
+ },
+ {
+  "t": 12129.8,
+  "f": 697,
+  "type": "countEnd",
+  "value": 1.63,
+  "shownText": "$1.63",
+  "skipped": false
+ },
+ {
+  "t": 13130.8,
+  "f": 757,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 6236
+ },
+ {
+  "t": 13130.9,
+  "f": 757,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 6236,
+  "won": 1.63,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 13334.1,
+  "f": 769,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false
+ },
+ {
+  "t": 14231.7,
+  "f": 823,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 14231.7,
+  "f": 823,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 14398.3,
+  "f": 833,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068,
+  "turbo": false
+ },
+ {
+  "t": 14398.3,
+  "f": 833,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 14565.3,
+  "f": 843,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1235,
+  "turbo": false
+ },
+ {
+  "t": 14565.3,
+  "f": 843,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 14715.3,
+  "f": 852,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1384,
+  "turbo": false
+ },
+ {
+  "t": 14715.3,
+  "f": 852,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 14882.2,
+  "f": 862,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1551,
+  "turbo": false
+ },
+ {
+  "t": 14882.2,
+  "f": 862,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 14882.4,
+  "f": 862,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 14882.4,
+  "f": 862,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 14882.4,
+  "f": 862,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 14965.5,
+  "f": 867,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 15066.1,
+  "f": 873,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 15066.1,
+  "f": 873,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.5
+ },
+ {
+  "t": 15132.6,
+  "f": 877,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 250
+ },
+ {
+  "t": 15531.6,
+  "f": 900,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 15966.5,
+  "f": 927,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 15983.2,
+  "f": 928,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 15999.7,
+  "f": 929,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 16033.2,
+  "f": 931,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 16049.7,
+  "f": 932,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 16233.5,
+  "f": 943,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1167,
+  "interMs": 0
+ },
+ {
+  "t": 16233.5,
+  "f": 943,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.5,
+  "stake": 1
+ },
+ {
+  "t": 16233.5,
+  "f": 943,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 2900
+ },
+ {
+  "t": 16233.5,
+  "f": 943,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 2900,
+  "won": 0.5,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 16436.7,
+  "f": 955,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false
+ },
+ {
+  "t": 17334.6,
+  "f": 1009,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 17334.6,
+  "f": 1009,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 17501.3,
+  "f": 1019,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068,
+  "turbo": false
+ },
+ {
+  "t": 17501.3,
+  "f": 1019,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 17501.3,
+  "f": 1019,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 17501.4,
+  "f": 1019,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 17501.4,
+  "f": 1019,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 17584.4,
+  "f": 1024,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 17735,
+  "f": 1033,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1235,
+  "turbo": false
+ },
+ {
+  "t": 17735,
+  "f": 1033,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 17751.7,
+  "f": 1034,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 250
+ },
+ {
+  "t": 17884.6,
+  "f": 1042,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1385,
+  "turbo": false
+ },
+ {
+  "t": 17884.6,
+  "f": 1042,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 18051.4,
+  "f": 1052,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1552,
+  "turbo": false
+ },
+ {
+  "t": 18051.5,
+  "f": 1052,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 18169.7,
+  "f": 1059,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 18169.8,
+  "f": 1059,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.22
+ },
+ {
+  "t": 18169.8,
+  "f": 1059,
+  "type": "celebrationSound",
+  "voice": "playWin"
+ },
+ {
+  "t": 18634.2,
+  "f": 1086,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 19069.1,
+  "f": 1113,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 19085.8,
+  "f": 1114,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 19102.3,
+  "f": 1115,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 19135.7,
+  "f": 1117,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 19152.5,
+  "f": 1118,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 19319.5,
+  "f": 1128,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1150,
+  "interMs": 0
+ },
+ {
+  "t": 19319.5,
+  "f": 1128,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 19319.6,
+  "f": 1128,
+  "type": "stepWin",
+  "step": 2,
+  "total": 1.18
+ },
+ {
+  "t": 19319.6,
+  "f": 1128,
+  "type": "celebrationSound",
+  "voice": "playWin"
+ },
+ {
+  "t": 19772.2,
+  "f": 1155,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 20219.9,
+  "f": 1182,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 20236.7,
+  "f": 1183,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 20253.3,
+  "f": 1184,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 20286.6,
+  "f": 1186,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 20303.5,
+  "f": 1187,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 20487.1,
+  "f": 1198,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1168,
+  "interMs": 0
+ },
+ {
+  "t": 20487.1,
+  "f": 1198,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 20487.1,
+  "f": 1198,
+  "type": "stepWin",
+  "step": 3,
+  "total": 1.192
+ },
+ {
+  "t": 20487.2,
+  "f": 1198,
+  "type": "celebrationSound",
+  "voice": "playWin"
+ },
+ {
+  "t": 20938.3,
+  "f": 1225,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 21387.6,
+  "f": 1252,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 21405.2,
+  "f": 1253,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 21421.3,
+  "f": 1254,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 21654.6,
+  "f": 1268,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1168,
+  "interMs": 0
+ },
+ {
+  "t": 21654.6,
+  "f": 1268,
+  "type": "countStart",
+  "target": 1.19,
+  "mult": 1.19,
+  "durMs": 1200,
+  "tier": null
+ },
+ {
+  "t": 22855.6,
+  "f": 1340,
+  "type": "countEnd",
+  "value": 1.19,
+  "shownText": "$1.19",
+  "skipped": false
+ },
+ {
+  "t": 23856.7,
+  "f": 1400,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 7421
+ },
+ {
+  "t": 23856.7,
+  "f": 1400,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 7421,
+  "won": 1.19,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 24025,
+  "f": 1410,
+  "type": "press",
+  "kind": "bonus",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 100,
+  "turbo": false
+ },
+ {
+  "t": 25524.6,
+  "f": 1500,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 25524.7,
+  "f": 1500,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 25691.2,
+  "f": 1510,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1067,
+  "turbo": false
+ },
+ {
+  "t": 25691.2,
+  "f": 1510,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 25858,
+  "f": 1520,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1234,
+  "turbo": false
+ },
+ {
+  "t": 25858,
+  "f": 1520,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 26008.1,
+  "f": 1529,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1384,
+  "turbo": false
+ },
+ {
+  "t": 26008.1,
+  "f": 1529,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 26175.3,
+  "f": 1539,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1552,
+  "turbo": false
+ },
+ {
+  "t": 26175.3,
+  "f": 1539,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 27259.8,
+  "f": 1604,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 27259.8,
+  "f": 1604,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 27259.8,
+  "f": 1604,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 27342.7,
+  "f": 1609,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 27526.2,
+  "f": 1620,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 266
+ },
+ {
+  "t": 28377.9,
+  "f": 1671,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 28378,
+  "f": 1671,
+  "type": "stepWin",
+  "step": 1,
+  "total": 6
+ },
+ {
+  "t": 28843.3,
+  "f": 1698,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 28843.3,
+  "f": 1698,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 28843.3,
+  "f": 1698,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 28913,
+  "f": 1703,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 29108.7,
+  "f": 1712,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 265
+ },
+ {
+  "t": 29359.6,
+  "f": 1724,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 29376,
+  "f": 1725,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 29392.5,
+  "f": 1726,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 29409.1,
+  "f": 1727,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 29426,
+  "f": 1728,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 29594.8,
+  "f": 1739,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1217,
+  "interMs": 0
+ },
+ {
+  "t": 30845.9,
+  "f": 1814,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 30845.9,
+  "f": 1814,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 31012.6,
+  "f": 1824,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1068,
+  "turbo": false
+ },
+ {
+  "t": 31012.6,
+  "f": 1824,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 31179.6,
+  "f": 1834,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1235,
+  "turbo": false
+ },
+ {
+  "t": 31179.6,
+  "f": 1834,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 31333,
+  "f": 1842,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1388,
+  "turbo": false
+ },
+ {
+  "t": 31333,
+  "f": 1842,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 31497.4,
+  "f": 1852,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1553,
+  "turbo": false
+ },
+ {
+  "t": 31497.4,
+  "f": 1852,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 32580.7,
+  "f": 1917,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 32580.8,
+  "f": 1917,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 32580.8,
+  "f": 1917,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 32664,
+  "f": 1922,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 32835.1,
+  "f": 1932,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 254
+ },
+ {
+  "t": 33697.3,
+  "f": 1978,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 33697.3,
+  "f": 1978,
+  "type": "stepWin",
+  "step": 1,
+  "total": 14.32
+ },
+ {
+  "t": 34153,
+  "f": 2003,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 34153,
+  "f": 2003,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 34153,
+  "f": 2003,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 34252.1,
+  "f": 2007,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 99,
+  "frames": 3
+ },
+ {
+  "t": 34407.3,
+  "f": 2013,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 254
+ },
+ {
+  "t": 34661,
+  "f": 2024,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 34685.6,
+  "f": 2025,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 34705.6,
+  "f": 2026,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 34728.4,
+  "f": 2027,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 34910.4,
+  "f": 2037,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1213,
+  "interMs": 0
+ },
+ {
+  "t": 36155.9,
+  "f": 2107,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 904,
+  "turbo": false
+ },
+ {
+  "t": 36155.9,
+  "f": 2107,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 36323,
+  "f": 2117,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1071,
+  "turbo": false
+ },
+ {
+  "t": 36323,
+  "f": 2117,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 36474.4,
+  "f": 2126,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1223,
+  "turbo": false
+ },
+ {
+  "t": 36474.4,
+  "f": 2126,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 36474.4,
+  "f": 2126,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 36474.4,
+  "f": 2126,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 36474.4,
+  "f": 2126,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 36555.6,
+  "f": 2131,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 81,
+  "frames": 4
+ },
+ {
+  "t": 36710.3,
+  "f": 2140,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1394,
+  "turbo": false
+ },
+ {
+  "t": 36710.3,
+  "f": 2140,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 36726.8,
+  "f": 2141,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 36856.7,
+  "f": 2149,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1541,
+  "turbo": false
+ },
+ {
+  "t": 36856.8,
+  "f": 2149,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 37952,
+  "f": 2213,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 37952.1,
+  "f": 2213,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 37952.1,
+  "f": 2213,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 38020.2,
+  "f": 2217,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 68,
+  "frames": 3
+ },
+ {
+  "t": 38211.9,
+  "f": 2228,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 260
+ },
+ {
+  "t": 39953.6,
+  "f": 2324,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 901,
+  "turbo": false
+ },
+ {
+  "t": 39953.6,
+  "f": 2324,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 40121.4,
+  "f": 2333,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1069,
+  "turbo": false
+ },
+ {
+  "t": 40121.4,
+  "f": 2333,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 40293.8,
+  "f": 2343,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1241,
+  "turbo": false
+ },
+ {
+  "t": 40293.8,
+  "f": 2343,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 40446.7,
+  "f": 2352,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1394,
+  "turbo": false
+ },
+ {
+  "t": 40446.7,
+  "f": 2352,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 40594.8,
+  "f": 2361,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1542,
+  "turbo": false
+ },
+ {
+  "t": 40594.8,
+  "f": 2361,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 41671.7,
+  "f": 2423,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 41671.8,
+  "f": 2423,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 41671.8,
+  "f": 2423,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 41739.7,
+  "f": 2427,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 68,
+  "frames": 3
+ },
+ {
+  "t": 41922.9,
+  "f": 2438,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 251
+ },
+ {
+  "t": 42787.5,
+  "f": 2487,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 42787.5,
+  "f": 2487,
+  "type": "stepWin",
+  "step": 1,
+  "total": 19.92
+ },
+ {
+  "t": 43242.4,
+  "f": 2511,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 43242.4,
+  "f": 2511,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 43242.4,
+  "f": 2511,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 43313.5,
+  "f": 2514,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 71,
+  "frames": 2
+ },
+ {
+  "t": 43506.9,
+  "f": 2521,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 265
+ },
+ {
+  "t": 43741.4,
+  "f": 2531,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 43764.1,
+  "f": 2532,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 43790.6,
+  "f": 2533,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 43811.2,
+  "f": 2534,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 44002.4,
+  "f": 2544,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1215,
+  "interMs": 0
+ },
+ {
+  "t": 45259.2,
+  "f": 2613,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 914,
+  "turbo": false
+ },
+ {
+  "t": 45259.3,
+  "f": 2613,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 45259.3,
+  "f": 2613,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 45259.3,
+  "f": 2613,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 45259.3,
+  "f": 2613,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 45333.6,
+  "f": 2617,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 74,
+  "frames": 3
+ },
+ {
+  "t": 45472.3,
+  "f": 2625,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1069,
+  "turbo": false
+ },
+ {
+  "t": 45472.3,
+  "f": 2625,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 45523.4,
+  "f": 2628,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 264
+ },
+ {
+  "t": 45625,
+  "f": 2634,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1222,
+  "turbo": false
+ },
+ {
+  "t": 45625,
+  "f": 2634,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 45793.4,
+  "f": 2644,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1390,
+  "turbo": false
+ },
+ {
+  "t": 45793.4,
+  "f": 2644,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 45959.3,
+  "f": 2654,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1556,
+  "turbo": false
+ },
+ {
+  "t": 45959.3,
+  "f": 2654,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 46692.6,
+  "f": 2698,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 46692.7,
+  "f": 2698,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 46692.7,
+  "f": 2698,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 46775.9,
+  "f": 2703,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 46942.6,
+  "f": 2713,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 250
+ },
+ {
+  "t": 47803.4,
+  "f": 2760,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 47803.4,
+  "f": 2760,
+  "type": "stepWin",
+  "step": 1,
+  "total": 39.68000000000001
+ },
+ {
+  "t": 48262.1,
+  "f": 2782,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 48262.1,
+  "f": 2782,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 48262.1,
+  "f": 2782,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 48371.3,
+  "f": 2786,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 109,
+  "frames": 3
+ },
+ {
+  "t": 48517.4,
+  "f": 2791,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 255
+ },
+ {
+  "t": 48781.5,
+  "f": 2800,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 48781.5,
+  "f": 2800,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 48811.4,
+  "f": 2801,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 48834.5,
+  "f": 2802,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 48858.3,
+  "f": 2803,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 49035.9,
+  "f": 2811,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1233,
+  "interMs": 0
+ },
+ {
+  "t": 49396.6,
+  "f": 2829,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 49396.6,
+  "f": 2829,
+  "type": "stepWin",
+  "step": 2,
+  "total": 49.28000000000001
+ },
+ {
+  "t": 49850.6,
+  "f": 2853,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 49850.6,
+  "f": 2853,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 49850.6,
+  "f": 2853,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 49931,
+  "f": 2857,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 3
+ },
+ {
+  "t": 50105.5,
+  "f": 2864,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 255
+ },
+ {
+  "t": 50375.4,
+  "f": 2875,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 50375.5,
+  "f": 2875,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 50403.5,
+  "f": 2876,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 50429.3,
+  "f": 2877,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 50450.9,
+  "f": 2878,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 50629.3,
+  "f": 2887,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1233,
+  "interMs": 0
+ },
+ {
+  "t": 51882.1,
+  "f": 2946,
+  "type": "reelStop",
+  "col": 0,
+  "plannedMs": 900,
+  "atMs": 906,
+  "turbo": false
+ },
+ {
+  "t": 51882.1,
+  "f": 2946,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 52048.1,
+  "f": 2954,
+  "type": "reelStop",
+  "col": 1,
+  "plannedMs": 1060,
+  "atMs": 1072,
+  "turbo": false
+ },
+ {
+  "t": 52048.1,
+  "f": 2954,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 52207.6,
+  "f": 2962,
+  "type": "reelStop",
+  "col": 2,
+  "plannedMs": 1220,
+  "atMs": 1232,
+  "turbo": false
+ },
+ {
+  "t": 52207.6,
+  "f": 2962,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 52372,
+  "f": 2970,
+  "type": "reelStop",
+  "col": 3,
+  "plannedMs": 1380,
+  "atMs": 1396,
+  "turbo": false
+ },
+ {
+  "t": 52372,
+  "f": 2970,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 52517.1,
+  "f": 2977,
+  "type": "reelStop",
+  "col": 4,
+  "plannedMs": 1540,
+  "atMs": 1541,
+  "turbo": false
+ },
+ {
+  "t": 52517.1,
+  "f": 2977,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 53608.5,
+  "f": 3031,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 53608.7,
+  "f": 3031,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 53608.7,
+  "f": 3031,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 53689.8,
+  "f": 3035,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 81,
+  "frames": 3
+ },
+ {
+  "t": 53865.1,
+  "f": 3044,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 256
+ },
+ {
+  "t": 54361.9,
+  "f": 3068,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 54361.9,
+  "f": 3068,
+  "type": "stepWin",
+  "step": 1,
+  "total": 73.28
+ },
+ {
+  "t": 54817.2,
+  "f": 3089,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 54817.3,
+  "f": 3089,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 54817.3,
+  "f": 3089,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 54906,
+  "f": 3093,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 89,
+  "frames": 3
+ },
+ {
+  "t": 55099.8,
+  "f": 3100,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 283
+ },
+ {
+  "t": 55317.1,
+  "f": 3107,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 55344.5,
+  "f": 3108,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 55344.5,
+  "f": 3108,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 55372.8,
+  "f": 3109,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 55578.4,
+  "f": 3118,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1217,
+  "interMs": 0
+ },
+ {
+  "t": 55932.8,
+  "f": 3135,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 55932.9,
+  "f": 3135,
+  "type": "stepWin",
+  "step": 2,
+  "total": 73.82000000000001
+ },
+ {
+  "t": 56389.2,
+  "f": 3158,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 56843.8,
+  "f": 3177,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 56843.8,
+  "f": 3177,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 56865.9,
+  "f": 3178,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 56887.9,
+  "f": 3179,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 56909.4,
+  "f": 3180,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 57081.7,
+  "f": 3188,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1149,
+  "interMs": 0
+ },
+ {
+  "t": 57442.7,
+  "f": 3205,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 57442.7,
+  "f": 3205,
+  "type": "stepWin",
+  "step": 3,
+  "total": 78.82000000000001
+ },
+ {
+  "t": 57896.4,
+  "f": 3227,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 57896.4,
+  "f": 3227,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 57896.4,
+  "f": 3227,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 57981.2,
+  "f": 3231,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 85,
+  "frames": 3
+ },
+ {
+  "t": 58165.7,
+  "f": 3238,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 269
+ },
+ {
+  "t": 58398.5,
+  "f": 3247,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 58426.7,
+  "f": 3248,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 58449.1,
+  "f": 3249,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 58473.2,
+  "f": 3250,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 58496.9,
+  "f": 3251,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 58645.6,
+  "f": 3258,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1203,
+  "interMs": 0
+ },
+ {
+  "t": 59009.2,
+  "f": 3276,
+  "type": "stepStart",
+  "step": 4,
+  "factor": 0.92
+ },
+ {
+  "t": 59009.2,
+  "f": 3276,
+  "type": "stepWin",
+  "step": 4,
+  "total": 86.32000000000001
+ },
+ {
+  "t": 59474.5,
+  "f": 3295,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 59474.6,
+  "f": 3295,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 59474.6,
+  "f": 3295,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 59564.5,
+  "f": 3299,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 90,
+  "frames": 3
+ },
+ {
+  "t": 59730.7,
+  "f": 3305,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 256
+ },
+ {
+  "t": 59971.8,
+  "f": 3314,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 59971.8,
+  "f": 3314,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 59996.2,
+  "f": 3315,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 60034.6,
+  "f": 3316,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 60034.6,
+  "f": 3316,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 60215.4,
+  "f": 3324,
+  "type": "stepEnd",
+  "step": 4,
+  "ms": 1206,
+  "interMs": 0
+ },
+ {
+  "t": 60571.1,
+  "f": 3341,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
+ },
+ {
+  "t": 60571.1,
+  "f": 3341,
+  "type": "stepWin",
+  "step": 5,
+  "total": 86.82000000000001
+ },
+ {
+  "t": 61027.9,
+  "f": 3364,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 61410.1,
+  "f": 3378,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 61438.3,
+  "f": 3379,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 61438.3,
+  "f": 3379,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 61461.2,
+  "f": 3380,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 61485.2,
+  "f": 3381,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 61635.4,
+  "f": 3387,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1064,
+  "interMs": 0
+ },
+ {
+  "t": 61993.1,
+  "f": 3403,
+  "type": "win",
+  "celebrate": false,
+  "total": 86.82,
+  "stake": 100
+ },
+ {
+  "t": 61993.1,
+  "f": 3403,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 37969
+ },
+ {
+  "t": 61993.1,
+  "f": 3403,
+  "type": "cycleEnd",
+  "kind": "bonus",
+  "cycleMs": 37969,
+  "won": 86.82,
+  "stake": 100,
+  "minCycleMs": 2600
+ }
+]

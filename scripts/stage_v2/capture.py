@@ -46,8 +46,9 @@ def serve():
     return httpd, port
 
 
-def launch(p):
-    args = ["--ignore-gpu-blocklist", "--enable-webgl", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
+def launch(p, gpu=False):
+    # swiftshader = deterministic stills (~10 fps); gpu=True uses the real GPU (60 fps) for timing checks
+    args = ["--ignore-gpu-blocklist"] if gpu else ["--ignore-gpu-blocklist", "--enable-webgl", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
     for channel in ("chrome", "msedge", None):
         try:
             return p.chromium.launch(headless=True, channel=channel, args=args) if channel else p.chromium.launch(headless=True, args=args)
