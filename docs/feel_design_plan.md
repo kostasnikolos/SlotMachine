@@ -35,7 +35,7 @@ Bus: dry → `ConvolverNode` (IR = 2.5–4s decaying noise, lowpass 4kHz→800Hz
 
 Rule: no win audio/presentation when the return ≤ stake (already enforced under ukgc; apply everywhere).
 
-## C. Escalating big-win screens ("more creatures as the win grows")
+## C. Escalating big-win screens ("more creatures as the win grows") — DONE 2026-11-03 (`bwEscalate` in the canvas front end; T4 luminance lands at 0.48 after the blackout, not 0.1, so the eye stays readable)
 
 Uses the existing `bw3d`/`bwfx` layers and the 15/40/100/500× ladder. Tier changes mid-count never restart the count.
 

@@ -131,6 +131,11 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .bwcol{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:40px 120px;background:radial-gradient(ellipse at center,rgba(0,0,0,.74),rgba(0,0,0,.5) 45%,rgba(0,0,0,0) 72%)}
 .bwfront.max .bwcol{background:radial-gradient(ellipse at center,rgba(0,0,0,.8),rgba(10,0,2,.55) 45%,rgba(0,0,0,0) 72%)}
 .bwcol.slam{animation:bwslam .7s cubic-bezier(.2,1.4,.4,1) .3s both}
+.bwcol.slam.slam4{animation:bwslam4 .9s cubic-bezier(.2,1.3,.4,1) .3s both}
+@keyframes bwslam4{0%{transform:scale(1.5);filter:brightness(1.6)}14%{transform:translate(-18px,26px) scale(1.42)}30%{transform:translate(14px,-12px) scale(1.3)}50%{transform:translate(-8px,7px) scale(1.15)}70%{transform:translate(4px,-3px) scale(1.04)}100%{transform:none;filter:none}}
+.bwamtw{display:block;transform:scale(var(--as,1));transition:transform .4s ease-out;transform-origin:50% 60%}
+.bwfront.t3 .bwamt,.bwfront.t4 .bwamt{-webkit-text-stroke:1px rgba(255,255,255,.22);text-shadow:0 4px 22px rgba(0,0,0,.95),0 0 26px rgba(var(--bw),.6),0 0 70px rgba(var(--bw),.28),2px 0 0 rgba(0,0,0,.35),-1px 1px 0 rgba(255,255,255,.1)}
+.bwfront.t4 .bwcol{background:radial-gradient(ellipse at center,rgba(0,0,0,.86),rgba(0,0,0,.6) 45%,rgba(0,0,0,0) 72%)}
 @keyframes bwslam{0%{transform:translateY(-18px) scale(1.06)}12%{transform:translate(-14px,22px) scale(.97)}24%{transform:translate(11px,-9px)}38%{transform:translate(-7px,6px)}55%{transform:translate(4px,-3px)}100%{transform:none}}
 .bwkicker{font-size:16px;font-weight:600;letter-spacing:.6em;color:rgba(var(--bw),.95);text-shadow:0 2px 12px rgba(0,0,0,.9)}
 .bwtitle{font-size:104px;font-weight:700;letter-spacing:.08em;line-height:1.05;color:#e4eef0;text-shadow:0 4px 24px rgba(0,0,0,.95),0 0 28px rgba(var(--bw),.5),0 0 70px rgba(var(--bw),.22)}
@@ -476,7 +481,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <div class="bwcol {{bw.slam}}">
 <span class="bwkicker">{{bw.kicker}}</span>
 <span class="bwtitle {{bw.titleAnim}}">{{bw.title}}</span>
-<span class="bwamt {{bw.punch}} {{bw.jit}}">{{bw.amount}}</span>
+<span class="bwamtw" style="--as: {{bw.amtScale}}"><span class="bwamt {{bw.punch}} {{bw.jit}}">{{bw.amount}}</span></span>
 <span class="bwx">{{bw.xStr}}</span>
 <span class="bwhint">{{bw.hint}}</span>
 </div>
@@ -588,7 +593,7 @@ class Component extends DCLogic {
       strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '' }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s',
       lu: { show: false, meters: '0', name: '', level: 0, points: 0, rewards: [] },
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
-      bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '' }, shake: '', shatter: false, buyOpen: false,
+      bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '', amtScale: 1 }, shake: '', shatter: false, buyOpen: false,
       spinning: false, auto: false, turbo: false, xbet: false, dirLevel: 0, muted: false,
       blipX: 72, blipY: 48, range: 640, bearing: 74,
       portrait: this.isPortrait()
@@ -2285,10 +2290,10 @@ class Component extends DCLogic {
   // slams into the seabed (the Core and the Leviathan's eye at max).
   bwLadder() {
     return [
-      { at: 50, name: 'DEEP WIN', cls: 't1', fx: 'bloom', kicker: 'THE DEEP STIRS' },
-      { at: 100, name: 'CRUSH DEPTH', cls: 't2', fx: 'implode', kicker: 'THE HULL GIVES WAY' },
-      { at: 500, name: 'LEVIATHAN WIN', cls: 't3', fx: 'reveal', kicker: 'IT HAS SEEN YOU' },
-      { at: 1000, name: 'HADAL WIN', cls: 't4', fx: 'quake', kicker: 'THE TRENCH ERUPTS' }
+      { at: 15, name: 'DEEP WIN', cls: 't1', fx: 'bloom', kicker: 'SOMETHING STIRS BELOW' },
+      { at: 40, name: 'CRUSH DEPTH', cls: 't2', fx: 'implode', kicker: 'EYES IN THE DARK' },
+      { at: 100, name: 'LEVIATHAN WIN', cls: 't3', fx: 'reveal', kicker: 'IT BREACHES THE GLASS' },
+      { at: 500, name: 'HADAL WIN', cls: 't4', fx: 'quake', kicker: 'THE LEVIATHAN' }
     ];
   }
 
@@ -2341,7 +2346,8 @@ class Component extends DCLogic {
     const view = (tier, v, extra) => {
       const T = L[Math.min(4, tier) - 1];
       return Object.assign({ show: true, stage: 'on', cls: T.cls, title: T.name, kicker: T.kicker, titleAnim: 'a' + tier,
-        amount: this.money(v * baseBet), xStr: this.fmt(v) + '× BET', hint: 'TAP TO SKIP', punch: this.state.bw.punch, jit: '', slam: '' }, extra || {});
+        amount: this.money(v * baseBet), xStr: this.fmt(v) + '× BET', hint: 'TAP TO SKIP', punch: this.state.bw.punch, jit: '', slam: '',
+        amtScale: Math.round((B.esc.amtScale || 1) * 100) / 100 }, extra || {});
     };
     const enterTier = (tier) => {
       const T = L[tier - 1];
@@ -2353,6 +2359,7 @@ class Component extends DCLogic {
       else if (tier === 2) { A.creak(); A.chain(false); }
       if (tier === 3) { A.scare(); A.roar(1.2); B.levWanted = true; this.levFly(); }
       if (tier === 4) { A.tsunami(); A.roar(1.4); }
+      this.bwEscalate(tier);
       this.setState({ bw: Object.assign({}, this.state.bw, { punch: this.state.bw.punch === 'pa' ? 'pb' : 'pa' }) });
     };
     this.setState({ bw: view(1, 0, { punch: 'pa' }) });
@@ -2371,7 +2378,8 @@ class Component extends DCLogic {
         const step = () => {
           if (this.dead) return res();
           const p = Math.min(1, (performance.now() - t0) / (sg.dur * 1000));
-          const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+          const ps = tier === 3 && !B.rm ? this.bwStutter(p) : p;
+          const e = ps < 0.5 ? 2 * ps * ps : 1 - Math.pow(-2 * ps + 2, 2) / 2;
           v = sg.a + (sg.b - sg.a) * e;
           reach(v, false);
           B.target = this.bwDepthAt(v);               // the camera is lowered as the number climbs
@@ -2399,10 +2407,10 @@ class Component extends DCLogic {
       B.events.push({ kind: 'max', t: 0 });
       A.maxLoop(true);
       this.levFly();
-      this.setState({ bw: view(4, D.maxWin, { cls: 'max', title: 'MAXIMUM WIN', kicker: "THE LEVIATHAN'S CORE", titleAnim: 'amax', xStr: this.fmt(D.maxWin) + '× BET · THE ROUND ENDS', hint: 'TAP TO CONTINUE', jit: '', slam: 'slam' }) });
+      this.setState({ bw: view(4, D.maxWin, { cls: 'max', title: 'MAXIMUM WIN', kicker: "THE LEVIATHAN'S CORE", titleAnim: 'amax', xStr: this.fmt(D.maxWin) + '× BET · THE ROUND ENDS', hint: 'TAP TO CONTINUE', jit: '', slam: 'slam slam4' }) });
     } else {
       A.endSting(tier);
-      this.setState({ bw: view(tier, v, { hint: 'TAP TO CONTINUE', jit: '', slam: 'slam' }) });
+      this.setState({ bw: view(tier, v, { hint: 'TAP TO CONTINUE', jit: '', slam: tier >= 4 ? 'slam slam4' : 'slam' }) });
     }
     this.flog('countEnd', { value: total, shownText: this.money(total), skipped });
     if (skipped) this.flog('skipLanded', { value: total });
@@ -2491,12 +2499,130 @@ class Component extends DCLogic {
       rings.push(pts);
     }
     const critters = [];
-    for (let i = 0; i < 4; i++) critters.push({ on: false });
+    for (let i = 0; i < 12; i++) critters.push({ on: false });
+    const eyes = [];
+    for (let i = 0; i < 10; i++) eyes.push({ open: 0, at: -1, ang: rnd() * 6.2832, d: 7 + rnd() * 11, y: -4 + rnd() * 8, sp: 0.6 + rnd() * 0.8, seed: rnd() * 10 });
+    const breachers = [];
+    for (let i = 0; i < 4; i++) breachers.push({ on: false });
     return { t: 0, rm, events: [], tier: 1, max: false, depth: 3, target: 6, speed: 0, vd: 0, fast: false, hold: false, levWanted: false,
       fall: 0, chainF: 0, vel: 6, chainV: 0, snap: 0, shake: 0, flash: 0.5, flashCol: [90, 150, 190], audT: 0,
       yaw: 0, pitch: 0.75, roll: 0, rollV: 0, fov: 66, pitchT: 0, yawT: 0, yawC: 0,
       slam: -1, crash: -1, crashVel: 0, floorY: -80, eye: 0, glint: 0, roared: false, lampDrop: 0, levT: -1,
-      critters, spawnAcc: 1.5, cracks, rings, crackO: [ox, oy], crackA: 0 };
+      critters, spawnAcc: 1.5, cracks, rings, crackO: [ox, oy], crackA: 0,
+      // plan C escalation: luminance 0.9/0.75/0.6/0.1(blackout)->0.35, creature density 1/2/4/8, eyes (T2), breachers (T3), blackout + face (T4)
+      esc: { tier: 0, dim: 1, dimT: 1, dens: 1, cool: 0, coolT: 0, push: 0, pushT: 0, eyes, eyesAt: -1, breachers, breachT: -1, breachN: 0, wobble: 0,
+        blackout: -1, face: -1, faceEye: 0, crackGrow: 0, amtScale: 1, chips: [], fogX: 0, shake8: 0 } };
+  }
+
+  // plan C: what each tier adds on top of the fall (never restarts the count)
+  bwEscalate(tier) {
+    const B = this.bwFx;
+    if (!B) return;
+    const E = B.esc;
+    E.tier = Math.max(E.tier, tier);
+    E.dimT = [1, 0.9, 0.75, 0.6, 0.48][tier] || 0.48;
+    E.dens = [1, 1, 2, 4, 8][tier] || 8;
+    if (tier >= 2) { E.coolT = 0.35; if (E.eyesAt < 0) E.eyesAt = B.t; }
+    if (tier >= 3) { E.pushT = 0.06; if (E.breachT < 0) E.breachT = B.t + 0.4; }
+    if (tier >= 4 && E.blackout < 0) {
+      // 500 ms of black and silence, then the Leviathan fills the frame
+      E.blackout = 0;
+      E.fogX = 0.02;
+      const A = this._aud;
+      if (A && typeof A.hush === 'function') A.hush(-60, 520, 300);
+    }
+    this.flog('bwEscalate', { tier, dim: E.dimT, dens: E.dens });
+  }
+
+  // the T3 count-up stops twice on its way up (p -> eased p with two plateaus, same total duration)
+  bwStutter(p) {
+    const stops = [[0.34, 0.07], [0.68, 0.07]];
+    let out = p;
+    for (const [at, w] of stops) {
+      if (p > at && p < at + w) out = at;
+      else if (p >= at + w) out = p - w;
+    }
+    return Math.min(1, out / (1 - stops.reduce((a, s) => a + s[1], 0)));
+  }
+
+  // per-frame escalation: darkening, eyes opening and tracking, breachers hitting the glass, the blackout and the face
+  bwEscStep(B, dt) {
+    const E = B.esc, A = this._aud, rm = B.rm;
+    E.dim += (E.dimT - E.dim) * Math.min(1, dt * 1.6);
+    E.cool += (E.coolT - E.cool) * Math.min(1, dt * 1.2);
+    E.push += (E.pushT - E.push) * Math.min(1, dt * 2.5);
+    E.wobble = Math.max(0, E.wobble - dt * 2.2);
+    E.shake8 = Math.max(0, E.shake8 - dt / 0.3);
+    // T2: eyes open 150 ms apart around the lens and drift in toward the number
+    if (E.eyesAt >= 0) {
+      E.eyes.forEach((e, i) => {
+        if (e.at < 0 && B.t - E.eyesAt >= i * 0.15) e.at = B.t;
+        if (e.at >= 0) {
+          e.open = Math.min(1, e.open + dt * 3.5);
+          e.d = Math.max(4.5, e.d - dt * e.sp * 0.35);
+          e.ang += dt * 0.05 * (i & 1 ? 1 : -1);
+        }
+      });
+    }
+    // T3: 3-4 mid creatures lunge at the faceplate one after another and thump it (refraction wobble + a glass chip)
+    if (E.breachT >= 0 && B.t >= E.breachT && E.breachN < 4 && B.crash < 0) {
+      const o = E.breachers.find((q) => !q.on);
+      if (o) {
+        E.breachN++;
+        E.breachT = B.t + 1.25 + Math.random() * 0.5;
+        const side = Math.random() < 0.5 ? -1 : 1;
+        Object.assign(o, { on: true, t: 0, kind: Math.random() < 0.6 ? 3 : 0, side, x0: side * (5 + Math.random() * 3), y0: (Math.random() - 0.5) * 5, z0: -16 - Math.random() * 4,
+          x1: side * (0.3 + Math.random() * 0.35), y1: (Math.random() - 0.5) * 0.5, z1: -0.95, seed: Math.random() * 10, s: 0.5 + Math.random() * 0.3, hit: false });
+      }
+    }
+    for (const o of E.breachers) {
+      if (!o.on) continue;
+      o.t += dt;
+      if (!o.hit && o.t >= 0.75) {
+        o.hit = true;
+        E.wobble = rm ? 0.4 : 1;
+        if (A && A.impact) A.impact(0.55);
+        if (!rm) B.shake = Math.max(B.shake, 0.9);
+        this.bwChip(B, o.x1, o.y1);
+      }
+      if (o.t > 2.2 || B.crash >= 0) o.on = false;
+    }
+    // T4: blackout, then the Leviathan's face rises behind the number; the glass cracks propagate; 8 px shake for 300 ms
+    if (E.blackout >= 0) {
+      E.blackout += dt;
+      if (E.face < 0 && E.blackout >= 0.5) {
+        E.face = 0;
+        E.fogX = -0.022;
+        E.shake8 = 1;
+        if (!rm) B.shake = Math.max(B.shake, 2);
+        if (A && A.boom) A.boom(null, 1.2);
+      }
+    }
+    if (E.face >= 0) {
+      E.face += dt;
+      E.faceEye = Math.min(1, Math.max(0, (E.face - 0.6) / 1.4));
+      E.crackGrow = Math.min(1, E.crackGrow + dt / 2.2);
+      B.crackA = Math.max(B.crackA, E.crackGrow);
+    }
+    // T3+: the number grows 1.0 -> 1.25 over the breach tier
+    if (E.tier >= 3) E.amtScale = Math.min(1.25, E.amtScale + dt * 0.045);
+    for (let j = E.chips.length - 1; j >= 0; j--) { E.chips[j].t += dt; }
+  }
+
+  // a small impact star on the faceplate where a breacher hit (overlay canvas coordinates)
+  bwChip(B, x, y) {
+    const G0 = this.geo();
+    // world x/y at the glass (z ~ -0.95) -> screen, through the current fov
+    const f = 0.5 / Math.tan((B.fov || 64) * Math.PI / 360);
+    const sx = G0.W * (0.5 + x / 0.95 * f * (G0.H / G0.W)), sy = G0.H * (0.5 - y / 0.95 * f);
+    const pts = [];
+    for (let b = 0; b < 7; b++) {
+      let cx = sx, cy = sy, a = b / 7 * 6.2832 + Math.random() * 0.5;
+      const seg = [[cx, cy]];
+      for (let j = 0; j < 3; j++) { a += (Math.random() - 0.5) * 0.8; const l = 10 + Math.random() * 28; cx += Math.cos(a) * l; cy += Math.sin(a) * l; seg.push([cx, cy]); }
+      pts.push(seg);
+    }
+    B.esc.chips.push({ x: sx, y: sy, pts, t: 0 });
   }
 
   // a tier is crossed: the chain snaps taut and wrenches the fall short, the body spins, the deeper zone flashes
@@ -2553,6 +2679,7 @@ class Component extends DCLogic {
   // fall physics: speed follows the count, the chain jolts, breathing sway and tumble, the slam and the stillness after
   bwStep(B, dt) {
     const prev = B.depth;
+    this.bwEscStep(B, dt);
     B.depth += (B.target - B.depth) * Math.min(1, dt * (B.fast ? 2.2 : 6));
     B.speed = dt > 0 ? (B.depth - prev) / dt : 0;
     B.vd = this.bwVd(B.depth);
@@ -2619,7 +2746,7 @@ class Component extends DCLogic {
     B.pitch += (B.pitchT - B.pitch) * Math.min(1, dt * kp);
     B.yaw += (B.yawT - B.yaw) * Math.min(1, dt * 1.2);
     B.rollS = B.rollT + B.roll * 0.18;
-    const fovT = B.crash >= 0 ? (B.max ? 58 : 62) : 64 + Math.min(28, B.vel * 0.33) * (rm ? 0.3 : 1);
+    const fovT = (B.crash >= 0 ? (B.max ? 58 : 62) : 64 + Math.min(28, B.vel * 0.33) * (rm ? 0.3 : 1)) * (1 - B.esc.push);
     B.fov += (fovT - B.fov) * Math.min(1, dt * 3);
     B.shake = Math.max(0, B.shake - dt * 1.5);
     B.flash = Math.max(0, B.flash - dt * 1.3);
@@ -2628,7 +2755,7 @@ class Component extends DCLogic {
     if (B.crash < 0 && B.slam < 0 && B.t > 1.2) {
       B.spawnAcc -= dt;
       if (B.spawnAcc <= 0) {
-        B.spawnAcc = 1.1 + Math.random() * 2.2;
+        B.spawnAcc = (1.1 + Math.random() * 2.2) / (B.esc.dens || 1);
         const o = B.critters.find((q) => !q.on);
         if (o) {
           const r = Math.random(), deep = B.vd;
@@ -2948,14 +3075,20 @@ class Component extends DCLogic {
         '  gl_FragColor = vec4(c * a + e, max(a, ae));',
         '}'].join('\n')
     });
-    const crit = [];
-    for (let i = 0; i < 4; i++) {
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), critMat(0));
+    const crit = [], eyes = [], breach = [];
+    const critPlane = new THREE.PlaneGeometry(1, 1);
+    const addCrit = (list, kind, order) => {
+      const m = new THREE.Mesh(critPlane, critMat(kind));
       m.visible = false;
-      m.renderOrder = 4;
+      m.renderOrder = order;
       scene.add(m);
-      crit.push(m);
-    }
+      list.push(m);
+    };
+    for (let i = 0; i < 12; i++) addCrit(crit, 0, 4);
+    // T2: bioluminescent eye pairs that open in the murk and drift in toward the number
+    for (let i = 0; i < 10; i++) addCrit(eyes, 2, 4);
+    // T3: mid creatures lunging at the faceplate (drawn last, right at the lens)
+    for (let i = 0; i < 4; i++) addCrit(breach, 3, 7);
     const glint = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), critMat(2));
     glint.visible = false;
     glint.renderOrder = 4;
@@ -3036,23 +3169,26 @@ class Component extends DCLogic {
     // post: pressure warp, radial speed blur, chromatic aberration, crushing vignette, grain, impact blackout
     const rt = new THREE.WebGLRenderTarget(RW, RH, { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat, depthBuffer: true });
     const PU = { tD: { value: rt.texture }, uT: U.uT, uAb: { value: 0.3 }, uWarp: { value: 0.3 }, uBlur: { value: 0 }, uBlack: { value: 0 }, uWhite: { value: 0 },
-      uRed: { value: 0 }, uRes: { value: new THREE.Vector2(RW, RH) } };
+      uRed: { value: 0 }, uRes: { value: new THREE.Vector2(RW, RH) }, uDim: { value: 1 }, uCool: { value: 0 }, uWobble: { value: 0 } };
     const post = new THREE.ShaderMaterial({ uniforms: PU, depthTest: false, depthWrite: false,
       vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
       fragmentShader: ['uniform sampler2D tD; uniform float uT; uniform float uAb; uniform float uWarp; uniform float uBlur; uniform float uBlack; uniform float uWhite;',
-        'uniform float uRed; uniform vec2 uRes; varying vec2 vUv;',
+        'uniform float uRed; uniform vec2 uRes; uniform float uDim; uniform float uCool; uniform float uWobble; varying vec2 vUv;',
         'float h2(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }',
         'void main() {',
         '  vec2 c = vUv - 0.5; float r2 = dot(c, c);',
         '  vec2 w = c * (1.0 + uWarp * 0.42 * r2) + uWarp * 0.003 * vec2(sin(vUv.y * 23.0 + uT * 2.7), sin(vUv.x * 19.0 - uT * 2.1));',
+        '  w += uWobble * uWobble * 0.011 * vec2(sin(vUv.y * 38.0 + uT * 31.0), sin(vUv.x * 33.0 - uT * 27.0));',
         '  vec2 uv = w + 0.5;',
-        '  vec2 off = c * uAb * (0.004 + 0.06 * r2);',
+        '  vec2 off = c * (uAb + uWobble * 1.6) * (0.004 + 0.06 * r2);',
         '  vec3 col = vec3(texture2D(tD, uv + off).r, texture2D(tD, uv).g, texture2D(tD, uv - off).b);',
         '  vec3 bl = vec3(0.0);',
         '  for (int i = 1; i <= 4; i++) { float k = float(i) * 0.25 * uBlur * (0.02 + 0.1 * r2); bl += texture2D(tD, uv - c * k).rgb; }',
         '  col = mix(col, bl * 0.25, min(0.75, uBlur * 0.8));',
         '  float v = smoothstep(1.02, 0.14, length(c * vec2(1.3, 1.0)));',
-        '  col *= mix(0.12, 1.0, v);',
+        '  float vig = mix(0.12, 1.0, v);',
+        '  col *= mix(vig, vig * vig, min(1.0, (1.0 - uDim) * 1.4)) * uDim;',
+        '  col = mix(col, col * vec3(0.72, 0.9, 1.18), uCool);',
         '  col = pow(col, vec3(0.88));',
         '  col = mix(col, col * vec3(1.3, 0.5, 0.55), uRed);',
         '  col += vec3(0.42, 0.4, 0.36) * uWhite;',
@@ -3066,7 +3202,7 @@ class Component extends DCLogic {
     postScene.add(pq);
     const postCam = new THREE.Camera();
     this.B3 = { THREE, canvas, renderer, scene, camera, U, PU, rt, postScene, postCam, dome, wall, floor, snow, silt, chain, NL, lamp, hemi, flashL, eyeL,
-      crit, glint, serp, face, eye, dummy: new THREE.Object3D(), idle: false };
+      crit, eyes, breach, glint, serp, face, eye, dummy: new THREE.Object3D(), idle: false, tmp: new THREE.Vector3() };
     return this.B3;
   }
 
@@ -3088,7 +3224,8 @@ class Component extends DCLogic {
     U.uFlashC.value.setRGB(fc[0] / 255, fc[1] / 255, fc[2] / 255);
     U.uCore.value = core;
     U.uAmb.value = amb * 0.5;
-    U.uFogD.value = 0.034 + 0.034 * sm(0.3, 3.5, vd) + (crashed ? (B.max ? 0.012 : 0.03) : 0);
+    const E = B.esc;
+    U.uFogD.value = 0.034 + 0.034 * sm(0.3, 3.5, vd) + (crashed ? (B.max ? 0.012 : 0.03) : 0) + E.fogX;
     const fogK = (i) => V.fog[i] / 255 * 0.45 + amb * V.sky[i] / 255 * 0.1 + fl * fc[i] / 255 * 0.04;
     U.uFogC.value.setRGB(fogK(0), fogK(1), fogK(2));
     U.uSurfC.value.setRGB(V.sky[0] / 255 * 0.8, V.sky[1] / 255 * 0.8, V.sky[2] / 255 * 0.8);
@@ -3104,8 +3241,9 @@ class Component extends DCLogic {
     const cam = R.camera;
     const sh = rm ? 0 : B.shake * B.shake;
     const rr = () => Math.random() - 0.5;
+    const s8 = rm ? 0 : E.shake8 * 0.016;      // 8 px at 1080 for 300 ms when the Leviathan surfaces
     cam.position.set(rr() * sh * 0.1, rr() * sh * 0.1 + Math.sin(t * 1.2) * 0.03, rr() * sh * 0.1);
-    cam.rotation.set(B.pitch + rr() * sh * 0.045, B.yaw + rr() * sh * 0.035, B.rollS + rr() * sh * 0.05);
+    cam.rotation.set(B.pitch + rr() * sh * 0.045 + rr() * s8, B.yaw + rr() * sh * 0.035 + rr() * s8, B.rollS + rr() * sh * 0.05);
     cam.fov = B.fov;
     cam.updateProjectionMatrix();
     cam.updateMatrixWorld();
@@ -3169,6 +3307,48 @@ class Component extends DCLogic {
       u.uGlow.value = o.kind === 1 ? 0.8 : 1;
       u.uGlowC.value.setRGB(o.kind === 1 ? 0.55 : 0.25, o.kind === 1 ? 0.35 : 0.85, 1);
     });
+    // camera-space placement for the escalation layer (it must stay in frame whatever the fall camera does)
+    const cs = (x, y, z) => R.tmp.set(x, y, z).applyMatrix4(cam.matrixWorld);
+    // T2: eye pairs open one after another, ringed around the number, and creep in
+    R.eyes.forEach((m, i) => {
+      const e = E.eyes[i];
+      if (!e || e.at < 0 || e.open <= 0.01 || (B.max && crashed)) { m.visible = false; return; }
+      const r = e.d * 0.5;
+      const ox = Math.cos(e.ang) * r, oy = Math.sin(e.ang) * r * 0.62 + e.y * 0.08;
+      const p = cs(ox, oy, -e.d);
+      m.visible = true;
+      m.position.copy(p);
+      m.quaternion.copy(cam.quaternion);
+      const sc = (1.2 + 0.6 * (1 - e.d / 18)) * (0.4 + 0.6 * e.open);
+      m.scale.set(sc * 2.4, sc * 1.1, 1);
+      const u = m.material.uniforms;
+      u.uKind.value = 2; u.uSeed.value = e.seed;
+      u.uGlow.value = e.open * (1.3 + 0.7 * Math.max(0, Math.sin(t * 1.3 + e.seed)));
+      u.uFogK.value = Math.exp(-e.d * U.uFogD.value * 0.25);
+      u.uLit.value = 0;
+    });
+    // T3: breachers lunge from the murk to the faceplate, hold against it, then slide off
+    R.breach.forEach((m, i) => {
+      const o = E.breachers[i];
+      if (!o || !o.on) { m.visible = false; return; }
+      let k, x, y, z;
+      if (o.t < 0.75) { k = o.t / 0.75; k = k * k * (3 - 2 * k); x = o.x0 + (o.x1 - o.x0) * k; y = o.y0 + (o.y1 - o.y0) * k; z = o.z0 + (o.z1 - o.z0) * k; }
+      else if (o.t < 1.1) { const j = Math.sin((o.t - 0.75) * 40) * 0.03; x = o.x1 + j; y = o.y1 - j; z = o.z1; }
+      else { const u2 = o.t - 1.1; x = o.x1 + o.side * u2 * 2.6; y = o.y1 - u2 * 0.6; z = o.z1 - u2 * u2 * 2.5; }
+      const p = cs(x, y, z);
+      m.visible = true;
+      m.position.copy(p);
+      m.quaternion.copy(cam.quaternion);
+      const near = 1 / Math.max(0.6, -z);
+      const sz = o.s * Math.min(1, 0.35 + 0.65 * near);
+      m.scale.set(sz * (o.kind === 3 ? 1.9 : 1.6) * -o.side, sz * (o.kind === 3 ? 0.7 : 1), 1);
+      const u = m.material.uniforms;
+      u.uKind.value = o.kind; u.uSeed.value = o.seed;
+      u.uLit.value = lamp * 1.4 * Math.min(1, near * 1.2);
+      u.uFogK.value = Math.exp(z * U.uFogD.value * 1.2);
+      u.uGlow.value = 1.2;
+      u.uGlowC.value.setRGB(0.25, 0.85, 1);
+    });
     // eyes in the murk after the crash
     R.glint.visible = !B.max && B.glint > 0.01;
     if (R.glint.visible) {
@@ -3193,6 +3373,26 @@ class Component extends DCLogic {
     R.face.visible = R.eye.visible = showEye;
     R.eyeL.intensity = 0;
     U.uEyeI.value = 0;
+    if (!showEye && E.face >= 0) {
+      // T4: the Leviathan's face fills the frame behind the number, its eye opening above the count
+      const rise = 1 - Math.exp(-E.face * 1.6);
+      R.face.visible = R.eye.visible = true;
+      R.eye.position.copy(cs(0, 1.35 - 0.25 * rise, -9.2 + 1.2 * rise));   // cs() reuses one vector: copy before the next call
+      R.eye.quaternion.copy(cam.quaternion);
+      R.eye.scale.set(4.6, 4.6, 2.8);
+      R.face.position.copy(cs(0, 0.2, -15 + 2 * rise));
+      R.face.quaternion.copy(cam.quaternion);
+      R.face.scale.set(17, 8.5, 6.5);
+      const e = E.faceEye, blink = Math.abs(Math.sin(t * 0.33 + 2)) < 0.03 ? 0.15 : 1;
+      const eu = R.eye.material.uniforms;
+      eu.uOpen.value = sm(0, 1, e) * blink;
+      eu.uPupil.value = 0.22 - 0.14 * sm(0, 1, e) + 0.02 * Math.sin(t * 0.9);
+      const lp = cs(0, 0.9, -5.2);
+      U.uEyeP.value.copy(lp);
+      U.uEyeI.value = 0.15 + 0.85 * e;
+      R.eyeL.position.copy(lp);
+      R.eyeL.intensity = 2.6 * e;
+    }
     if (showEye) {
       const ep = yf(0, 1.6, -11, B.yawC), fp = yf(0, 1.8, -24, B.yawC);
       R.eye.position.set(ep[0], ep[1], ep[2]);
@@ -3218,7 +3418,12 @@ class Component extends DCLogic {
     PU.uBlur.value = crashed || rm ? 0 : Math.min(1, B.vel / 70);
     PU.uWhite.value = crashed ? Math.max(0, 1 - B.crash / 0.07) * (rm ? 0.15 : 0.35) : fl * 0.04;
     PU.uBlack.value = crashed && B.crash < 0.75 ? 0.85 * Math.max(0, Math.min(1, (B.crash - 0.04) / 0.05)) * (1 - sm(0.15, 0.75, B.crash)) * (rm ? 0.4 : 1) : 0;
-    PU.uRed.value = B.max && crashed ? 0.55 * (0.8 + 0.2 * Math.sin(t * 2.4)) : sm(4, 5, vd) * 0.35;
+    PU.uRed.value = B.max && crashed ? 0.55 * (0.8 + 0.2 * Math.sin(t * 2.4)) : sm(4, 5, vd) * 0.35 + (E.face >= 0 ? 0.12 * E.faceEye : 0);
+    PU.uDim.value = E.dim;
+    PU.uCool.value = E.cool;
+    PU.uWobble.value = E.wobble;
+    // T4 blackout: 500 ms of black, then a 300 ms return
+    if (E.blackout >= 0) PU.uBlack.value = Math.max(PU.uBlack.value, E.blackout < 0.5 ? 1 : Math.max(0, 1 - (E.blackout - 0.5) / 0.3));
     const r = R.renderer;
     r.setRenderTarget(R.rt);
     r.render(R.scene, cam);
@@ -3274,9 +3479,31 @@ class Component extends DCLogic {
   // lens damage over the feed: the faceplate cracks on impact (the count stays readable: cracks sit off-centre)
   bwEvents(g, B, W, H, dt) {
     for (let j = B.events.length - 1; j >= 0; j--) { B.events[j].t += dt; if (B.events[j].t > 3.2 && B.events[j].kind !== 'max') B.events.splice(j, 1); }
+    const E = B.esc;
+    if (E.chips.length) {
+      // small impact stars where breachers hit the glass
+      g.save();
+      g.lineJoin = 'round';
+      g.lineCap = 'round';
+      for (const ch of E.chips) {
+        const a = Math.min(1, ch.t * 6) * (0.75 - 0.3 * Math.min(1, ch.t / 2.5));
+        const grow = Math.min(1, ch.t * 5);
+        const fl = Math.max(0, 1 - ch.t * 4);
+        if (fl > 0) { const im = g.createRadialGradient(ch.x, ch.y, 0, ch.x, ch.y, 90); im.addColorStop(0, 'rgba(220,235,240,' + (0.28 * fl) + ')'); im.addColorStop(1, 'rgba(220,235,240,0)'); g.fillStyle = im; g.fillRect(ch.x - 90, ch.y - 90, 180, 180); }
+        for (const seg of ch.pts) {
+          g.beginPath();
+          const n = Math.max(2, Math.ceil(seg.length * grow));
+          seg.slice(0, n).forEach((p, j) => (j ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])));
+          g.strokeStyle = 'rgba(0,0,0,' + (0.5 * a) + ')'; g.lineWidth = 3; g.stroke();
+          g.strokeStyle = 'rgba(200,222,230,' + (0.55 * a) + ')'; g.lineWidth = 1; g.stroke();
+        }
+      }
+      g.restore();
+    }
     if (B.crackA <= 0.01) return;
     const red = B.max;
     const [ox, oy] = B.crackO;
+    const grow = B.crash >= 0 ? 1 : B.crackA;   // T4: the fractures propagate over ~2 s; the impact completes them at once
     g.save();
     g.lineJoin = 'round';
     g.lineCap = 'round';
@@ -3285,10 +3512,11 @@ class Component extends DCLogic {
     im.addColorStop(1, 'rgba(210,225,230,0)');
     g.fillStyle = im;
     g.fillRect(ox - 70, oy - 70, 140, 140);
-    const paths = B.cracks.concat(B.rings);
+    const paths = B.cracks.concat(grow >= 0.999 ? B.rings : B.rings.slice(0, grow > 0.5 ? 1 : 0));
     for (const cr of paths) {
       g.beginPath();
-      cr.forEach((p, j) => (j ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])));
+      const n = Math.max(2, Math.ceil(cr.length * Math.min(1, grow * 1.15)));
+      cr.slice(0, n).forEach((p, j) => (j ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])));
       g.strokeStyle = 'rgba(0,0,0,0.55)';
       g.lineWidth = 4;
       g.stroke();
