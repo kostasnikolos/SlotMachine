@@ -136,11 +136,11 @@ def gate(log, profile):
     else:
         res["G2 no LDW celebration"] = (None, "n/a (no return <= stake this run)")
 
-    # G4: cascade step 900-1300 ms, long chains keep >= 70%, running total visible >= 300 ms
+    # G4: cascade step 900-2300 ms (slowed twice per user 2026-11-02), long chains keep >= 70%, running total visible >= 300 ms
     ends = [e for e in log if e["type"] == "stepEnd"]
     if ends:
         durs = [e["ms"] for e in ends]
-        ok = all(900 <= d <= 1300 for d in durs)
+        ok = all(900 <= d <= 2300 for d in durs)
         chains, cur = [], []
         for e in ends:
             if e["step"] == 1 and cur:

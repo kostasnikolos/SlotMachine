@@ -18,11 +18,11 @@
     anticipationExtraMs: 900, anticipationSpeed: 0.4, // reserved: only for real near-feature states
     // turbo / slam (only where the profile allows them)
     slamStaggerMs: 40, turboFirstStopMs: 300, turboStaggerMs: 40,
-    // cascade step (~1.1-1.25 s)
-    highlightMs: 450,                             // win highlight + running total shown (never compressed)
-    explodeMs: 250,
-    dropMs: 300, dropColStaggerMs: 20, dropBounceCells: 0.06, // per-column fall = dropMs - 4*stagger (220 ms)
-    pauseMs: 120,
+    // cascade step (~1.95 s; slowed twice 2026-11-02 at the user's request: hits and refills read too fast)
+    highlightMs: 750,                             // win highlight + running total shown (never compressed)
+    explodeMs: 480,
+    dropMs: 520, dropColStaggerMs: 34, dropBounceCells: 0.06, // per-column fall = dropMs - 4*stagger (220 ms)
+    pauseMs: 200,
     chainAccelAfter: 3, chainAccelPerStep: 0.08, chainFloor: 0.7, // speeds explode/drop/pause only
     minWinVisibleMs: 300,
     // impacts

@@ -115,6 +115,13 @@
       try { A.master.disconnect(); } catch (e) { /* nothing connected yet */ }
       A.master.connect(comp); comp.connect(hp); hp.connect(shelf); shelf.connect(lim); lim.connect(trim);
       D.comp = comp; D.limiter = lim; D.trim = trim;
+      // analyser tap on the master bus (post-compressor): the Leviathan's bioluminescence reads the 40-120 Hz band from it
+      try {
+        const an = ctx.createAnalyser();
+        an.fftSize = 2048; an.smoothingTimeConstant = 0.55; an.minDecibels = -95; an.maxDecibels = -20;
+        lim.connect(an);
+        A.analyser = an; D.fft = new Float32Array(an.frequencyBinCount);
+      } catch (e) { A.analyser = null; }
       // ambience: low-pass closing with depth (1.2 kHz -> 500 Hz), re-routed between amb and master
       D.ambLP = filt('lowpass', 1200 - (A.level || 0) * 140, 0.7);
       try { A.amb.disconnect(); } catch (e) { /* ignore */ }
@@ -165,6 +172,29 @@
       duckAt(at == null ? now() : at, a, b, c);
     };
     A.duckImpact = (db, a, r) => A.duck(db == null ? -9 : db, a == null ? 20 : a, r == null ? 600 : r);
+    // hush(dB, holdMs[, releaseMs]): the ambience drops in 60 ms and stays down for holdMs (the stillness before a strike)
+    A.hush = (db, holdMs, releaseMs) => {
+      if (!have()) return;
+      const t = now(), base = ambBase(), lo = base * dB(db == null ? -12 : db), hold = (holdMs == null ? 2000 : holdMs) / 1000, r = (releaseMs == null ? 500 : releaseMs) / 1000;
+      [A.amb, A.ambWet].forEach((g) => {
+        if (!g) return;
+        g.gain.cancelScheduledValues(t);
+        g.gain.setTargetAtTime(lo, t, 0.02);
+        g.gain.setTargetAtTime(base, t + hold, Math.max(0.01, r / 3));
+      });
+    };
+    // 0..1 energy in the 40-120 Hz band of the master bus (0 while the context is not running)
+    A.lowBand = () => {
+      const an = A.analyser;
+      if (!an || !A.ctx || A.ctx.state !== 'running') return 0;
+      an.getFloatFrequencyData(D.fft);
+      const hz = A.ctx.sampleRate / an.fftSize;
+      const i0 = Math.max(1, Math.floor(40 / hz)), i1 = Math.max(i0, Math.ceil(120 / hz));
+      let acc = 0;
+      for (let i = i0; i <= i1; i++) acc += D.fft[i];
+      const db = acc / (i1 - i0 + 1);
+      return clamp((db + 72) / 42, 0, 1);
+    };
 
     // ---- init / setLevel hooks ----------------------------------------------------------------------------------
     const oInit = A.init;
@@ -353,7 +383,7 @@
       duckAt(t, -9, 20, 600);
     };
 
-    A.darkNames = ['spin', 'dissolve', 'fizz', 'land', 'chomp', 'impact', 'riser', 'roar', 'win', 'levelUp', 'setLevel', 'tier', 'tierUp', 'tick', 'ui', 'shimmer', 'sink', 'wildRise', 'endSting', 'duck', 'duckImpact'];
+    A.darkNames = ['spin', 'dissolve', 'fizz', 'land', 'chomp', 'impact', 'riser', 'roar', 'win', 'levelUp', 'setLevel', 'tier', 'tierUp', 'tick', 'ui', 'shimmer', 'sink', 'wildRise', 'endSting', 'duck', 'duckImpact', 'hush', 'lowBand'];
     return A;
   }
 

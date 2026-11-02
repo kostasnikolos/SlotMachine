@@ -1,0 +1,261 @@
+{
+  "profile": "default",
+  "target_rtp": 96.05,
+  "tolerance_pts": 2.0,
+  "max_sediment_share": 5.0,
+  "full": false,
+  "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55,
+    66,
+    77,
+    88
+  ],
+  "elapsed_seconds": 21.6,
+  "modes": {
+    "NONE": {
+      "spins": 200000,
+      "rtp": 97.51204500000001,
+      "rtp_per_seed": [
+        88.63,
+        83.68,
+        87.96,
+        88.13,
+        114.2,
+        122.15,
+        101.47,
+        93.86
+      ],
+      "rtp_std_error": 4.935295620035629,
+      "hit_frequency": 49.364999999999995,
+      "max_win_x_cost": 2118.46,
+      "cap_hits": 0,
+      "avg_free_spins": 0.203125,
+      "level_distribution": {
+        "LEVEL_0_SUNLIGHT": 95.26050000000001,
+        "LEVEL_1_TWILIGHT": 1.8159999999999998,
+        "LEVEL_2_MIDNIGHT": 0.8935000000000001,
+        "LEVEL_3_ABYSS": 1.6555,
+        "LEVEL_4_HADAL": 0.33,
+        "LEVEL_5_CORE": 0.0445
+      },
+      "win_buckets": {
+        "0x (Loss)": 60.6985,
+        "0.01x - 1x (Micro)": 37.267,
+        "1x - 5x (Small)": 0.128,
+        "5x - 20x (Medium)": 0.7135,
+        "20x - 100x (Big)": 1.0,
+        "100x - 500x (Super)": 0.1825,
+        "500x+ (Mega/Epic)": 0.0105
+      },
+      "sediment_share": 0.5278514309243134,
+      "sediment_share_by_level": {
+        "LEVEL_1_TWILIGHT": 1.98,
+        "LEVEL_2_MIDNIGHT": 1.96,
+        "LEVEL_3_ABYSS": 2.11,
+        "LEVEL_4_HADAL": 2.15,
+        "LEVEL_5_CORE": 3.52
+      },
+      "cost_x_bet": 1.0,
+      "target_rtp": 96.05,
+      "rtp_delta_pts": 1.4620450000000176,
+      "rtp_window_pts": 11.870591240071258,
+      "rtp_ok": true,
+      "sediment_ok": true,
+      "cap_ok": true,
+      "ok": true
+    },
+    "XBET_SONAR_2X": {
+      "spins": 40000,
+      "rtp": 95.373825,
+      "rtp_per_seed": [
+        92.18,
+        88.26,
+        106.21,
+        88.29,
+        85.2,
+        95.71,
+        109.39,
+        97.74
+      ],
+      "rtp_std_error": 3.0882321283497167,
+      "hit_frequency": 76.395,
+      "max_win_x_cost": 888.23,
+      "cap_hits": 0,
+      "avg_free_spins": 0.307125,
+      "level_distribution": {
+        "LEVEL_1_TWILIGHT": 90.24,
+        "LEVEL_2_MIDNIGHT": 4.66,
+        "LEVEL_3_ABYSS": 4.697500000000001,
+        "LEVEL_4_HADAL": 0.3475,
+        "LEVEL_5_CORE": 0.055
+      },
+      "win_buckets": {
+        "0x (Loss)": 40.2325,
+        "0.01x - 1x (Micro)": 54.7775,
+        "1x - 5x (Small)": 1.2149999999999999,
+        "5x - 20x (Medium)": 2.5025,
+        "20x - 100x (Big)": 1.1625,
+        "100x - 500x (Super)": 0.105,
+        "500x+ (Mega/Epic)": 0.005
+      },
+      "sediment_share": 1.9165969511061536,
+      "sediment_share_by_level": {
+        "LEVEL_1_TWILIGHT": 1.99,
+        "LEVEL_2_MIDNIGHT": 1.98,
+        "LEVEL_3_ABYSS": 2.07,
+        "LEVEL_4_HADAL": 2.35,
+        "LEVEL_5_CORE": 3.56
+      },
+      "cost_x_bet": 2.0,
+      "target_rtp": 96.05,
+      "rtp_delta_pts": -0.6761750000000006,
+      "rtp_window_pts": 8.176464256699433,
+      "rtp_ok": true,
+      "sediment_ok": true,
+      "cap_ok": true,
+      "ok": true
+    },
+    "STANDARD_BONUS_100X": {
+      "spins": 5000,
+      "rtp": 95.76156999999999,
+      "rtp_per_seed": [
+        92.18,
+        99.66,
+        96.05,
+        92.47,
+        101.94,
+        103.24,
+        92.76,
+        87.79
+      ],
+      "rtp_std_error": 1.916089244025816,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 23.02,
+      "cap_hits": 0,
+      "avg_free_spins": 7.677625,
+      "level_distribution": {
+        "LEVEL_3_ABYSS": 41.44,
+        "LEVEL_4_HADAL": 45.9,
+        "LEVEL_5_CORE": 12.659999999999998
+      },
+      "win_buckets": {
+        "0x (Loss)": 0.0,
+        "0.01x - 1x (Micro)": 73.18,
+        "1x - 5x (Small)": 25.080000000000002,
+        "5x - 20x (Medium)": 1.72,
+        "20x - 100x (Big)": 0.02,
+        "100x - 500x (Super)": 0.0,
+        "500x+ (Mega/Epic)": 0.0
+      },
+      "sediment_share": 2.099391371982326,
+      "sediment_share_by_level": {
+        "LEVEL_3_ABYSS": 2.06,
+        "LEVEL_4_HADAL": 1.97,
+        "LEVEL_5_CORE": 3.14
+      },
+      "cost_x_bet": 100.0,
+      "target_rtp": 96.05,
+      "rtp_delta_pts": -0.2884300000000053,
+      "rtp_window_pts": 5.832178488051632,
+      "rtp_ok": true,
+      "sediment_ok": true,
+      "cap_ok": true,
+      "ok": true
+    },
+    "ULTRA_BONUS_350X": {
+      "spins": 5000,
+      "rtp": 94.29035142857143,
+      "rtp_per_seed": [
+        94.6,
+        91.14,
+        91.29,
+        102.46,
+        91.08,
+        100.61,
+        90.28,
+        92.87
+      ],
+      "rtp_std_error": 1.6589071677075318,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 42.86,
+      "cap_hits": 1,
+      "avg_free_spins": 7.99975,
+      "level_distribution": {
+        "LEVEL_5_CORE": 100.0
+      },
+      "win_buckets": {
+        "0x (Loss)": 0.0,
+        "0.01x - 1x (Micro)": 69.82000000000001,
+        "1x - 5x (Small)": 29.38,
+        "5x - 20x (Medium)": 0.7799999999999999,
+        "20x - 100x (Big)": 0.02,
+        "100x - 500x (Super)": 0.0,
+        "500x+ (Mega/Epic)": 0.0
+      },
+      "sediment_share": 2.972426908266267,
+      "sediment_share_by_level": {
+        "LEVEL_5_CORE": 3.03
+      },
+      "cost_x_bet": 350.0,
+      "target_rtp": 96.05,
+      "rtp_delta_pts": -1.7596485714285706,
+      "rtp_window_pts": 5.317814335415063,
+      "rtp_ok": true,
+      "sediment_ok": true,
+      "cap_ok": true,
+      "ok": true
+    },
+    "MYSTERY_BUY_200X": {
+      "spins": 5000,
+      "rtp": 98.562453,
+      "rtp_per_seed": [
+        101.99,
+        98.44,
+        102.96,
+        103.18,
+        96.19,
+        94.39,
+        95.42,
+        95.92
+      ],
+      "rtp_std_error": 1.2839579397594878,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 24.69,
+      "cap_hits": 0,
+      "avg_free_spins": 7.82525,
+      "level_distribution": {
+        "LEVEL_3_ABYSS": 23.66,
+        "LEVEL_4_HADAL": 27.74,
+        "LEVEL_5_CORE": 48.6
+      },
+      "win_buckets": {
+        "0x (Loss)": 0.0,
+        "0.01x - 1x (Micro)": 66.92,
+        "1x - 5x (Small)": 31.78,
+        "5x - 20x (Medium)": 1.28,
+        "20x - 100x (Big)": 0.02,
+        "100x - 500x (Super)": 0.0,
+        "500x+ (Mega/Epic)": 0.0
+      },
+      "sediment_share": 2.528170897987091,
+      "sediment_share_by_level": {
+        "LEVEL_3_ABYSS": 2.1,
+        "LEVEL_4_HADAL": 2.01,
+        "LEVEL_5_CORE": 3.04
+      },
+      "cost_x_bet": 200.0,
+      "target_rtp": 96.05,
+      "rtp_delta_pts": 2.512453000000008,
+      "rtp_window_pts": 4.567915879518976,
+      "rtp_ok": true,
+      "sediment_ok": true,
+      "cap_ok": true,
+      "ok": true
+    }
+  },
+  "passed": true
+}

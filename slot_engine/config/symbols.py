@@ -41,11 +41,11 @@ class SymbolType(str, Enum):
 
 class DepthLevel(int, Enum):
     LEVEL_0_SUNLIGHT = 0   # 0m, Base state
-    LEVEL_1_TWILIGHT = 1   # 500m, 15 pts, 10 removed, 1x1 Maw, +2 spins
-    LEVEL_2_MIDNIGHT = 2   # 2,000m, 35 pts, J removed, 2x1 Maw, +2 spins
-    LEVEL_3_ABYSS = 3      # 5,000m, 65 pts, Q removed, 2x2 Maw, Vents active (Standard Bonus)
+    LEVEL_1_TWILIGHT = 1   # 500m, 6 pts, 10 removed, 1x1 Maw, +2 spins
+    LEVEL_2_MIDNIGHT = 2   # 2,000m, 13 pts, J removed, 2x1 Maw, +2 spins
+    LEVEL_3_ABYSS = 3      # 5,000m, 24 pts, Q removed, 2x2 Maw, Vents active (Standard Bonus)
     LEVEL_4_HADAL = 4      # 8,000m, 100 pts, K removed, 3x3 Tentacle xSplit, +2 spins
-    LEVEL_5_CORE = 5       # 11,000m, 140 pts, A removed, 6x5 grid, Ultra Bonus (8 spins)
+    LEVEL_5_CORE = 5       # 11,000m, 200 pts, A removed, 6x5 grid, Ultra Bonus (8 spins)
 
 
 class FeatureBuyType(str, Enum):
@@ -75,20 +75,27 @@ SYMBOL_CATEGORIES: Dict[SymbolType, SymbolCategory] = {
 }
 
 
-# Paytable expressed as multiplier of total base bet for 3, 4, 5, and 6 consecutive matching reels
-# (Reels 1-5 in base, Reels 1-6 in Ultra Bonus 6x5 mode)
+# Paytable expressed as multiplier of total base bet PER WAY for 3, 4, 5, and 6 consecutive matching reels
+# (Reels 1-5 in base, Reels 1-6 in Ultra Bonus 6x5 mode).
+#
+# Calibration (docs/math_calibration.md): the shape below is a 1 : 0.6 : 0.4 : 0.3 : 0.16 : 0.12 pyramid
+# (Leviathan 5-of-a-kind = 0.135x per way) scaled so that an 8-spin Ultra round returns ~336x bet.
+# Values look small because ways multiply: a 5x5 screen offers up to 3,125 ways and a 6x5 screen 7,776,
+# and the 2x2 Maelstrom / Leviathan wild multipliers and Hydrothermal Vents compound per column.
+# Low runes pay from 4 reels only (3-of-a-kind = 0.0): this is what keeps the base hit rate below 50%
+# on a 5-row ways grid; a 3-reel low pay pushes it above 75%.
 SYMBOL_PAYTABLE: Dict[SymbolType, Dict[int, float]] = {
-    SymbolType.HIGH_LEVIATHAN: {3: 0.15, 4: 0.40, 5: 1.20, 6: 3.50},
-    SymbolType.HIGH_SQUID:     {3: 0.10, 4: 0.25, 5: 0.80, 6: 2.20},
-    SymbolType.HIGH_ANGLER:    {3: 0.08, 4: 0.20, 5: 0.60, 6: 1.60},
-    SymbolType.HIGH_VIPER:     {3: 0.06, 4: 0.15, 5: 0.45, 6: 1.20},
-    SymbolType.MID_COMPASS:    {3: 0.04, 4: 0.10, 5: 0.30, 6: 0.80},
-    SymbolType.MID_HELMET:     {3: 0.03, 4: 0.08, 5: 0.25, 6: 0.60},
-    SymbolType.LOW_A:          {3: 0.02, 4: 0.05, 5: 0.15, 6: 0.40},
-    SymbolType.LOW_K:          {3: 0.018, 4: 0.045, 5: 0.12, 6: 0.30},
-    SymbolType.LOW_Q:          {3: 0.015, 4: 0.04, 5: 0.10, 6: 0.25},
-    SymbolType.LOW_J:          {3: 0.012, 4: 0.03, 5: 0.08, 6: 0.20},
-    SymbolType.LOW_10:         {3: 0.01, 4: 0.025, 5: 0.06, 6: 0.15},
+    SymbolType.HIGH_LEVIATHAN: {3: 0.0135, 4: 0.0405, 5: 0.135, 6: 0.27},
+    SymbolType.HIGH_SQUID:     {3: 0.0081, 4: 0.0216, 5: 0.0675, 6: 0.135},
+    SymbolType.HIGH_ANGLER:    {3: 0.0054, 4: 0.0135, 5: 0.0405, 6: 0.081},
+    SymbolType.HIGH_VIPER:     {3: 0.00405, 4: 0.0108, 5: 0.027, 6: 0.054},
+    SymbolType.MID_COMPASS:    {3: 0.00216, 4: 0.0054, 5: 0.0135, 6: 0.027},
+    SymbolType.MID_HELMET:     {3: 0.00162, 4: 0.00405, 5: 0.0108, 6: 0.0216},
+    SymbolType.LOW_A:          {3: 0.0, 4: 0.0027, 5: 0.0081, 6: 0.0162},
+    SymbolType.LOW_K:          {3: 0.0, 4: 0.00216, 5: 0.00675, 6: 0.0135},
+    SymbolType.LOW_Q:          {3: 0.0, 4: 0.00162, 5: 0.0054, 6: 0.0108},
+    SymbolType.LOW_J:          {3: 0.0, 4: 0.00135, 5: 0.00405, 6: 0.0081},
+    SymbolType.LOW_10:         {3: 0.0, 4: 0.00108, 5: 0.00324, 6: 0.00675},
 }
 
 
@@ -112,14 +119,17 @@ SYMBOL_PRESSURE_POINTS: Dict[SymbolType, int] = {
 }
 
 
-# Thresholds of accumulated pressure points required to breach each depth level
+# Thresholds of accumulated pressure points required to breach each depth level.
+# Calibrated so that the base game descends naturally (Level 1 ~1.7% of rounds, Level 3 ~1.6%,
+# Level 5 ~0.05%) and a bought Standard Bonus (starting at Level 3 with 6 spins) reaches
+# Level 4 ~48% and Level 5 ~12% of the time. Points carry across all free spins of one round.
 DEPTH_LEVEL_THRESHOLDS: Dict[DepthLevel, int] = {
     DepthLevel.LEVEL_0_SUNLIGHT: 0,
-    DepthLevel.LEVEL_1_TWILIGHT: 15,
-    DepthLevel.LEVEL_2_MIDNIGHT: 35,
-    DepthLevel.LEVEL_3_ABYSS: 65,      # Unlocks Abyssal Descent (Standard Bonus Milestone)
-    DepthLevel.LEVEL_4_HADAL: 160,
-    DepthLevel.LEVEL_5_CORE: 260,      # Unlocks Leviathan Awakening (Ultra Bonus Milestone)
+    DepthLevel.LEVEL_1_TWILIGHT: 6,
+    DepthLevel.LEVEL_2_MIDNIGHT: 13,
+    DepthLevel.LEVEL_3_ABYSS: 24,      # Unlocks Abyssal Descent (Standard Bonus Milestone)
+    DepthLevel.LEVEL_4_HADAL: 100,
+    DepthLevel.LEVEL_5_CORE: 200,      # Unlocks Leviathan Awakening (Ultra Bonus Milestone)
 }
 
 
@@ -143,9 +153,9 @@ DEPTH_METADATA: Dict[DepthLevel, Dict[str, Any]] = {
         "ambient_lighting": 0.8,
         "creature_footprint": (1, 1),
         "purged_symbols": [SymbolType.LOW_10],
-        "spins_awarded_natural": 1,
+        "spins_awarded_natural": 2,
         "audio_cue": "CREAKING_HULL_TWILIGHT",
-        "description": "Low 10 removed. 1x1 Lurker Maw attacks on stall to eat lows and transmute to mid equipment (+1 spin)."
+        "description": "Low 10 removed. 1x1 Lurker Maw attacks on stall to eat lows and transmute to mid equipment (+2 spins)."
     },
     DepthLevel.LEVEL_2_MIDNIGHT: {
         "name": "Midnight Zone",
@@ -154,9 +164,9 @@ DEPTH_METADATA: Dict[DepthLevel, Dict[str, Any]] = {
         "ambient_lighting": 0.6,
         "creature_footprint": (2, 1),
         "purged_symbols": [SymbolType.LOW_10, SymbolType.LOW_J],
-        "spins_awarded_natural": 1,
+        "spins_awarded_natural": 2,
         "audio_cue": "DEEP_SUB_BASS_PULSE",
-        "description": "Low J removed. 2x1 Tentacle Stalker eats mid equipment and transmutes to high predators (+1 spin)."
+        "description": "Low J removed. 2x1 Tentacle Stalker eats mid equipment and transmutes to high predators (+2 spins)."
     },
     DepthLevel.LEVEL_3_ABYSS: {
         "name": "The Abyssal Plains",

@@ -1,0 +1,186 @@
+{
+ "idle": {
+  "reveal": 0.101,
+  "agit": 0,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": 0.0076,
+  "pulse": 1.2,
+  "lb": 0.53,
+  "push": 0,
+  "yawDeg": 4,
+  "strike": null,
+  "dirLevel": 0
+ },
+ "fps_idle": {
+  "n": 659,
+  "p50": 16.7,
+  "p95": 16.8,
+  "p99": 16.8,
+  "max": 16.9,
+  "fps": 59.9
+ },
+ "idle_reveal": {
+  "mean": 0.096,
+  "max": 0.101,
+  "shareAbove0.6": 0.0
+ },
+ "breath_0": {
+  "reveal": 0.66,
+  "agit": 0.99,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": -0.0392,
+  "pulse": 1.93,
+  "lb": 0.7,
+  "push": 0.98,
+  "yawDeg": -2.82,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "breath_1": {
+  "reveal": 0.66,
+  "agit": 1,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": 0.0476,
+  "pulse": 1.96,
+  "lb": 0.72,
+  "push": 1,
+  "yawDeg": -2.82,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "breath_2": {
+  "reveal": 0.66,
+  "agit": 1,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": -0.0297,
+  "pulse": 1.67,
+  "lb": 0.5,
+  "push": 1,
+  "yawDeg": -2.82,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "breath_diff_01": {
+  "mean": 2.058,
+  "changedBox": [
+   0,
+   8,
+   1784,
+   1080
+  ]
+ },
+ "breath_diff_02": {
+  "mean": 2.694,
+  "changedBox": [
+   0,
+   8,
+   1784,
+   1080
+  ]
+ },
+ "nearmiss": {
+  "reveal": 0.644,
+  "agit": 1,
+  "hush": false,
+  "react": null,
+  "att": [
+   1272,
+   510,
+   true
+  ],
+  "breath": -0.0442,
+  "pulse": 2.24,
+  "lb": 0.68,
+  "push": 1,
+  "yawDeg": -3.9,
+  "strike": null,
+  "dirLevel": 0
+ },
+ "reveal": {
+  "reveal": 0.66,
+  "agit": 0,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": 0.0074,
+  "pulse": 1.89,
+  "lb": 0.78,
+  "push": 0,
+  "yawDeg": 0.07,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "react_loss": {
+  "reveal": 1,
+  "agit": 0.7,
+  "hush": false,
+  "react": "loss",
+  "att": null,
+  "breath": -0.0475,
+  "pulse": 1.93,
+  "lb": 0.54,
+  "push": 1,
+  "yawDeg": 1.03,
+  "strike": "peek",
+  "dirLevel": 2
+ },
+ "react_win": {
+  "reveal": 1,
+  "agit": 1,
+  "hush": false,
+  "react": "win",
+  "att": null,
+  "breath": 0.0127,
+  "pulse": 2.28,
+  "lb": 0.62,
+  "push": 1,
+  "yawDeg": 3.02,
+  "strike": "lunge",
+  "dirLevel": 2
+ },
+ "prestrike": {
+  "reveal": 0.023,
+  "agit": 1,
+  "hush": true,
+  "react": null,
+  "att": null,
+  "breath": 0.045,
+  "pulse": 1.27,
+  "lb": 0.46,
+  "push": 1,
+  "yawDeg": 3.94,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "strike": {
+  "reveal": 1,
+  "agit": 1,
+  "hush": false,
+  "react": null,
+  "att": null,
+  "breath": 0.0107,
+  "pulse": 2.4,
+  "lb": 0.94,
+  "push": 1,
+  "yawDeg": 3.96,
+  "strike": null,
+  "dirLevel": 2
+ },
+ "fps_after": {
+  "n": 300,
+  "p50": 16.7,
+  "p95": 16.8,
+  "p99": 16.8,
+  "max": 16.8,
+  "fps": 60
+ },
+ "errors": []
+}
