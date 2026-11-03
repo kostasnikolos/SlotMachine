@@ -22,7 +22,7 @@
     "level": 0
   },
   "eye": {
-    "reveal": 0.3,
+    "reveal": 0.011,
     "hero": {
       "ready": true,
       "failed": false,
@@ -44,7 +44,7 @@
     "level": 0
   },
   "jaws": {
-    "reveal": 0.3,
+    "reveal": 0.001,
     "hero": {
       "ready": true,
       "failed": false,
@@ -66,7 +66,7 @@
     "level": 0
   },
   "rise": {
-    "reveal": 0.248,
+    "reveal": 0.02,
     "hero": {
       "ready": true,
       "failed": false,
@@ -89,62 +89,62 @@
   },
   "hero_log": [
     {
-      "t": 9860.7,
-      "f": 528,
+      "t": 11883.6,
+      "f": 640,
       "type": "heroPlay",
       "id": "lev_eye",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-      "dur": 3200,
+      "dur": 3400,
       "rect": [
-        549,
+        634,
         71,
         1180,
         659
       ]
     },
     {
-      "t": 13061.2,
-      "f": 720,
+      "t": 15297.8,
+      "f": 845,
       "type": "heroEnd",
       "id": "lev_eye"
     },
     {
-      "t": 16767.9,
-      "f": 942,
+      "t": 23110.6,
+      "f": 1313,
       "type": "heroPlay",
       "id": "lev_jaws",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
-      "dur": 2300,
+      "dur": 6000,
       "rect": [
-        940,
-        359,
-        820,
-        458
+        449,
+        40,
+        749,
+        418
       ]
     },
     {
-      "t": 19082.9,
-      "f": 1081,
+      "t": 24722.5,
+      "f": 1410,
       "type": "heroEnd",
       "id": "lev_jaws"
     },
     {
-      "t": 21286.7,
-      "f": 1213,
+      "t": 28212.8,
+      "f": 1619,
       "type": "heroPlay",
       "id": "lev_rise",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
-      "dur": 3300,
+      "dur": 6000,
       "rect": [
-        210,
-        425,
-        1500,
-        837
+        549,
+        513,
+        823,
+        459
       ]
     },
     {
-      "t": 24587.5,
-      "f": 1411,
+      "t": 32345.3,
+      "f": 1867,
       "type": "heroEnd",
       "id": "lev_rise"
     }

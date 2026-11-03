@@ -2,13 +2,20 @@
 // no full-body creature in everyday view).
 //
 // A painting (RGBA cut-out) + its pseudo-depth map (scripts/ai/hero_prep.py) is drawn on its own WebGL canvas
-// (data-hero) with: depth parallax driven by the pointer and a slow drift, a breathing scale, depth fog, chromatic
-// aberration at the glass, drifting motes, and an alpha envelope. Shots: 'lev_eye' (reaction / near-miss),
-// 'lev_jaws' (the bite), 'lev_rise' (level-up), 'lev_maw' (max win). ?hero=0 disables the layer.
+// (data-hero) by ONE fragment program whose "rig" uniforms give every shot its life:
+//   - depth parallax (pointer + drift), breathing scale, depth fog, chromatic aberration weighted to the near glass, motes
+//   - feathered painting edges (px, measured from the content bbox), a contact overlay under the painting (dark ellipse + ripple)
+//   - eye rig: iris ellipse tracking the pointer, a 2-layer eyelid blink filled with skin sampled above the iris, pupil narrowing
+//   - jaw rig: the cut-out split at the mouth midline (feathered), lower/upper region translation (the chomp, the slow threat)
+//   - rise rig: nodule pulse (blue > 1.5 red mask), a rotation about the neck, fog at the bottom only
+//   - maw rig: radial "swallow" scale about the throat, a lure pulse keyed to the counter ticks
+// Every shot is opaque and enters / leaves by moving (translate / zoom) under a short alpha ramp; reduced-motion users get a
+// plain cross-fade and no blink / slam. Shots: 'lev_eye' (loss reaction), 'lev_jaws' (the bite), 'lev_rise' (level-up),
+// 'lev_maw' (500x). ?hero=0 disables the layer.
 //
-//   const H = window.HeroShots.install(game);   // game = the canvas component (geo(), mouse, timers, flog)
-//   H.play('lev_jaws', { x, y, w, h, dur: 1500, zoomFrom: 0.8, zoomTo: 1.15, z: 7 });
-//   H.frame(dt);  // from the render loop
+//   const H = window.HeroShots.install(game);   // game = the canvas component (geo(), mouse, timers, flog, setState)
+//   H.play('lev_jaws', { anchor: 'throat', at: [x, y], w: side, h: side, chompMs: 1800 });
+//   H.chomp(); H.pulse(); H.stop(ms); H.frame(dt);  // from the choreography / the render loop
 (function (root) {
   'use strict';
 
@@ -16,42 +23,135 @@
   const FS = [
     'precision mediump float; varying vec2 v;',
     'uniform sampler2D tC; uniform sampler2D tD; uniform vec2 uRes; uniform vec4 uRect; uniform vec2 uPar; uniform float uT;',
-    'uniform float uA; uniform float uFog; uniform vec3 uTint; uniform float uScale; uniform vec2 uPivot; uniform float uChrom; uniform float uDark;',
+    'uniform float uA; uniform float uFog; uniform float uFogBot; uniform vec3 uTint; uniform vec3 uFogCol; uniform float uScale; uniform vec2 uPivot; uniform float uChrom; uniform float uDark;',
+    'uniform vec4 uFeath; uniform vec4 uCont;',          // feather widths (l, r, b, t) in uv; content bbox (x0, x1, y0, y1)
+    'uniform vec4 uIris; uniform vec2 uIrisOff; uniform float uPupil; uniform float uLid; uniform vec2 uLidSkin;',
+    'uniform vec4 uJaw;',                                 // hinge y, feather, upper dy (down), lower dy (up)
+    'uniform vec3 uRot; uniform float uNod; uniform vec4 uThroat; uniform float uFlash;',
+    'uniform vec4 uShadow; uniform float uShadowA; uniform float uRipple;',
+    'float ss(float a, float b, float x) { float t = clamp((x - a) / (b - a), 0.0, 1.0); return t * t * (3.0 - 2.0 * t); }',
     'float h2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float n2(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);',
     '  return mix(mix(h2(i), h2(i + vec2(1.0, 0.0)), f.x), mix(h2(i + vec2(0.0, 1.0)), h2(i + vec2(1.0, 1.0)), f.x), f.y); }',
     'void main() {',
-    '  vec2 uv = (v - uRect.xy) / uRect.zw;',
-    '  uv = (uv - uPivot) / uScale + uPivot;',
-    '  if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) { gl_FragColor = vec4(0.0); return; }',
-    '  float d = texture2D(tD, uv).r;',
-    '  vec2 sway = vec2(sin(uT * 0.7 + uv.y * 5.0), cos(uT * 0.5 + uv.x * 4.0)) * 0.0025 * (1.0 - d);',
-    '  vec2 u2 = uv + uPar * (d - 0.5) * 0.05 + sway;',
-    '  vec4 c = texture2D(tC, u2);',
-    '  float ca = uChrom * 0.0035 * (0.3 + 0.7 * length(v - 0.5));',
-    '  c.r = texture2D(tC, u2 + vec2(ca, 0.0)).r; c.b = texture2D(tC, u2 - vec2(ca, 0.0)).b;',
-    '  float fog = uFog * (1.0 - d);',
-    '  vec3 col = mix(c.rgb, uTint * 0.22, fog * 0.85) * (1.0 - uDark * (1.0 - d) * 0.6);',
-    '  vec2 ar = vec2(uRes.x * uRect.z, uRes.y * uRect.w) / 140.0;',
-    '  vec2 mp = uv * ar + vec2(0.0, uT * 0.06);',
-    '  float m = pow(n2(mp * 3.0) * n2(mp * 7.0 + 3.0), 7.0) * 2.2;',
-    '  col += uTint * m * 0.7 * c.a;',
-    '  gl_FragColor = vec4(col * c.a, c.a) * uA;',
+    '  vec2 uvR = (v - uRect.xy) / uRect.zw;',
+    '  float asp = (uRes.x * uRect.z) / max(1.0, uRes.y * uRect.w);',
+    // contact overlay under the painting: a soft dark ellipse on the symbols + a refraction-looking ripple around the iris
+    '  vec4 ov = vec4(0.0);',
+    '  if (uShadowA > 0.0) {',
+    '    vec2 q = (uvR - uShadow.xy) / uShadow.zw;',
+    '    float sh = (1.0 - smoothstep(0.5, 1.1, length(q))) * uShadowA;',
+    '    vec2 ic = uPivot + (uIris.xy + uIrisOff - uPivot) * uScale;',
+    '    vec2 qi = (uvR - ic) / (uIris.zw * uScale * 1.1 + 1e-4);',
+    '    float ri = length(qi);',
+    '    float rm = (1.0 - smoothstep(0.75, 1.0, ri)) * uRipple;',
+    '    float ring = sin(ri * 26.0 - uT * 4.0) * 0.5 + 0.5;',
+    '    sh = min(1.0, sh + rm * 0.35 * ring);',
+    '    ov = vec4(uTint * rm * (1.0 - ring) * 0.09, sh);',
+    '  }',
+    // painting space: zoom about the pivot, rotation about the neck, region translations, the throat swallow
+    '  vec2 uv = (uvR - uPivot) / uScale + uPivot;',
+    '  if (uRot.z != 0.0) { vec2 d = uv - uRot.xy; d.x *= asp; float cs = cos(uRot.z), sn = sin(uRot.z); d = vec2(d.x * cs - d.y * sn, d.x * sn + d.y * cs); d.x /= asp; uv = uRot.xy + d; }',
+    '  if (uJaw.y > 0.0) { float hd = uJaw.x + uJaw.w; float lw = 1.0 - smoothstep(hd - uJaw.y, hd + uJaw.y, uv.y); uv.y += -uJaw.w * lw + uJaw.z * (1.0 - lw); }',
+    '  if (uThroat.z != 1.0) uv = uThroat.xy + (uv - uThroat.xy) * uThroat.z;',
+    '  float mi = 0.0, me = 0.0, ny = 0.0;',
+    '  if (uIris.z > 0.0) {',
+    '    vec2 qe = (uv - uIris.xy) / uIris.zw;',
+    '    float re = length(qe);',
+    '    mi = 1.0 - smoothstep(0.8, 1.0, re);',
+    '    me = 1.0 - smoothstep(1.2, 1.32, re);',
+    '    ny = qe.y / 1.28;',
+    '    uv -= uIrisOff * mi;',
+    '    float mp = 1.0 - smoothstep(0.25, 0.75, re);',
+    '    uv.x = mix(uv.x, uIris.x + (uv.x - uIris.x) / max(0.5, uPupil), mp);',
+    '  }',
+    '  vec4 pc = vec4(0.0);',
+    '  if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {',
+    '    float d = texture2D(tD, uv).r;',
+    '    vec2 sway = vec2(sin(uT * 0.7 + uv.y * 5.0), cos(uT * 0.5 + uv.x * 4.0)) * 0.0025 * (1.0 - d);',
+    '    vec2 u2 = uv + uPar * (d - 0.5) * 0.05 + sway;',
+    '    vec4 c = texture2D(tC, u2);',
+    '    float ca = uChrom * 0.0045 * (1.0 - d) * (0.3 + 0.7 * length(v - 0.5));',
+    '    c.r = texture2D(tC, u2 + vec2(ca, 0.0)).r; c.b = texture2D(tC, u2 - vec2(ca, 0.0)).b;',
+    '    vec3 col = c.rgb;',
+    // nodule pulse: the bioluminescent dots are the pixels with blue well over red
+    '    if (uNod != 1.0) { float nm = smoothstep(1.3, 1.6, c.b / max(c.r, 0.02)) * smoothstep(0.3, 0.5, c.b); col *= mix(1.0, uNod, nm); }',
+    // the 2-layer eyelid: an upper cap closing down over the iris, a thinner lower lid rising, filled with skin from above the eye
+    '    if (uLid > 0.0 && me > 0.0) {',
+    '      float up = smoothstep(-0.07, 0.07, ny - (1.0 - 2.0 * uLid));',
+    '      float lo = 1.0 - smoothstep(-0.07, 0.07, ny - (-1.0 + 0.75 * uLid));',
+    '      float lw = clamp(max(up, lo), 0.0, 1.0) * me;',
+    '      vec3 skin = texture2D(tC, uLidSkin + (uv - uIris.xy) * 0.35).rgb * (0.8 - 0.25 * abs(ny));',
+    '      col = mix(col, skin, lw);',
+    '    }',
+    // lure pulse: Biolume in a small mask around the throat
+    '    if (uThroat.w > 0.0) { vec2 ql = (uv - uThroat.xy) * vec2(asp, 1.0); float lm = 1.0 - smoothstep(0.0, 0.11, length(ql)); col += uTint * uThroat.w * lm * lm * 1.4; }',
+    '    float fog = clamp(uFog * (1.0 - d) + uFogBot * pow(1.0 - uv.y, 1.5), 0.0, 1.0);',
+    '    col = mix(col, uFogCol * 0.22, fog * 0.85) * (1.0 - uDark * (1.0 - d) * 0.6);',
+    '    vec2 ar = vec2(uRes.x * uRect.z, uRes.y * uRect.w) / 140.0;',
+    '    vec2 mp2 = uv * ar + vec2(0.0, uT * 0.06);',
+    '    float m = pow(n2(mp2 * 3.0) * n2(mp2 * 7.0 + 3.0), 7.0) * 2.2;',
+    '    col += uTint * m * 0.7 * c.a;',
+    '    col = mix(col, vec3(0.0), uFlash);',
+    // feathered edges, measured from the content bbox
+    '    float fe = ss(uCont.x, uCont.x + uFeath.x, uv.x) * ss(uCont.y, uCont.y - uFeath.y, uv.x)',
+    '             * ss(uCont.z, uCont.z + uFeath.z, uv.y) * ss(uCont.w, uCont.w - uFeath.w, uv.y);',
+    '    float pa = c.a * fe;',
+    '    pc = vec4(col * pa, pa) * uA;',
+    '  }',
+    '  ov *= uA;',
+    '  gl_FragColor = pc + ov * (1.0 - pc.a);',
     '}'
   ].join('\n');
+  const UNI = ['tC', 'tD', 'uRes', 'uRect', 'uPar', 'uT', 'uA', 'uFog', 'uFogBot', 'uTint', 'uFogCol', 'uScale', 'uPivot', 'uChrom', 'uDark', 'uFeath', 'uCont',
+    'uIris', 'uIrisOff', 'uPupil', 'uLid', 'uLidSkin', 'uJaw', 'uRot', 'uNod', 'uThroat', 'uFlash', 'uShadow', 'uShadowA', 'uRipple'];
+
+  // measured feature anchors, in painting image coordinates (x right, y DOWN, 0..1); flipped to GL (y up) when uploaded.
+  // Measured off the PNGs with PIL (scripts: see the review notes): iris = the big cyan blob of lev_eye, the lure / throat = the
+  // cyan blob in the gullet, the mouth midline of lev_jaws = the darkest row band of the opening, content = alpha bbox.
+  const RIG = {
+    lev_eye: {
+      iris: [0.661, 0.476], irisR: [0.075, 0.13], lidSkin: [0.661, 0.416], cont: [0.309, 0.932, 0.0, 0.969],
+      fog: 0.15, dark: 0.2, chrom: 0.3, feather: { l: 120, b: 120 }, shadow: true
+    },
+    lev_jaws: {
+      throat: [0.48, 0.60], hinge: 0.58, hingeFeather: 0.035, cont: [0.198, 0.711, 0.0, 0.927],
+      fog: 0.2, dark: 0.2, chrom: 0.6, feather: { l: 80, r: 80, b: 80, t: 110 }
+    },
+    lev_rise: {
+      eye: [0.496, 0.514], eyeR: [0.016, 0.028], lidSkin: [0.496, 0.454], neck: [0.5, 0.30], cont: [0.294, 0.709, 0.331, 0.849],
+      fog: 0.0, fogBot: 0.65, dark: 0.2, chrom: 0.5, feather: { l: 60, r: 60, b: 160 }, nodules: true
+    },
+    lev_maw: {
+      throat: [0.535, 0.52], lure: [0.535, 0.496], cont: [0.140, 0.862, 0.0, 0.999],
+      fog: 0.2, dark: 0.2, chrom: 0.4, feather: { l: 100, r: 100 }, swallow: true
+    }
+  };
 
   // '#rrggbb' or the canvas's 'r,g,b' accent strings
   function hex(c) {
-    if (!c) c = '#3ff5ff';
+    if (!c) c = '#3FE0D0';
     if (c.indexOf(',') > 0) { const v = c.split(',').map((x) => parseFloat(x) / 255); return [v[0] || 0, v[1] || 0, v[2] || 0]; }
     const n = parseInt(c.replace('#', ''), 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
   }
+  const EASE = {
+    linear: (k) => k,
+    outQuart: (k) => 1 - Math.pow(1 - k, 4),
+    outCubic: (k) => 1 - Math.pow(1 - k, 3),
+    outQuad: (k) => 1 - (1 - k) * (1 - k),
+    inCubic: (k) => k * k * k,
+    inQuad: (k) => k * k,
+    smooth: (k) => k * k * (3 - 2 * k)
+  };
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const BIOLUME = hex('#3FE0D0');
 
   function install(game) {
     if (game.hero) return game.hero;
     if (/[?&]hero=0(&|$)/.test(root.location.search)) return null;
     const H = {
-      game, gl: null, canvas: null, prog: null, loc: {}, tex: {}, manifest: null, cur: null, t: 0, par: [0, 0], ready: false, failed: false, base: 'assets/hero/'
+      game, gl: null, canvas: null, prog: null, loc: {}, tex: {}, manifest: null, cur: null, t: 0, par: [0, 0], ready: false, failed: false, base: 'assets/hero/',
+      rm: !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches), RIG
     };
 
     const ensureGL = () => {
@@ -74,7 +174,7 @@
       const ap = gl.getAttribLocation(p, 'p');
       gl.enableVertexAttribArray(ap);
       gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
-      for (const u of ['tC', 'tD', 'uRes', 'uRect', 'uPar', 'uT', 'uA', 'uFog', 'uTint', 'uScale', 'uPivot', 'uChrom', 'uDark']) H.loc[u] = gl.getUniformLocation(p, u);
+      for (const u of UNI) H.loc[u] = gl.getUniformLocation(p, u);
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -116,27 +216,97 @@
       H.loaded = Object.keys(H.tex);
     };
 
-    // play one shot. rect in stage px (x, y, w, h); the painting is fitted into it (contain) unless cover:true.
+    // play one shot. rect in stage px (x, y, w, h): the painting is fitted into it (contain, or cover:true); with anchor (a RIG
+    // feature name or [u, v] in image coords) + at [x, y] the painting is placed so that feature sits on that stage point; the
+    // rect is then clamped inside the stage with `margin` px. Motion: enter {dx, dy, ms, ease, alphaMs} and exit {...} are moves
+    // in stage px; zoomFrom -> zoomTo over zoomMs (ease-out), then the breathing.
     H.play = (id, o) => {
       o = o || {};
       if (H.failed || !H.tex[id]) { if (!H.ready) H.load(); if (game.flog) game.flog('heroSkip', { id, reason: H.failed ? 'failed' : 'notLoaded' }); return false; }
       const G = game.geo();
       const T = H.tex[id];
+      const R = RIG[id] || {};
       let x = o.x ?? 0, y = o.y ?? 0, w = o.w ?? G.W, h = o.h ?? G.H;
       // fit the painting's aspect into the rect
       const ar = T.w / T.h, rr = w / h;
       if (o.cover ? ar > rr : ar < rr) { const nw = h * ar; x += (w - nw) / 2; w = nw; } else { const nh = w / ar; y += (h - nh) / 2; h = nh; }
+      let anchor = o.anchor;
+      if (typeof anchor === 'string') anchor = R[anchor];
+      if (anchor && o.at) { x = o.at[0] - anchor[0] * w; y = o.at[1] - anchor[1] * h; }
+      if (o.margin != null) {
+        const mg = o.margin;
+        x = Math.max(mg, Math.min(G.W - mg - w, x)); y = Math.max(mg, Math.min(G.H - mg - h, y));
+        if (w > G.W - 2 * mg) x = (G.W - w) / 2;
+        if (h > G.H - 2 * mg) y = (G.H - h) / 2;
+      }
+      const pivot = o.pivot || (anchor ? [anchor[0], anchor[1]] : [0.5, 0.5]);
+      const fe = Object.assign({}, R.feather || {}, o.feather || {});
+      const enter = Object.assign({ dx: 0, dy: 0, ms: 0, ease: 'outQuart', alphaMs: o.fadeIn ?? 220 }, o.enter || {});
+      const exit = Object.assign({ dx: 0, dy: 0, ms: 0, ease: 'inCubic', alphaMs: o.fadeOut ?? 250, zoomTo: null }, o.exit || {});
+      if (H.rm) {
+        // reduced motion: no violence beyond a plain cross-fade
+        enter.dx = enter.dy = exit.dx = exit.dy = 0; exit.zoomTo = null;
+        enter.alphaMs = Math.max(enter.alphaMs, 350); exit.alphaMs = Math.max(exit.alphaMs, 350);
+      }
+      const now = performance.now();
       H.cur = {
-        id, x, y, w, h, t0: performance.now(), dur: o.dur || 2000, fadeIn: o.fadeIn ?? 220, fadeOut: o.fadeOut ?? 450,
-        zoomFrom: o.zoomFrom ?? 1, zoomTo: o.zoomTo ?? 1.06, pivot: o.pivot || [0.5, 0.5], tint: hex(o.tint), fog: o.fog ?? 0.35,
-        chrom: o.chrom ?? 1, dark: o.dark ?? 0.3, alpha: o.alpha ?? 1, par: o.par ?? 1, hold: !!o.hold
+        id, x, y, w, h, t0: now, dur: o.dur || 2000, enter, exit,
+        zoomFrom: o.zoomFrom ?? 1, zoomTo: o.zoomTo ?? 1.06, zoomMs: o.zoomMs ?? (o.dur || 2000), pivot, tint: BIOLUME, fogCol: o.tint && o.tint !== 'biolume' ? hex(o.tint) : BIOLUME,
+        fog: o.fog ?? R.fog ?? 0.2, fogBot: o.fogBot ?? R.fogBot ?? 0, chrom: o.chrom ?? R.chrom ?? 0.5, dark: o.dark ?? R.dark ?? 0.2, alpha: o.alpha ?? 1,
+        par: o.par ?? 1, hold: !!o.hold, feather: fe, cont: R.cont || [0, 1, 0, 1], rig: R,
+        breath: o.breath ?? 0.012, hitStopMs: o.hitStopMs ?? 67,
+        // live rig state
+        irisOff: [0, 0], track: [0, 0], lid: 0, pupil: 1, blink: null, nextBlink: null, lastLid: 0,
+        jaw: [0, 0], chompT: null, dropT: null, flash: 0, rot: 0, nod: 1, swallow: 1, lure: 0, shadowA: 0, ox: 0, oy: 0
       };
+      const S = H.cur;
+      if (id === 'lev_eye' || id === 'lev_rise') {
+        const arrive = enter.ms;
+        S.nextBlink = arrive + (id === 'lev_eye' ? 300 : 1100);
+      }
       if (o.z != null && game.setState) game.setState({ heroZ: o.z });
-      if (game.flog) game.flog('heroPlay', { id, source: T.source, dur: H.cur.dur, rect: [Math.round(x), Math.round(y), Math.round(w), Math.round(h)] });
+      if (game.flog) game.flog('heroPlay', { id, source: T.source, dur: S.dur, rect: [Math.round(x), Math.round(y), Math.round(w), Math.round(h)] });
       return true;
     };
-    H.stop = (ms) => { if (H.cur) { H.cur.dur = Math.min(H.cur.dur, performance.now() - H.cur.t0 + (ms ?? 350)); H.cur.fadeOut = ms ?? 350; H.cur.hold = false; } };
+
+    // end the shot within ms: by its exit move (drop / recede / sink), the alpha ramp only at the very end
+    H.stop = (ms) => {
+      const S = H.cur;
+      if (!S) return;
+      ms = ms ?? 350;
+      const el = performance.now() - S.t0;
+      if (S.id === 'lev_jaws' && !H.rm) {
+        if (S.dropT == null) { S.dropT = el; S.dropMs = ms; }
+        S.dur = Math.min(S.dur, S.dropT + S.dropMs);
+        S.exit.alphaMs = 0;
+      } else {
+        S.exit.ms = H.rm ? 0 : Math.min(S.exit.ms || ms, ms);
+        S.exit.alphaMs = Math.min(S.exit.alphaMs, ms);
+        S.dur = Math.min(S.dur, el + ms);
+      }
+      S.hold = false;
+    };
     H.active = () => !!H.cur;
+    // the bite: jaws slam shut (70 ms), hold through the hit-stop, a 120 ms overshoot, a 60 ms black flash on impact, then the
+    // painting drops off the bottom of the stage within 450 ms
+    H.chomp = () => {
+      const S = H.cur;
+      if (!S || S.id !== 'lev_jaws' || S.chompT != null) return false;
+      S.chompT = performance.now() - S.t0;
+      S.zoomMs = Math.min(S.zoomMs, S.chompT);
+      if (!H.rm) { S.flash = 1; S.dropT = S.chompT + 70 + S.hitStopMs + 120; S.dropMs = 450; S.dur = Math.min(S.dur, S.dropT + S.dropMs); S.exit.alphaMs = 0; }
+      return true;
+    };
+    // the lure pulses with the big-win counter ticks
+    H.pulse = (v) => { const S = H.cur; if (S) S.lure = Math.max(S.lure, v ?? 1); };
+    // the stage point where a painting feature sits right now (for the churn / the contact cue)
+    H.featureAt = (name) => {
+      const S = H.cur;
+      if (!S) return null;
+      const f = S.rig[name];
+      if (!f) return null;
+      return [S.x + S.ox + f[0] * S.w, S.y + S.oy + f[1] * S.h];
+    };
 
     H.frame = (dt) => {
       if (!H.ready) { H.load(); return; }
@@ -148,39 +318,150 @@
       const S = H.cur;
       if (!S) { if (H.drawn) { gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); H.drawn = false; } return; }
       H.t += dt;
-      const el = performance.now() - S.t0;
-      let a = 1;
-      if (el < S.fadeIn) a = el / S.fadeIn;
-      if (!S.hold && el > S.dur - S.fadeOut) a = Math.min(a, Math.max(0, (S.dur - el) / S.fadeOut));
+      const now = performance.now();
+      const el = now - S.t0;
       if (!S.hold && el >= S.dur) { H.cur = null; gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); H.drawn = false; if (game.flog) game.flog('heroEnd', { id: S.id }); return; }
+      const R = S.rig, EN = S.enter, EX = S.exit;
+      // ---- envelope: alpha ramps, enter / exit moves ----
+      let a = 1;
+      if (EN.alphaMs > 0 && el < EN.alphaMs) a = el / EN.alphaMs;
+      const exitStart = S.hold ? Infinity : S.dur - EX.ms;
+      let ox = 0, oy = 0, scaleX = null;
+      if (el < EN.ms) { const k = 1 - (EASE[EN.ease] || EASE.outQuart)(el / EN.ms); ox += EN.dx * k; oy += EN.dy * k; }
+      if (!S.hold && EX.alphaMs > 0 && el > S.dur - EX.alphaMs) a = Math.min(a, Math.max(0, (S.dur - el) / EX.alphaMs));
+      if (el >= exitStart && EX.ms > 0) { const k = (EASE[EX.ease] || EASE.inCubic)(clamp01((el - exitStart) / EX.ms)); ox += EX.dx * k; oy += EX.dy * k; if (EX.zoomTo != null) scaleX = k; }
       a = a * a * (3 - 2 * a) * S.alpha;
       // parallax: pointer (normalised to the stage) + a slow drift; eased so it never snaps
       const m = game.mouse, M = game.E && game.E.c;
       let px = Math.sin(H.t * 0.31) * 0.35, py = Math.cos(H.t * 0.23) * 0.25;
-      if (m && M && performance.now() - m.t < 4000) { px += (m.x / (M.width || 1) - 0.5) * 1.4; py += (m.y / (M.height || 1) - 0.5) * 1.0; }
+      if (m && M && now - m.t < 4000) { px += (m.x / (M.width || 1) - 0.5) * 1.4; py += (m.y / (M.height || 1) - 0.5) * 1.0; }
       H.par[0] += (px - H.par[0]) * Math.min(1, dt * 2.5);
       H.par[1] += (py - H.par[1]) * Math.min(1, dt * 2.5);
-      const k = Math.min(1, el / S.dur), ke = 1 - Math.pow(1 - k, 2);
-      const breath = 1 + 0.012 * Math.sin(H.t * 1.7);
-      const scale = (S.zoomFrom + (S.zoomTo - S.zoomFrom) * ke) * breath;
+      const kz = Math.min(1, el / Math.max(1, S.zoomMs));
+      const breath = 1 + S.breath * Math.sin(H.t * 1.7);
+      let zoom = S.zoomFrom + (S.zoomTo - S.zoomFrom) * EASE.outCubic(kz);
+      if (scaleX != null) zoom = zoom + (EX.zoomTo - zoom) * scaleX;
+      const scale = zoom * breath;
+      // ---- the rig ----
+      let iris = null, lidSkin = [0, 0], pupil = 1;
+      if (R.iris || R.eye) {
+        const ic = R.iris || R.eye, ir = R.irisR || R.eyeR;
+        iris = [ic[0], ic[1], ir[0], ir[1]];
+        lidSkin = R.lidSkin;
+        // eye tracking: the iris drifts up to +-0.012 toward the pointer (or the stage centre) with a 400 ms lag
+        if (R.iris) {
+          const ix = S.x + ox + ic[0] * S.w, iy = S.y + oy + ic[1] * S.h;
+          let tx = G.W / 2, ty = G.H / 2;
+          if (m && M && now - m.t < 4000 && game.E && game.E.c) { const sc = G.gridW / (M.width || 1); tx = G.frameLeft + 20 + m.x * sc; ty = G.frameTop + 20 + (G.gridTop || 0) + m.y * sc; }
+          let dx = tx - ix, dy = ty - iy;
+          const l = Math.hypot(dx, dy) || 1;
+          const amt = Math.min(1, l / (S.w * 0.6)) * 0.012;
+          dx = dx / l * amt; dy = dy / l * amt;
+          const f = 1 - Math.exp(-dt / 0.4);
+          S.track[0] += (dx - S.track[0]) * f; S.track[1] += (dy - S.track[1]) * f;
+        }
+        // 2-layer blink: close 90 ms, open 140 ms; once after arrival, then every 4-7 s; one at the exit covers the departure
+        if (!H.rm) {
+          if (!S.blink && S.nextBlink != null && el >= S.nextBlink) { S.blink = el; S.nextBlink = el + 4000 + Math.random() * 3000; }
+          if (!S.blink && R.iris && !S.hold && el >= exitStart - 20 && !S.exitBlinked) { S.blink = el; S.exitBlinked = true; }
+          if (S.blink != null) {
+            const b = el - S.blink;
+            S.lid = b < 90 ? EASE.inQuad(b / 90) : b < 230 ? 1 - EASE.outQuad((b - 90) / 140) : 0;
+            if (b >= 230) { S.blink = null; S.lid = 0; }
+            // the slit pupil narrows ~25% as the lid opens, then relaxes
+            if (b >= 90 && b < 230) S.pupil = 0.75;
+          }
+          S.pupil += (1 - S.pupil) * Math.min(1, dt * 1.2);
+          pupil = S.pupil;
+        }
+      }
+      // jaws: the chomp / the slow threat
+      let jaw = [0, 0, 0, 0];
+      if (R.hinge != null) {
+        let lo = 0, up = 0;
+        if (S.chompT != null && !H.rm) {
+          const b = el - S.chompT;
+          const hs = S.hitStopMs;
+          if (b < 70) { const k = EASE.outCubic(b / 70); lo = 0.16 * k; up = 0.05 * k; }
+          else if (b < 70 + hs) { lo = 0.16; up = 0.05; }
+          else if (b < 70 + hs + 120) { const k = EASE.outQuad((b - 70 - hs) / 120); lo = 0.16 - 0.05 * k; up = 0.05 - 0.02 * k; }
+          else { lo = 0.11; up = 0.03; }
+          S.flash = b < 60 ? 1 - b / 60 : 0;
+        }
+        jaw = [1 - R.hinge, R.hingeFeather, up, lo];
+        // the drop: the whole painting falls off the bottom of the stage (ease-in-cubic)
+        if (S.dropT != null && el >= S.dropT) { const k = EASE.inCubic(clamp01((el - S.dropT) / S.dropMs)); oy += G.H * 0.45 * k + S.h * 0.3 * k; }
+      } else if (R.swallow) {
+        // the maw's slow threat: upper jaw down 0.03 and lower up 0.02 over the screen's life
+        const k = clamp01(el / 10000);
+        jaw = [0.5, 0.12, 0.03 * k, 0.02 * k];
+      }
+      // rise: nodules pulse (low band when the audio exposes it), the head sways 1.5 deg on a 7 s sine
+      let nod = 1, rot = [0.5, 0.5, 0];
+      if (R.nodules) {
+        const A = root.__aud;
+        let lb = null;
+        if (A && typeof A.lowBand === 'function') { try { lb = A.lowBand(); } catch (e) { lb = null; } }
+        const drive = lb != null && lb > 0 ? Math.min(1, lb * 1.8) : 0.5 + 0.5 * Math.sin(el / 1000 * 6.2831853 * 1.2);
+        S.lbS = (S.lbS ?? drive) + (drive - (S.lbS ?? drive)) * Math.min(1, dt * 8);
+        nod = 0.75 + 0.45 * S.lbS;
+        if (!H.rm) rot = [R.neck[0], 1 - R.neck[1], 1.5 * Math.PI / 180 * Math.sin(el / 7000 * 6.2831853)];
+      }
+      // maw: the gullet swallows (radial scale about the throat at 0.45 Hz); the lure pulses with the count
+      let throat = [0, 0, 1, 0];
+      if (R.swallow) {
+        S.lure *= Math.exp(-dt / 0.22);
+        throat = [R.throat[0], 1 - R.throat[1], 1 + (H.rm ? 0.006 : 0.02) * Math.sin(el / 1000 * 6.2831853 * 0.45), S.lure];
+      }
+      // the eye's contact cue on the symbols under it: a soft shadow under the painting's silhouette + the ripple around the iris
+      let shadow = [0.5, 0.5, 0.5, 0.5], shadowA = 0, ripple = 0;
+      if (R.shadow) {
+        const cx = (R.cont[0] + R.cont[1]) / 2, cy = 1 - (R.cont[2] + R.cont[3]) / 2;
+        shadow = [cx, cy, (R.cont[1] - R.cont[0]) * 0.55, (R.cont[3] - R.cont[2]) * 0.55];
+        shadowA = 0.25; ripple = H.rm ? 0 : 1;
+      }
+      S.ox = ox; S.oy = oy;
+      // ---- draw ----
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.useProgram(H.prog);
-      const T = H.tex[S.id];
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T.c.t); gl.uniform1i(H.loc.tC, 0);
-      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, T.d.t); gl.uniform1i(H.loc.tD, 1);
-      gl.uniform2f(H.loc.uRes, c.width, c.height);
+      const T = H.tex[S.id], L = H.loc;
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T.c.t); gl.uniform1i(L.tC, 0);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, T.d.t); gl.uniform1i(L.tD, 1);
+      gl.uniform2f(L.uRes, c.width, c.height);
       // rect in GL space (origin bottom-left)
-      gl.uniform4f(H.loc.uRect, S.x / G.W, 1 - (S.y + S.h) / G.H, S.w / G.W, S.h / G.H);
-      gl.uniform2f(H.loc.uPar, H.par[0] * S.par, -H.par[1] * S.par);
-      gl.uniform1f(H.loc.uT, H.t);
-      gl.uniform1f(H.loc.uA, a);
-      gl.uniform1f(H.loc.uFog, S.fog);
-      gl.uniform3f(H.loc.uTint, S.tint[0], S.tint[1], S.tint[2]);
-      gl.uniform1f(H.loc.uScale, scale);
-      gl.uniform2f(H.loc.uPivot, S.pivot[0], 1 - S.pivot[1]);
-      gl.uniform1f(H.loc.uChrom, S.chrom);
-      gl.uniform1f(H.loc.uDark, S.dark);
+      gl.uniform4f(L.uRect, (S.x + ox) / G.W, 1 - (S.y + oy + S.h) / G.H, S.w / G.W, S.h / G.H);
+      gl.uniform2f(L.uPar, H.par[0] * S.par, -H.par[1] * S.par);
+      gl.uniform1f(L.uT, H.t);
+      gl.uniform1f(L.uA, a);
+      gl.uniform1f(L.uFog, S.fog);
+      gl.uniform1f(L.uFogBot, S.fogBot);
+      gl.uniform3f(L.uTint, S.tint[0], S.tint[1], S.tint[2]);
+      gl.uniform3f(L.uFogCol, S.fogCol[0], S.fogCol[1], S.fogCol[2]);
+      gl.uniform1f(L.uScale, scale);
+      gl.uniform2f(L.uPivot, S.pivot[0], 1 - S.pivot[1]);
+      gl.uniform1f(L.uChrom, S.chrom);
+      gl.uniform1f(L.uDark, S.dark);
+      // feather widths in uv (px / rect size, through the zoom), measured from the content bbox
+      const fe = S.feather, ct = S.cont;
+      const fx = (p) => Math.max(1e-4, (p || 0) / (S.w * scale)), fy = (p) => Math.max(1e-4, (p || 0) / (S.h * scale));
+      gl.uniform4f(L.uFeath, fx(fe.l), fx(fe.r), fy(fe.b), fy(fe.t));
+      gl.uniform4f(L.uCont, fe.l ? ct[0] : -1, fe.r ? ct[1] : 2, fe.b ? 1 - ct[3] : -1, fe.t ? 1 - ct[2] : 2);
+      if (iris) {
+        gl.uniform4f(L.uIris, iris[0], 1 - iris[1], iris[2], iris[3]);
+        gl.uniform2f(L.uIrisOff, S.track[0], -S.track[1]);
+        gl.uniform1f(L.uPupil, pupil);
+        gl.uniform1f(L.uLid, S.lid);
+        gl.uniform2f(L.uLidSkin, lidSkin[0], 1 - lidSkin[1]);
+      } else { gl.uniform4f(L.uIris, 0, 0, 0, 0); gl.uniform2f(L.uIrisOff, 0, 0); gl.uniform1f(L.uPupil, 1); gl.uniform1f(L.uLid, 0); gl.uniform2f(L.uLidSkin, 0, 0); }
+      gl.uniform4f(L.uJaw, jaw[0], jaw[1], jaw[2], jaw[3]);
+      gl.uniform3f(L.uRot, rot[0], rot[1], rot[2]);
+      gl.uniform1f(L.uNod, nod);
+      gl.uniform4f(L.uThroat, throat[0], throat[1], throat[2], throat[3]);
+      gl.uniform1f(L.uFlash, S.flash || 0);
+      gl.uniform4f(L.uShadow, shadow[0], shadow[1], shadow[2], shadow[3]);
+      gl.uniform1f(L.uShadowA, shadowA);
+      gl.uniform1f(L.uRipple, ripple);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       H.drawn = true;
     };
@@ -190,5 +471,5 @@
     return H;
   }
 
-  root.HeroShots = { install, version: 1 };
+  root.HeroShots = { install, version: 2, RIG };
 })(typeof window !== 'undefined' ? window : this);

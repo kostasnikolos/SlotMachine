@@ -61,25 +61,44 @@ def main():
         page.wait_for_function("window.__FEEL_READY === true && !!window.__canvasGame", timeout=60000)
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && (H.loaded || H.failed); })()", timeout=30000)
 
-        def shot(name, ms):
+        def shot(name, ms, burst=0, every=220):
             page.wait_for_timeout(ms)
             st = page.evaluate(STATE_JS)
             page.screenshot(path=str(OUT / f"hero_{name}{sfx}.png"))
             report[name] = st
             print(f"[hero] {name}: {json.dumps(st)}")
+            if burst:
+                # motion evidence for the reviewer: a contact sheet of `burst` frames `every` ms apart (3 per row, half size)
+                from PIL import Image
+                import io as _io
+                frames = []
+                for _ in range(burst):
+                    frames.append(Image.open(_io.BytesIO(page.screenshot())).convert("RGB"))
+                    page.wait_for_timeout(every)
+                w, h = frames[0].size
+                cw, ch = w // 2, h // 2
+                cols = 3
+                rows = (len(frames) + cols - 1) // cols
+                sheet = Image.new("RGB", (cw * cols, ch * rows), (0, 0, 0))
+                for i, f in enumerate(frames):
+                    sheet.paste(f.resize((cw, ch)), ((i % cols) * cw, (i // cols) * ch))
+                sheet.save(OUT / f"hero_{name}_seq{sfx}.png")
+                print(f"[hero] {name}: {len(frames)} frames {every} ms apart -> hero_{name}_seq{sfx}.png")
 
         shot("idle", 8000)
         page.evaluate("window.__levReact('loss')")
-        shot("eye", 1500)
+        shot("eye", 300, burst=6, every=420)
         page.wait_for_timeout(2500)
         page.evaluate("() => { window.__canvasGame.dirStrike(); }")
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_jaws'; })()", timeout=20000)
-        shot("jaws", 900)
+        # the still is the bite itself (the chomp lands ~900 ms after the shot starts); the sheet then follows the slam and the drop
+        page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_jaws' && H.cur.chompT != null; })()", timeout=20000)
+        shot("jaws", 0, burst=6, every=90)
         page.wait_for_function("(() => !window.__canvasGame.isStriking)()", timeout=30000)
         page.wait_for_timeout(800)
         page.evaluate("() => { window.__canvasGame.dirLevelUp(); }")
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_rise'; })()", timeout=20000)
-        shot("rise", 1300)
+        shot("rise", 200, burst=6, every=420)
         page.wait_for_timeout(4000)
         log = page.evaluate("(window.__FEEL_LOG || []).filter(e => /^hero/.test(e.type))")
         report["hero_log"] = log
