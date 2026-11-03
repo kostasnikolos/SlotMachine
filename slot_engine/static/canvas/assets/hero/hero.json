@@ -2,29 +2,29 @@
   "lev_eye": {
     "file": "lev_eye.png",
     "depth": "lev_eye_depth.png",
-    "w": 1536,
-    "h": 864,
-    "source": "placeholder"
+    "w": 1376,
+    "h": 768,
+    "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg"
   },
   "lev_jaws": {
     "file": "lev_jaws.png",
     "depth": "lev_jaws_depth.png",
-    "w": 1536,
-    "h": 864,
-    "source": "placeholder"
+    "w": 1376,
+    "h": 768,
+    "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg"
   },
   "lev_rise": {
     "file": "lev_rise.png",
     "depth": "lev_rise_depth.png",
-    "w": 1536,
-    "h": 864,
-    "source": "placeholder"
+    "w": 1376,
+    "h": 768,
+    "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg"
   },
   "lev_maw": {
     "file": "lev_maw.png",
     "depth": "lev_maw_depth.png",
-    "w": 1536,
-    "h": 864,
-    "source": "placeholder"
+    "w": 1376,
+    "h": 768,
+    "source": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
   }
 }

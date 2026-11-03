@@ -95,9 +95,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--placeholder", action="store_true")
     ap.add_argument("--pick", action="append", default=[], help="<id>=<n>: which inbox variant to use")
+    ap.add_argument("--key", action="append", default=[], help="<id>=<lo>:<hi>: luminance key thresholds for one shot (default 0.025:0.12; raise for paintings with a lit background)")
     a = ap.parse_args()
     jobs = [j["id"] for j in json.loads(MANIFEST.read_text(encoding="utf-8"))["jobs"]]
     picks = dict(p.split("=", 1) for p in a.pick)
+    keys = {k: tuple(float(x) for x in v.split(":")) for k, v in (p.split("=", 1) for p in a.key)}
+    keys.setdefault("lev_rise", (0.07, 0.22))   # the head-rising painting carries a light shaft above the head
+    clip_top = {"lev_rise": 0.30}                # ...and everything above this fraction of the height is background, not creature
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = {}
     for jid in jobs:
@@ -113,7 +117,13 @@ def main() -> int:
             img = placeholder(jid)
             source = "placeholder"
         else:
-            img = cutout(Image.open(src))
+            lo, hi = keys.get(jid, (0.025, 0.12))
+            img = cutout(Image.open(src), lo=lo, hi=hi)
+            if jid in clip_top:
+                al = np.asarray(img.getchannel("A"), dtype=np.float32)
+                y0 = clip_top[jid] * img.height
+                ramp = np.clip((np.arange(img.height)[:, None] - y0) / (0.06 * img.height), 0, 1)
+                img.putalpha(Image.fromarray((al * ramp).astype(np.uint8), "L"))
             source = str(src.relative_to(REPO))
         if img.width > MAX_W:
             img = img.resize((MAX_W, round(img.height * MAX_W / img.width)), Image.LANCZOS)

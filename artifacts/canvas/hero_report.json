@@ -12,17 +12,17 @@
       ],
       "cur": null,
       "sources": {
-        "lev_eye": "placeholder",
-        "lev_jaws": "placeholder",
-        "lev_rise": "placeholder",
-        "lev_maw": "placeholder"
+        "lev_eye": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+        "lev_jaws": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
+        "lev_rise": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+        "lev_maw": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
       }
     },
     "heroZ": 7,
     "level": 0
   },
   "eye": {
-    "reveal": 1,
+    "reveal": 0.3,
     "hero": {
       "ready": true,
       "failed": false,
@@ -34,17 +34,17 @@
       ],
       "cur": "lev_eye",
       "sources": {
-        "lev_eye": "placeholder",
-        "lev_jaws": "placeholder",
-        "lev_rise": "placeholder",
-        "lev_maw": "placeholder"
+        "lev_eye": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+        "lev_jaws": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
+        "lev_rise": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+        "lev_maw": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
       }
     },
     "heroZ": 7,
     "level": 0
   },
   "jaws": {
-    "reveal": 1,
+    "reveal": 0.3,
     "hero": {
       "ready": true,
       "failed": false,
@@ -56,17 +56,17 @@
       ],
       "cur": "lev_jaws",
       "sources": {
-        "lev_eye": "placeholder",
-        "lev_jaws": "placeholder",
-        "lev_rise": "placeholder",
-        "lev_maw": "placeholder"
+        "lev_eye": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+        "lev_jaws": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
+        "lev_rise": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+        "lev_maw": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
       }
     },
     "heroZ": 7,
     "level": 0
   },
   "rise": {
-    "reveal": 0.247,
+    "reveal": 0.248,
     "hero": {
       "ready": true,
       "failed": false,
@@ -78,10 +78,10 @@
       ],
       "cur": "lev_rise",
       "sources": {
-        "lev_eye": "placeholder",
-        "lev_jaws": "placeholder",
-        "lev_rise": "placeholder",
-        "lev_maw": "placeholder"
+        "lev_eye": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+        "lev_jaws": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
+        "lev_rise": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+        "lev_maw": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
       }
     },
     "heroZ": 7,
@@ -89,62 +89,62 @@
   },
   "hero_log": [
     {
-      "t": 9664.9,
-      "f": 511,
+      "t": 9860.7,
+      "f": 528,
       "type": "heroPlay",
       "id": "lev_eye",
-      "source": "placeholder",
+      "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
       "dur": 3200,
       "rect": [
         549,
-        69,
+        71,
         1180,
-        664
+        659
       ]
     },
     {
-      "t": 12871.8,
-      "f": 704,
+      "t": 13061.2,
+      "f": 720,
       "type": "heroEnd",
       "id": "lev_eye"
     },
     {
-      "t": 16319.8,
-      "f": 910,
+      "t": 16767.9,
+      "f": 942,
       "type": "heroPlay",
       "id": "lev_jaws",
-      "source": "placeholder",
+      "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
       "dur": 2300,
       "rect": [
-        602,
-        743,
-        560,
-        315
+        940,
+        359,
+        820,
+        458
       ]
     },
     {
-      "t": 18626.6,
-      "f": 1049,
+      "t": 19082.9,
+      "f": 1081,
       "type": "heroEnd",
       "id": "lev_jaws"
     },
     {
-      "t": 20914.3,
-      "f": 1186,
+      "t": 21286.7,
+      "f": 1213,
       "type": "heroPlay",
       "id": "lev_rise",
-      "source": "placeholder",
+      "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
       "dur": 3300,
       "rect": [
         210,
-        422,
+        425,
         1500,
-        844
+        837
       ]
     },
     {
-      "t": 24214.5,
-      "f": 1383,
+      "t": 24587.5,
+      "f": 1411,
       "type": "heroEnd",
       "id": "lev_rise"
     }

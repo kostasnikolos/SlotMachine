@@ -2099,9 +2099,9 @@ class Component extends DCLogic {
     if (!this.lv.roared) this.levSfx('jawOpen') || this.levSfx('roar', 0.8);
     this.lv.roared = false;
     if (this.hero) {
-      const side = Math.max(560, Math.max(zw, zh) * 3.2);
+      const side = Math.max(820, Math.max(zw, zh) * 3.6);
       this.hero.play('lev_jaws', { x: sx + zw / 2 - side / 2, y: sy + zh / 2 - side / 2, w: side, h: side, dur: 2300, fadeIn: 260, fadeOut: 520,
-        zoomFrom: 0.72, zoomTo: 1.18, fog: 0.45, chrom: 1.4, dark: 0.2, z: 7, tint: this.defs().levels[this.state.level || 0].accent });
+        zoomFrom: 0.72, zoomTo: 1.18, fog: 0.3, chrom: 1.4, dark: 0.1, z: 7, tint: this.defs().levels[this.state.level || 0].accent });
     }
     await this.waitK(0.324);
     // 3. it lunges; the jaws slam shut on the strike zone and the symbols are dragged into the maw
@@ -5274,7 +5274,9 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     if (!forced) reveal = Math.min(reveal, heroOn ? 0.2 + peak * 0.22 + V.presence * 0.6 + pres * 0.3 + (LV.att && LV.att.hold ? 0.18 : 0)
       : 0.36 + peak * 0.64 + V.presence + pres * 0.5 + (LV.att && LV.att.hold ? 0.3 : 0));
     if (dl >= 2 && !this.state.spinning) reveal = Math.max(reveal, 0.42 + 0.12 * dl);      // the Director levels force it up
-    reveal = this.levRecede || LV.hush ? 0 : forced ? 1 : Math.max(0, Math.min(1, reveal));
+    // while a painted hero shot is on screen the 3D body stays back in the fog (the painting is the close-up)
+    const heroUp = !!(this.hero && this.hero.cur);
+    reveal = this.levRecede || LV.hush ? 0 : forced ? (heroUp ? 0.3 : 1) : Math.max(0, Math.min(1, reveal));
     L.reveal += (reveal - L.reveal) * (this.levRecede || LV.hush ? 0.05 : forced ? 0.15 : reveal > L.reveal ? 0.03 : 0.012);
     const rv = L.reveal;
     const zPush = 420 * (1 - rv);
