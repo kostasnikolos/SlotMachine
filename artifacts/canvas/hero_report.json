@@ -1,6 +1,6 @@
 {
   "idle": {
-    "reveal": 0.116,
+    "reveal": 0.115,
     "hero": {
       "ready": true,
       "failed": false,
@@ -111,8 +111,8 @@
   },
   "hero_log": [
     {
-      "t": 18158.5,
-      "f": 1013,
+      "t": 18302.3,
+      "f": 1026,
       "type": "heroPlay",
       "id": "lev_eye",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
@@ -125,73 +125,73 @@
       ]
     },
     {
-      "t": 23177.8,
-      "f": 1315,
+      "t": 23344.3,
+      "f": 1329,
       "type": "heroEnd",
       "id": "lev_eye",
-      "el": 5031
+      "el": 5052
     },
     {
-      "t": 28559.3,
-      "f": 1637,
+      "t": 28809,
+      "f": 1656,
       "type": "heroPlay",
       "id": "lev_jaws",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
       "dur": 6000,
       "rect": [
-        605,
+        917,
         263,
         749,
         418
       ]
     },
     {
-      "t": 29456.4,
-      "f": 1691,
+      "t": 29704.8,
+      "f": 1710,
       "type": "heroChomp",
       "id": "lev_jaws",
-      "el": 897,
-      "dropAt": 1154
+      "el": 896,
+      "dropAt": 1153
     },
     {
-      "t": 30917.6,
-      "f": 1779,
+      "t": 31101.2,
+      "f": 1794,
       "type": "heroDrop",
       "id": "lev_jaws",
-      "el": 1237,
+      "el": 1236,
       "ms": 450
     },
     {
-      "t": 32486.7,
-      "f": 1873,
+      "t": 32652.5,
+      "f": 1887,
       "type": "heroEnd",
       "id": "lev_jaws",
-      "el": 3928
+      "el": 3843
     },
     {
-      "t": 33332.1,
-      "f": 1923,
+      "t": 33482.6,
+      "f": 1936,
       "type": "heroPlay",
       "id": "lev_rise",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
       "dur": 6000,
       "rect": [
-        370,
-        519,
-        1181,
-        659
+        -4,
+        193,
+        1928,
+        1076
       ]
     },
     {
-      "t": 37239.9,
-      "f": 2157,
+      "t": 37940.3,
+      "f": 2203,
       "type": "heroEnd",
       "id": "lev_rise",
-      "el": 3913
+      "el": 4463
     },
     {
-      "t": 53887.9,
-      "f": 3133,
+      "t": 54588.4,
+      "f": 3180,
       "type": "heroPlay",
       "id": "lev_maw",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg",
@@ -204,11 +204,11 @@
       ]
     },
     {
-      "t": 61193.1,
-      "f": 3566,
+      "t": 61726.6,
+      "f": 3604,
       "type": "heroEnd",
       "id": "lev_maw",
-      "el": 7305
+      "el": 7138
     }
   ],
   "errors": []

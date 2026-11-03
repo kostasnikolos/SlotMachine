@@ -305,7 +305,7 @@
         lidCol: [0.25, 0.3, 0.32]
       };
       const S = H.cur;
-      if (R.lidSkin) { T.cols = T.cols || {}; S.lidCol = sampleCol(T, R.lidSkin, T.cols); }
+      if (R.lidSkin) { T.cols = T.cols || {}; S.lidCol = sampleCol(T, R.lidSkin, T.cols).map((v, i) => v * 0.6 + [0.36, 0.42, 0.42][i] * 0.4); }   // 40 % toward a dull skin grey: a lid, not a membrane
       if (id === 'lev_eye' || id === 'lev_rise') {
         const arrive = enter.ms;
         // the eye: a full blink 300 ms after arrival and a half-blink 900 ms into the hold; the rising head: one at 1.26 s

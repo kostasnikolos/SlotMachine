@@ -114,6 +114,10 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 @keyframes luflick{0%,100%{opacity:1}7%{opacity:.55}9%{opacity:1}61%{opacity:.7}62%{opacity:1}}
 @keyframes flash{from{opacity:1}to{opacity:0}}
 .lu .card{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;animation:crush .7s cubic-bezier(.2,1.5,.35,1)}
+/* the card sits in the upper third so the rising head owns the lower half (hero.js lev_rise) */
+.lu{align-items:flex-start}
+.land .lu .card{margin-top:186px}
+.por .lu .card{margin-top:230px}
 @keyframes crush{0%{transform:scale(1.5);opacity:0;filter:blur(8px)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
 .lu .depth{font-family:'JetBrains Mono',monospace;font-size:120px;font-weight:600;line-height:1;color:#e9f3f5;text-shadow:-2px 0 rgba(255,40,60,.45),2px 0 rgba(var(--a),.35),0 0 50px rgba(0,0,0,.95)}
 .lu .name{font-size:54px;font-weight:600;letter-spacing:.2em;color:#d9b49a;text-shadow:0 0 26px rgba(160,30,20,.7),0 4px 30px rgba(0,0,0,.95)}
@@ -2310,7 +2314,7 @@ class Component extends DCLogic {
         const c = E.cells[i];
         if (!c || c.state === 'gone') continue;
         c.eatT = 0; c.ex = bx + (c.x - bx) * 0.12; c.ey = by + (c.y - by) * 0.12;
-        c.eatSpin = (c.x < bx ? -1 : 1) * (0.8 + Math.random() * 0.8); c.hitT = 0; c.flash = 0.6;
+        c.eatSpin = (c.x < bx ? -1 : 1) * (0.8 + Math.random() * 0.8); c.hitT = 0; c.flash = this.hero && this.hero.cur ? 0.15 : 0.6;
         this.biteDiscs(8, c.x, c.y, 320);
       }
       for (let j = 0; j < 10 + 4 * foot.size; j++) {
@@ -2320,7 +2324,8 @@ class Component extends DCLogic {
       }
       if (E.rip) { E.rip.x = px; E.rip.y = py; }
     }
-    this.spawnWater('splash', sx, sy, zw, zh);
+    // the white splash (drops + mist on the levfx canvas) only without the painting: under the painted jaws the discs are the burst
+    if (!(this.hero && this.hero.cur && this.hero.cur.id === 'lev_jaws')) this.spawnWater('splash', sx, sy, zw, zh);
     // the stream above the painting: a thin column of discs rising from the bite
     const St = this.biteStream || (this.biteStream = []);
     for (let j = 0; j < 10 && St.length < 16; j++) St.push(this.disc(sx + zw / 2 + (Math.random() - 0.5) * 24, sy + zh / 2 + (Math.random() - 0.5) * 30, 1));
@@ -4007,7 +4012,7 @@ class Component extends DCLogic {
       // rises up out of the water, shedding it
       c.surf = 1;
       for (let j = 0; j < 14; j++) E.parts.push({ k: 'drop', x: c.x + (Math.random() - 0.5) * 240, y: c.y - 60 + Math.random() * 120, vx: (Math.random() - 0.5) * 80, vy: 40 + Math.random() * 160, r: 2 + Math.random() * 4, life: 0.7 + Math.random() * 0.6, max: 1.3 });
-      E.parts.push({ k: 'ring', x: c.x, y: c.y, r: 70, life: 0.9, max: 0.9, c: 2 });
+      E.parts.push({ k: 'pool', x: c.x, y: c.y, life: 0.35, max: 0.35 });
     } else {
       c.pop = 1;
       this.burst(c.x, c.y, sym === 'WILD_MAW' ? 'maw' : 'glint');
@@ -4057,8 +4062,8 @@ class Component extends DCLogic {
   // the bite's burst: a filled soft Biolume disc 2-6 px (stage) with one specular dot, drifting up; sc = canvas units per stage px
   disc(x, y, sc) {
     const k = sc || 1;
-    return { k: 'bite', x, y, vx: (Math.random() - 0.5) * 30 * k, vy: (-50 - Math.random() * 110) * k, r: (1.5 + Math.random() * 2.5) * k, al: 0.18 + Math.random() * 0.12,
-      w: Math.random() * 6.28, life: 0.9 + Math.random() * 1.1, max: 2 };
+    return { k: 'bite', x, y, vx: (Math.random() - 0.5) * 30 * k, vy: (-50 - Math.random() * 110) * k, r: (1 + Math.random() * 2) * k, al: 0.35 + Math.random() * 0.15,
+      sp: Math.random() < 0.25, w: Math.random() * 6.28, life: 0.9 + Math.random() * 1.1, max: 2 };
   }
 
   // the below-painting share of the bite discs is capped at 24 (60 % of ~40), the stream above at 16
@@ -4067,7 +4072,7 @@ class Component extends DCLogic {
     if (!E) return;
     let have = 0;
     for (const p of E.parts) if (p.k === 'bite') have++;
-    for (let j = 0; j < n && have < 16; j++, have++) E.parts.push(this.disc(x + (Math.random() - 0.5) * spread, y + (Math.random() - 0.5) * spread * 0.6, 2));
+    for (let j = 0; j < n && have < 20; j++, have++) E.parts.push(this.disc(x + (Math.random() - 0.5) * spread, y + (Math.random() - 0.5) * spread * 0.6, 2));
   }
 
   burst(x, y, kind) {
@@ -4441,8 +4446,17 @@ void main(){
         g.addColorStop(1, 'rgba(63,224,208,0)');
         f.fillStyle = g;
         f.beginPath(); f.arc(p.x, p.y, p.r, 0, 6.2832); f.fill();
-        f.fillStyle = 'rgba(235,255,252,' + (a * 0.35) + ')';
-        f.fillRect(p.x - p.r * 0.35 - 1, p.y - p.r * 0.4 - 1, 2, 2);
+        if (p.sp) { f.fillStyle = 'rgba(220,250,246,' + (a * 0.5) + ')'; f.fillRect(p.x - p.r * 0.35 - 1, p.y - p.r * 0.4 - 1, 2, 2); }
+      } else if (p.k === 'pool') {
+        // the surfacing ripple: a filled soft Biolume disc expanding 0.6x -> 1.3x cell over 350 ms, fading 35 % -> 0
+        const u = 1 - p.life / p.max, pr = 156 * (0.6 + 0.7 * u) * 1.0, pa = 0.35 * (1 - u);
+        f.globalCompositeOperation = 'lighter';
+        const g = f.createRadialGradient(p.x, p.y, 0, p.x, p.y, pr);
+        g.addColorStop(0, 'rgba(63,224,208,' + pa + ')');
+        g.addColorStop(0.6, 'rgba(63,224,208,' + (pa * 0.5) + ')');
+        g.addColorStop(1, 'rgba(63,224,208,0)');
+        f.fillStyle = g;
+        f.beginPath(); f.arc(p.x, p.y, pr, 0, 6.2832); f.fill();
       } else if (p.k === 'ember') {
         p.x += p.vx * sdt; p.y += p.vy * sdt; p.vx *= 0.94; p.vy = p.vy * 0.94 - 90 * sdt;
         f.globalCompositeOperation = 'lighter';
@@ -5267,8 +5281,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
           g.addColorStop(1, 'rgba(63,224,208,0)');
           fx.fillStyle = g;
           fx.beginPath(); fx.arc(p.x, p.y, p.r, 0, 6.2832); fx.fill();
-          fx.fillStyle = 'rgba(235,255,252,' + (a * 0.5) + ')';
-          fx.fillRect(p.x - p.r * 0.35, p.y - p.r * 0.4, 1, 1);
+          if (p.sp) { fx.fillStyle = 'rgba(220,250,246,' + (a * 0.5) + ')'; fx.fillRect(p.x - p.r * 0.35, p.y - p.r * 0.4, 1, 1); }
         }
         fx.globalCompositeOperation = 'source-over';
       }
