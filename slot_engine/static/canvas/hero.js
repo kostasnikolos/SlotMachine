@@ -25,10 +25,10 @@
     'uniform sampler2D tC; uniform sampler2D tD; uniform vec2 uRes; uniform vec4 uRect; uniform vec2 uPar; uniform float uT;',
     'uniform float uA; uniform float uFog; uniform float uFogBot; uniform vec3 uTint; uniform vec3 uFogCol; uniform float uScale; uniform vec2 uPivot; uniform float uChrom; uniform float uDark;',
     'uniform vec4 uFeath; uniform vec4 uCont;',          // feather widths (l, r, b, t) in uv; content bbox (x0, x1, y0, y1)
-    'uniform vec4 uIris; uniform vec2 uIrisOff; uniform float uPupil; uniform float uLid; uniform vec2 uLidSkin;',
+    'uniform vec4 uIris; uniform vec2 uIrisOff; uniform float uPupil; uniform float uLid; uniform vec2 uLidSkin; uniform vec3 uLidCol;',
     'uniform vec4 uJaw;',                                 // hinge y, feather, upper dy (down), lower dy (up)
     'uniform vec3 uRot; uniform float uNod; uniform vec4 uThroat; uniform float uFlash;',
-    'uniform vec4 uShadow; uniform float uShadowA; uniform float uRipple;',
+    'uniform vec4 uShadow; uniform float uShadowA; uniform float uRipple; uniform float uBg;',
     'float ss(float a, float b, float x) { float t = clamp((x - a) / (b - a), 0.0, 1.0); return t * t * (3.0 - 2.0 * t); }',
     'float h2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float n2(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);',
@@ -38,6 +38,12 @@
     '  float asp = (uRes.x * uRect.z) / max(1.0, uRes.y * uRect.w);',
     // contact overlay under the painting: a soft dark ellipse on the symbols + a refraction-looking ripple around the iris
     '  vec4 ov = vec4(0.0);',
+    '  if (uBg > 0.0 && uvR.x >= 0.0 && uvR.x <= 1.0 && uvR.y >= 0.0 && uvR.y <= 1.0) {',
+    '    vec2 tc = uPivot + (uThroat.xy - uPivot) * uScale;',
+    '    float dpx = length((uvR - tc) * vec2(uRes.x * uRect.z, uRes.y * uRect.w)) / uRes.x;',
+    '    vec3 wash = mix(mix(vec3(0.043, 0.078, 0.094), vec3(0.008, 0.024, 0.039), ss(0.0, 0.75, dpx)), uFogCol * 0.25, 0.3);',
+    '    ov = vec4(wash, 1.0) * uBg;',
+    '  }',
     '  if (uShadowA > 0.0) {',
     '    vec2 q = (uvR - uShadow.xy) / uShadow.zw;',
     '    float sh = (1.0 - smoothstep(0.5, 1.1, length(q))) * uShadowA;',
@@ -54,13 +60,12 @@
     '  if (uRot.z != 0.0) { vec2 d = uv - uRot.xy; d.x *= asp; float cs = cos(uRot.z), sn = sin(uRot.z); d = vec2(d.x * cs - d.y * sn, d.x * sn + d.y * cs); d.x /= asp; uv = uRot.xy + d; }',
     '  if (uJaw.y > 0.0) { float hd = uJaw.x + uJaw.w; float lw = 1.0 - smoothstep(hd - uJaw.y, hd + uJaw.y, uv.y); uv.y += -uJaw.w * lw + uJaw.z * (1.0 - lw); }',
     '  if (uThroat.z != 1.0) uv = uThroat.xy + (uv - uThroat.xy) * uThroat.z;',
-    '  float mi = 0.0, me = 0.0, ny = 0.0;',
+    '  float mi = 0.0, me = 0.0; vec2 qe = vec2(0.0);',
     '  if (uIris.z > 0.0) {',
-    '    vec2 qe = (uv - uIris.xy) / uIris.zw;',
-    '    float re = length(qe);',
+    '    qe = (uv - uIris.xy) / (uIris.zw * 1.22);',
+    '    float re = length(qe * 1.22);',
     '    mi = 1.0 - smoothstep(0.8, 1.0, re);',
     '    me = 1.0 - smoothstep(1.2, 1.32, re);',
-    '    ny = qe.y / 1.28;',
     '    uv -= uIrisOff * mi;',
     '    float mp = 1.0 - smoothstep(0.25, 0.75, re);',
     '    uv.x = mix(uv.x, uIris.x + (uv.x - uIris.x) / max(0.5, uPupil), mp);',
@@ -78,11 +83,14 @@
     '    if (uNod != 1.0) { float nm = smoothstep(1.3, 1.6, c.b / max(c.r, 0.02)) * smoothstep(0.3, 0.5, c.b); col *= mix(1.0, uNod, nm); }',
     // the 2-layer eyelid: an upper cap closing down over the iris, a thinner lower lid rising, filled with skin from above the eye
     '    if (uLid > 0.0 && me > 0.0) {',
-    '      float up = smoothstep(-0.07, 0.07, ny - (1.0 - 2.0 * uLid));',
-    '      float lo = 1.0 - smoothstep(-0.07, 0.07, ny - (-1.0 + 0.75 * uLid));',
-    '      float lw = clamp(max(up, lo), 0.0, 1.0) * me;',
-    '      vec3 skin = texture2D(tC, uLidSkin + (uv - uIris.xy) * 0.35).rgb * (0.8 - 0.25 * abs(ny));',
-    '      col = mix(col, skin, lw);',
+    '      float cap = sqrt(max(0.0, 1.0 - qe.x * qe.x));',
+    '      float dUp = (qe.y - (1.0 - 2.0 * uLid) * cap) * uIris.w * 1.22;',
+    '      float dLo = ((-1.0 + 0.75 * uLid) * cap - qe.y) * uIris.w * 1.22;',
+    '      float dE = max(dUp, dLo);',
+    '      float lw = ss(-0.01, 0.01, dE) * me;',
+    '      vec3 membrane = uLidCol * (1.0 - 0.15 * (1.0 - clamp(dE / 0.08, 0.0, 1.0)));',
+    '      float rim = (1.0 - ss(0.0, 0.004, abs(dE))) * me;',
+    '      col = mix(col, membrane, lw) + uTint * 0.25 * rim;',
     '    }',
     // lure pulse: Biolume in a small mask around the throat
     '    if (uThroat.w > 0.0) { vec2 ql = (uv - uThroat.xy) * vec2(asp, 1.0); float lm = 1.0 - smoothstep(0.0, 0.11, length(ql)); col += uTint * uThroat.w * lm * lm * 1.4; }',
@@ -104,7 +112,7 @@
     '}'
   ].join('\n');
   const UNI = ['tC', 'tD', 'uRes', 'uRect', 'uPar', 'uT', 'uA', 'uFog', 'uFogBot', 'uTint', 'uFogCol', 'uScale', 'uPivot', 'uChrom', 'uDark', 'uFeath', 'uCont',
-    'uIris', 'uIrisOff', 'uPupil', 'uLid', 'uLidSkin', 'uJaw', 'uRot', 'uNod', 'uThroat', 'uFlash', 'uShadow', 'uShadowA', 'uRipple'];
+    'uIris', 'uIrisOff', 'uPupil', 'uLid', 'uLidSkin', 'uLidCol', 'uJaw', 'uRot', 'uNod', 'uThroat', 'uFlash', 'uShadow', 'uShadowA', 'uRipple', 'uBg'];
 
   // measured feature anchors, in painting image coordinates (x right, y DOWN, 0..1); flipped to GL (y up) when uploaded.
   // Measured off the PNGs with PIL (scripts: see the review notes): iris = the big cyan blob of lev_eye, the lure / throat = the
@@ -124,7 +132,7 @@
     },
     lev_maw: {
       throat: [0.535, 0.52], lure: [0.535, 0.496], cont: [0.140, 0.862, 0.0, 0.999],
-      fog: 0.2, dark: 0.2, chrom: 0.4, feather: { l: 100, r: 100 }, swallow: true
+      fog: 0.2, dark: 0.2, chrom: 0.4, feather: { l: 100, r: 100 }, swallow: true, bg: true
     }
   };
 
@@ -153,6 +161,11 @@
       game, gl: null, canvas: null, prog: null, loc: {}, tex: {}, manifest: null, cur: null, t: 0, par: [0, 0], ready: false, failed: false, base: 'assets/hero/',
       rm: !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches), RIG
     };
+
+    // the hero clock: real time, or frozen at an offset into the current shot (H.freezeAt(ms) / H.freezeAt(null)) so a capture can
+    // step the choreography frame by frame
+    H.now = () => (H.frozen != null ? H.frozen : performance.now());
+    H.freezeAt = (ms) => { H.frozen = ms == null || !H.cur ? null : H.cur.t0 + ms; };
 
     const ensureGL = () => {
       if (H.gl || H.failed) return !!H.gl;
@@ -192,7 +205,7 @@
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        res({ t, w: im.width, h: im.height });
+        res({ t, w: im.width, h: im.height, im });
       };
       im.onerror = () => res(null);
       im.src = url;
@@ -214,6 +227,28 @@
         if (c && d) H.tex[id] = { c, d, w: c.w, h: c.h, source: m.source };
       }
       H.loaded = Object.keys(H.tex);
+    };
+
+    // the mean colour of a 5-tap cross around a painting point (image coords), for the flat eyelid membrane
+    const sampleCol = (T, pt, cache) => {
+      const key = pt[0].toFixed(3) + ',' + pt[1].toFixed(3);
+      if (cache[key]) return cache[key];
+      let out = [0.25, 0.3, 0.32];
+      try {
+        const cv = document.createElement('canvas'); cv.width = cv.height = 5;
+        const g = cv.getContext('2d', { willReadFrequently: true });
+        const d = 0.012, taps = [[0, 0], [d, 0], [-d, 0], [0, d], [0, -d]];
+        let r = 0, gg = 0, b = 0, n = 0;
+        for (const [dx, dy] of taps) {
+          g.clearRect(0, 0, 5, 5);
+          g.drawImage(T.c.im, Math.round((pt[0] + dx) * T.w) - 2, Math.round((pt[1] + dy) * T.h) - 2, 5, 5, 0, 0, 5, 5);
+          const px = g.getImageData(0, 0, 5, 5).data;
+          for (let i = 0; i < px.length; i += 4) { if (px[i + 3] < 128) continue; r += px[i]; gg += px[i + 1]; b += px[i + 2]; n++; }
+        }
+        if (n) out = [r / n / 255, gg / n / 255, b / n / 255];
+      } catch (e) { /* tainted / no 2d: keep the fallback */ }
+      cache[key] = out;
+      return out;
     };
 
     // play one shot. rect in stage px (x, y, w, h): the painting is fitted into it (contain, or cover:true); with anchor (a RIG
@@ -239,6 +274,8 @@
         if (w > G.W - 2 * mg) x = (G.W - w) / 2;
         if (h > G.H - 2 * mg) y = (G.H - h) / 2;
       }
+      if (o.minY != null && y < o.minY) y = o.minY;
+      if (o.maxY != null && y > o.maxY) y = o.maxY;
       const pivot = o.pivot || (anchor ? [anchor[0], anchor[1]] : [0.5, 0.5]);
       const fe = Object.assign({}, R.feather || {}, o.feather || {});
       const enter = Object.assign({ dx: 0, dy: 0, ms: 0, ease: 'outQuart', alphaMs: o.fadeIn ?? 220 }, o.enter || {});
@@ -248,7 +285,7 @@
         enter.dx = enter.dy = exit.dx = exit.dy = 0; exit.zoomTo = null;
         enter.alphaMs = Math.max(enter.alphaMs, 350); exit.alphaMs = Math.max(exit.alphaMs, 350);
       }
-      const now = performance.now();
+      const now = H.now();
       H.cur = {
         id, x, y, w, h, t0: now, dur: o.dur || 2000, enter, exit,
         zoomFrom: o.zoomFrom ?? 1, zoomTo: o.zoomTo ?? 1.06, zoomMs: o.zoomMs ?? (o.dur || 2000), pivot, tint: BIOLUME, fogCol: o.tint && o.tint !== 'biolume' ? hex(o.tint) : BIOLUME,
@@ -257,9 +294,11 @@
         breath: o.breath ?? 0.012, hitStopMs: o.hitStopMs ?? 67,
         // live rig state
         irisOff: [0, 0], track: [0, 0], lid: 0, pupil: 1, blink: null, nextBlink: null, lastLid: 0,
-        jaw: [0, 0], chompT: null, dropT: null, flash: 0, rot: 0, nod: 1, swallow: 1, lure: 0, shadowA: 0, ox: 0, oy: 0
+        jaw: [0, 0], chompT: null, dropT: null, dropped: false, flash: 0, rot: 0, nod: 1, swallow: 1, lure: 0, shadowA: 0, ox: 0, oy: 0,
+        lidCol: [0.25, 0.3, 0.32]
       };
       const S = H.cur;
+      if (R.lidSkin) { T.cols = T.cols || {}; S.lidCol = sampleCol(T, R.lidSkin, T.cols); }
       if (id === 'lev_eye' || id === 'lev_rise') {
         const arrive = enter.ms;
         S.nextBlink = arrive + (id === 'lev_eye' ? 300 : 1100);
@@ -274,7 +313,7 @@
       const S = H.cur;
       if (!S) return;
       ms = ms ?? 350;
-      const el = performance.now() - S.t0;
+      const el = H.now() - S.t0;
       if (S.id === 'lev_jaws' && !H.rm) {
         if (S.dropT == null) { S.dropT = el; S.dropMs = ms; }
         S.dur = Math.min(S.dur, S.dropT + S.dropMs);
@@ -292,9 +331,10 @@
     H.chomp = () => {
       const S = H.cur;
       if (!S || S.id !== 'lev_jaws' || S.chompT != null) return false;
-      S.chompT = performance.now() - S.t0;
+      S.chompT = H.now() - S.t0;
       S.zoomMs = Math.min(S.zoomMs, S.chompT);
       if (!H.rm) { S.flash = 1; S.dropT = S.chompT + 70 + S.hitStopMs + 120; S.dropMs = 450; S.dur = Math.min(S.dur, S.dropT + S.dropMs); S.exit.alphaMs = 0; }
+      if (game.flog) game.flog('heroChomp', { id: S.id, el: Math.round(S.chompT), dropAt: S.dropT == null ? null : Math.round(S.dropT) });
       return true;
     };
     // the lure pulses with the big-win counter ticks
@@ -318,9 +358,9 @@
       const S = H.cur;
       if (!S) { if (H.drawn) { gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); H.drawn = false; } return; }
       H.t += dt;
-      const now = performance.now();
+      const now = H.now();
       const el = now - S.t0;
-      if (!S.hold && el >= S.dur) { H.cur = null; gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); H.drawn = false; if (game.flog) game.flog('heroEnd', { id: S.id }); return; }
+      if (!S.hold && el >= S.dur) { H.cur = null; H.frozen = null; gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); H.drawn = false; if (game.flog) game.flog('heroEnd', { id: S.id, el: Math.round(el) }); return; }
       const R = S.rig, EN = S.enter, EX = S.exit;
       // ---- envelope: alpha ramps, enter / exit moves ----
       let a = 1;
@@ -334,7 +374,8 @@
       // parallax: pointer (normalised to the stage) + a slow drift; eased so it never snaps
       const m = game.mouse, M = game.E && game.E.c;
       let px = Math.sin(H.t * 0.31) * 0.35, py = Math.cos(H.t * 0.23) * 0.25;
-      if (m && M && now - m.t < 4000) { px += (m.x / (M.width || 1) - 0.5) * 1.4; py += (m.y / (M.height || 1) - 0.5) * 1.0; }
+      const realNow = performance.now();
+      if (m && M && realNow - m.t < 4000) { px += (m.x / (M.width || 1) - 0.5) * 1.4; py += (m.y / (M.height || 1) - 0.5) * 1.0; }
       H.par[0] += (px - H.par[0]) * Math.min(1, dt * 2.5);
       H.par[1] += (py - H.par[1]) * Math.min(1, dt * 2.5);
       const kz = Math.min(1, el / Math.max(1, S.zoomMs));
@@ -352,7 +393,7 @@
         if (R.iris) {
           const ix = S.x + ox + ic[0] * S.w, iy = S.y + oy + ic[1] * S.h;
           let tx = G.W / 2, ty = G.H / 2;
-          if (m && M && now - m.t < 4000 && game.E && game.E.c) { const sc = G.gridW / (M.width || 1); tx = G.frameLeft + 20 + m.x * sc; ty = G.frameTop + 20 + (G.gridTop || 0) + m.y * sc; }
+          if (m && M && realNow - m.t < 4000 && game.E && game.E.c) { const sc = G.gridW / (M.width || 1); tx = G.frameLeft + 20 + m.x * sc; ty = G.frameTop + 20 + (G.gridTop || 0) + m.y * sc; }
           let dx = tx - ix, dy = ty - iy;
           const l = Math.hypot(dx, dy) || 1;
           const amt = Math.min(1, l / (S.w * 0.6)) * 0.012;
@@ -382,15 +423,18 @@
         if (S.chompT != null && !H.rm) {
           const b = el - S.chompT;
           const hs = S.hitStopMs;
-          if (b < 70) { const k = EASE.outCubic(b / 70); lo = 0.16 * k; up = 0.05 * k; }
-          else if (b < 70 + hs) { lo = 0.16; up = 0.05; }
-          else if (b < 70 + hs + 120) { const k = EASE.outQuad((b - 70 - hs) / 120); lo = 0.16 - 0.05 * k; up = 0.05 - 0.02 * k; }
-          else { lo = 0.11; up = 0.03; }
+          if (b < 70) { const k = EASE.outCubic(b / 70); lo = 0.18 * k; up = 0.05 * k; }
+          else if (b < 70 + hs) { lo = 0.18; up = 0.05; }
+          else if (b < 70 + hs + 120) { const k = EASE.outQuad((b - 70 - hs) / 120); lo = 0.18 - 0.02 * k; up = 0.05 - 0.01 * k; }
+          else { lo = 0.16; up = 0.04; }
           S.flash = b < 60 ? 1 - b / 60 : 0;
         }
         jaw = [1 - R.hinge, R.hingeFeather, up, lo];
         // the drop: the whole painting falls off the bottom of the stage (ease-in-cubic)
-        if (S.dropT != null && el >= S.dropT) { const k = EASE.inCubic(clamp01((el - S.dropT) / S.dropMs)); oy += G.H * 0.45 * k + S.h * 0.3 * k; }
+        if (S.dropT != null && el >= S.dropT) {
+          if (!S.dropped) { S.dropped = true; if (game.flog) game.flog('heroDrop', { id: S.id, el: Math.round(el), ms: S.dropMs }); }
+          const k = EASE.inCubic(clamp01((el - S.dropT) / S.dropMs)); oy += G.H * 0.45 * k + S.h * 0.3 * k;
+        }
       } else if (R.swallow) {
         // the maw's slow threat: upper jaw down 0.03 and lower up 0.02 over the screen's life
         const k = clamp01(el / 10000);
@@ -404,8 +448,8 @@
         if (A && typeof A.lowBand === 'function') { try { lb = A.lowBand(); } catch (e) { lb = null; } }
         const drive = lb != null && lb > 0 ? Math.min(1, lb * 1.8) : 0.5 + 0.5 * Math.sin(el / 1000 * 6.2831853 * 1.2);
         S.lbS = (S.lbS ?? drive) + (drive - (S.lbS ?? drive)) * Math.min(1, dt * 8);
-        nod = 0.75 + 0.45 * S.lbS;
-        if (!H.rm) rot = [R.neck[0], 1 - R.neck[1], 1.5 * Math.PI / 180 * Math.sin(el / 7000 * 6.2831853)];
+        nod = 0.55 + 0.8 * S.lbS;
+        if (!H.rm) rot = [R.neck[0], 1 - R.neck[1], 2.5 * Math.PI / 180 * Math.sin(el / 5000 * 6.2831853)];
       }
       // maw: the gullet swallows (radial scale about the throat at 0.45 Hz); the lure pulses with the count
       let throat = [0, 0, 1, 0];
@@ -453,7 +497,8 @@
         gl.uniform1f(L.uPupil, pupil);
         gl.uniform1f(L.uLid, S.lid);
         gl.uniform2f(L.uLidSkin, lidSkin[0], 1 - lidSkin[1]);
-      } else { gl.uniform4f(L.uIris, 0, 0, 0, 0); gl.uniform2f(L.uIrisOff, 0, 0); gl.uniform1f(L.uPupil, 1); gl.uniform1f(L.uLid, 0); gl.uniform2f(L.uLidSkin, 0, 0); }
+        gl.uniform3f(L.uLidCol, S.lidCol[0], S.lidCol[1], S.lidCol[2]);
+      } else { gl.uniform4f(L.uIris, 0, 0, 0, 0); gl.uniform2f(L.uIrisOff, 0, 0); gl.uniform1f(L.uPupil, 1); gl.uniform1f(L.uLid, 0); gl.uniform2f(L.uLidSkin, 0, 0); gl.uniform3f(L.uLidCol, 0, 0, 0); }
       gl.uniform4f(L.uJaw, jaw[0], jaw[1], jaw[2], jaw[3]);
       gl.uniform3f(L.uRot, rot[0], rot[1], rot[2]);
       gl.uniform1f(L.uNod, nod);
@@ -462,6 +507,7 @@
       gl.uniform4f(L.uShadow, shadow[0], shadow[1], shadow[2], shadow[3]);
       gl.uniform1f(L.uShadowA, shadowA);
       gl.uniform1f(L.uRipple, ripple);
+      gl.uniform1f(L.uBg, R.bg ? 1 : 0);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       H.drawn = true;
     };

@@ -71,7 +71,9 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .strike{position:absolute;z-index:7;box-sizing:border-box;border-radius:10px;border:2px solid #ff7a1a;box-shadow:0 0 40px rgba(255,122,26,.8),inset 0 0 40px rgba(255,122,26,.45);animation:strikein .5s cubic-bezier(.2,1.4,.4,1),strikep .5s ease-in-out .5s infinite alternate;pointer-events:none}
 @keyframes strikein{from{transform:scale(1.6);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes strikep{to{box-shadow:0 0 70px rgba(255,122,26,1),inset 0 0 60px rgba(255,122,26,.6)}}
-.strikecard{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 14px);white-space:nowrap;text-align:center;padding:10px 20px;border-radius:12px;background:rgba(14,4,0,.92);border:1px solid #ff7a1a;box-shadow:0 0 30px rgba(255,122,26,.5);animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
+.strikecard{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 14px);white-space:nowrap;text-align:center;padding:10px 20px;border-radius:12px;background:rgba(14,4,0,.92);border:1px solid #ff7a1a;box-shadow:0 0 30px rgba(255,122,26,.3);animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
+/* under the painted jaws the zone keeps its edge but not its glow: the creature carries one cyan light */
+.strike.hero{box-shadow:0 0 16px rgba(255,122,26,.3);animation:strikein .5s cubic-bezier(.2,1.4,.4,1)}
 /* strikes in the top row show their card under the zone */
 .strikecard.below{bottom:auto;top:calc(100% + 14px)}
 /* the painted jaws cover the zone: the card goes beside the cell, on the side away from the painting's bulk */
@@ -283,7 +285,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <canvas data-sym="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: {{gridH}}px; pointer-events: none"></canvas>
 <canvas data-fx="1" width="{{symPx}}" height="1544" style="position: absolute; left: 0; top: 0; width: {{gridW}}px; height: {{gridH}}px; pointer-events: none"></canvas>
 <sc-if value="{{strike.show}}" hint-placeholder-val="{{ false }}">
-<div class="strike" style="left: {{strike.x}}px; top: {{strike.y}}px; width: {{strike.w}}px; height: {{strike.h}}px">
+<div class="strike {{strike.cls}}" style="left: {{strike.x}}px; top: {{strike.y}}px; width: {{strike.w}}px; height: {{strike.h}}px">
 <sc-if value="{{strike.card}}" hint-placeholder-val="{{ false }}">
 <div class="strikecard {{strike.cardCls}}">
 <div style="font-size: 12px; letter-spacing: 0.3em; color: #ffb27a">LEVIATHAN LIFELINE</div>
@@ -599,7 +601,7 @@ class Component extends DCLogic {
     return {
       grid: g, cols: 5, level: 0, meters: 0, pts: 0, banked: 0, free: false, inFeature: false, gmult: 1, pearls: 0,
       balance: 1000, betIdx: 2, win: 0, winLabel: '', winCells: [], dimCells: [], vents: [],
-      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '', card: false }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s', heroZ: 7, ctlOp: 1,
+      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '', card: false, cls: '' }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s', heroZ: 7, ctlOp: 1,
       lu: { show: false, meters: '0', name: '', level: 0, points: 0, rewards: [] },
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
       bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '', amtScale: 1 }, shake: '', shatter: false, buyOpen: false,
@@ -2029,25 +2031,29 @@ class Component extends DCLogic {
     this.aud.boom(null, 0.7 + d.new_level * 0.08);
     if (d.new_level >= 4) this.aud.alarm();
     if (d.new_level === 5) this.aud.roar(1.3);
+    this.luNow = { show: true, meters: this.fmt(from), name: L.name, level: d.new_level, points: d.accumulated_points,
+        rewards: rewards.map((text, i) => ({ text, delay: (0.9 + i * 0.22).toFixed(2) })) };
+    this.setState({ level: d.new_level, pts: d.accumulated_points, creatureState: 'ARMED',
+      lu: this.luNow });
     let heroRise = false;
     if (this.hero) {
       const G = this.geo();
-      // above the level card's dark wash (the .lu overlay has no z-index): the head top stays under the reward lines, the painting's
-      // (content) bottom edge sits 24 px above the control row; it rises in by translation and sinks out with the card (hero.stop below)
-      const RG = this.hero.RIG.lev_rise, ctlTop = G.por ? G.H - 22 - 160 - 16 - 56 : G.H - 22 - 130;
-      const topMin = G.por ? G.H * 0.56 : G.H * 0.615;
-      const span = RG.cont[3] - RG.cont[2];
-      const h = Math.max(300, Math.min(G.por ? 620 : 843, (ctlTop - 24 - topMin) / span, (G.W - 2 * G.margin) * 9 / 16)), w = h * 16 / 9;
-      const y = ctlTop - 24 - RG.cont[3] * h;
+      // above the level card's dark wash (the .lu overlay has no z-index): ~800 px of head between the reel-frame pillars, its top
+      // 30 px under the last reward line (measured from the card), the content running under the dimmed control row through the
+      // 160 px bottom feather; it rises in by translation and sinks out with the card (hero.stop below)
+      const RG = this.hero.RIG.lev_rise;
+      const w = Math.min(800, G.W - 2 * G.margin) / (RG.cont[1] - RG.cont[0]), h = w * 9 / 16;
+      let rewardsBottom = G.H * 0.47;
+      try {
+        const card = document.querySelector('.lu .card'), hud = document.querySelector('.hud');
+        if (card && hud) { const cr = card.getBoundingClientRect(), hr = hud.getBoundingClientRect(); if (hr.height > 0) rewardsBottom = (cr.bottom - hr.top) / hr.height * G.H; }
+      } catch (e) { /* layout not ready: the estimate stands */ }
+      const y = rewardsBottom + 30 - RG.cont[2] * h;
       heroRise = this.hero.play('lev_rise', { x: G.W / 2 - w / 2, y, w, h, dur: 6000, hold: true, zoomFrom: 0.96, zoomTo: 1.04, zoomMs: 2600, z: 7, pivot: [0.5, 0.9],
         enter: { dx: 0, dy: G.H * 0.3, ms: 1400, ease: 'outQuart', alphaMs: 250 }, exit: { dx: 0, dy: G.H * 0.2, ms: 700, ease: 'inQuad', alphaMs: 250 },
         tint: L.accent || this.defs().levels[this.state.level || 0].accent });
       if (heroRise) this.setState({ ctlOp: 0.2 });
     }
-    this.luNow = { show: true, meters: this.fmt(from), name: L.name, level: d.new_level, points: d.accumulated_points,
-        rewards: rewards.map((text, i) => ({ text, delay: (0.9 + i * 0.22).toFixed(2) })) };
-    this.setState({ level: d.new_level, pts: d.accumulated_points, creatureState: 'ARMED',
-      lu: this.luNow });
     const t0 = performance.now(), dur = 1500 * (this.state.turbo ? 0.5 : 1);
     await new Promise((res) => {
       const tick = () => {
@@ -2121,12 +2127,12 @@ class Component extends DCLogic {
       // clamped inside the stage with a 40 px margin. The zoom 0.72 -> 1.0 completes at the chomp (k 0.16 -> 0.34 of the strike clock).
       const side = Math.max(w, h) * 312 * 2.4;
       const Sa = this.strikeAnim, chompMs = Sa ? Math.max(400, (0.34 - Math.max(0.16, (this.levT - Sa.u0) / Sa.dur)) * Sa.dur * 1000 / 2) : 900;   // the swim clock runs at 2x during a strike
-      heroJaws = this.hero.play('lev_jaws', { anchor: 'throat', at: [sx0, sy0], w: side, h: side, margin: 40, dur: 6000, hold: true,
-        zoomFrom: 0.72, zoomTo: 1.0, zoomMs: chompMs, z: 7, hitStopMs: this.FT.hitStopMs, enter: { alphaMs: 200 },
+      heroJaws = this.hero.play('lev_jaws', { anchor: 'throat', at: [sx0, sy0], w: side, h: side, margin: 40, minY: G.frameTop - 0.1 * side, dur: 6000, hold: true,
+        zoomFrom: 0.72, zoomTo: 1.0, zoomMs: chompMs, z: 7, hitStopMs: this.FT.hitStopMs, enter: { alphaMs: 200 }, feather: { t: 0.1 * side },
         tint: this.defs().levels[this.state.level || 0].accent });
       if (heroJaws) {
-        // one creature on screen: the 3D body goes dark behind the reels until step 4
-        this.setState({ levOp: 0, levOpT: '0.25s', levZ: 0 });
+        // one creature on screen: the 3D body goes dark behind the reels until step 4; the zone's orange glow drops under the painting
+        this.setState({ levOp: 0, levOpT: '0.25s', levZ: 0, strike: Object.assign({}, this.state.strike, { cls: 'hero' }) });
         // the churn on the strike cell follows the painting's throat
         const th = this.hero.featureAt('throat');
         if (th && this.E && this.E.rip) { this.E.rip.x = px + (th[0] - sx0) * 312 / G.pitch; this.E.rip.y = py + (th[1] - sy0) * 312 / G.pitch; }
@@ -2178,7 +2184,7 @@ class Component extends DCLogic {
     this.setState({ levOp: 1, levOpT: '1.8s' });
     await this.waitRaw(150);
     this.engDim(others, false);
-    this.setState({ creatureState: 'SPENT', dimCells: [], strike: Object.assign({}, this.state.strike, { show: false, card: false }) });
+    this.setState({ creatureState: 'SPENT', dimCells: [], strike: Object.assign({}, this.state.strike, { show: false, card: false, cls: '' }) });
     await this.waitRaw(250);
   }
 
@@ -2242,10 +2248,11 @@ class Component extends DCLogic {
         // 2.5D hero shot (plan: the Nolimit way): the painted eye slides in from the right stage edge (1100 ms, ease-out-quart) under a
         // 220 ms alpha ramp, holds 1.6 s blinking and tracking the pointer, then recedes (zoom 1.04 -> 0.92, +0.15 w right, 700 ms) with
         // a blink covering the departure; the dome edge sits on the right frame pillar
-        const w = Math.min(G.W * 0.62, 1180), h = w * 9 / 16;
-        const ex = G.por ? G.W * 0.5 - w / 2 : G.frameLeft + G.frameW - w * 0.62;
+        const w = Math.min(G.W * 0.52, 1000), h = w * 9 / 16;
+        const RG = this.hero.RIG.lev_eye, dialLeft = G.W - 48 - 330 + 24;
+        const ex = G.por ? G.W * 0.5 - w / 2 : Math.min(G.frameLeft + G.frameW - w * 0.70, dialLeft - 20 - RG.cont[1] * w);
         const ey = G.por ? G.frameTop + G.frameH * 0.3 - h * 0.45 : py - h * 0.42;
-        this.hero.play('lev_eye', { x: ex, y: ey, w, h, dur: 1100 + 1600 + 700, zoomFrom: 1.0, zoomTo: 1.04, zoomMs: 2700, z: 7, pivot: [0.661, 0.476],
+        this.hero.play('lev_eye', { x: ex, y: ey, w, h, minY: G.frameTop - 20, feather: { t: 0.08 * h }, dur: 1100 + 1600 + 700, zoomFrom: 1.0, zoomTo: 1.04, zoomMs: 2700, z: 7, pivot: [0.661, 0.476],
           enter: { dx: G.W - ex + w * 0.2, dy: 0, ms: 1100, ease: 'outQuart', alphaMs: 220 },
           exit: { dx: w * 0.15, dy: 0, ms: 700, ease: 'inQuad', alphaMs: 250, zoomTo: 0.92 },
           tint: this.defs().levels[this.state.level || 0].accent });
@@ -2661,7 +2668,7 @@ class Component extends DCLogic {
         if (this.hero && this.hero.tex && this.hero.tex.lev_maw && !B.max) {
           const G = this.geo();
           E.heroMaw = this.hero.play('lev_maw', { x: 0, y: 0, w: G.W, h: G.H, cover: true, dur: 120000, hold: true, fadeIn: 500,
-            zoomFrom: 1.28, zoomTo: 1.08, zoomMs: 2500, z: 9, par: 0.6, pivot: [0.535, 0.52], exit: { ms: 650, ease: 'inQuad', alphaMs: 250, zoomTo: 1.16 }, tint: '255,42,75' });
+            zoomFrom: 1.28, zoomTo: 1.18, zoomMs: 2500, z: 9, par: 0.6, pivot: [0.535, 0.52], exit: { ms: 650, ease: 'inQuad', alphaMs: 250, zoomTo: 1.26 }, tint: '255,42,75' });
         }
         E.shake8 = 1;
         if (!rm) B.shake = Math.max(B.shake, 2);
@@ -4509,6 +4516,7 @@ uniform float uLen, uS0, uMode, uA0, uLs, uFixR, uHR;
 uniform vec3 uHP, uHT, uHN, uHOff;
 uniform float uJaw;
 uniform float uBreath;
+uniform float uRv;
 attribute float aJaw;
 varying float vLevS;
 varying float vLevY;
@@ -4550,6 +4558,12 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
     wn = -T * n.x + N * n.y + B * n.z;
     // breathing: displacement along the normal, strongest just behind the head and fading down the tail
     wp += normalize(wn) * uBreath * R * (0.45 + 0.55 * (1.0 - clamp((s - uS0) / (uLen - uS0), 0.0, 1.0)));
+    // the base-game silhouette (low reveal): nodule bumps and a dorsal row of plates break the smooth tube, 6-10 px along the normal
+    float levSilV = 1.0 - smoothstep(0.3, 0.8, uRv);
+    float levAng = atan(p.z, p.y);
+    float levBump = sin(s * 0.09 + levAng * 3.0) * sin(s * 0.041 - levAng * 2.0 + 1.7);
+    float levDorsal = pow(max(0.0, p.y), 3.0) * max(0.0, sin(s * 0.16));
+    wp += normalize(wn) * levSilV * (levBump * 3.0 + max(0.0, levBump) * 5.0 + levDorsal * 9.0);
     vLevS = s;
     vLevY = p.y; vLevZ = p.z;
     vLevJ = 1.0 - smoothstep(uS0 * 0.3, -uS0 * 1.1, s);
