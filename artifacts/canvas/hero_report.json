@@ -1,0 +1,153 @@
+{
+  "idle": {
+    "reveal": 0.116,
+    "hero": {
+      "ready": true,
+      "failed": false,
+      "loaded": [
+        "lev_eye",
+        "lev_jaws",
+        "lev_rise",
+        "lev_maw"
+      ],
+      "cur": null,
+      "sources": {
+        "lev_eye": "placeholder",
+        "lev_jaws": "placeholder",
+        "lev_rise": "placeholder",
+        "lev_maw": "placeholder"
+      }
+    },
+    "heroZ": 7,
+    "level": 0
+  },
+  "eye": {
+    "reveal": 1,
+    "hero": {
+      "ready": true,
+      "failed": false,
+      "loaded": [
+        "lev_eye",
+        "lev_jaws",
+        "lev_rise",
+        "lev_maw"
+      ],
+      "cur": "lev_eye",
+      "sources": {
+        "lev_eye": "placeholder",
+        "lev_jaws": "placeholder",
+        "lev_rise": "placeholder",
+        "lev_maw": "placeholder"
+      }
+    },
+    "heroZ": 7,
+    "level": 0
+  },
+  "jaws": {
+    "reveal": 1,
+    "hero": {
+      "ready": true,
+      "failed": false,
+      "loaded": [
+        "lev_eye",
+        "lev_jaws",
+        "lev_rise",
+        "lev_maw"
+      ],
+      "cur": "lev_jaws",
+      "sources": {
+        "lev_eye": "placeholder",
+        "lev_jaws": "placeholder",
+        "lev_rise": "placeholder",
+        "lev_maw": "placeholder"
+      }
+    },
+    "heroZ": 7,
+    "level": 0
+  },
+  "rise": {
+    "reveal": 0.247,
+    "hero": {
+      "ready": true,
+      "failed": false,
+      "loaded": [
+        "lev_eye",
+        "lev_jaws",
+        "lev_rise",
+        "lev_maw"
+      ],
+      "cur": "lev_rise",
+      "sources": {
+        "lev_eye": "placeholder",
+        "lev_jaws": "placeholder",
+        "lev_rise": "placeholder",
+        "lev_maw": "placeholder"
+      }
+    },
+    "heroZ": 7,
+    "level": 1
+  },
+  "hero_log": [
+    {
+      "t": 9664.9,
+      "f": 511,
+      "type": "heroPlay",
+      "id": "lev_eye",
+      "source": "placeholder",
+      "dur": 3200,
+      "rect": [
+        549,
+        69,
+        1180,
+        664
+      ]
+    },
+    {
+      "t": 12871.8,
+      "f": 704,
+      "type": "heroEnd",
+      "id": "lev_eye"
+    },
+    {
+      "t": 16319.8,
+      "f": 910,
+      "type": "heroPlay",
+      "id": "lev_jaws",
+      "source": "placeholder",
+      "dur": 2300,
+      "rect": [
+        602,
+        743,
+        560,
+        315
+      ]
+    },
+    {
+      "t": 18626.6,
+      "f": 1049,
+      "type": "heroEnd",
+      "id": "lev_jaws"
+    },
+    {
+      "t": 20914.3,
+      "f": 1186,
+      "type": "heroPlay",
+      "id": "lev_rise",
+      "source": "placeholder",
+      "dur": 3300,
+      "rect": [
+        210,
+        422,
+        1500,
+        844
+      ]
+    },
+    {
+      "t": 24214.5,
+      "f": 1383,
+      "type": "heroEnd",
+      "id": "lev_rise"
+    }
+  ],
+  "errors": []
+}

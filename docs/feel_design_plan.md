@@ -18,6 +18,12 @@ Today: a procedural spine on a drifting path; `reveal` rises on a slow sine + su
 | 8 | **Dithered depth fog + grade**: density 0.08–0.15 keyed to level; blue-noise dither; teal → black-green per level. | `BG_FS` / post | S |
 | 9 | **Camera**: 2–4% push-in over 600ms during anticipation; slow 0.5°/s idle orbit. | render loop | S |
 
+### A′. Decision 2026-11-03: hero shots instead of a realistic body
+The procedural body cannot be made realistic (tube + textures, no anatomy) and the Tripo GLB is unrigged and 68 MB. Following the
+Nolimit pattern (Beheaded: painted character, staged moments), the creature is now shown as painted 2.5D close-ups (`hero.js`,
+`scripts/ai/hero_prep.py`, prompt pack `p3_leviathan_hero`) at strike / reaction / level-up / max win, and the body stays a
+silhouette in fog the rest of the time. Items 1–6 and 9 above remain in force for the silhouette.
+
 ## B. Dark procedural audio (kill the bubbles)
 
 Today: `A.win` and `A.dissolve` are bubble clouds (Minnaert sines); `A.thump` is a soft triangle drop. Keep the bubble synth for ambience only.

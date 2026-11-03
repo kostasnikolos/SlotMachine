@@ -1,0 +1,47 @@
+# Prompt pack — p3_leviathan_hero
+
+Free route: paste each prompt into the Gemini app (gemini.google.com) with image generation.
+Save results to `generated/inbox/p3_leviathan_hero/` as `<job-id>_<n>.png`. Make 2–4 per job.
+
+**Consistency:** once one image looks right, attach it to the following prompts and add
+"Match the painting style, palette and lighting of the attached image."
+
+## lev_eye  (16:9)
+
+```text
+Aspect ratio 16:9. Dark painterly digital illustration for a premium online slot game, horror-industrial deep-sea mood, Nolimit City grit. Heavily desaturated palette: abyss black #02060A, trench teal-grey #0B1418, silt #1E2C31, wet bone #F2E6CF for teeth. The only strong light is bioluminescent cyan #3FE0D0 from the creature's own photophores and lure, plus a faint cold rim light from upper-centre-left. Visible brush texture, fine film grain, matte, wet-skin specular only where the light touches. Enormous scale: the creature is far bigger than the frame. Subject on a PURE BLACK background (#000000) with no fog or glow spilling onto the background, so it can be cut out. Nothing touches the image border except the creature's own body fading into black.
+
+Extreme close-up of ONE colossal eye of an eldritch deep-sea leviathan pressed close to a submarine's glass, filling the right two thirds of the frame. Vertical slit pupil, iris glowing dim bioluminescent cyan with darker veins, wet scaled skin and bony ridges around the eye socket, a few translucent tendrils drifting in front. The eye is looking straight at the viewer. Everything beyond the skin fades to pure black.
+
+No text, no letters, no logos, no UI, no slot reels, no symbols, no frame around the image, no watermark, no bright saturated colours, no cartoon style, no cute, no whole-body shot, no visible seafloor or surface.
+```
+
+## lev_jaws  (16:9)
+
+```text
+Aspect ratio 16:9. Dark painterly digital illustration for a premium online slot game, horror-industrial deep-sea mood, Nolimit City grit. Heavily desaturated palette: abyss black #02060A, trench teal-grey #0B1418, silt #1E2C31, wet bone #F2E6CF for teeth. The only strong light is bioluminescent cyan #3FE0D0 from the creature's own photophores and lure, plus a faint cold rim light from upper-centre-left. Visible brush texture, fine film grain, matte, wet-skin specular only where the light touches. Enormous scale: the creature is far bigger than the frame. Subject on a PURE BLACK background (#000000) with no fog or glow spilling onto the background, so it can be cut out. Nothing touches the image border except the creature's own body fading into black.
+
+The open jaws of a colossal eldritch deep-sea leviathan lunging straight at the viewer, seen from the front, filling the frame: rows of long translucent needle teeth lit from inside the mouth by a cyan lure organ, black throat, glistening gums, bony plated snout at the top of the frame, a faint cyan glow line of photophores along the jaw. Centred composition with the dark throat at the centre, so a small object can sit inside the mouth. Edges of the head fade to pure black.
+
+No text, no letters, no logos, no UI, no slot reels, no symbols, no frame around the image, no watermark, no bright saturated colours, no cartoon style, no cute, no whole-body shot, no visible seafloor or surface.
+```
+
+## lev_rise  (16:9)
+
+```text
+Aspect ratio 16:9. Dark painterly digital illustration for a premium online slot game, horror-industrial deep-sea mood, Nolimit City grit. Heavily desaturated palette: abyss black #02060A, trench teal-grey #0B1418, silt #1E2C31, wet bone #F2E6CF for teeth. The only strong light is bioluminescent cyan #3FE0D0 from the creature's own photophores and lure, plus a faint cold rim light from upper-centre-left. Visible brush texture, fine film grain, matte, wet-skin specular only where the light touches. Enormous scale: the creature is far bigger than the frame. Subject on a PURE BLACK background (#000000) with no fog or glow spilling onto the background, so it can be cut out. Nothing touches the image border except the creature's own body fading into black.
+
+The head of a colossal eldritch deep-sea leviathan rising from below out of black water, seen from slightly above, occupying the lower half of the frame: closed jaws, one visible eye glowing dim cyan, rows of photophores along the ridged skull, tendrils trailing down. Head only, nothing else, fading to pure black at the bottom and sides, upper half of the image pure black.
+
+No text, no letters, no logos, no UI, no slot reels, no symbols, no frame around the image, no watermark, no bright saturated colours, no cartoon style, no cute, no whole-body shot, no visible seafloor or surface.
+```
+
+## lev_maw  (16:9)
+
+```text
+Aspect ratio 16:9. Dark painterly digital illustration for a premium online slot game, horror-industrial deep-sea mood, Nolimit City grit. Heavily desaturated palette: abyss black #02060A, trench teal-grey #0B1418, silt #1E2C31, wet bone #F2E6CF for teeth. The only strong light is bioluminescent cyan #3FE0D0 from the creature's own photophores and lure, plus a faint cold rim light from upper-centre-left. Visible brush texture, fine film grain, matte, wet-skin specular only where the light touches. Enormous scale: the creature is far bigger than the frame. Subject on a PURE BLACK background (#000000) with no fog or glow spilling onto the background, so it can be cut out. Nothing touches the image border except the creature's own body fading into black.
+
+Frontal symmetrical view of a colossal eldritch deep-sea leviathan's gaping mouth seen from inside a cracking submarine viewport, the mouth wider than the frame: a ring of needle teeth around the edges of the image, the throat a dark cyan-lit tunnel in the centre with a bright lure deep inside, wet tissue and bone textures. The centre of the image is the darkest part, so a number can be read over it.
+
+No text, no letters, no logos, no UI, no slot reels, no symbols, no frame around the image, no watermark, no bright saturated colours, no cartoon style, no cute, no whole-body shot, no visible seafloor or surface.
+```

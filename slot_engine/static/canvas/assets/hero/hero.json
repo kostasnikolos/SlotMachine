@@ -1,0 +1,30 @@
+{
+  "lev_eye": {
+    "file": "lev_eye.png",
+    "depth": "lev_eye_depth.png",
+    "w": 1536,
+    "h": 864,
+    "source": "placeholder"
+  },
+  "lev_jaws": {
+    "file": "lev_jaws.png",
+    "depth": "lev_jaws_depth.png",
+    "w": 1536,
+    "h": 864,
+    "source": "placeholder"
+  },
+  "lev_rise": {
+    "file": "lev_rise.png",
+    "depth": "lev_rise_depth.png",
+    "w": 1536,
+    "h": 864,
+    "source": "placeholder"
+  },
+  "lev_maw": {
+    "file": "lev_maw.png",
+    "depth": "lev_maw_depth.png",
+    "w": 1536,
+    "h": 864,
+    "source": "placeholder"
+  }
+}
