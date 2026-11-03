@@ -29,6 +29,9 @@
     'uniform vec4 uJaw;',                                 // hinge y, feather, upper dy (down), lower dy (up)
     'uniform vec3 uRot; uniform vec3 uNod; uniform vec4 uThroat; uniform float uFlash;',
     'uniform vec4 uShadow; uniform float uShadowA; uniform float uRipple; uniform float uBg;',
+    'uniform vec4 uSheet;',                               // flipbook: cols, rows, frame index, on (0/1); frames in reading order from the top
+    'vec2 fbUv(vec2 u) { if (uSheet.w < 0.5) return u; float i = uSheet.z; float col = mod(i, uSheet.x); float row = floor(i / uSheet.x);',
+    '  return vec2((u.x + col) / uSheet.x, (u.y + (uSheet.y - 1.0 - row)) / uSheet.y); }',
     'float ss(float a, float b, float x) { float t = clamp((x - a) / (b - a), 0.0, 1.0); return t * t * (3.0 - 2.0 * t); }',
     'float h2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float n2(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);',
@@ -80,9 +83,9 @@
     '    float d = texture2D(tD, uv).r;',
     '    vec2 sway = vec2(sin(uT * 0.7 + uv.y * 5.0), cos(uT * 0.5 + uv.x * 4.0)) * 0.0025 * (1.0 - d);',
     '    vec2 u2 = uv + uPar * (d - 0.5) * 0.05 + sway;',
-    '    vec4 c = texture2D(tC, u2);',
+    '    vec4 c = texture2D(tC, fbUv(u2));',
     '    float ca = uChrom * 0.0045 * (1.0 - d) * (0.3 + 0.7 * length(v - 0.5));',
-    '    c.r = texture2D(tC, u2 + vec2(ca, 0.0)).r; c.b = texture2D(tC, u2 - vec2(ca, 0.0)).b;',
+    '    c.r = texture2D(tC, fbUv(u2 + vec2(ca, 0.0))).r; c.b = texture2D(tC, fbUv(u2 - vec2(ca, 0.0))).b;',
     '    vec3 col = c.rgb;',
     // nodule pulse: the bioluminescent dots are the pixels with blue well over red
     '    if (uNod.x > 0.0) { float nm = smoothstep(1.3, 1.6, c.b / max(c.r, 0.02)) * smoothstep(0.3, 0.5, c.b);',
@@ -118,7 +121,7 @@
     '  gl_FragColor = pc + ov * (1.0 - pc.a);',
     '}'
   ].join('\n');
-  const UNI = ['tC', 'tD', 'uRes', 'uRect', 'uPar', 'uT', 'uA', 'uFog', 'uFogBot', 'uTint', 'uFogCol', 'uScale', 'uPivot', 'uChrom', 'uDark', 'uFeath', 'uCont',
+  const UNI = ['uSheet', 'tC', 'tD', 'uRes', 'uRect', 'uPar', 'uT', 'uA', 'uFog', 'uFogBot', 'uTint', 'uFogCol', 'uScale', 'uPivot', 'uChrom', 'uDark', 'uFeath', 'uCont',
     'uIris', 'uIrisOff', 'uPupil', 'uLid', 'uLidSkin', 'uLidCol', 'uJaw', 'uRot', 'uNod', 'uThroat', 'uFlash', 'uShadow', 'uShadowA', 'uRipple', 'uBg'];
 
   // measured feature anchors, in painting image coordinates (x right, y DOWN, 0..1); flipped to GL (y up) when uploaded.
@@ -232,6 +235,10 @@
         const m = H.manifest[id];
         const [c, d] = await Promise.all([loadTex(H.base + m.file + '?v=' + Date.now()), loadTex(H.base + m.depth + '?v=' + Date.now())]);
         if (c && d) H.tex[id] = { c, d, w: c.w, h: c.h, source: m.source };
+        if (c && d && m.sheet) {
+          const sh = await loadTex(H.base + m.sheet.file + '?v=' + Date.now());
+          if (sh) H.tex[id].sheet = Object.assign({ t: sh.t }, m.sheet);
+        }
       }
       H.loaded = Object.keys(H.tex);
     };
@@ -342,6 +349,15 @@
       if (!S || S.id !== 'lev_jaws' || S.chompT != null) return false;
       S.chompT = H.now() - S.t0;
       S.zoomMs = Math.min(S.zoomMs, S.chompT);
+      const sh = H.tex[S.id] && H.tex[S.id].sheet;
+      if (sh && !H.rm && !/[?&]flipbook=0(&|$)/.test(root.location.search)) {
+        // real frames: play the sheet from the chomp at its fps, hold the last frame through the hit-stop + overshoot, then drop
+        S.fb = { t0: S.chompT, fps: sh.fps || 24, count: sh.count, cols: sh.cols, rows: sh.rows };
+        const playMs = (sh.count - 1) / (sh.fps || 24) * 1000;
+        S.flash = 0; S.dropT = S.chompT + playMs + S.hitStopMs + 120; S.dropMs = 450; S.dur = Math.min(S.dur, S.dropT + S.dropMs); S.exit.alphaMs = 0;
+        if (game.flog) game.flog('heroFlipbook', { id: S.id, frames: sh.count, fps: sh.fps, playMs: Math.round(playMs) });
+        return true;
+      }
       if (!H.rm) { S.flash = 1; S.dropT = S.chompT + 70 + S.hitStopMs + 120; S.dropMs = 450; S.dur = Math.min(S.dur, S.dropT + S.dropMs); S.exit.alphaMs = 0; }
       if (game.flog) game.flog('heroChomp', { id: S.id, el: Math.round(S.chompT), dropAt: S.dropT == null ? null : Math.round(S.dropT) });
       return true;
@@ -443,6 +459,7 @@
           S.flash = b < 60 ? 1 - b / 60 : 0;
         }
         jaw = [1 - R.hinge, R.hingeFeather, up, lo];
+        if (S.fb) { const fi = Math.min(S.fb.count - 1, Math.max(0, Math.floor((el - S.fb.t0) / 1000 * S.fb.fps))); S.fbIndex = fi; jaw = [1 - R.hinge, R.hingeFeather, 0, 0]; S.flash = 0; }
         // the drop: the whole painting falls off the bottom of the stage (ease-in-cubic)
         if (S.dropT != null && el >= S.dropT) {
           if (!S.dropped) { S.dropped = true; if (game.flog) game.flog('heroDrop', { id: S.id, el: Math.round(el), ms: S.dropMs }); }
@@ -487,7 +504,9 @@
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.useProgram(H.prog);
       const T = H.tex[S.id], L = H.loc;
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T.c.t); gl.uniform1i(L.tC, 0);
+      const fbOn = !!(S.fb && T.sheet);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fbOn ? T.sheet.t : T.c.t); gl.uniform1i(L.tC, 0);
+      gl.uniform4f(L.uSheet, fbOn ? T.sheet.cols : 1, fbOn ? T.sheet.rows : 1, fbOn ? S.fbIndex || 0 : 0, fbOn ? 1 : 0);
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, T.d.t); gl.uniform1i(L.tD, 1);
       gl.uniform2f(L.uRes, c.width, c.height);
       // rect in GL space (origin bottom-left)
