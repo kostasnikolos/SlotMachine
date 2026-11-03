@@ -1,6 +1,6 @@
 {
   "idle": {
-    "reveal": 0.115,
+    "reveal": 0.116,
     "hero": {
       "ready": true,
       "failed": false,
@@ -66,7 +66,7 @@
     "level": 0
   },
   "rise": {
-    "reveal": 0.014,
+    "reveal": 0.02,
     "hero": {
       "ready": true,
       "failed": false,
@@ -88,7 +88,7 @@
     "level": 1
   },
   "maw": {
-    "reveal": 1,
+    "reveal": 0.6,
     "hero": {
       "ready": true,
       "failed": false,
@@ -98,7 +98,7 @@
         "lev_rise",
         "lev_maw"
       ],
-      "cur": null,
+      "cur": "lev_maw",
       "sources": {
         "lev_eye": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
         "lev_jaws": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
@@ -106,13 +106,13 @@
         "lev_maw": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg"
       }
     },
-    "heroZ": 7,
+    "heroZ": 9,
     "level": 1
   },
   "hero_log": [
     {
-      "t": 18122.3,
-      "f": 1014,
+      "t": 18158.5,
+      "f": 1013,
       "type": "heroPlay",
       "id": "lev_eye",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
@@ -125,73 +125,73 @@
       ]
     },
     {
-      "t": 21520.3,
-      "f": 1219,
+      "t": 23177.8,
+      "f": 1315,
       "type": "heroEnd",
       "id": "lev_eye",
-      "el": 3408
+      "el": 5031
     },
     {
-      "t": 28922.2,
-      "f": 1662,
+      "t": 28559.3,
+      "f": 1637,
       "type": "heroPlay",
       "id": "lev_jaws",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
       "dur": 6000,
       "rect": [
-        761,
-        40,
+        605,
+        263,
         749,
         418
       ]
     },
     {
-      "t": 29814.2,
-      "f": 1716,
+      "t": 29456.4,
+      "f": 1691,
       "type": "heroChomp",
       "id": "lev_jaws",
-      "el": 892,
-      "dropAt": 1149
+      "el": 897,
+      "dropAt": 1154
     },
     {
-      "t": 31361.2,
-      "f": 1809,
+      "t": 30917.6,
+      "f": 1779,
       "type": "heroDrop",
       "id": "lev_jaws",
-      "el": 1232,
+      "el": 1237,
       "ms": 450
     },
     {
-      "t": 32963.1,
-      "f": 1905,
+      "t": 32486.7,
+      "f": 1873,
       "type": "heroEnd",
       "id": "lev_jaws",
-      "el": 4041
+      "el": 3928
     },
     {
-      "t": 33781.6,
-      "f": 1953,
+      "t": 33332.1,
+      "f": 1923,
       "type": "heroPlay",
       "id": "lev_rise",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
       "dur": 6000,
       "rect": [
-        -4,
-        183,
-        1928,
-        1076
+        370,
+        519,
+        1181,
+        659
       ]
     },
     {
-      "t": 37900.3,
-      "f": 2200,
+      "t": 37239.9,
+      "f": 2157,
       "type": "heroEnd",
       "id": "lev_rise",
-      "el": 4125
+      "el": 3913
     },
     {
-      "t": 55549.6,
-      "f": 3233,
+      "t": 53887.9,
+      "f": 3133,
       "type": "heroPlay",
       "id": "lev_maw",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg",
@@ -204,11 +204,11 @@
       ]
     },
     {
-      "t": 62821.2,
-      "f": 3665,
+      "t": 61193.1,
+      "f": 3566,
       "type": "heroEnd",
       "id": "lev_maw",
-      "el": 7272
+      "el": 7305
     }
   ],
   "errors": []

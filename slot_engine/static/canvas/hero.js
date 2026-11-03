@@ -27,7 +27,7 @@
     'uniform vec4 uFeath; uniform vec4 uCont;',          // feather widths (l, r, b, t) in uv; content bbox (x0, x1, y0, y1)
     'uniform vec4 uIris; uniform vec2 uIrisOff; uniform float uPupil; uniform float uLid; uniform vec2 uLidSkin; uniform vec3 uLidCol;',
     'uniform vec4 uJaw;',                                 // hinge y, feather, upper dy (down), lower dy (up)
-    'uniform vec3 uRot; uniform float uNod; uniform vec4 uThroat; uniform float uFlash;',
+    'uniform vec3 uRot; uniform vec3 uNod; uniform vec4 uThroat; uniform float uFlash;',
     'uniform vec4 uShadow; uniform float uShadowA; uniform float uRipple; uniform float uBg;',
     'float ss(float a, float b, float x) { float t = clamp((x - a) / (b - a), 0.0, 1.0); return t * t * (3.0 - 2.0 * t); }',
     'float h2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
@@ -41,7 +41,12 @@
     '  if (uBg > 0.0 && uvR.x >= 0.0 && uvR.x <= 1.0 && uvR.y >= 0.0 && uvR.y <= 1.0) {',
     '    vec2 tc = uPivot + (uThroat.xy - uPivot) * uScale;',
     '    float dpx = length((uvR - tc) * vec2(uRes.x * uRect.z, uRes.y * uRect.w)) / uRes.x;',
-    '    vec3 wash = mix(mix(vec3(0.043, 0.078, 0.094), vec3(0.008, 0.024, 0.039), ss(0.0, 0.75, dpx)), uFogCol * 0.25, 0.3);',
+    '    vec2 ar2 = vec2(uRes.x * uRect.z, uRes.y * uRect.w) / 140.0;',
+    '    vec2 mp3 = uvR * ar2 + vec2(0.0, uT * 0.06);',
+    '    float fogN = n2(mp3 * 1.5 + uT * 0.03) * 0.6 + n2(mp3 * 4.0 - uT * 0.05) * 0.4;',
+    '    float mt = pow(n2(mp3 * 3.0) * n2(mp3 * 7.0 + 3.0), 7.0) * 2.2;',
+    '    float lamp = 1.0 - 0.55 * ss(0.25, 0.9, dpx);',
+    '    vec3 wash = (vec3(0.043, 0.078, 0.094) * (0.7 + 0.6 * fogN) + uFogCol * 0.08 * fogN) * lamp + uTint * mt * 0.5;',
     '    ov = vec4(wash, 1.0) * uBg;',
     '  }',
     '  if (uShadowA > 0.0) {',
@@ -80,7 +85,8 @@
     '    c.r = texture2D(tC, u2 + vec2(ca, 0.0)).r; c.b = texture2D(tC, u2 - vec2(ca, 0.0)).b;',
     '    vec3 col = c.rgb;',
     // nodule pulse: the bioluminescent dots are the pixels with blue well over red
-    '    if (uNod != 1.0) { float nm = smoothstep(1.3, 1.6, c.b / max(c.r, 0.02)) * smoothstep(0.3, 0.5, c.b); col *= mix(1.0, uNod, nm); }',
+    '    if (uNod.x > 0.0) { float nm = smoothstep(1.3, 1.6, c.b / max(c.r, 0.02)) * smoothstep(0.3, 0.5, c.b);',
+    '      float wave = 0.5 + 0.5 * sin(uv.x * 18.85 - uNod.y); col *= mix(1.0, 0.55 + 0.8 * wave + 0.3 * uNod.z, nm); }',
     // the 2-layer eyelid: an upper cap closing down over the iris, a thinner lower lid rising, filled with skin from above the eye
     '    if (uLid > 0.0 && me > 0.0) {',
     '      float cap = sqrt(max(0.0, 1.0 - qe.x * qe.x));',
@@ -93,7 +99,8 @@
     '      col = mix(col, membrane, lw) + uTint * 0.25 * rim;',
     '    }',
     // lure pulse: Biolume in a small mask around the throat
-    '    if (uThroat.w > 0.0) { vec2 ql = (uv - uThroat.xy) * vec2(asp, 1.0); float lm = 1.0 - smoothstep(0.0, 0.11, length(ql)); col += uTint * uThroat.w * lm * lm * 1.4; }',
+    '    if (uThroat.w > 0.0) { vec2 ql = (uv - uThroat.xy) * vec2(asp, 1.0); float dl = length(ql); float lm = 1.0 - smoothstep(0.0, 0.11, dl);',
+    '      col += uTint * uThroat.w * lm * lm * 1.4 + uTint * 0.15 * min(1.0, uThroat.w / 1.6) * (1.0 - ss(0.0, 0.22, dl)); }',
     '    float fog = clamp(uFog * (1.0 - d) + uFogBot * pow(1.0 - uv.y, 1.5), 0.0, 1.0);',
     '    col = mix(col, uFogCol * 0.22, fog * 0.85) * (1.0 - uDark * (1.0 - d) * 0.6);',
     '    vec2 ar = vec2(uRes.x * uRect.z, uRes.y * uRect.w) / 140.0;',
@@ -301,7 +308,9 @@
       if (R.lidSkin) { T.cols = T.cols || {}; S.lidCol = sampleCol(T, R.lidSkin, T.cols); }
       if (id === 'lev_eye' || id === 'lev_rise') {
         const arrive = enter.ms;
-        S.nextBlink = arrive + (id === 'lev_eye' ? 300 : 1100);
+        // the eye: a full blink 300 ms after arrival and a half-blink 900 ms into the hold; the rising head: one at 1.26 s
+        S.blinks = id === 'lev_eye' ? [[arrive + 300, 1], [arrive + 900, 0.5]] : [[arrive + 1260, 1]];
+        S.nextBlink = S.blinks[0][0];
       }
       if (o.z != null && game.setState) game.setState({ heroZ: o.z });
       if (game.flog) game.flog('heroPlay', { id, source: T.source, dur: S.dur, rect: [Math.round(x), Math.round(y), Math.round(w), Math.round(h)] });
@@ -338,7 +347,7 @@
       return true;
     };
     // the lure pulses with the big-win counter ticks
-    H.pulse = (v) => { const S = H.cur; if (S) S.lure = Math.max(S.lure, v ?? 1); };
+    H.pulse = (v) => { const S = H.cur; if (S) S.lure = Math.max(S.lure, v ?? 1.6); };
     // the stage point where a painting feature sits right now (for the churn / the contact cue)
     H.featureAt = (name) => {
       const S = H.cur;
@@ -403,14 +412,18 @@
         }
         // 2-layer blink: close 90 ms, open 140 ms; once after arrival, then every 4-7 s; one at the exit covers the departure
         if (!H.rm) {
-          if (!S.blink && S.nextBlink != null && el >= S.nextBlink) { S.blink = el; S.nextBlink = el + 4000 + Math.random() * 3000; }
-          if (!S.blink && R.iris && !S.hold && el >= exitStart - 20 && !S.exitBlinked) { S.blink = el; S.exitBlinked = true; }
-          if (S.blink != null) {
-            const b = el - S.blink;
-            S.lid = b < 90 ? EASE.inQuad(b / 90) : b < 230 ? 1 - EASE.outQuad((b - 90) / 140) : 0;
-            if (b >= 230) { S.blink = null; S.lid = 0; }
-            // the slit pupil narrows ~25% as the lid opens, then relaxes
-            if (b >= 90 && b < 230) S.pupil = 0.75;
+          if (!S.blink && S.nextBlink != null && el >= S.nextBlink) {
+            const q = S.blinks && S.blinks.length && S.blinks[0][0] <= el ? S.blinks.shift() : null;
+            S.blink = { t: el, amp: q ? q[1] : 1 };
+            S.nextBlink = S.blinks && S.blinks.length ? S.blinks[0][0] : el + 4000 + Math.random() * 3000;
+          }
+          if (!S.blink && R.iris && !S.hold && el >= exitStart - 20 && !S.exitBlinked) { S.blink = { t: el, amp: 1 }; S.exitBlinked = true; }
+          if (S.blink) {
+            const b = el - S.blink.t, A = S.blink.amp;
+            S.lid = A * (b < 110 ? EASE.inQuad(b / 110) : b < 150 ? 1 : b < 310 ? 1 - EASE.outQuad((b - 150) / 160) : 0);
+            // the slit pupil narrows ~25% as a full lid opens, then relaxes
+            if (A >= 1 && b >= 150 && b < 310) S.pupil = 0.75;
+            if (b >= 310) { S.blink = null; S.lid = 0; }
           }
           S.pupil += (1 - S.pupil) * Math.min(1, dt * 1.2);
           pupil = S.pupil;
@@ -438,24 +451,28 @@
       } else if (R.swallow) {
         // the maw's slow threat: upper jaw down 0.03 and lower up 0.02 over the screen's life
         const k = clamp01(el / 10000);
-        jaw = [0.5, 0.12, 0.03 * k, 0.02 * k];
+        jaw = [0.5, 0.12, 0.06 * k, 0.04 * k];
       }
       // rise: nodules pulse (low band when the audio exposes it), the head sways 1.5 deg on a 7 s sine
-      let nod = 1, rot = [0.5, 0.5, 0];
+      let nod = [0, 0, 0], rot = [0.5, 0.5, 0];
       if (R.nodules) {
         const A = root.__aud;
-        let lb = null;
-        if (A && typeof A.lowBand === 'function') { try { lb = A.lowBand(); } catch (e) { lb = null; } }
-        const drive = lb != null && lb > 0 ? Math.min(1, lb * 1.8) : 0.5 + 0.5 * Math.sin(el / 1000 * 6.2831853 * 1.2);
-        S.lbS = (S.lbS ?? drive) + (drive - (S.lbS ?? drive)) * Math.min(1, dt * 8);
-        nod = 0.55 + 0.8 * S.lbS;
+        let lb = 0;
+        if (A && typeof A.lowBand === 'function') { try { lb = Math.min(1, (A.lowBand() || 0) * 1.8); } catch (e) { lb = 0; } }
+        S.lbS = (S.lbS ?? lb) + (lb - (S.lbS ?? lb)) * Math.min(1, dt * 8);
+        // a wave travelling along the crown (3 turns across the painting) at 1.2 Hz
+        nod = [1, el / 1000 * 6.2831853 * 1.2, S.lbS];
         if (!H.rm) rot = [R.neck[0], 1 - R.neck[1], 2.5 * Math.PI / 180 * Math.sin(el / 5000 * 6.2831853)];
       }
       // maw: the gullet swallows (radial scale about the throat at 0.45 Hz); the lure pulses with the count
       let throat = [0, 0, 1, 0];
       if (R.swallow) {
         S.lure *= Math.exp(-dt / 0.22);
-        throat = [R.throat[0], 1 - R.throat[1], 1 + (H.rm ? 0.006 : 0.02) * Math.sin(el / 1000 * 6.2831853 * 0.45), S.lure];
+        if (S.gulpAt == null) S.gulpAt = 600;
+        if (el >= S.gulpAt + 2200) S.gulpAt = el + 2200 + Math.random() * 800;    // the next gulp 2.2-3 s after this one
+        const g = el - S.gulpAt;
+        const gulp = g < 0 ? 0 : g < 400 ? EASE.outQuad(g / 400) : g < 2200 ? 1 - EASE.smooth((g - 400) / 1800) : 0;
+        throat = [R.throat[0], 1 - R.throat[1], 1 + (H.rm ? 0.012 : 0.04) * gulp, S.lure];
       }
       // the eye's contact cue on the symbols under it: a soft shadow under the painting's silhouette + the ripple around the iris
       let shadow = [0.5, 0.5, 0.5, 0.5], shadowA = 0, ripple = 0;
@@ -501,7 +518,7 @@
       } else { gl.uniform4f(L.uIris, 0, 0, 0, 0); gl.uniform2f(L.uIrisOff, 0, 0); gl.uniform1f(L.uPupil, 1); gl.uniform1f(L.uLid, 0); gl.uniform2f(L.uLidSkin, 0, 0); gl.uniform3f(L.uLidCol, 0, 0, 0); }
       gl.uniform4f(L.uJaw, jaw[0], jaw[1], jaw[2], jaw[3]);
       gl.uniform3f(L.uRot, rot[0], rot[1], rot[2]);
-      gl.uniform1f(L.uNod, nod);
+      gl.uniform3f(L.uNod, nod[0], nod[1], nod[2]);
       gl.uniform4f(L.uThroat, throat[0], throat[1], throat[2], throat[3]);
       gl.uniform1f(L.uFlash, S.flash || 0);
       gl.uniform4f(L.uShadow, shadow[0], shadow[1], shadow[2], shadow[3]);

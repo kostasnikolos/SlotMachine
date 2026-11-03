@@ -8,8 +8,10 @@ Loads /static/canvas/index.html at 1920x1080 on the real GPU and captures to art
   hero_eye.png        window.__levReact('loss') -> the painted eye at the glass
   hero_jaws.png       Director STRIKE -> the jaws close-up over the strike zone at the bite
   hero_rise.png       Director LEVEL UP -> the head rising under the level card
-  hero_*_seq.png      6-frame contact sheets: idle (1 s apart, pointer beside reel 5), eye (420 ms), jaws (stepped through the chomp
-                      with the hero clock frozen: +70/150/240/340/480/640 ms), rise (420 ms), maw (500 ms from the T4 blackout)
+  hero_*_seq.png      6-frame contact sheets: idle (1 s apart, pointer beside reel 5); the others step the frozen hero clock
+                      (H.freezeAt): eye through its first blink (60 ms apart from arrival+280), jaws through the chomp
+                      (+70/150/240/340/480/640 ms), rise through the head's blink (60 ms apart from 2660), maw 250 ms apart from
+                      1 s after the T4 blackout
 and prints the hero log entries (heroPlay/heroEnd/heroSkip), the texture sources (placeholder or painting) and page errors.
 
     python scripts/canvas/hero_capture.py [--headed] [--portrait]
@@ -63,7 +65,7 @@ def main():
         page.wait_for_function("window.__FEEL_READY === true && !!window.__canvasGame", timeout=60000)
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && (H.loaded || H.failed); })()", timeout=30000)
 
-        def shot(name, ms, burst=0, every=220, steps=None):
+        def shot(name, ms, burst=0, every=220, steps=None, rel="chomp"):
             page.wait_for_timeout(ms)
             st = page.evaluate(STATE_JS)
             page.screenshot(path=str(OUT / f"hero_{name}{sfx}.png"))
@@ -76,8 +78,9 @@ def main():
                 frames = []
                 for i in range(burst):
                     if steps:
-                        # stepped: freeze the hero clock at this offset into the jaws' chomp before the frame
-                        page.evaluate(f"() => {{ const H = window.__canvasGame.hero; if (H.cur && H.cur.chompT != null) H.freezeAt(H.cur.chompT + {steps[i]}); }}")
+                        # stepped: freeze the hero clock at this offset (into the jaws' chomp, or into the shot) before the frame
+                        base = "H.cur.chompT + " if rel == "chomp" else ""
+                        page.evaluate(f"() => {{ const H = window.__canvasGame.hero; if (H.cur) H.freezeAt({base}{steps[i]}); }}")
                         page.wait_for_timeout(60)
                     frames.append(Image.open(_io.BytesIO(page.screenshot())).convert("RGB"))
                     if every: page.wait_for_timeout(every)
@@ -89,13 +92,15 @@ def main():
                 for i, f in enumerate(frames):
                     sheet.paste(f.resize((cw, ch)), ((i % cols) * cw, (i // cols) * ch))
                 sheet.save(OUT / f"hero_{name}_seq{sfx}.png")
-                print(f"[hero] {name}: {len(frames)} frames {'at chomp+' + ','.join(map(str, steps)) + ' ms' if steps else str(every) + ' ms apart'} -> hero_{name}_seq{sfx}.png")
+                print(f"[hero] {name}: {len(frames)} frames {'at ' + ('chomp+' if rel == 'chomp' else 'shot+') + ','.join(map(str, steps)) + ' ms' if steps else str(every) + ' ms apart'} -> hero_{name}_seq{sfx}.png")
 
         # the pointer parked beside reel 5 so the look-at engages; 6 frames 1 s apart for breath / look-at
         page.mouse.move(1430 if not a.portrait else 300, 500 if not a.portrait else 600)
         shot("idle", 8000, burst=6, every=1000)
         page.evaluate("window.__levReact('loss')")
-        shot("eye", 300, burst=6, every=420)
+        # the still mid-entry; the sheet steps the frozen hero clock through the first blink (arrival 1100 + 280 ms, 60 ms apart)
+        shot("eye", 300, burst=6, steps=[1380, 1440, 1500, 1560, 1620, 1680], rel="el")
+        page.evaluate("() => { window.__canvasGame.hero.freezeAt(null); }")
         page.wait_for_timeout(2500)
         page.evaluate("() => { window.__canvasGame.dirStrike(); }")
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_jaws'; })()", timeout=20000)
@@ -111,12 +116,18 @@ def main():
         page.wait_for_timeout(800)
         page.evaluate("() => { window.__canvasGame.dirLevelUp(); }")
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_rise'; })()", timeout=20000)
-        shot("rise", 200, burst=6, every=420)
+        # the sheet steps the frozen clock through the head's blink (arrival 1400 + 1260 ms, 60 ms apart)
+        shot("rise", 200, burst=6, steps=[2660, 2720, 2780, 2840, 2900, 2960], rel="el")
+        page.evaluate("() => { window.__canvasGame.hero.freezeAt(null); }")
         page.wait_for_timeout(4000)
         # the maw (500x tier): 6 frames 500 ms apart from the T4 blackout
         page.evaluate("() => { window.__canvasGame.celebrate(700, 1, 1, false).catch(e => console.error('celebrate', e)); }")
         page.wait_for_function("(() => { const B = window.__canvasGame.bwFx; return B && B.esc.blackout >= 0; })()", timeout=40000)
-        shot("maw", 0, burst=6, every=500)
+        # the maw starts 500 ms into the blackout; the sheet runs 250 ms apart from 1 s after the blackout (frozen clock, shot+500..1750)
+        page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && H.cur && H.cur.id === 'lev_maw'; })()", timeout=20000)
+        page.evaluate("() => { window.__canvasGame.hero.freezeAt(500); }")
+        shot("maw", 60, burst=6, steps=[500, 750, 1000, 1250, 1500, 1750], rel="el")
+        page.evaluate("() => { window.__canvasGame.hero.freezeAt(null); }")
         page.wait_for_timeout(1500)
         page.evaluate("window.__canvasGame.onBigWinTap()")
         page.wait_for_timeout(1600)
