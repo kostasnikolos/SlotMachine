@@ -2449,8 +2449,9 @@ class Component extends DCLogic {
     A.maxLoop(false);
     if (A.descentStop) A.descentStop();
     A.duck(false);
-    // fade the fall out over the game
-    this.setState({ bw: Object.assign({}, this.state.bw, { stage: 'out', hint: '' }) });
+    // fade the fall out over the game (and the painted maw with it)
+    if (this.hero && this.hero.cur && this.hero.cur.id === 'lev_maw') this.hero.stop(650);
+    this.setState({ bw: Object.assign({}, this.state.bw, { stage: 'out', hint: '' }), heroZ: 7 });
     await this.wait(650);
     this.bwFx = null;
     this.setState({ levZ: 0, shake: '', bw: Object.assign({}, this.state.bw, { show: false, stage: '' }) });
@@ -2617,6 +2618,11 @@ class Component extends DCLogic {
       if (E.face < 0 && E.blackout >= 0.5) {
         E.face = 0;
         E.fogX = -0.022;
+        if (this.hero && this.hero.tex && this.hero.tex.lev_maw && !B.max) {
+          const G = this.geo();
+          E.heroMaw = this.hero.play('lev_maw', { x: 0, y: 0, w: G.W, h: G.H, cover: true, dur: 120000, hold: true, fadeIn: 900,
+            zoomFrom: 1.28, zoomTo: 1.0, fog: 0.2, chrom: 0.5, dark: 0.2, z: 9, par: 0.6, tint: '255,42,75' });
+        }
         E.shake8 = 1;
         if (!rm) B.shake = Math.max(B.shake, 2);
         if (A && A.boom) A.boom(null, 1.2);
@@ -3397,7 +3403,7 @@ class Component extends DCLogic {
     R.face.visible = R.eye.visible = showEye;
     R.eyeL.intensity = 0;
     U.uEyeI.value = 0;
-    if (!showEye && E.face >= 0) {
+    if (!showEye && E.face >= 0 && !E.heroMaw) {
       // T4: the Leviathan's face fills the frame behind the number, its eye opening above the count
       const rise = 1 - Math.exp(-E.face * 1.6);
       R.face.visible = R.eye.visible = true;
