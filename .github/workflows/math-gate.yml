@@ -1,0 +1,45 @@
+name: math-gate
+
+# The engine's RTP must not move by accident. On every push and pull request that touches the engine, its config, the
+# simulator or the gate itself, run the fast Monte Carlo gate (fixed seeds, deterministic) and compare with the pinned
+# baseline in artifacts/math_baseline.json. An intentional recalibration must update the baseline in the same change
+# (python scripts/math_check.py --write-pin artifacts/math_baseline.json) and docs/math_calibration.md.
+
+on:
+  push:
+    paths:
+      - "slot_engine/config/**"
+      - "slot_engine/core/**"
+      - "slot_engine/simulation/**"
+      - "scripts/math_check.py"
+      - "artifacts/math_baseline.json"
+      - ".github/workflows/math-gate.yml"
+  pull_request:
+    paths:
+      - "slot_engine/config/**"
+      - "slot_engine/core/**"
+      - "slot_engine/simulation/**"
+      - "scripts/math_check.py"
+      - "artifacts/math_baseline.json"
+      - ".github/workflows/math-gate.yml"
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Fast gate against the pinned baseline
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/math_check.py --pin artifacts/math_baseline.json --json artifacts/math_gate_ci.json
+      - name: Keep the run's table
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-gate
+          path: artifacts/math_gate_ci.json

@@ -234,6 +234,47 @@ def api_check(base_url: str, rounds: int = 1) -> bool:
     return ok and sed_ok
 
 
+def _pin_numbers(results: Dict[str, Any]) -> Dict[str, Dict[str, float]]:
+    return {mode: {"rtp": round(m["rtp"], 3), "hit_frequency": round(m["hit_frequency"], 3), "max_win_x_cost": round(m["max_win_x_cost"], 2)}
+            for mode, m in results["modes"].items()}
+
+
+def write_pin(results: Dict[str, Any], path: str) -> None:
+    pin = {"profile": results["profile"], "full": results["full"], "seeds": results["seeds"], "modes": _pin_numbers(results)}
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(pin, fh, indent=2)
+    print(f"Baseline written to {path} (seeds {results['seeds']}, {'FULL' if results['full'] else 'FAST'} run).")
+
+
+def check_pin(results: Dict[str, Any], path: str, tol: float) -> bool:
+    """The gate seeds are fixed, so an unchanged engine reproduces the baseline to the decimal. Any drift means the
+    math changed: either a bug, or an intentional recalibration that must come with --write-pin and a doc update."""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            pin = json.load(fh)
+    except FileNotFoundError:
+        print(f"PIN: no baseline at {path}; run with --write-pin {path} to create it.")
+        return False
+    if pin.get("full") != results["full"] or pin.get("seeds") != results["seeds"]:
+        print(f"PIN: baseline was made with {'FULL' if pin.get('full') else 'FAST'} seeds {pin.get('seeds')}; this run is "
+              f"{'FULL' if results['full'] else 'FAST'} seeds {results['seeds']}. Run the same mode to compare.")
+        return False
+    now = _pin_numbers(results)
+    ok = True
+    print("-" * 124)
+    print(f"PIN CHECK against {path} (tolerance {tol} pts): mode / RTP pinned -> now / hit% pinned -> now")
+    for mode, p in pin["modes"].items():
+        n = now.get(mode)
+        if not n:
+            print(f"  {mode:<22} MISSING in this run"); ok = False; continue
+        d_rtp, d_hit = n["rtp"] - p["rtp"], n["hit_frequency"] - p["hit_frequency"]
+        bad = abs(d_rtp) > tol or abs(d_hit) > tol
+        ok = ok and not bad
+        print(f"  {mode:<22} {p['rtp']:7.3f} -> {n['rtp']:7.3f} ({d_rtp:+.3f})   {p['hit_frequency']:7.3f} -> {n['hit_frequency']:7.3f} ({d_hit:+.3f})  {'DRIFT' if bad else 'ok'}")
+    print("PIN RESULT:", "PASS (math unchanged)" if ok else "FAIL (math changed: fix it, or recalibrate on purpose and re-pin with --write-pin)")
+    return ok
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Math calibration gate for The Descent")
     parser.add_argument("--full", action="store_true", help="Large run (800k base spins, 160k xBet, 20k+ rounds per bonus buy)")
@@ -243,6 +284,11 @@ def main() -> int:
     parser.add_argument("--api", type=str, default=None,
                         help="Skip the simulation; buy ULTRA rounds from a running API at this base URL and check sediment")
     parser.add_argument("--api-rounds", type=int, default=1)
+    parser.add_argument("--pin", type=str, default=None,
+                        help="Compare every mode's RTP and hit frequency with the pinned baseline JSON (deterministic seeds: any engine or config "
+                             "change moves them); fail on a drift above --pin-tol points")
+    parser.add_argument("--pin-tol", type=float, default=0.05, help="Allowed drift from the pinned numbers, in RTP points (default 0.05)")
+    parser.add_argument("--write-pin", type=str, default=None, help="Write this run's numbers as the new baseline JSON (after an intentional recalibration)")
     args = parser.parse_args()
 
     try:
@@ -256,6 +302,10 @@ def main() -> int:
     seeds = [int(s) for s in args.seeds.split(",") if s.strip()]
     results, ok = run_gate(full=args.full, seeds=seeds, workers=args.workers)
     print_table(results)
+    if args.pin:
+        ok = check_pin(results, args.pin, args.pin_tol) and ok
+    if args.write_pin:
+        write_pin(results, args.write_pin)
     if args.json:
         with open(args.json, "w", encoding="utf-8") as fh:
             json.dump(results, fh, indent=2)

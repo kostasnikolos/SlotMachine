@@ -1,0 +1,41 @@
+{
+  "profile": "default",
+  "full": false,
+  "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55,
+    66,
+    77,
+    88
+  ],
+  "modes": {
+    "NONE": {
+      "rtp": 97.512,
+      "hit_frequency": 49.365,
+      "max_win_x_cost": 2118.46
+    },
+    "XBET_SONAR_2X": {
+      "rtp": 95.374,
+      "hit_frequency": 76.395,
+      "max_win_x_cost": 888.23
+    },
+    "STANDARD_BONUS_100X": {
+      "rtp": 95.762,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 23.02
+    },
+    "ULTRA_BONUS_350X": {
+      "rtp": 94.29,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 42.86
+    },
+    "MYSTERY_BUY_200X": {
+      "rtp": 98.562,
+      "hit_frequency": 100.0,
+      "max_win_x_cost": 24.69
+    }
+  }
+}

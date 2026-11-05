@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit math gate: when a staged change touches the engine, its config, the simulator or the gate, run the fast
+# Monte Carlo gate against the pinned baseline (artifacts/math_baseline.json). Deterministic seeds: an unchanged engine
+# reproduces the baseline exactly, so any drift means the math changed.
+#
+# Enable once per clone:   git config core.hooksPath .githooks
+# Intentional recalibration: python scripts/math_check.py --write-pin artifacts/math_baseline.json, stage the baseline
+# and update docs/math_calibration.md in the same commit. Skip once with:  SKIP_MATH_GATE=1 git commit ...
+
+if [ -n "$SKIP_MATH_GATE" ]; then exit 0; fi
+if git diff --cached --name-only | grep -Eq '^(slot_engine/(config|core|simulation)/|scripts/math_check\.py|artifacts/math_baseline\.json)'; then
+  echo "[math-gate] engine files staged: running the fast gate against the pinned baseline..."
+  PYTHONIOENCODING=utf-8 python scripts/math_check.py --pin artifacts/math_baseline.json || {
+    echo "[math-gate] FAILED: the RTP moved. Fix the change, or re-pin on purpose (see .githooks/pre-commit)."; exit 1; }
+fi
+exit 0

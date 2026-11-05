@@ -156,6 +156,16 @@ spread, both printed, so the gate is deterministic without being flaky on the fe
 sediment exceeds 5% of generated cells at any level, or when a round exceeds the cap. Run it after every
 change to `slot_engine/config/*` or `slot_engine/core/*`.
 
+### The pinned baseline (added 2026-11-06)
+
+`artifacts/math_baseline.json` holds every mode's RTP, hit frequency and max win from the fast gate (fixed seeds 11–88).
+Because the seeds are fixed, an unchanged engine reproduces those numbers to the third decimal; any drift above 0.05 pts
+means the math changed. Two automatic runs: the GitHub Actions job `.github/workflows/math-gate.yml` on every push or
+pull request that touches `slot_engine/config`, `slot_engine/core`, `slot_engine/simulation` or the gate; and the local
+pre-commit hook `.githooks/pre-commit` (enable once per clone with `git config core.hooksPath .githooks`). A deliberate
+recalibration re-pins in the same commit: `python scripts/math_check.py --write-pin artifacts/math_baseline.json`, and
+this document's results table is updated.
+
 ## Trade-offs and remaining risks
 
 * **Base hit frequency is 49%, not the 25-32% aspiration.** It is a property of the grid, not of the
