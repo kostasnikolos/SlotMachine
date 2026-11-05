@@ -138,7 +138,7 @@
     },
     // the whole-figure lunge (strike beat 2): head frontal at the throat anchor, the body coiling back; zoomed from far to the glass
     lev_lunge: {
-      throat: [0.491, 0.665], cont: [0.18, 0.99, 0.0, 1.0],
+      throat: [0.491, 0.665], hinge: 0.656, hingeFeather: 0.03, cont: [0.18, 0.99, 0.0, 1.0],
       fog: 0.25, dark: 0.15, chrom: 0.4, feather: { l: 90, r: 90, b: 90, t: 90 }
     },
     lev_rise: {
@@ -351,7 +351,8 @@
     // painting drops off the bottom of the stage within 450 ms
     H.chomp = () => {
       const S = H.cur;
-      if (!S || S.id !== 'lev_jaws' || S.chompT != null) return false;
+      if (!S || S.chompT != null) return false;
+      if (!(H.tex[S.id] && H.tex[S.id].sheet) && S.rig.hinge == null) return false;   // a bite needs frames or a jaw hinge
       S.chompT = H.now() - S.t0;
       S.zoomMs = Math.min(S.zoomMs, S.chompT);
       const sh = H.tex[S.id] && H.tex[S.id].sheet;

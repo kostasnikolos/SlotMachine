@@ -2146,7 +2146,14 @@ class Component extends DCLogic {
     if (!this.lv.roared) this.levSfx('jawOpen') || this.levSfx('roar', 0.8);
     this.lv.roared = false;
     let heroJaws = false;
-    if (this.hero) {
+    const lungeBite = !!(this.hero && this.hero.cur && this.hero.cur.id === 'lev_lunge' && this.hero.tex.lev_lunge.sheet);
+    if (lungeBite) {
+      // the whole creature bites: the lunge painting stays and its own frames close the jaws on the cell (no cut to a mouth close-up)
+      heroJaws = true;
+      this.setState({ strike: Object.assign({}, this.state.strike, { cls: 'hero' }) });
+      const th = this.hero.featureAt('throat');
+      if (th && this.E && this.E.rip) { this.E.rip.x = px + (th[0] - sx0) * 312 / G.pitch; this.E.rip.y = py + (th[1] - sy0) * 312 / G.pitch; }
+    } else if (this.hero) {
       // the painting pivots on its throat, which sits on the strike cell's centre; side = 2.4 x the strike zone (~750 px for a 1x1),
       // clamped inside the stage with a 40 px margin. The zoom 0.72 -> 1.0 completes at the chomp (k 0.16 -> 0.34 of the strike clock).
       const side = Math.max(w, h) * 312 * 2.4;

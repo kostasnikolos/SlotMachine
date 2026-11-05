@@ -32,6 +32,15 @@
     "depth": "lev_lunge_depth.png",
     "w": 1344,
     "h": 768,
-    "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png"
+    "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+    "sheet": {
+      "file": "lev_lunge_sheet.webp",
+      "cols": 4,
+      "rows": 4,
+      "count": 14,
+      "fps": 24,
+      "fw": 1024,
+      "fh": 585
+    }
   }
 }
