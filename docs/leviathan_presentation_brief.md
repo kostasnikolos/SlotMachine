@@ -115,6 +115,14 @@ meet without smearing. Fail = smear or ghosting: stop B, brief the layered paint
   position). If it drifts, the alignment, not the interpolator, is the risk; a remedy is to align B to A by the brow plates
   before interpolating (translate/scale fit on the matte) and to accept small drift as motion.
 
+- **Result (2026-11-05): PASS, on the free route end to end.** The closed keyframe was not painted by Gemini: SDXL inpainting
+  could not follow "jaws shut" (it repainted the mouth open, a figure, a skull), but seeding SDXL with the synthetic closed pose
+  and letting it repaint only the seam band (`comfy_hero.py closed-refine`, denoise 0.5) gave a convincing clamped bite with the
+  same head and light. `chomp_test.py` aligned it to the open painting by the brow (scale 1.009, shift −3/−19 px), RIFE made
+  14 frames, the sheet plays at the chomp (542 ms at 24 fps) and the teeth travel cleanly (artifacts/canvas/chomp_test_sheet.png,
+  hero_jaws_seq.png). The whole-figure lunge is the one keyframe SDXL base cannot do (it paints surface-ocean serpents off-style);
+  that one still needs the Gemini prompt in the brief.
+
 ## 5. Open questions and risks
 
 - Business/legal: Spine Pro purchase ($449) or Live2D FREE eligibility (annual sales under 10M JPY): owner's call.

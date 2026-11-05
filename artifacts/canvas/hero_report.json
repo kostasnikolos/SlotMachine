@@ -1,6 +1,6 @@
 {
   "idle": {
-    "reveal": 0.116,
+    "reveal": 0.115,
     "hero": {
       "ready": true,
       "failed": false,
@@ -66,7 +66,7 @@
     "level": 0
   },
   "rise": {
-    "reveal": 0.018,
+    "reveal": 0.017,
     "hero": {
       "ready": true,
       "failed": false,
@@ -111,8 +111,8 @@
   },
   "hero_log": [
     {
-      "t": 17741,
-      "f": 998,
+      "t": 18182.4,
+      "f": 1008,
       "type": "heroPlay",
       "id": "lev_eye",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
@@ -125,45 +125,45 @@
       ]
     },
     {
-      "t": 22478.8,
-      "f": 1283,
+      "t": 23113.6,
+      "f": 1305,
       "type": "heroEnd",
       "id": "lev_eye",
-      "el": 4747
+      "el": 4941
     },
     {
-      "t": 28073.9,
-      "f": 1618,
+      "t": 28132.6,
+      "f": 1605,
       "type": "heroPlay",
       "id": "lev_jaws",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_jaws_1.jpg",
       "dur": 6000,
       "rect": [
-        917,
+        293,
         263,
         749,
         418
       ]
     },
     {
-      "t": 28979.6,
-      "f": 1672,
+      "t": 29033.8,
+      "f": 1659,
       "type": "heroFlipbook",
       "id": "lev_jaws",
-      "frames": 12,
+      "frames": 14,
       "fps": 24,
-      "playMs": 458
+      "playMs": 542
     },
     {
-      "t": 31687,
-      "f": 1835,
+      "t": 32004.9,
+      "f": 1838,
       "type": "heroEnd",
       "id": "lev_jaws",
-      "el": 3613
+      "el": 3873
     },
     {
-      "t": 32663.6,
-      "f": 1893,
+      "t": 32833,
+      "f": 1887,
       "type": "heroPlay",
       "id": "lev_rise",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
@@ -176,15 +176,15 @@
       ]
     },
     {
-      "t": 36523.7,
-      "f": 2125,
+      "t": 36825,
+      "f": 2127,
       "type": "heroEnd",
       "id": "lev_rise",
-      "el": 3865
+      "el": 3997
     },
     {
-      "t": 53138.5,
-      "f": 3105,
+      "t": 53456.6,
+      "f": 3100,
       "type": "heroPlay",
       "id": "lev_maw",
       "source": "generated\\inbox\\p3_leviathan_hero\\lev_maw_1.jpg",
@@ -197,11 +197,11 @@
       ]
     },
     {
-      "t": 60427,
-      "f": 3539,
+      "t": 60478.2,
+      "f": 3516,
       "type": "heroEnd",
       "id": "lev_maw",
-      "el": 7289
+      "el": 7022
     }
   ],
   "errors": []
