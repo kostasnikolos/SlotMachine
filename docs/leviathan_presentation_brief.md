@@ -106,6 +106,15 @@ edit, same angle, same light); cut out both; interpolate 12 frames with RIFE or 
 it in the hero layer at the chomp instead of the mask slam; capture a 60 ms sheet. Pass = the teeth travel and the lips
 meet without smearing. Fail = smear or ghosting: stop B, brief the layered painting for C.
 
+### 4a. Test status (2026-11-05)
+- Toolchain proven: RIFE 4.9 (the ComfyUI-Frame-Interpolation node's implementation, MIT, cloned by the owner) runs on
+  the RTX 5060 via `scripts/ai/interp_frames.py`; the hero layer plays a WebP frame sheet at the chomp (`flipbook_pack.py`).
+- Half of the assumption holds: interpolating the open jaws to a synthetically closed copy (lower jaw slid up 16% of the
+  height) gives 12 frames where the teeth travel and the throat closes coherently, no smear (artifacts/canvas/interp_dry_sheet.png).
+- Still open: whether Gemini can deliver a closed-jaws painting that stays aligned with the open one (same angle, scale,
+  position). If it drifts, the alignment, not the interpolator, is the risk; a remedy is to align B to A by the brow plates
+  before interpolating (translate/scale fit on the matte) and to accept small drift as motion.
+
 ## 5. Open questions and risks
 
 - Business/legal: Spine Pro purchase ($449) or Live2D FREE eligibility (annual sales under 10M JPY): owner's call.
