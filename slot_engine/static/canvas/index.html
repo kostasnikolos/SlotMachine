@@ -2132,6 +2132,15 @@ class Component extends DCLogic {
     if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: 4.3, splashed: false };
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
       strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero } });
+    if (this.hero && this.hero.tex && this.hero.tex.lev_lunge) {
+      // beat 1 (plan C of the presentation brief): the WHOLE creature rushes out of the dark at the strike cell, far -> near,
+      // so the jaws that follow belong to a body; the painting's throat lands on the cell centre, 2.6x the zone wide
+      const Sa = this.strikeAnim, swimMs = Sa ? Math.max(500, 0.16 * Sa.dur * 1000 / 2) : 800;
+      const lw = Math.min(G.W * 0.9, Math.max(1100, Math.max(w, h) * 312 * 2.6));
+      this.hero.play('lev_lunge', { anchor: 'throat', at: [sx0, sy0], w: lw, h: lw * 768 / 1344, margin: 0, dur: swimMs + 2000, hold: true,
+        zoomFrom: 0.22, zoomTo: 1.0, zoomMs: swimMs, z: 7, enter: { alphaMs: 180 }, fog: 0.5, par: 0.4 });
+      this.setState({ levOp: 0, levOpT: '0.2s', levZ: 0 });
+    }
     await this.waitK(0.16);
     // 2. it rears over the cells and its jaws gape open (the dark set's riser is already running from the hush)
     if (!this.lv.roared) this.levSfx('jawOpen') || this.levSfx('roar', 0.8);

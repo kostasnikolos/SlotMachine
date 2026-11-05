@@ -24,6 +24,11 @@
       "id": "lev_maw",
       "aspect": "16:9",
       "prompt": "Frontal symmetrical view of a colossal eldritch deep-sea leviathan's gaping mouth seen from inside a cracking submarine viewport, the mouth wider than the frame: a ring of needle teeth around the edges of the image, the throat a dark cyan-lit tunnel in the centre with a bright lure deep inside, wet tissue and bone textures. The centre of the image is the darkest part, so a number can be read over it."
+    },
+    {
+      "id": "lev_lunge",
+      "aspect": "16:9",
+      "prompt": "The WHOLE colossal eldritch deep-sea leviathan seen from the front and slightly above, rushing straight toward the viewer out of the black: head with open jaws in the centre foreground, the long serpentine body coiling away behind it into the dark, rows of cyan photophores along the spine receding with perspective, fins and tendrils trailing. The body fades to pure black at the edges."
     }
   ]
 }

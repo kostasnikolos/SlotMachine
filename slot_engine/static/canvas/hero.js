@@ -136,6 +136,11 @@
       throat: [0.48, 0.60], hinge: 0.58, hingeFeather: 0.035, cont: [0.198, 0.711, 0.0, 0.927],
       fog: 0.2, dark: 0.2, chrom: 0.6, feather: { l: 80, r: 80, b: 80, t: 110 }
     },
+    // the whole-figure lunge (strike beat 2): head frontal at the throat anchor, the body coiling back; zoomed from far to the glass
+    lev_lunge: {
+      throat: [0.491, 0.665], cont: [0.18, 0.99, 0.0, 1.0],
+      fog: 0.25, dark: 0.15, chrom: 0.4, feather: { l: 90, r: 90, b: 90, t: 90 }
+    },
     lev_rise: {
       eye: [0.496, 0.514], eyeR: [0.016, 0.028], lidSkin: [0.496, 0.454], neck: [0.5, 0.30], cont: [0.294, 0.709, 0.331, 0.849],
       fog: 0.0, fogBot: 0.65, dark: 0.2, chrom: 0.5, feather: { l: 60, r: 60, b: 160 }, nodules: true
