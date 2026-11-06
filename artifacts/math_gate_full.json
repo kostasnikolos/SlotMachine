@@ -14,23 +14,23 @@
     77,
     88
   ],
-  "elapsed_seconds": 84.3,
+  "elapsed_seconds": 57.7,
   "modes": {
     "NONE": {
       "spins": 800000,
-      "rtp": 98.18071249999998,
+      "rtp": 98.08920749999999,
       "rtp_per_seed": [
-        95.7,
-        96.49,
-        95.49,
-        93.25,
-        105.0,
-        104.51,
-        97.8,
-        97.21
+        95.6,
+        96.4,
+        95.4,
+        93.16,
+        104.91,
+        104.42,
+        97.71,
+        97.12
       ],
-      "rtp_std_error": 1.5131216992647076,
-      "hit_frequency": 49.401250000000005,
+      "rtp_std_error": 1.5134150124800532,
+      "hit_frequency": 30.665,
       "max_win_x_cost": 2317.39,
       "cap_hits": 0,
       "avg_free_spins": 0.2025,
@@ -43,8 +43,8 @@
         "LEVEL_5_CORE": 0.04475
       },
       "win_buckets": {
-        "0x (Loss)": 60.7065,
-        "0.01x - 1x (Micro)": 37.256625,
+        "0x (Loss)": 69.33399999999999,
+        "0.01x - 1x (Micro)": 28.629125,
         "1x - 5x (Small)": 0.123125,
         "5x - 20x (Medium)": 0.6992499999999999,
         "20x - 100x (Big)": 1.014875,
@@ -61,8 +61,8 @@
       },
       "cost_x_bet": 1.0,
       "target_rtp": 96.05,
-      "rtp_delta_pts": 2.130712499999987,
-      "rtp_window_pts": 5.026243398529415,
+      "rtp_delta_pts": 2.039207499999989,
+      "rtp_window_pts": 5.026830024960106,
       "rtp_ok": true,
       "sediment_ok": true,
       "cap_ok": true,
@@ -206,8 +206,8 @@
       "rtp_window_pts": 3.044276492533056,
       "rtp_ok": true,
       "sediment_ok": true,
-      "cap_ok": false,
-      "ok": false
+      "cap_ok": true,
+      "ok": true
     },
     "MYSTERY_BUY_200X": {
       "spins": 20000,
@@ -257,5 +257,5 @@
       "ok": true
     }
   },
-  "passed": false
+  "passed": true
 }

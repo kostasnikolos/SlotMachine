@@ -1947,6 +1947,26 @@ class Component extends DCLogic {
         break;
       }
       case 'LEVEL_UP': await this.levelUpSeq(d); ctx.deepest = Math.max(ctx.deepest, d.new_level); break;
+      case 'PRESSURE_CRUSH': {
+        // crush depth (features.py A): a dust return at the surface is crushed by the water: the board goes dark under a
+        // pressure thud, the win chip collapses to nothing. Never a celebration: it is a loss with a reason.
+        const all = []; for (let i = 0; i < 5 * this.state.cols; i++) all.push(i);
+        this.flog('crush', { crushed: d.crushed_payout });
+        this.aud.sink();
+        if (this.aud.hush) this.aud.hush(-9, 500, 400);
+        this.engDim(all, true);
+        // the reason is read off the frame card the undertow uses (the win label is not rendered): the whole grid under pressure
+        const Gc = this.geo();
+        const card = { show: true, x: Gc.frameLeft + 20, y: Gc.frameTop + 20 + Gc.gridTop, w: Gc.gridW, h: Gc.gridH, waterH: 0, waterT: '0s', waterOp: 0, foamK: 0, foamOp: 0, blobs: [],
+          title: 'CRUSHED BY PRESSURE', sub: (d.crushed_payout >= 0.01 ? this.money(d.crushed_payout) : 'A DUST WIN') + ' LOST TO THE DEEP', cardTop: Math.round(Gc.gridH / 2 - 34) };
+        this.setState({ shake: 'shake', dimCells: all, win: 0, winCells: [], ut: card });
+        this.timers.push(setTimeout(() => this.setState({ shake: '' }), 460));
+        await this.wait(this.state.turbo ? 420 : 900);
+        this.engDim(all, false);
+        this.setState({ dimCells: [], ut: Object.assign({}, card, { show: false }) });
+        await this.wait(this.state.turbo ? 120 : 260);
+        break;
+      }
       case 'PEARLS_COLLECTED': this.setState({ pearls: d.total_pearls }); this.aud.shimmer(); await this.wait(300); break;
       case 'ULTRA_ASCENSION_ACHIEVED': await this.showFeature('ASCENSION'); ctx.deepest = 5; break;
       case 'CASCADE_DROP': {

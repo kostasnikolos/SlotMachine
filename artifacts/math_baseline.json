@@ -13,8 +13,8 @@
   ],
   "modes": {
     "NONE": {
-      "rtp": 97.512,
-      "hit_frequency": 49.365,
+      "rtp": 97.421,
+      "hit_frequency": 30.756,
       "max_win_x_cost": 2118.46
     },
     "XBET_SONAR_2X": {

@@ -11,6 +11,7 @@ from slot_engine.config.symbols import (
     DEPTH_LEVEL_THRESHOLDS,
 )
 from slot_engine.config.rtp_profiles import get_active_rtp_profile
+from slot_engine.config import features as FEAT
 from slot_engine.core.grid import GridMatrix, CellCoordinate
 from slot_engine.core.rng import SlotRNG
 from slot_engine.core.ways_evaluator import WaysEvaluator, EvaluationSummary
@@ -140,6 +141,9 @@ class SlotStateMachine:
         total_payout = 0.0
         total_cascades = 0
         max_win_hit = False
+        # B. pressure multiplier = the depth gained in this round (1 + PRESSURE_PER_LEVEL per level descended, capped)
+        pressure_mult = 1.0
+        bite_spins_total = 0
 
         # 2. Main Game Execution Loop (Spins & Cascades)
         while True:
@@ -205,6 +209,11 @@ class SlotStateMachine:
                     active_mult = 2
                 else:
                     active_mult = 1
+                in_descent = self.gauge.current_level > self.gauge.starting_level
+                if FEAT.PRESSURE_MULT_ENABLED and in_descent:
+                    levels_gained = self.gauge.current_level.value - self.gauge.starting_level.value
+                    pressure_mult = min(FEAT.PRESSURE_CAP, 1.0 + FEAT.PRESSURE_PER_LEVEL * levels_gained)
+                    active_mult = max(active_mult, pressure_mult)      # the Core's fixed 2x and the pressure do not stack
 
                 summary: EvaluationSummary = self.evaluator.evaluate(
                     grid=grid,
@@ -247,6 +256,7 @@ class SlotStateMachine:
                         "depth_level": self.gauge.current_level.value,
                         "depth_meters": DEPTH_METADATA[self.gauge.current_level]["depth_meters"],
                         "cascade_multiplier": active_mult,
+                        "pressure_multiplier": pressure_mult if (FEAT.PRESSURE_MULT_ENABLED and in_descent) else 1,
                     })
 
                     for lev_ev in level_events:
@@ -300,7 +310,15 @@ class SlotStateMachine:
                         creature_ev = self.creature.strike_lifeline(grid, self.gauge.current_level, self.rng)
                         if creature_ev:
                             self.gauge.pending_lifeline = False
+                            bite_spins = 0
+                            if (FEAT.BITE_RETRIGGER_ENABLED and (is_free_spin or self.gauge.spins_banked > 0)
+                                    and bite_spins_total < FEAT.BITE_RETRIGGER_MAX_PER_ROUND
+                                    and self.rng.random_float() < FEAT.BITE_RETRIGGER_CHANCE):
+                                bite_spins = FEAT.BITE_RETRIGGER_SPINS
+                                bite_spins_total += bite_spins
+                                self.gauge.spins_banked += bite_spins
                             emit("CREATURE_LIFELINE_STRIKE", {
+                                "spins_added": bite_spins,
                                 "creature": creature_ev.creature_name,
                                 "size": creature_ev.size,
                                 "position": creature_ev.top_left_coord,
@@ -322,6 +340,12 @@ class SlotStateMachine:
                 break
 
         # 3. Final Settlement
+        # A. crush depth: a base-game round that never left the Sunlight Zone and returns dust is crushed by pressure
+        if (FEAT.CRUSH_DEPTH_ENABLED and feature_buy == FeatureBuyType.NONE
+                and self.gauge.highest_level == DepthLevel.LEVEL_0_SUNLIGHT
+                and 0.0 < total_payout < FEAT.CRUSH_THRESHOLD_X * actual_bet):
+            emit("PRESSURE_CRUSH", {"crushed_payout": round(total_payout, 4), "threshold_x": FEAT.CRUSH_THRESHOLD_X})
+            total_payout = 0.0
         final_meta = DEPTH_METADATA[self.gauge.current_level]
         emit("SPIN_COMPLETE", {
             "total_payout": round(total_payout, 4),

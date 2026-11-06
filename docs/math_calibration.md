@@ -34,7 +34,7 @@ RTP is expressed as % of the mode's own cost; the +/- is one standard error of t
 
 | Mode | Cost | RTP before | RTP after | Hit freq after | Max win after (x bet) | Sediment share before | after |
 |---|---|---|---|---|---|---|---|
-| Base game (NONE) | 1x | 57.2% | **97.4%** (±1.0; gate 98.2, harness 96.6) | 49.4% | ~3,400x | 0% | 0% at L0, 0.5% of all base cells |
+| Base game (NONE) | 1x | 57.2% | **97.4%** (±1.0; gate 98.2, harness 96.6) | 30.7% (49.4% before crush depth) | ~3,400x | 0% | 0% at L0, 0.5% of all base cells |
 | XBET_SONAR_2X | 2x | 85.6% | **94.8%** (±1.5; gate 92.6, harness 95.9) | 76.3% | ~2,900x | 0.04% | 1.9% |
 | STANDARD_BONUS_100X | 100x | 114.7% | **95.8%** (±1.1) | 100% | ~4,200x (42x cost) | 47.8% | 2.1% |
 | ULTRA_BONUS_350X | 350x | 36.6% | **95.2%** (±0.5) | 100% | 15,000x cap (1 in 20k rounds) | 67.3% | 3.0% |
@@ -155,6 +155,20 @@ Exit code 1 when a mode is outside +/-2 pts of 96.05% (window widened by 2 stand
 spread, both printed, so the gate is deterministic without being flaky on the feature-driven modes), when
 sediment exceeds 5% of generated cells at any level, or when a round exceeds the cap. Run it after every
 change to `slot_engine/config/*` or `slot_engine/core/*`.
+
+### Crush depth (2026-11-06): base hit frequency 49% → 30.7%
+
+`slot_engine/config/features.py` `CRUSH_DEPTH_ENABLED` / `CRUSH_THRESHOLD_X = 0.01`: a base-game round that never leaves the
+Sunlight Zone and returns less than 1% of its stake is crushed (`PRESSURE_CRUSH` event, payout 0). Measurement that
+justified it: 44% of base rounds paid under 0.1× the stake (dust from the ×0.027 paytable scale), so the 49% "hit rate" was
+mostly cents. At 0.01× the crush voids 19% of rounds; full gate after: base 98.09% (unchanged to the decimal: the crushed
+cash is < 0.1 pt), hit 30.66%, every buy unchanged. The dial: 0.015× → 24%, 0.02× → 20%.
+
+The pressure multiplier (B) and the bite retrigger (C) are implemented behind flags in the same file and **switched off**:
+measured on the current weights, B at +0.5×/level sends the base to 239% and Standard to 105%; C at a 20% chance (cap 4)
+sends the base to 279% and Ultra to 116%; even B 0.25/level cap 2 with C 5% cap 2 gives base 196%. The cause is structural:
+~80% of the base RTP sits in the 2% of rounds that descend to Level 3+, so anything that scales deep rounds scales the RTP.
+Turning them on needs the descent frequency rebalanced (thresholds up, deep weights down) and a full re-pin: its own job.
 
 ### The pinned baseline (added 2026-11-06)
 

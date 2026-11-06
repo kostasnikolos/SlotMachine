@@ -49,9 +49,9 @@ RTP_PROFILES: Dict[str, RTPProfile] = {
         creature_lifeline_rtp_budget=0.0050,
         standard_bonus_rtp_budget=0.7900,
         ultra_bonus_rtp_budget=0.1500,
-        # Hit frequency: 49% measured on the 5x5 ways grid (the 28% aspiration is not reachable
+        # Hit frequency: 30.7% measured after crush depth (features.py); 49% before it (the 28% aspiration was not reachable
         # with 11 symbols on 5 rows; see the trade-off section of docs/math_calibration.md).
-        hit_frequency_target=0.49,
+        hit_frequency_target=0.31,
         max_win_multiplier=15000.0,
         description="Default high-volatility profile with 15,000x hard cap. Only this profile is calibrated."
     ),
