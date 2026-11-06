@@ -43,9 +43,9 @@ class DepthLevel(int, Enum):
     LEVEL_0_SUNLIGHT = 0   # 0m, Base state
     LEVEL_1_TWILIGHT = 1   # 500m, 6 pts, 10 removed, 1x1 Maw, +2 spins
     LEVEL_2_MIDNIGHT = 2   # 2,000m, 13 pts, J removed, 2x1 Maw, +2 spins
-    LEVEL_3_ABYSS = 3      # 5,000m, 24 pts, Q removed, 2x2 Maw, Vents active (Standard Bonus)
-    LEVEL_4_HADAL = 4      # 8,000m, 100 pts, K removed, 3x3 Tentacle xSplit, +2 spins
-    LEVEL_5_CORE = 5       # 11,000m, 200 pts, A removed, 6x5 grid, Ultra Bonus (8 spins)
+    LEVEL_3_ABYSS = 3      # 5,000m, 32 pts, Q removed, 2x2 Maw, Vents active (Standard Bonus)
+    LEVEL_4_HADAL = 4      # 8,000m, 126 pts, K removed, 3x3 Tentacle xSplit, +2 spins
+    LEVEL_5_CORE = 5       # 11,000m, 285 pts, A removed, 6x5 grid, Ultra Bonus (8 spins)
 
 
 class FeatureBuyType(str, Enum):
@@ -120,16 +120,18 @@ SYMBOL_PRESSURE_POINTS: Dict[SymbolType, int] = {
 
 
 # Thresholds of accumulated pressure points required to breach each depth level.
-# Calibrated so that the base game descends naturally (Level 1 ~1.7% of rounds, Level 3 ~1.6%,
-# Level 5 ~0.05%) and a bought Standard Bonus (starting at Level 3 with 6 spins) reaches
-# Level 4 ~48% and Level 5 ~12% of the time. Points carry across all free spins of one round.
+# Calibrated with the pressure package on (docs/math_calibration.md, "Pressure package calibration"): the base game
+# descends naturally to Level 1 on ~0.9% of rounds, Level 3 ~0.8%, Level 4 ~0.08% (every win inside a descent is
+# multiplied by the depth, so the descents are rarer and larger than before the package), and a bought Standard
+# Bonus (starting at Level 3 with 6 spins) reaches Level 4 ~49% and Level 5 ~2% of the time.
+# Points carry across all free spins of one round.
 DEPTH_LEVEL_THRESHOLDS: Dict[DepthLevel, int] = {
     DepthLevel.LEVEL_0_SUNLIGHT: 0,
     DepthLevel.LEVEL_1_TWILIGHT: 6,
     DepthLevel.LEVEL_2_MIDNIGHT: 13,
-    DepthLevel.LEVEL_3_ABYSS: 24,      # Unlocks Abyssal Descent (Standard Bonus Milestone)
-    DepthLevel.LEVEL_4_HADAL: 100,
-    DepthLevel.LEVEL_5_CORE: 200,      # Unlocks Leviathan Awakening (Ultra Bonus Milestone)
+    DepthLevel.LEVEL_3_ABYSS: 32,      # Unlocks Abyssal Descent (Standard Bonus Milestone)
+    DepthLevel.LEVEL_4_HADAL: 126,
+    DepthLevel.LEVEL_5_CORE: 285,      # Unlocks Leviathan Awakening (Ultra Bonus Milestone)
 }
 
 

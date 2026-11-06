@@ -4,6 +4,20 @@ Read this first on any PC. Newest entry on top. Each entry: date, branch, what c
 
 ---
 
+## 2026-11-06 — `visual/ai-studio-pipeline` — pressure package on (B + C), engine recalibrated
+
+**Done**
+- `slot_engine/config/features.py`: B pressure multiplier ON (+0.5x per level descended, cap 4x) and C bite retrigger ON (15% per bite during free spins, +1 spin, cap 3 per round). Crush depth stays on.
+- Rebalanced so every mode is within +/-2 pts of 96.05% of its cost with both on: thresholds L3 24->32, L4 100->126, L5 200->285 (`symbols.py`); Level-0 table wild 2.09->1.5 units and a highs->mids shift (`weights.py`); Level-5 table wild 1->0, sediment 3->4. Paytable, bought spins, natural spin awards untouched.
+- Full gate: base 97.5 (hit 31.1%), xBet 98.1, Standard 95.8, Ultra 95.6, Mystery 97.2; sediment <= 4%. Fast gate re-pinned (`artifacts/math_baseline.json`), full table in `artifacts/math_gate_full.txt`. API gate against a restarted server on 8080: PASS.
+- `docs/math_calibration.md` "Pressure package calibration": 38-row attempt table, the levers and their couplings, final weights, win-bucket split, trade-offs (natural Core from the base game ~0%, Standard ascension 12% -> 2%, no table wild at L5).
+
+**Next**
+- Front end: `WIN_EVALUATION.pressure_multiplier` and `CREATURE_LIFELINE_STRIKE.spins_added` now carry real values; the depth gauge follows the new thresholds via `/api/slot/paytable`.
+- If the owner wants the natural Core back in the base game: L5 threshold 285 -> ~240, recover ~5-8 pts from the L0 wild.
+
+---
+
 ## 2026-11-01 → 11-03 — `visual/ai-studio-pipeline` — canvas becomes the front end
 
 **Decision (user):** the Design canvas "The Descent: Abyssal Leviathan" (https://claude.ai/artifact/Qh5cU4RMbQ4KRmAsLPGpvB) is the look. Porting it piece by piece into the old UI was rejected; instead the canvas's own code now runs as the game front end.

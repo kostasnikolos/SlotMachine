@@ -58,7 +58,7 @@ rounds ~79 pts, natural Level 5 rounds ~15 pts. The base game is feature-driven:
 37% pay under 1x, 1.9% of spins (the descents) carry the RTP, and the largest observed base wins are
 2,000-3,200x. The `default` profile budgets in `rtp_profiles.py` were updated to this measured split.
 
-## Final weights per level
+## Final weights per level (pre-package; superseded 2026-11-06, see "Pressure package calibration" below)
 
 Weights are relative integers; compare shares within a level. `DEAD_SEDIMENT` share of *generated cells*
 is measured by the gate (L1 2.0%, L2 2.0%, L3 2.1%, L4 2.2%, L5 3.5% max; limit 5%).
@@ -168,7 +168,7 @@ The pressure multiplier (B) and the bite retrigger (C) are implemented behind fl
 measured on the current weights, B at +0.5×/level sends the base to 239% and Standard to 105%; C at a 20% chance (cap 4)
 sends the base to 279% and Ultra to 116%; even B 0.25/level cap 2 with C 5% cap 2 gives base 196%. The cause is structural:
 ~80% of the base RTP sits in the 2% of rounds that descend to Level 3+, so anything that scales deep rounds scales the RTP.
-Turning them on needs the descent frequency rebalanced (thresholds up, deep weights down) and a full re-pin: its own job.
+Turning them on needs the descent frequency rebalanced (thresholds up, deep weights down) and a full re-pin: done below.
 
 ### The pinned baseline (added 2026-11-06)
 
@@ -206,3 +206,161 @@ this document's results table is updated.
 * **Pearl ascension** is left at 0.1% per cell and contributes negligibly; it is a tunable reserve.
 * The thresholds and +2 spins at L1/L2 change how often the front end plays level-up choreography in the
   base game (Level 1 on 1.7% of spins instead of 0.1%). This was verified only in simulation, not visually.
+
+
+## Pressure package calibration (2026-11-06): B and C switched on
+
+`features.py`: **B** `PRESSURE_MULT_ENABLED`, +0.5x per level descended in the round, cap 4x (base game: L1 1.5x, L2 2x,
+L3 2.5x, L4 3x, L5 3.5x; Standard buy: L4 1.5x, L5 = the Core's own 2x; Ultra: nothing). **C** `BITE_RETRIGGER_ENABLED`,
+every Leviathan bite during free spins has a 15% chance of +1 spin, at most 3 per round. Crush depth (A) stays on at 0.01x.
+
+### Why the package had to be paid for elsewhere
+
+Both features scale the deep rounds, and the deep rounds *are* the base RTP. On the pre-package config B alone put the
+base at 239%, C alone at 279% (the extra spins converted into Level 4-5 reach: natural Core rounds went 0.04% -> 0.44%),
+both together at 634%. C alone also lifted the Ultra to 116%: an 8-spin round averages 9.9 spins at 20% / cap 4.
+
+Levers used, in the order of the calibration notes: depth thresholds (base and xBet descent frequency, Standard's climb),
+the Level-0 table (base-only: the base game's L0 wild share and its high/mid split), the Level-5 table (Ultra-only).
+Paytable, bought spin counts (6 / 8) and the natural free-spin awards per level are untouched.
+
+The couplings that shaped the search:
+
+* **Base and xBet share the L3 threshold.** xBet starts cold at Level 1 (one spin, no banked spins); all of its value
+  is the 2-5% of rounds that reach Level 3, and that is set by the L1->L3 gap. L3 at 40 drops xBet to 39%; L3 at 32
+  keeps it on target. The base game then needs its own lever, and the Level-0 table is the only one xBet never sees.
+* **The L0 wild sets the base hit rate as well as the RTP.** 2.09 -> 1.5 units alone brings the base to ~105% but the hit
+  rate to 27.4% (under the 28% floor). Moving Level-0 mass from highs to mids fixes that: mids pay from 3 reels like the
+  highs (hits kept), but earn 1 pressure point instead of 2-3 (fewer descents). Each step of 32 units off every high
+  (-128 total) onto the two mids adds ~1.7 pts of hit rate and takes ~20 pts of RTP at a given wild share.
+* **The Ultra fixes C.** It starts at the Core, so B adds nothing and only C touches it; it had to come down ~13 pts.
+  Shifting the L5 table towards mids makes cascades *longer* (more concentrated), not shorter; the levers that work are
+  the table wild (1% -> 0: -11 pts) and sediment (3% -> 4%: ~-3.5 pts; 5% would sit on the ceiling).
+
+### Attempts (fast gate, seeds 11-88, RTP as % of each mode's cost; base/xBet carry +/-3-5 pts of seed noise)
+
+Thresholds are L3 / L4 / L5 unless L1 / L2 are listed (6 / 13 throughout). L0 wild in x32 units; "S2" = Level-0 highs
+-48 each (Viper 288->240, Angler 256->208, Squid 160->112, Leviathan 96->48) and mids +96 each (320->416). Blank cells:
+mode not run in that trial (the runner can run one mode at a time; Ultra depends only on C and the L5 table, Standard on
+the L4/L5 gaps and C).
+
+| # | B | C | thresholds | L0 | L5 | base | xBet | Standard | Ultra | Mystery | base hit |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0 | off | off | 24/100/200 | wild 67 | wild 1, sed 3 | 97.4 | 95.4 | 95.8 | 94.3 | 98.6 | 30.8 |
+| 1 | 0.5/cap 4 | off | 24/100/200 | | | 239 | 187 | 105 | 94.3 | 101 | 30.8 |
+| 2 | off | 20%/1/cap 4 | 24/100/200 | | | 279 | 222 | 189 | 116 | 144 | 30.7 |
+| 3 | 0.5/4 | 20%/1/4 | 24/100/200 | | | 634 | 424 | 203 | 116 | 149 | 30.7 |
+| 4 | 0.5/4 | 20%/1/4 | 40/160/320 | | | 94.6 | 39 | 89 | 116 | 110 | 30.6 |
+| 5 | 0.5/4 | 20%/1/4 | 50/200/400 | | | 28.6 | 12 | 79 | 116 | 106 | 30.7 |
+| 6 | 0.5/4 | 20%/1/4 | 8/18/50/200/400 | | | 13.9 | 5.7 | 79 | 116 | 106 | 30.7 |
+| 7 | 0.5/4 | 20%/1/4 | 10/24/60/240/480 | | | 3.0 | 2.1 | 76 | 116 | 105 | 30.6 |
+| 8 | | 15%/1/3 | | | as was | | | | 109.4 | | |
+| 9 | | 15%/1/3 | | | sed 5 | | | | 102.2 | | |
+| 10 | | 15%/1/3 | | | wild 0 | | | | 98.4 | | |
+| 11 | | 15%/1/3 | | | mids 24/22, highs 16/14/12/8 | | | | 104.6 | | |
+| 12 | | 15%/1/3 | | | mids 27/25, highs 15/13/11/7 | | | | 110.7 | | |
+| 13 | | 15%/1/3 | | | **wild 0, sed 4** | | | | **94.9** | | |
+| 14 | | 15%/1/3 | | | x2 scale, wild 1 (0.5%), sed 7 | | | | 103.5 | | |
+| 15 | | 20%/1/4 | | | wild 0, sed 5 (4.9%) | | | | 95.0 | | |
+| 16 | | 20%/1/3 | | | wild 0, sed 4 | | | | 98.9 | | |
+| 17 | 0.5/4 | 15%/1/3 | 30/160/320 | wild 67 | wild 0, sed 4 | 196 | 114 | 75 | 94.9 | 90 | 30.7 |
+| 18 | 0.5/4 | 15%/1/3 | 32/160/320 | wild 67 | wild 0, sed 4 | 173 | 93 | 77 | 94.9 | 93 | 30.7 |
+| 19 | 0.5/4 | 15%/1/3 | 30/200/400 | wild 67 | wild 0, sed 4 | 195 | 115 | 71 | 94.9 | 88 | 30.7 |
+| 20 | 0.5/4 | 15%/1/3 | 32/140/300 | wild 67 | wild 0, sed 4 | 177 | 93 | 87 | 94.9 | 92 | 30.7 |
+| 21 | 0.5/4 | 15%/1/3 | 32/140/300 | wild 48 | wild 0, sed 4 | 105 | | | | | 27.4 |
+| 22 | 0.5/4 | 15%/1/3 | 32/140/300 | wild 40 | wild 0, sed 4 | 87 | | | | | 25.9 |
+| 23 | 0.5/4 | 15%/1/3 | 32/140/300 | wild 32 | wild 0, sed 4 | 55 | | | | | 24.3 |
+| 24 | 0.5/4 | 15%/1/3 | 32/130/280 | | wild 0, sed 4 | | | 93.3 | | | |
+| 25 | 0.5/4 | 15%/1/3 | 32/120/260 | | wild 0, sed 4 | | | 108.6 | | | |
+| 26 | 0.5/4 | 15%/1/3 | 32/130/300 | | wild 0, sed 4 | | | 92.0 | | | |
+| 27 | 0.5/4 | 15%/1/3 | 32/120/300 | | wild 0, sed 4 | | | 99.0 | | | |
+| 28 | 0.5/4 | 15%/1/3 | 32/125/290 | | wild 0, sed 4 | | | 97.8 | | | |
+| 29 | 0.5/4 | 15%/1/3 | 32/128/280 | | wild 0, sed 4 | | | 94.4 | | | |
+| 30 | 0.5/4 | 15%/1/3 | 32/126/285 | | wild 0, sed 4 | | | 95.4 | | | |
+| 31 | 0.5/4 | 15%/1/3 | 32/128/280 | wild 67, highs -32 / mids +64 | wild 0, sed 4 | 161 | | | | | 32.6 |
+| 32 | 0.5/4 | 15%/1/3 | 32/128/280 | wild 56, highs -32 / mids +64 | wild 0, sed 4 | 118 | | | | | 30.5 |
+| 33 | 0.5/4 | 15%/1/3 | 32/128/280 | wild 56 | wild 0, sed 4 | 137 | | | | | 28.8 |
+| 34 | 0.5/4 | 15%/1/3 | 32/128/280 | wild 60, S2 | wild 0, sed 4 | 134 | | | | | 33.0 |
+| 35 | 0.5/4 | 15%/1/3 | 32/126/285 | wild 52, S2 | wild 0, sed 4 | 107 | | | | | 31.8 |
+| 36 | 0.5/4 | 15%/1/3 | 32/126/285 | wild 52, highs -64 / mids +128 | wild 0, sed 4 | 108.5 | | | | | 34.0 |
+| 37 | 0.5/4 | 15%/1/3 | 32/126/285 | wild 56, highs -64 / mids +128 | wild 0, sed 4 | 128 | | | | | 34.6 |
+| **38** | **0.5/4** | **15%/1/3** | **32/126/285** | **wild 48, S2** | **wild 0, sed 4** | **97.0** | **99.0** | **95.4** | **94.9** | **99.3** | **31.1** |
+
+### Result (row 38), full gate (`--full`: 800k base, 160k xBet, 24k / 20k / 20k buys; `artifacts/math_gate_full.txt`)
+
+| Mode | Cost | RTP (% of cost) | delta | +/-SE | Hit % | Max win | Caps | Sediment | Levels reached |
+|---|---|---|---|---|---|---|---|---|---|
+| Base game | 1x | **97.50** | +1.45 | 2.18 | **31.07** | 4,627x | 0 | 0.35% | L1 0.91 / L2 1.06 / L3 0.76 / L4 0.08 / L5 0.00 |
+| xBet | 2x | **98.11** | +2.06 | 2.56 | 76.2 | 1,572x cost (3,143x bet) | 0 | 1.9% | L2 7.4 / L3 2.3 / L4 0.14 / L5 0.00 |
+| Standard 100x | 100x | **95.81** | -0.24 | 0.76 | 100 | 28x cost (2,820x bet) | 0 | 2.0% | L4 49.0 / L5 2.25 |
+| Ultra 350x | 350x | **95.58** | -0.47 | 0.56 | 100 | 42.9x cost (15,000x cap, 1 in 20k) | 1 | 4.0% | L5 100 |
+| Mystery 200x | 200x | **97.22** | +1.17 | 0.52 | 100 | 66x cost (13,200x bet) | 0 | 3.0% | L3 29 / L4 29 / L5 41 |
+
+Fast gate (the pinned baseline, `artifacts/math_baseline.json`, written with `--write-pin` in the same commit):
+base 96.96 / xBet 99.00 / Standard 95.41 / Ultra 94.92 / Mystery 99.33, base hit 31.14%.
+xBet reads +2.06 on the full run and +2.95 on the fast one with a standard error of 2.6-5.9 pts; the fast trial on the
+same thresholds with the old Level-0 table read 93, so the pooled estimate is ~96-97. The gate's pass window is
+tolerance + 2 SE and both runs pass on every mode. The hook and CI run the fast gate with `--pin`, so the pin is a
+fast-run pin; `--full --pin` reports a mode mismatch by design (compare the full table above instead).
+
+Win buckets, % of rounds (x cost):
+
+| Mode | loss | <1x | 1-5x | 5-20x | 20-100x | 100-500x | 500x+ |
+|---|---|---|---|---|---|---|---|
+| Base (before -> after) | 69.2 -> 68.9 | 28.7 -> 30.0 | 0.13 -> 0.21 | 0.71 -> 0.09 | 1.00 -> 0.46 | 0.18 -> 0.28 | 0.01 -> 0.02 |
+| xBet | 40.8 | 56.8 | 0.19 | 0.91 | 1.18 | 0.17 | 0.01 |
+| Standard | 0 | 67.3 | 32.0 | 0.76 | 0.00 | 0 | 0 |
+| Ultra | 0 | 68.7 | 30.6 | 0.62 | 0.03 | 0 | 0 |
+| Mystery | 0 | 68.7 | 29.9 | 1.29 | 0.07 | 0 | 0 |
+
+What the package did to the shape: the base game's 5-100x band (the old L1-L3 descents) is a third of what it was
+(1.7% -> 0.55% of rounds) and the 100x+ band rose 60% (0.19% -> 0.30%); the base max win on the gate seeds went
+2,100x -> 4,600x. Descents are rarer and bigger: that is the point of B. In the buys, 500x bet is 5x the Standard's
+cost: 0.76% of Standard rounds pay 5-20x cost (1.7% before the package, when a Standard reached the Core 12% of the time;
+now 2%, with the Level-4 1.5x and the bites instead). The buys' top end is still modest: no Standard or Ultra round in
+24k / 20k reached 100x cost, and the Ultra's cap hit stays 1 in 20k rounds. A larger buy top end needs a mechanic inside
+the bonus (sticky multiplier, progressive), not more of B/C: both sit at their RTP ceiling here.
+
+### Final thresholds and weights
+
+Depth thresholds: L1 6, L2 13, **L3 32** (was 24), **L4 126** (was 100), **L5 285** (was 200). Natural free spins
+unchanged (L1 +2, L2 +2, L3 +2, L4 +2, L5 +4). Bought spins unchanged (6 / 8). Paytable unchanged.
+
+| Symbol | L0 (x32) | L1 (x8) | L2 | L3 | L4 | L5 |
+|---|---|---|---|---|---|---|
+| LOW_10 | 384 | 0 | 0 | 0 | 0 | 0 |
+| LOW_J | 384 | 112 | 0 | 0 | 0 | 0 |
+| LOW_Q | 384 | 104 | 16 | 0 | 0 | 0 |
+| LOW_K | 384 | 104 | 15 | 11 | 0 | 0 |
+| LOW_A | 384 | 96 | 14 | 11 | 13 | 0 |
+| MID_HELMET | **416** (was 320) | 112 | 16 | 12 | 14 | 21 |
+| MID_COMPASS | **416** (was 320) | 104 | 15 | 12 | 14 | 19 |
+| HIGH_VIPER | **240** (was 288) | 64 | 9 | 13 | 15 | 17 |
+| HIGH_ANGLER | **208** (was 256) | 56 | 8 | 13 | 14 | 16 |
+| HIGH_SQUID | **112** (was 160) | 40 | 6 | 12 | 13 | 14 |
+| HIGH_LEVIATHAN | **48** (was 96) | 24 | 3 | 10 | 12 | 10 |
+| WILD_MAW | **48** (was 67) | 9 | 2 | 4 | 5 | **0** (was 1) |
+| DEAD_SEDIMENT | 0 | 16 | 2 | 2 | 2 | **4** (was 3) |
+
+Shares: L0 lows 56% / mids 24% / highs+apex 18% / wild 1.4%; L5 mids 40% / highs 47% / apex 10% / sediment 4%.
+L1-L4 tables unchanged.
+
+Sediment measured by the full gate: L1 2.0%, L2 1.9%, L3 2.1%, L4 2.2%, L5 4.0% in the Ultra. The gate prints an L5
+maximum of 4.98%: that is the base game's few hundred Core rounds in one seed (a tiny sample); the Ultra itself is 3.97%.
+It is deterministic on the gate seeds, so CI reproduces it, but it leaves no headroom: keep L5 sediment at 4 or lower.
+
+### Trade-offs
+
+* **The natural Core is gone from the base game** (L5 reach 0.04% -> ~0.00%: a handful of rounds in 800k) and the
+  natural Level 4 is 4x rarer (0.33% -> 0.08%). The 2.5x pressure at Level 3 carries the base RTP instead. If the owner
+  wants the Ultra to stay reachable from a paid spin, the dial is the L5 threshold (285 -> ~240 gives it back at the cost
+  of ~5-8 pts of base RTP to be recovered from the L0 wild, ~4 units).
+* **Fewer Standard ascensions** (Core reach 12% -> 2.25%): the Standard's value now comes from Level 4 (49% of rounds,
+  1.5x pressure, xSplit) and the bites (8.3 spins per round instead of 7.7).
+* **xBet has no lever of its own** (it starts at the L1 threshold with no banked spins; `progression.py`'s docstring
+  says "+2 spins", the code gives 0). It is on target only because the L3 threshold was left at 32; any further base
+  rebalance has to go through the Level-0 table, not the thresholds.
+* **The Level-5 table has no wild.** The Leviathan's own 2x2 strike wild still lands every spin at the Core (the creature
+  re-arms each spin), so the Ultra is not wild-less in play; but a table wild never drops at the Core now.
+* `rtp_profiles.py` budgets (base 1.5 / lifeline 0.5 / Standard-depth 79 / Core 15 pts) are stale in their split: the
+  Core's share of the base RTP is ~0 now and the Level-3/4 share ~95%. They are informational only (nothing reads them).

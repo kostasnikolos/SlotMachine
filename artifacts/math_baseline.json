@@ -13,29 +13,29 @@
   ],
   "modes": {
     "NONE": {
-      "rtp": 97.421,
-      "hit_frequency": 30.756,
-      "max_win_x_cost": 2118.46
+      "rtp": 96.958,
+      "hit_frequency": 31.145,
+      "max_win_x_cost": 2494.22
     },
     "XBET_SONAR_2X": {
-      "rtp": 95.374,
-      "hit_frequency": 76.395,
-      "max_win_x_cost": 888.23
+      "rtp": 98.996,
+      "hit_frequency": 76.312,
+      "max_win_x_cost": 911.52
     },
     "STANDARD_BONUS_100X": {
-      "rtp": 95.762,
+      "rtp": 95.41,
       "hit_frequency": 100.0,
-      "max_win_x_cost": 23.02
+      "max_win_x_cost": 14.94
     },
     "ULTRA_BONUS_350X": {
-      "rtp": 94.29,
+      "rtp": 94.92,
       "hit_frequency": 100.0,
-      "max_win_x_cost": 42.86
+      "max_win_x_cost": 17.16
     },
     "MYSTERY_BUY_200X": {
-      "rtp": 98.562,
+      "rtp": 99.327,
       "hit_frequency": 100.0,
-      "max_win_x_cost": 24.69
+      "max_win_x_cost": 66.02
     }
   }
 }

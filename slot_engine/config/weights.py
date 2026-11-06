@@ -14,8 +14,13 @@ Calibration notes (see docs/math_calibration.md):
   concentrated distribution would make cascades effectively endless.
 * WILD_MAW at Levels 0 and 1 is the most sensitive single lever in the whole model
   (it feeds both ways-count and pressure points): +1 wild unit at Level 0 nearly doubles the
-  base RTP. It is tuned to fractional shares (2.09 and 1.125 units), which is why those two
+  base RTP. It is tuned to fractional shares (1.5 and 1.125 units), which is why those two
   tables carry a larger integer scale (x32 and x8).
+* Pressure package (2026-11-06): with the pressure multiplier on, the Level-0 table carries less
+  wild (2.09 -> 1.5 units) and its high-symbol mass moved to the mids (mids pay from 3 reels like
+  the highs, so the hit rate holds, but earn 1 pressure point instead of 2-3, so natural descents
+  are rarer). The Level-5 table lost its 1% wild and runs 4% sediment: that is what pays for the
+  bite retrigger inside the Ultra, the only mode the retrigger alone reaches.
 """
 
 from typing import Dict, List, Tuple
@@ -25,21 +30,21 @@ from slot_engine.config.symbols import SymbolType, DepthLevel
 # Raw probability weights for symbol drop generation across each DepthLevel.
 # Higher weight = higher probability of landing on the grid during initial drop or cascade refill.
 LEVEL_WEIGHT_DISTRIBUTIONS: Dict[DepthLevel, Dict[SymbolType, int]] = {
-    # Level 0: Sunlight Zone (all 11 paying symbols; lows ~56%, mids ~19%, highs ~23%, wild ~2.0%)
-    # Scale x32 so that WILD_MAW can sit at 2.09 "units" (67/32). Total = 3427.
+    # Level 0: Sunlight Zone (all 11 paying symbols; lows ~56%, mids ~24%, highs ~18%, wild ~1.4%)
+    # Scale x32 so that WILD_MAW can sit at 1.5 "units" (48/32). Total = 3408.
     DepthLevel.LEVEL_0_SUNLIGHT: {
         SymbolType.LOW_10: 384,
         SymbolType.LOW_J: 384,
         SymbolType.LOW_Q: 384,
         SymbolType.LOW_K: 384,
         SymbolType.LOW_A: 384,
-        SymbolType.MID_HELMET: 320,
-        SymbolType.MID_COMPASS: 320,
-        SymbolType.HIGH_VIPER: 288,
-        SymbolType.HIGH_ANGLER: 256,
-        SymbolType.HIGH_SQUID: 160,
-        SymbolType.HIGH_LEVIATHAN: 96,
-        SymbolType.WILD_MAW: 67,
+        SymbolType.MID_HELMET: 416,
+        SymbolType.MID_COMPASS: 416,
+        SymbolType.HIGH_VIPER: 240,
+        SymbolType.HIGH_ANGLER: 208,
+        SymbolType.HIGH_SQUID: 112,
+        SymbolType.HIGH_LEVIATHAN: 48,
+        SymbolType.WILD_MAW: 48,
         SymbolType.DEAD_SEDIMENT: 0,
     },
 
@@ -113,8 +118,8 @@ LEVEL_WEIGHT_DISTRIBUTIONS: Dict[DepthLevel, Dict[SymbolType, int]] = {
         SymbolType.DEAD_SEDIMENT: 2,
     },
 
-    # Level 5: The Core / Ultra Bonus (all lows purged: only mids, highs, apex, wild; sediment 3%).
-    # Total = 101.
+    # Level 5: The Core / Ultra Bonus (all lows purged: only mids, highs, apex; sediment 4%, no table wild:
+    # the Leviathan itself is the Core's wild). Total = 101.
     DepthLevel.LEVEL_5_CORE: {
         SymbolType.LOW_10: 0,
         SymbolType.LOW_J: 0,
@@ -127,8 +132,8 @@ LEVEL_WEIGHT_DISTRIBUTIONS: Dict[DepthLevel, Dict[SymbolType, int]] = {
         SymbolType.HIGH_ANGLER: 16,
         SymbolType.HIGH_SQUID: 14,
         SymbolType.HIGH_LEVIATHAN: 10,
-        SymbolType.WILD_MAW: 1,
-        SymbolType.DEAD_SEDIMENT: 3,
+        SymbolType.WILD_MAW: 0,
+        SymbolType.DEAD_SEDIMENT: 4,
     },
 }
 
