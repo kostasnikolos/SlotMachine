@@ -189,6 +189,8 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 .icorow{display:flex;align-items:center;justify-content:space-between;gap:10px;height:40px;padding:0 4px;border-top:1px solid rgba(var(--a),.06)}
 .hico{width:40px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid rgba(var(--a),.1);color:#4c6370;font-size:14px;font-weight:600;transition:all .4s}
 .hico.on{color:#ffb27a;border-color:rgba(255,122,26,.5);box-shadow:0 0 14px rgba(255,122,26,.3)}
+.hico.pulse{animation:multpulse .5s cubic-bezier(.2,1.5,.35,1)}
+@keyframes multpulse{0%{transform:scale(1)}35%{transform:scale(1.35);box-shadow:0 0 30px rgba(255,122,26,.7)}100%{transform:scale(1)}}
 .hico.hot{color:#ff7a8a;border-color:rgba(255,42,75,.6);box-shadow:0 0 16px rgba(255,42,75,.4);animation:blink 1.4s ease-in-out infinite}
 .pearls{display:flex;gap:8px}
 .pd{width:10px;height:10px;border-radius:50%;border:1px solid rgba(214,184,255,.25);background:rgba(214,184,255,.03);transition:all .4s}
@@ -1897,6 +1899,7 @@ class Component extends DCLogic {
       case 'FEATURE_ACTIVATED': await this.showFeature(d.type); break;
       case 'GRID_EXPANSION_6X5': await this.expandGrid(); break;
       case 'SPIN_STARTED':
+        if (ctx.startLevel == null) ctx.startLevel = d.depth_level;
         this.setVis(d.depth_level);
         this.setState({ level: d.depth_level, meters: d.depth_meters, pts: d.accumulated_points, banked: d.spins_remaining, free: d.is_free_spin,
           gmult: d.spin_multiplier, vents: [], winCells: [], dimCells: [], creatureState: d.depth_level >= 1 ? 'ARMED' : 'DORMANT' });
@@ -1940,13 +1943,24 @@ class Component extends DCLogic {
         if (ctx.quiet) { this.flog('win', { celebrate: false, step: ctx.step, total: d.cumulative_payout, stake: this.cycle ? this.cycle.stake : ctx.bet }); this.aud.ui(); }
         else { this.flog('celebrationSound', { voice: 'win' }); this.aud.win(d.step_payout / ctx.bet); this.surge = Math.max(this.surge, 1.1); }
         ctx.deepest = Math.max(ctx.deepest, d.depth_level);
+        // the pressure multiplier (features.py B): the chip shows the live x and pulses when the depth has raised it
+        const liveMult = d.cascade_multiplier || 1;
+        if (liveMult !== this.state.gmult) {
+          const up = liveMult > (this.state.gmult || 1);
+          this.setState({ gmult: liveMult, multPulse: up });
+          if (up) { this.flog('pressureMult', { mult: liveMult, step: ctx.step }); this.aud.shimmer(); this.timers.push(setTimeout(() => this.setState({ multPulse: false }), 520)); }
+        }
         this.setState({ winCells: idx, win: +d.cumulative_payout.toFixed(2), pts: d.accumulated_points,
           winLabel: D.sym[top.symbol].name + ' · ' + top.reels + ' REELS · ' + this.fmt(top.ways) + ' WAYS' + (d.points_earned ? ' · +' + d.points_earned + ' PTS' : '') });
         this.flog('stepWin', { step: ctx.step, total: d.cumulative_payout });
         await this.wait(T.highlightMs); // the highlight + running total are never compressed, whatever the chain length
         break;
       }
-      case 'LEVEL_UP': await this.levelUpSeq(d); ctx.deepest = Math.max(ctx.deepest, d.new_level); break;
+      case 'LEVEL_UP': {
+        const gained = d.new_level - (ctx.startLevel ?? 0);
+        d.pressure = Math.min(4, 1 + 0.5 * Math.max(0, gained));
+        await this.levelUpSeq(d); ctx.deepest = Math.max(ctx.deepest, d.new_level); break;
+      }
       case 'PRESSURE_CRUSH': {
         // crush depth (features.py A): a dust return at the surface is crushed by the water: the board goes dark under a
         // pressure thud, the win chip collapses to nothing. Never a celebration: it is a loss with a reason.
@@ -2043,6 +2057,7 @@ class Component extends DCLogic {
     if (d.spins_added) rewards.push('+' + d.spins_added + ' FREE SPIN' + (d.spins_added > 1 ? 'S' : '') + ' BANKED');
     if (d.new_level === 5) rewards.push('ALL LOW RUNES PURGED');
     else if (L.purged) rewards.push('RUNE ' + D.sym[D.lows[L.purged - 1]].g + ' PURGED FROM THE REELS');
+    if (d.pressure && d.pressure > 1) rewards.push('PRESSURE ×' + (d.pressure % 1 ? d.pressure.toFixed(1) : d.pressure) + ' ON EVERY WIN');
     if (L.creature) rewards.push(L.creature.name + ' UNLOCKED');
     if (d.new_level === 3) { rewards.push('HYDROTHERMAL VENTS ONLINE · REELS 2–4'); rewards.push('PREDATORS FLOOD THE REELS'); }
     if (d.new_level === 5) { rewards.push('6×5 GRID · 15,625 WAYS'); rewards.push('2× GLOBAL MULTIPLIER'); }
@@ -2151,7 +2166,7 @@ class Component extends DCLogic {
     // 1. it swims in over the reels to the strike zone; the water there starts to churn
     if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: 4.3, splashed: false };
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
-      strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero } });
+      strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: d.spins_added ? 'SECOND BREATH' : C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero } });
     if (this.hero && this.hero.tex && this.hero.tex.lev_lunge) {
       // beat 1 (plan C of the presentation brief): the WHOLE creature rushes out of the dark at the strike cell, far -> near,
       // so the jaws that follow belong to a body; the painting's throat lands on the cell centre, 2.6x the zone wide
@@ -2228,6 +2243,12 @@ class Component extends DCLogic {
       await this.waitRaw(60);
     }
     this.G = d.grid;
+    if (d.spins_added) {
+      // second breath: the bite banked a spin; the bank ticks up under a shimmer once the wilds have surfaced
+      this.flog('retrigger', { spins: d.spins_added });
+      this.aud.shimmer();
+      this.setState({ banked: (this.state.banked || 0) + d.spins_added, strike: Object.assign({}, this.state.strike, { blurb: '+' + d.spins_added + ' FREE SPIN BANKED · ' + C.blurb }) });
+    }
     await this.waitRaw(1100);
     this.levRecede = false;
     this.isStriking = false;
@@ -6324,8 +6345,8 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       ventsStr: s.level >= 3 ? (s.vents.length ? 'ERUPTING' : 'ONLINE') : 'LOCKED',
       ventsColor: s.level >= 3 ? '#ffb27a' : '#5f8395',
       waysStr: this.fmt(ways),
-      gmultStr: '×' + (s.level >= 5 ? 2 : 1),
-      multIcoCls: s.level >= 5 ? 'hot' : '',
+      gmultStr: '×' + ((s.gmult || 1) % 1 ? (s.gmult).toFixed(1) : (s.gmult || 1)),
+      multIcoCls: (s.gmult > 1 ? 'on' : '') + (s.level >= 5 ? ' hot' : '') + (s.multPulse ? ' pulse' : ''),
       ventIcoCls: s.vents.length ? 'hot' : s.level >= 3 ? 'on' : '',
       pearlDots: [0, 1, 2, 3, 4].map((j) => ({ cls: j < s.pearls ? 'pd on' : 'pd' })),
       gaugeAria: 'Depth pressure ' + s.pts + (next ? ' of ' + hi : '') + ' points',
