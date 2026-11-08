@@ -1,9 +1,11 @@
 """FastAPI Application for The Descent: Abyssal Leviathan Slot Engine."""
 
 import os
+import time
+from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -50,6 +52,34 @@ def _debug_only() -> None:
     if not DEBUG_ENDPOINTS:
         raise HTTPException(status_code=404, detail="Not found")
 
+# Per-client rate limit on the paid endpoints (a public tester link sits behind a tunnel, so the client is read from the
+# forwarded header first). Token bucket: SLOT_RATE_PER_SEC sustained, SLOT_RATE_BURST burst. Memory-only, per process.
+RATE_PER_SEC = float(os.environ.get("SLOT_RATE_PER_SEC", "4"))
+RATE_BURST = float(os.environ.get("SLOT_RATE_BURST", "20"))
+_buckets: Dict[str, List[float]] = defaultdict(lambda: [RATE_BURST, time.monotonic()])
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    return request.client.host if request.client else "?"
+
+
+def _rate_limit(request: Request) -> None:
+    if RATE_PER_SEC <= 0:
+        return
+    b = _buckets[_client_ip(request)]
+    now = time.monotonic()
+    b[0] = min(RATE_BURST, b[0] + (now - b[1]) * RATE_PER_SEC)
+    b[1] = now
+    if b[0] < 1.0:
+        raise HTTPException(status_code=429, detail="Too many spins; slow down.")
+    b[0] -= 1.0
+    if len(_buckets) > 10000:   # never let the table grow without bound
+        _buckets.clear()
+
+
 # Static directory
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 if not STATIC_DIR.exists():
@@ -92,10 +122,21 @@ def outcome_to_dict(outcome) -> Dict[str, Any]:
 
 @app.get("/")
 async def serve_index():
+    """The game: the canvas front end (the old UI stays at /legacy)."""
+    if (STATIC_DIR / "canvas" / "index.html").exists():
+        return RedirectResponse(url="/static/canvas/index.html")
     index_path = STATIC_DIR / "index.html"
     if index_path.exists():
         return FileResponse(str(index_path))
     return {"status": "The Descent Slot Engine Online", "docs": "/docs"}
+
+
+@app.get("/legacy")
+async def serve_legacy():
+    index_path = STATIC_DIR / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    raise HTTPException(status_code=404, detail="legacy front end not present")
 
 
 @app.get("/canvas")
@@ -149,7 +190,8 @@ async def get_paytable():
 
 
 @app.post("/api/slot/spin")
-async def spin(req: SpinRequest):
+async def spin(req: SpinRequest, request: Request):
+    _rate_limit(request)
     try:
         buy_enum = FeatureBuyType[req.feature_buy]
     except KeyError:
@@ -160,7 +202,8 @@ async def spin(req: SpinRequest):
 
 
 @app.post("/api/slot/buy-bonus")
-async def buy_bonus(req: BonusBuyRequest):
+async def buy_bonus(req: BonusBuyRequest, request: Request):
+    _rate_limit(request)
     try:
         buy_enum = FeatureBuyType[req.feature_type]
     except KeyError:

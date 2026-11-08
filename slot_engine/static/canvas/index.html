@@ -168,6 +168,8 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 @keyframes jitter{25%{transform:translate(3px,-2px)}50%{transform:translate(-3px,2px)}75%{transform:translate(2px,3px)}}
 .bwx{font-family:'JetBrains Mono',monospace;font-size:24px;color:rgba(var(--bw),1);letter-spacing:.1em;text-shadow:0 2px 12px rgba(0,0,0,.9)}
 .bwhint{margin-top:22px;font-size:16px;letter-spacing:.45em;color:#d6eef5;animation:blink 1.6s ease-in-out infinite}
+.demoTag{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:30;pointer-events:none;font-size:11px;letter-spacing:.3em;color:rgba(170,200,205,.55);text-shadow:0 1px 4px rgba(0,0,0,.9);white-space:nowrap}
+.por .demoTag{bottom:4px;font-size:10px;letter-spacing:.2em}
 .hud.shake{animation:shake .45s linear}
 .hud.shake.feel{animation:shake var(--shakeMs,.25s) linear}
 .ibtn.off{opacity:.3;pointer-events:none;filter:grayscale(1)}
@@ -239,6 +241,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <canvas data-levfx="1" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: {{fxZ}}"></canvas>
 <canvas data-hero="1" width="{{rootW}}" height="{{rootH}}" style="position: absolute; left: 0; top: 0; width: {{rootW}}px; height: {{rootH}}px; display: block; pointer-events: none; z-index: {{heroZ}}"></canvas>
 <sc-if value="{{scanlines}}" hint-placeholder-val="{{ true }}"><div class="scan"></div></sc-if>
+<div class="demoTag">DEMO BUILD · PLAY MONEY ONLY · NO REAL WAGERING · 18+</div>
 
 <header style="position: absolute; left: {{margin}}px; right: {{margin}}px; top: 0; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid rgba(var(--a),0.06)">
 <div style="display: flex; align-items: center; gap: 16px">

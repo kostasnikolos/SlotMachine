@@ -45,8 +45,14 @@ class TestSlotAPI(unittest.TestCase):
         self.assertEqual(data["bet"], 350.0)
         self.assertGreater(len(data["events"]), 0)
 
-    def test_root_serves_html(self):
-        res = self.client.get("/")
+    def test_root_serves_the_canvas_front_end(self):
+        res = self.client.get("/")   # follows the redirect to /static/canvas/index.html
+        self.assertEqual(res.status_code, 200)
+        self.assertIn("The Descent", res.text)
+        self.assertIn("ABYSSAL LEVIATHAN", res.text)
+
+    def test_legacy_front_end_still_served(self):
+        res = self.client.get("/legacy")
         self.assertEqual(res.status_code, 200)
         self.assertIn("The Descent: Abyssal Leviathan", res.text)
 
