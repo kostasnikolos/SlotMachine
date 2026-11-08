@@ -1,0 +1,274 @@
+<title>Descent Mechanics Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one dark stage (the viewport) on top, an instrument strip of controls under it; stacks on a phone.
+   Single dark world by choice: this is the game's own palette (docs/art_bible.md). */
+:root{
+  --abyss:#02060A; --trench:#0B1418; --silt:#1E2C31; --bone:#F2E6CF; --mist:#C3D1D4;
+  --biolume:#3FE0D0; --brass:#B8874A; --brass2:#D9B77E; --sulfur:#E8B04A; --blood:#E0314B;
+  --panel:#0A1317; --line:rgba(63,224,208,.14);
+  --display:'Chakra Petch',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--abyss);color:var(--mist);font-family:var(--display);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px}
+.wrap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:15px;letter-spacing:.32em;font-weight:600;color:var(--bone)}
+h1 small{display:block;font-size:11px;letter-spacing:.18em;color:var(--biolume);opacity:.7;margin-top:4px;font-weight:500}
+.hint{font-family:var(--mono);font-size:11px;color:#6d8890;letter-spacing:.04em}
+.stage{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--abyss);border:1px solid var(--line);overflow:hidden}
+canvas{display:block;width:100%;height:100%}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.box{background:var(--panel);border:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.box h2{margin:0;font-size:10px;letter-spacing:.3em;color:var(--biolume);font-weight:600;opacity:.8}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+button{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.18em;color:var(--bone);background:transparent;
+  border:1px solid rgba(217,183,126,.45);padding:7px 10px;cursor:pointer;min-height:34px}
+button:hover{background:rgba(217,183,126,.08)}button:focus-visible{outline:2px solid var(--biolume);outline-offset:1px}
+button.hot{border-color:var(--sulfur);color:var(--sulfur)}
+label.t{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.12em;color:var(--mist);cursor:pointer;min-height:26px}
+label.t input{accent-color:var(--biolume);width:16px;height:16px}
+label.s{display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:11px;letter-spacing:.12em;color:var(--mist)}
+label.s span.v{font-family:var(--mono);color:var(--biolume);font-variant-numeric:tabular-nums}
+label.s input{grid-column:1/-1;accent-color:var(--biolume);width:100%}
+.lv{display:flex;gap:4px}.lv button{padding:6px 0;flex:1;letter-spacing:.08em}
+.lv button.on{background:rgba(63,224,208,.12);border-color:var(--biolume);color:var(--biolume)}
+.log{font-family:var(--mono);font-size:10px;color:#6d8890;line-height:1.5;max-height:64px;overflow:auto;white-space:pre-wrap}
+@media (prefers-reduced-motion:reduce){.stage{outline:1px dashed var(--sulfur)}}
+</style>
+<div class="wrap">
+<header>
+  <h1>DESCENT MECHANICS LAB<small>THE SEA GETS IN · LIVE PROTOTYPE OF THE IDEATION BRIEF</small></h1>
+  <div class="hint">tap WIN, then CASCADE · all timings scale with the slider · nothing here is final art</div>
+</header>
+<div class="stage"><canvas id="c" width="1600" height="900"></canvas></div>
+<div class="strip">
+  <div class="box"><h2>MOMENTS</h2>
+    <div class="row">
+      <button id="bWin">WIN WAY</button><button id="bCascade">CASCADE</button><button id="bHigh">CREATURE WAY</button>
+      <button id="bPts">+1 PRESSURE</button><button id="bCrush" class="hot">CRUSH</button><button id="bIdle">IDLE PASS</button>
+      <button id="bAuto">AUTO</button><button id="bReset">RESET</button>
+    </div>
+    <div class="lv" id="lv"></div>
+  </div>
+  <div class="box"><h2>MECHANICS ON / OFF</h2>
+    <label class="t">1 SEAM BREACH (crack + jets + current)<input type="checkbox" id="mSeam" checked></label>
+    <label class="t">2 LURE RELAY (creature ways)<input type="checkbox" id="mLure" checked></label>
+    <label class="t">3 HULL IMPLOSION<input type="checkbox" id="mImpl" checked></label>
+    <label class="t">4 MARINE SNOW REFILL<input type="checkbox" id="mRefill" checked></label>
+    <label class="t">5 HULL INTEGRITY (crack grows, beads)<input type="checkbox" id="mHull" checked></label>
+    <label class="t">10 SOMETHING PASSES (idle shadow)<input type="checkbox" id="mIdle" checked></label>
+  </div>
+  <div class="box"><h2>TUNING</h2>
+    <label class="s">TIME SCALE <span class="v" id="vTime">1.0×</span><input type="range" id="sTime" min="0.5" max="3" step="0.1" value="1"></label>
+    <label class="s">JET INTENSITY <span class="v" id="vJet">1.0</span><input type="range" id="sJet" min="0" max="2" step="0.1" value="1"></label>
+    <label class="s">CRACK LUMINANCE <span class="v" id="vCrack">35%</span><input type="range" id="sCrack" min="10" max="80" step="5" value="35"></label>
+    <label class="s">STAKE RULE: BELOW-STAKE WIN <span class="v" id="vLdw">off</span><input type="range" id="sLdw" min="0" max="1" step="1" value="0"></label>
+  </div>
+  <div class="box"><h2>TIMELINE</h2><div class="log" id="log">ready</div></div>
+</div>
+</div>
+<script>
+(function(){
+'use strict';
+const cv=document.getElementById('c'), g=cv.getContext('2d');
+const W=1600,H=900, COLS=5, ROWS=5, PITCH=118, CELL=106;
+const GX=Math.round(W/2-(COLS*PITCH-12)/2), GY=120;        // grid origin
+const FR={x:GX-44,y:GY-44,w:COLS*PITCH-12+88,h:ROWS*PITCH-12+88}; // frame rect
+const LOWS=['10','J','Q','K','A'], HIGHS=['V','A','S','L'];  // viper angler squid leviathan (stand-ins)
+const PAL={cy:[63,224,208], su:[232,176,74], bl:[224,49,75], brass:[184,135,74], brass2:[217,183,126]};
+const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const Q=id=>document.getElementById(id);
+const on=id=>Q(id).checked;
+let TS=1, JET=1, CRACKL=0.35, LDW=false;
+const S={ level:0, pts:0, cells:[], seams:[], jets:[], parts:[], bubbles:[], refill:[], crack:[], crackFlash:0, beads:[], snow:[], shadow:null, shake:0, dim:0, lures:[], t:0, auto:false, busy:false, sill:'' };
+const log=(m)=>{const l=Q('log'); l.textContent=(m+'\n'+l.textContent).slice(0,1200);};
+function waterCol(){ return S.level<=1?PAL.cy:S.level<=3?PAL.su:PAL.bl; }
+const rgba=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, inQuart=t=>t*t*t*t, outQ=t=>1-(1-t)*(1-t);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*TS));
+function newSym(){ return Math.random()<0.72?{k:'low',g:LOWS[Math.floor(Math.random()*5)]}:{k:'high',g:HIGHS[Math.floor(Math.random()*4)]}; }
+function reset(){ S.cells=[]; for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)S.cells.push({r,c,sym:newSym(),scale:1,alpha:1,y:0,lit:1,imp:null,lure:0}); S.seams=[];S.jets=[];S.parts=[];S.bubbles=[];S.refill=[];S.crack=[];S.beads=[];S.lures=[];S.pts=0;S.level=0;S.shadow=null;S.sill='';lvUI();log('reset'); }
+const cell=(r,c)=>S.cells[r*COLS+c];
+const cx=c=>GX+c*PITCH+CELL/2, cy=r=>GY+r*PITCH+CELL/2;
+for(let i=0;i<140;i++)S.snow.push({x:rnd(FR.x,FR.x+FR.w),y:rnd(FR.y,FR.y+FR.h),s:rnd(.6,2),v:rnd(6,18),ph:rnd(0,6)});
+/* ---------- drawing ---------- */
+function drawFrame(){
+  // steel frame + rivets
+  g.fillStyle='#070d11'; g.fillRect(FR.x-26,FR.y-26,FR.w+52,FR.h+52);
+  const grd=g.createLinearGradient(FR.x,FR.y,FR.x+FR.w,FR.y+FR.h); grd.addColorStop(0,'#1a2429'); grd.addColorStop(.5,'#0d151a'); grd.addColorStop(1,'#070c10');
+  g.fillStyle=grd; g.fillRect(FR.x-26,FR.y-26,FR.w+52,FR.h+52);
+  g.strokeStyle='rgba(63,224,208,.18)'; g.lineWidth=1; g.strokeRect(FR.x-26.5,FR.y-26.5,FR.w+53,FR.h+53);
+  // glass pane
+  g.fillStyle='#030a0e'; g.fillRect(FR.x,FR.y,FR.w,FR.h);
+  const kl=g.createRadialGradient(FR.x+FR.w*.3,FR.y-80,10,FR.x+FR.w*.3,FR.y-80,FR.w*1.1); kl.addColorStop(0,'rgba(63,224,208,.10)'); kl.addColorStop(1,'rgba(63,224,208,0)');
+  g.fillStyle=kl; g.fillRect(FR.x,FR.y,FR.w,FR.h);
+  // rivets
+  g.fillStyle='#1b262b'; g.strokeStyle='rgba(217,183,126,.35)';
+  for(let i=0;i<=8;i++){ const x=FR.x-13+i*(FR.w+26)/8; for(const y of [FR.y-13,FR.y+FR.h+13]){ g.beginPath();g.arc(x,y,5,0,7);g.fill();g.stroke(); } }
+  for(let i=1;i<6;i++){ const y=FR.y-13+i*(FR.h+26)/6; for(const x of [FR.x-13,FR.x+FR.w+13]){ g.beginPath();g.arc(x,y,5,0,7);g.fill();g.stroke(); } }
+  // sill trough (idea 6 hint): water level = pts progress
+  const sy=FR.y+FR.h+30, prog=Math.min(1,S.pts/6);
+  g.fillStyle='#0c1216'; g.fillRect(FR.x+20,sy,FR.w-40,16);
+  g.fillStyle=rgba(waterCol(),.35); g.fillRect(FR.x+20,sy+16-16*prog,(FR.w-40),16*prog);
+  g.strokeStyle='rgba(217,183,126,.4)'; g.strokeRect(FR.x+20.5,sy+.5,FR.w-41,16);
+  g.font='600 12px "Chakra Petch"'; g.fillStyle='rgba(195,209,212,.55)'; g.textAlign='left';
+  g.fillText(['SUNLIGHT','TWILIGHT','MIDNIGHT','ABYSSAL PLAINS','HADAL','THE CORE'][S.level]+' · PRESSURE '+S.pts+' / 6'+(S.sill?'   ·   '+S.sill:''),FR.x+22,sy+34);
+}
+function keyLight(x){ // 0..1 occlusion from the idle shadow
+  if(!S.shadow) return 1; const d=Math.abs(x-S.shadow.x)/420; return 1-Math.max(0,1-d*d)*0.85;
+}
+function drawMedallion(cl){
+  const x=cx(cl.c), y=cy(cl.r)+cl.y, R=CELL/2*cl.scale; if(R<1||cl.alpha<=0)return;
+  const lit=cl.lit*keyLight(x);
+  g.save(); g.globalAlpha=cl.alpha; g.translate(x,y);
+  if(cl.imp){ // implosion pinch: squash then crumple
+    const k=cl.imp.k; g.scale(1-0.08*Math.min(1,k*6)*(1-k), 1+0.05*Math.min(1,k*6)*(1-k)); g.rotate(k*0.6*(cl.r%2?1:-1));
+  }
+  const body=g.createRadialGradient(-R*.35,-R*.4,R*.1,0,0,R);
+  body.addColorStop(0,`rgba(${Math.round(60+90*lit)},${Math.round(52+70*lit)},${Math.round(34+44*lit)},1)`);
+  body.addColorStop(.7,'#2a2118'); body.addColorStop(1,'#120e0a');
+  g.fillStyle=body; g.beginPath(); g.arc(0,0,R,0,7); g.fill();
+  g.lineWidth=Math.max(1,R*.08); g.strokeStyle=rgba(PAL.brass2,.25+.5*lit); g.beginPath(); g.arc(0,0,R*.92,0,7); g.stroke();
+  // rim light from upper-left (the one key light), scaled by occlusion
+  g.strokeStyle=rgba(PAL.cy,.55*lit); g.lineWidth=Math.max(1,R*.05); g.beginPath(); g.arc(0,0,R*.95,Math.PI*1.05,Math.PI*1.6); g.stroke();
+  g.fillStyle=cl.sym.k==='high'?rgba(PAL.cy,.25+.6*lit):rgba(PAL.brass2,.3+.55*lit);
+  g.font=`700 ${Math.round(R*(cl.sym.k==='high'?.9:.8))}px "Chakra Petch"`; g.textAlign='center'; g.textBaseline='middle'; g.fillText(cl.sym.g,0,R*.04);
+  if(cl.sym.k==='high'){ // lure point (idea 2)
+    const a=.25+cl.lure*.75; g.fillStyle=rgba(PAL.cy,a); g.shadowColor=rgba(PAL.cy,cl.lure); g.shadowBlur=cl.lure*28*R/50; g.beginPath(); g.arc(R*.22,-R*.18,R*.07+cl.lure*R*.05,0,7); g.fill(); g.shadowBlur=0;
+    if(cl.lure>0){ g.strokeStyle=rgba(PAL.cy,.35*cl.lure); g.lineWidth=2; g.beginPath(); g.arc(0,0,R*(1.1+0.6*cl.lure),0,7); g.stroke(); }
+  }
+  g.restore();
+}
+function crackPath(pts,prog,width,lum,col){
+  const n=Math.max(2,Math.ceil(pts.length*prog));
+  g.save(); g.lineJoin='round'; g.lineCap='round';
+  g.strokeStyle=rgba(col,lum*.35); g.lineWidth=width*4; g.shadowColor=rgba(col,lum); g.shadowBlur=14;
+  g.beginPath(); pts.slice(0,n).forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.stroke();
+  g.shadowBlur=0; g.strokeStyle='rgba(2,6,10,.9)'; g.lineWidth=width*1.6; g.stroke();
+  g.strokeStyle=rgba([235,250,250],lum*1.1); g.lineWidth=width*.6; g.stroke();
+  g.restore();
+}
+function jagged(a,b,seg,amp){ const pts=[a]; for(let i=1;i<seg;i++){const t=i/seg; pts.push([a[0]+(b[0]-a[0])*t+rnd(-amp,amp),a[1]+(b[1]-a[1])*t+rnd(-amp,amp)]);} pts.push(b); return pts; }
+function draw(dt){
+  g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,W,H);
+  const sh=S.shake>0?rnd(-1,1)*S.shake*2:0; g.translate(sh,S.shake>0?rnd(-1,1)*S.shake*2:0);
+  g.fillStyle='#02060A'; g.fillRect(-10,-10,W+20,H+20);
+  // backdrop: water grade by level
+  const wc=waterCol(); const bg=g.createRadialGradient(W*.3,-100,50,W*.5,H*.5,W*.8); bg.addColorStop(0,rgba(wc,.07)); bg.addColorStop(1,'rgba(2,6,10,0)'); g.fillStyle=bg; g.fillRect(0,0,W,H);
+  // idle shadow: an occluder sliding across the backdrop (read on the rim lights)
+  if(S.shadow){ const s=S.shadow; const og=g.createRadialGradient(s.x,H*.45,40,s.x,H*.45,460); og.addColorStop(0,'rgba(0,0,0,.42)'); og.addColorStop(.6,'rgba(0,0,0,.22)'); og.addColorStop(1,'rgba(0,0,0,0)'); g.fillStyle=og; g.beginPath(); g.ellipse(s.x,H*.45,460,500,0.2,0,7); g.fill(); }
+  drawFrame();
+  g.save(); g.beginPath(); g.rect(FR.x,FR.y,FR.w,FR.h); g.clip();
+  // marine snow inside the pane: drifts up (sinking POV); swirls in the shadow's wake
+  g.fillStyle='rgba(195,209,212,.55)';
+  for(const p of S.snow){ const sw=S.shadow?Math.max(0,1-Math.abs(p.x-S.shadow.x)/300)*40:0; p.y-=p.v*dt*(S.level>=2?-.6:1); p.x+=Math.sin(S.t*.7+p.ph)*8*dt+sw*dt; if(p.y<FR.y-4)p.y=FR.y+FR.h+4; if(p.y>FR.y+FR.h+4)p.y=FR.y-4; if(p.x<FR.x)p.x+=FR.w; if(p.x>FR.x+FR.w)p.x-=FR.w; g.globalAlpha=.25+.5*Math.abs(Math.sin(S.t+p.ph)); g.beginPath(); g.arc(p.x,p.y,p.s,0,7); g.fill(); }
+  g.globalAlpha=1;
+  // dim (crush)
+  // cells
+  for(const cl of S.cells) if(cl.y!==0) drawMedallion(cl);   // moving (refilling) symbols pass behind the resting ones
+  for(const cl of S.cells) if(cl.y===0) drawMedallion(cl);
+  if(S.dim>0){ g.fillStyle=`rgba(2,6,10,${S.dim*.6})`; g.fillRect(FR.x,FR.y,FR.w,FR.h); }
+  // seams (idea 1): crack along the way, then current, then scar
+  for(const sm of S.seams){
+    if(sm.flow>0&&!sm.scar){ // silt current: fine specks streaming along the seam toward the last symbol, under the crack
+      g.save(); g.lineCap='round'; g.setLineDash([1.5,9]); g.lineDashOffset=-S.t*160; g.strokeStyle=rgba(sm.col,.28*sm.flow); g.lineWidth=2+sm.width*.6; g.beginPath(); sm.pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.stroke(); g.restore();
+    }
+    const lum=sm.scar?CRACKL*.35*sm.scarA:CRACKL*(1+0.4*Math.sin(S.t*18)); crackPath(sm.pts,Math.min(1,sm.prog),sm.scar?1.1:1.4+sm.width*.4,lum,sm.col);
+  }
+  // jets: needle sprays perpendicular to the way
+  for(const j of S.jets){ const k=j.t/j.life; g.save(); g.translate(j.x,j.y); g.rotate(j.a); const L=j.len*Math.min(1,k*4); const gr=g.createLinearGradient(0,0,L,0); gr.addColorStop(0,rgba([235,250,250],.9*(1-k))); gr.addColorStop(.5,rgba(PAL.cy,.6*(1-k))); gr.addColorStop(1,rgba(PAL.cy,0)); g.strokeStyle=gr; g.lineWidth=2.2*JET; g.beginPath(); g.moveTo(0,0); g.lineTo(L,rnd(-2,2)); g.stroke(); g.restore(); }
+  // dust / spray / bubbles
+  for(const p of S.parts){ g.fillStyle=rgba(p.c,p.a*(1-p.t/p.life)); g.beginPath(); g.arc(p.x,p.y,p.r,0,7); g.fill(); }
+  for(const b of S.bubbles){ g.strokeStyle=rgba([195,209,212],.5*(1-b.t/b.life)); g.lineWidth=1; g.beginPath(); g.arc(b.x,b.y,b.r,0,7); g.stroke(); g.fillStyle=rgba([235,250,250],.6*(1-b.t/b.life)); g.beginPath(); g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.25,0,7); g.fill(); }
+  // hull crack (idea 5) from the upper-left rivet
+  if(S.crack.length>1){ crackPath(S.crack,1,1.4,Math.min(.4,CRACKL)*(1+S.crackFlash*2),PAL.cy); }
+  // condensation beads
+  for(const b of S.beads){ const k=b.t/b.life; const y=FR.y+8+(FR.h-16)*ease(Math.min(1,k)); g.fillStyle='rgba(235,250,250,.55)'; g.beginPath(); g.ellipse(b.x,y,2.2,3.4,0,0,7); g.fill(); g.strokeStyle='rgba(195,209,212,.18)'; g.lineWidth=1.2; g.beginPath(); g.moveTo(b.x,FR.y+8); g.lineTo(b.x,y-4); g.stroke(); }
+  g.restore();
+  // pressure chip
+  g.font='600 13px "JetBrains Mono"'; g.textAlign='right'; g.fillStyle=rgba(PAL.su,.85); g.fillText('×'+(1+0.5*Math.max(0,S.level-0)).toFixed(1).replace('.0',''),FR.x+FR.w+26,FR.y-36);
+  g.textAlign='left'; g.fillStyle='rgba(109,136,144,.8)'; g.font='500 12px "JetBrains Mono"'; g.fillText('L'+S.level+' · '+(S.level<=1?'CYAN WATER':S.level<=3?'SULFUR WATER':'BLOOD WATER')+' · REFILL '+(S.level>=2?'RISES FROM BELOW':'SINKS FROM ABOVE'),FR.x-26,FR.y-36);
+}
+/* ---------- update ---------- */
+function update(dt){
+  S.t+=dt; S.shake=Math.max(0,S.shake-dt*6); S.crackFlash=Math.max(0,S.crackFlash-dt*8); S.dim=Math.max(0,S.dim-dt*1.5);
+  for(const sm of S.seams){ sm.prog+=dt/(0.2*TS); if(sm.prog>1&&!sm.scar){ sm.flow=Math.min(1,sm.flow+dt/(0.12*TS)); } if(sm.scar){ sm.scarA=(sm.scarA??1)-dt/(6*TS); } }
+  S.seams=S.seams.filter(sm=>!(sm.scar&&sm.scarA<=0));
+  for(const j of S.jets) j.t+=dt; S.jets=S.jets.filter(j=>j.t<j.life);
+  for(const p of S.parts){ p.t+=dt; if(p.flip&&p.t>p.flip){ p.vx*=-1.6; p.vy*=-1.6; p.flip=0; } p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=p.gr*dt; }
+  S.parts=S.parts.filter(p=>p.t<p.life);
+  for(const b of S.bubbles){ b.t+=dt; b.y-=b.v*dt; b.x+=Math.sin(S.t*6+b.r)*10*dt; } S.bubbles=S.bubbles.filter(b=>b.t<b.life);
+  for(const b of S.beads) b.t+=dt; S.beads=S.beads.filter(b=>b.t<b.life);
+  for(const cl of S.cells){ if(cl.imp){ cl.imp.t+=dt; const k=Math.min(1,cl.imp.t/(0.2*TS)); cl.imp.k=k; cl.scale=1-0.92*inQuart(k); if(k>=1){cl.alpha=0;} } if(cl.lure>0&&!cl.lureHold) cl.lure=Math.max(0,cl.lure-dt*.8); }
+  for(const rf of S.refill){ rf.t+=dt; const k=Math.min(1,rf.t/(0.3*TS)); const e=k*k; rf.cl.y=rf.from*(1-e); rf.cl.lit=Math.min(1,Math.max(0.08,(k-0.72)/0.28)); rf.cl.alpha=1; rf.cl.scale=k>=1?1:0.98; if(k>=1){rf.cl.y=0;rf.cl.lit=1;} }
+  S.refill=S.refill.filter(r=>r.t<0.3*TS);
+  if(S.shadow){ S.shadow.x-=dt*(W+900)/(4.5*TS); if(S.shadow.x<-500){S.shadow=null; log('…it is gone');} }
+  if(on('mHull')&&S.level>=1&&Math.random()<dt/8) S.beads.push({x:rnd(FR.x+20,FR.x+FR.w-20),t:0,life:1.2*TS});
+}
+/* ---------- moments ---------- */
+function pickWay(high){ const n=3+Math.floor(Math.random()*3); const rows=[]; for(let c=0;c<n;c++)rows.push(Math.floor(Math.random()*ROWS)); if(high)for(let c=0;c<n;c++)cell(rows[c],c).sym={k:'high',g:HIGHS[c%4]}; return rows; }
+async function win(high){
+  if(S.busy)return; S.busy=true;
+  for(const sm of S.seams) sm.scar=true;   // a new spin: old seams are scars now
+  const rows=pickWay(high); const cells=rows.map((r,c)=>cell(r,c)); const col=waterCol();
+  const pts=[]; for(let c=0;c<rows.length;c++){ const a=[cx(c)-CELL*.5,cy(rows[c])], b=[cx(c)+CELL*.5,cy(rows[c])]; pts.push(...jagged(c?[cx(c-1)+CELL*.5,cy(rows[c-1])]:a,b,8,7)); }
+  const ldw=LDW; log((high?'CREATURE WAY ':'WIN WAY ')+rows.length+' reels'+(ldw?' · below stake: crack only':''));
+  if(high&&on('mLure')){ // relay: lures open 60 ms apart, then the seam fires at once
+    for(const cl of cells){ cl.lure=1; cl.lureHold=true; await sleep(60); }
+    if(on('mSeam')){ S.seams.push({pts,prog:0.98,flow:0,width:rows.length-3,col,scar:false}); }
+  } else if(on('mSeam')){ S.seams.push({pts,prog:0,flow:0,width:rows.length-3,col,scar:false}); await sleep(240); }
+  const sm=S.seams[S.seams.length-1];
+  if(on('mSeam')&&!ldw){ // jets at each node, perpendicular to the way
+    for(let c=0;c<rows.length;c++){ const dir=Math.random()<.5?-1:1; for(let k=0;k<3;k++) S.jets.push({x:cx(c)+rnd(-20,20),y:cy(rows[c])+rnd(-6,6),a:dir*Math.PI/2+rnd(-.25,.25),len:CELL*rnd(1,1.8)*JET,t:-k*0.03,life:0.6*TS}); for(let k=0;k<10;k++)S.parts.push({x:cx(c),y:cy(rows[c]),vx:rnd(-40,40),vy:dir*rnd(80,220),gr:60,r:rnd(.8,1.8),c:[235,250,250],a:.7,t:0,life:rnd(.5,.9)*TS}); }
+    await sleep(210);
+  } else await sleep(ldw?300:210);
+  if(sm&&ldw){ sm.scar=true; S.busy=false; return; }
+  S.lastWay=cells; S.busy=false;
+}
+async function cascade(){
+  if(S.busy)return; if(!S.lastWay){ await win(false); } S.busy=true;
+  const cells=S.lastWay; S.lastWay=null; const mult=cells.length>=5;
+  log('CASCADE · '+(on('mImpl')?'implode':'remove')+' '+cells.length+' → '+(on('mRefill')?(S.level>=2?'rise from below':'sink from murk'):'drop'));
+  if(on('mImpl')){ if(!rm){ S.shake=1; } }
+  for(let i=0;i<cells.length;i++){ const cl=cells[i]; cl.lureHold=false;
+    if(on('mImpl')){ cl.imp={t:0,k:0}; const x=cx(cl.c),y=cy(cl.r);
+      for(let k=0;k<12;k++){ const a=rnd(0,7),v=rnd(90,180); S.parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,gr:0,r:rnd(1,2.2),c:k<3?[235,250,250]:PAL.brass,a:k<3?.9:.6,t:0,life:.5*TS,flip:.12*TS}); }
+      setTimeout(()=>S.bubbles.push({x:x+rnd(-8,8),y:y,r:rnd(3,5),v:120,t:0,life:.8*TS}),200*TS);
+    } else { cl.alpha=0; }
+    await sleep(25);
+  }
+  await sleep(250);
+  for(const sm of S.seams) sm.scar=true;
+  // refill: the empty cells get new symbols from the murk (direction by level)
+  const stagger=40; const cols=[...new Set(cells.map(c=>c.c))].sort();
+  for(const c of cols){ const emp=cells.filter(x=>x.c===c); for(const cl of emp){ cl.sym=newSym(); cl.imp=null; cl.scale=1; cl.alpha=on('mRefill')?0:1; cl.lit=1; cl.lure=0;
+      if(on('mRefill')){ cl.alpha=1; cl.lit=0.08; const from=S.level>=2?(FR.y+FR.h+CELL-cy(cl.r)):(FR.y-CELL-cy(cl.r)); cl.y=from; S.refill.push({cl,from,t:0}); for(let k=0;k<4;k++)S.parts.push({x:cx(cl.c)+rnd(-30,30),y:cy(cl.r)+from,vx:0,vy:S.level>=2?-30:-50,gr:0,r:rnd(.6,1.4),c:[195,209,212],a:.5,t:0,life:.6*TS}); }
+    } await sleep(stagger); }
+  await sleep(320); if(on('mRefill')&&!rm){ S.shake=.4; }
+  const pts=cells.length>=4?2:1; S.pts+=pts; log('+'+pts+' pressure'); if(S.pts>=6){ S.pts=0; S.level=Math.min(5,S.level+1); lvUI(); log('LEVEL UP → L'+S.level); }
+  if(on('mHull')&&S.level>=2) growCrack(pts);
+  S.busy=false;
+}
+function growCrack(n){ for(let i=0;i<n;i++){ let last=S.crack[S.crack.length-1]||[FR.x+2,FR.y+2]; if(!S.crack.length)S.crack.push(last); const ang=rnd(0.05,0.9)+(last[0]>FR.x+FR.w*.6?0.5:0); const len=rnd(20,60); const nx=Math.min(FR.x+FR.w-2,last[0]+Math.cos(ang)*len), ny=Math.min(FR.y+FR.h-2,last[1]+Math.sin(ang)*len*0.6); S.crack.push([nx,ny]); } S.crackFlash=1; }
+function pressure(){ S.pts++; log('+1 pressure (tick)'); if(on('mHull')&&S.level>=2)growCrack(1); if(S.pts>=6){S.pts=0;S.level=Math.min(5,S.level+1);lvUI();log('LEVEL UP → L'+S.level);} }
+function crush(){ if(S.busy)return; log('CRUSHED BY PRESSURE · frame shudders, crack grows, a bead drops, board dims (400 ms)'); if(!rm)S.shake=1; S.dim=1; if(on('mHull')){ if(S.level<2)S.level=Math.max(S.level,0); growCrack(1); S.beads.push({x:rnd(FR.x+40,FR.x+FR.w-40),t:0,life:1.2*TS}); } S.sill='0.00 LOST TO THE DEEP'; setTimeout(()=>S.sill='',2600*TS); }
+function idle(){ if(!on('mIdle')||S.shadow)return; S.shadow={x:W+500}; log('SOMETHING PASSES · the key light is occluded right to left (4.5 s); nothing lights up'); }
+/* ---------- UI ---------- */
+function lvUI(){ const el=Q('lv'); el.innerHTML=''; for(let i=0;i<=5;i++){ const b=document.createElement('button'); b.textContent='L'+i; b.className=i===S.level?'on':''; b.onclick=()=>{S.level=i;S.pts=0;lvUI();log('level set to L'+i);}; el.appendChild(b);} }
+Q('bWin').onclick=()=>win(false); Q('bHigh').onclick=()=>win(true); Q('bCascade').onclick=cascade; Q('bPts').onclick=pressure; Q('bCrush').onclick=crush; Q('bIdle').onclick=idle; Q('bReset').onclick=reset;
+Q('bAuto').onclick=function(){ S.auto=!S.auto; this.classList.toggle('on',S.auto); this.textContent=S.auto?'AUTO ▮▮':'AUTO'; if(S.auto)autoLoop(); };
+async function autoLoop(){ while(S.auto){ await win(Math.random()<.3); await sleep(500); await cascade(); await sleep(1400); if(Math.random()<.15)crush(); if(Math.random()<.12)idle(); await sleep(900); } }
+Q('sTime').oninput=e=>{TS=+e.target.value;Q('vTime').textContent=TS.toFixed(1)+'×';}; Q('sJet').oninput=e=>{JET=+e.target.value;Q('vJet').textContent=JET.toFixed(1);};
+Q('sCrack').oninput=e=>{CRACKL=e.target.value/100;Q('vCrack').textContent=e.target.value+'%';}; Q('sLdw').oninput=e=>{LDW=e.target.value==='1';Q('vLdw').textContent=LDW?'on (crack only, no jets)':'off';};
+reset();
+let last=performance.now(), idleT=0;
+function frame(now){ const dt=Math.min(.05,(now-last)/1000); last=now; idleT+=dt; if(idleT>12&&!S.busy&&!S.shadow&&on('mIdle')){idleT=0;idle();} update(dt); draw(dt); requestAnimationFrame(frame); }
+['pointerdown','keydown'].forEach(ev=>addEventListener(ev,()=>{idleT=0;},{passive:true}));
+requestAnimationFrame(frame);
+})();
+</script>
