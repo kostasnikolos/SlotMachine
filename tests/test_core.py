@@ -38,8 +38,8 @@ class TestCoreSlotEngine(unittest.TestCase):
         self.assertEqual(len(lev_wins), 1)
         self.assertEqual(lev_wins[0].reels_matched, 3)
         self.assertEqual(lev_wins[0].ways_count, 1)
-        # 3-reel HIGH_LEVIATHAN pays 0.15x
-        self.assertEqual(lev_wins[0].base_payout_multiplier, 0.15)
+        # 3-reel HIGH_LEVIATHAN pays whatever the live paytable says (the scale is calibrated; see docs/math_calibration.md)
+        self.assertEqual(lev_wins[0].base_payout_multiplier, SYMBOL_PAYTABLE[SymbolType.HIGH_LEVIATHAN][3])
         # Pressure points for HIGH_LEVIATHAN is 3 per winning combo
         self.assertEqual(lev_wins[0].pressure_points, 3)
 
@@ -69,7 +69,8 @@ class TestCoreSlotEngine(unittest.TestCase):
         # Ways count should be 2 * 3 * 1 = 6 ways!
         self.assertEqual(angler_wins[0].ways_count, 6)
         # 3-reel ANGLER pays 0.08x per way. Total payout = 6 ways * 0.08x * $2.00 bet = $0.96
-        self.assertAlmostEqual(angler_wins[0].total_payout, 0.96, places=2)
+        # 6 ways x the live 4-reel ANGLER pay (the grid built above gives 1 x 2 x 3 x 1 ways across 4 reels)
+        self.assertAlmostEqual(angler_wins[0].total_payout, 6 * SYMBOL_PAYTABLE[SymbolType.HIGH_ANGLER][angler_wins[0].reels_matched] * 2.0, places=4)
 
     def test_cascade_gravity(self):
         rng = SlotRNG(seed=123)

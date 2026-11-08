@@ -1,0 +1,18 @@
+# keep the image to the engine and its front end
+*
+!requirements.txt
+!slot_engine/
+!scripts/math_check.py
+!artifacts/math_baseline.json
+# never ship these even if they sit under slot_engine
+slot_engine/static/snapshots/
+slot_engine/static/assets/models/
+slot_engine/static/assets/v2/
+slot_engine/static/stage_v2/
+# the old front end's heavy 3D assets (the canvas front end does not load them)
+slot_engine/static/assets/pbr/
+slot_engine/static/assets/textures/
+slot_engine/static/assets/tripo_views/
+slot_engine/static/assets/turnarounds/
+**/__pycache__/
+**/*.pyc

@@ -41,6 +41,15 @@ app.add_middleware(
 # Engine instance
 engine = SlotStateMachine(rng=SlotRNG())
 
+# Debug endpoints that WRITE to the static folder (/api/snapshot, /api/upload-model) are off unless SLOT_DEBUG_ENDPOINTS=1.
+# The container runs with a read-only filesystem and never needs them.
+DEBUG_ENDPOINTS = os.environ.get("SLOT_DEBUG_ENDPOINTS", "1" if os.environ.get("SLOT_HOST") is None else "0") == "1"
+
+
+def _debug_only() -> None:
+    if not DEBUG_ENDPOINTS:
+        raise HTTPException(status_code=404, detail="Not found")
+
 # Static directory
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 if not STATIC_DIR.exists():
@@ -171,6 +180,7 @@ class SnapshotRequest(BaseModel):
 
 @app.post("/api/snapshot")
 async def save_snapshot(req: SnapshotRequest):
+    _debug_only()
     import base64
     import re
 
@@ -187,18 +197,12 @@ async def save_snapshot(req: SnapshotRequest):
     with open(snap_path, "wb") as f:
         f.write(img_data)
         
-    # 2. Save directly to brain artifact directory if exists
-    artifact_dir = Path("/Users/kosta/.gemini/antigravity/brain/c8ee4d6f-219a-45e7-ba86-3151e9bd0b1a")
-    if artifact_dir.exists():
-        art_path = artifact_dir / f"{req.name}.png"
-        with open(art_path, "wb") as f:
-            f.write(img_data)
-
     return {"status": "SUCCESS", "saved_to": str(snap_path), "size_bytes": len(img_data)}
 
 
 @app.post("/api/upload-model")
 async def upload_model(file: UploadFile = File(...)):
+    _debug_only()
     content = await file.read()
     models_dir = STATIC_DIR / "assets" / "models"
     models_dir.mkdir(parents=True, exist_ok=True)
@@ -206,12 +210,6 @@ async def upload_model(file: UploadFile = File(...)):
     with open(model_path, "wb") as f:
         f.write(content)
         
-    artifact_dir = Path("/Users/kosta/.gemini/antigravity/brain/c8ee4d6f-219a-45e7-ba86-3151e9bd0b1a")
-    if artifact_dir.exists():
-        art_path = artifact_dir / "custom_leviathan.glb"
-        with open(art_path, "wb") as f:
-            f.write(content)
-            
     return {
         "status": "SUCCESS",
         "filename": file.filename,

@@ -24,6 +24,13 @@ pip install -r requirements.txt
 python3 -m uvicorn slot_engine.api.app:app --host 0.0.0.0 --port 8080 --reload
 ```
 
+### 1b. Or run it in Docker (recommended for demos: always on, isolated, read-only)
+```bash
+docker compose up -d --build      # http://localhost:8080/canvas  (phone: http://<pc-ip>:8080/canvas)
+```
+After a `git pull`, run the same command to rebuild. The container runs as a non-root user on a read-only filesystem
+with all capabilities dropped; the file-writing debug endpoints are disabled in it (`SLOT_DEBUG_ENDPOINTS`).
+
 ### 2. Run Tests
 ```bash
 python3 -m pytest tests/ -v
