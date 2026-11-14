@@ -1,0 +1,866 @@
+{
+ "pack_scale": 1,
+ "note": "All x/y/w/h are stage pixels for the layout's stage size; 'cells' gives the same rect in units of one cell relative to the top-left of the grid opening. Files are authored at pack_scale x those sizes.",
+ "layouts": {
+  "landscape": {
+   "stage": [
+    1920,
+    1080
+   ],
+   "cell": 146,
+   "grid": {
+    "x": 595,
+    "y": 147,
+    "cols": 5,
+    "rows": 5,
+    "cell": 146
+   },
+   "opening": {
+    "x": 583,
+    "y": 135,
+    "w": 754,
+    "h": 754,
+    "margin": 12
+   },
+   "pieces": [
+    {
+     "id": "pillar_l",
+     "file": "pillar_l.webp",
+     "x": 407.0,
+     "y": 132.0,
+     "w": 182.0,
+     "h": 763.0,
+     "cells": [
+      -1.2055,
+      -0.0205,
+      1.2466,
+      5.226
+     ]
+    },
+    {
+     "id": "pillar_r",
+     "file": "pillar_r.webp",
+     "x": 1334.0,
+     "y": 132.0,
+     "w": 125.0,
+     "h": 763.0,
+     "cells": [
+      5.1438,
+      -0.0205,
+      0.8562,
+      5.226
+     ]
+    },
+    {
+     "id": "outrigger_l",
+     "file": "outrigger_l.webp",
+     "x": 139.0,
+     "y": 865.0,
+     "w": 348.0,
+     "h": 215.0,
+     "cells": [
+      -3.0411,
+      5.0,
+      2.3836,
+      1.4726
+     ]
+    },
+    {
+     "id": "outrigger_r",
+     "file": "outrigger_r.webp",
+     "x": 1392.0,
+     "y": 433.0,
+     "w": 322.0,
+     "h": 635.0,
+     "cells": [
+      5.5411,
+      2.0411,
+      2.2055,
+      4.3493
+     ]
+    },
+    {
+     "id": "lintel",
+     "file": "lintel.webp",
+     "x": 407.0,
+     "y": 0.0,
+     "w": 1056.0,
+     "h": 167.0,
+     "cells": [
+      -1.2055,
+      -0.9247,
+      7.2329,
+      1.1438
+     ]
+    },
+    {
+     "id": "sill",
+     "file": "sill.webp",
+     "x": 407.0,
+     "y": 881.0,
+     "w": 1056.0,
+     "h": 199.0,
+     "cells": [
+      -1.2055,
+      5.1096,
+      7.2329,
+      1.363
+     ]
+    }
+   ],
+   "place": {
+    "gauge_tube": {
+     "x": 498.62,
+     "y": 247.65,
+     "w": 17.2,
+     "h": 528.7,
+     "cells": [
+      -0.5779,
+      0.7716,
+      0.1178,
+      3.6212
+     ]
+    },
+    "ritual_bar": {
+     "x": 756.0,
+     "y": 913.16,
+     "w": 408.0,
+     "h": 9.600000000000001,
+     "cells": [
+      1.1849,
+      5.3299,
+      2.7945,
+      0.0658
+     ]
+    },
+    "win": {
+     "x": 790.0,
+     "y": 44.0,
+     "w": 340,
+     "h": 68,
+     "cells": [
+      1.4178,
+      -0.6233,
+      2.3288,
+      0.4658
+     ]
+    },
+    "balance": {
+     "x": 156.0,
+     "y": 885.0,
+     "w": 278,
+     "h": 66,
+     "cells": [
+      -2.9247,
+      5.137,
+      1.9041,
+      0.4521
+     ]
+    },
+    "bet": {
+     "x": 230.0,
+     "y": 964.0,
+     "w": 130,
+     "h": 88,
+     "cells": [
+      -2.4178,
+      5.6781,
+      0.8904,
+      0.6027
+     ]
+    },
+    "zone": {
+     "x": 1550.0,
+     "y": 399.0,
+     "w": 236,
+     "h": 46,
+     "cells": [
+      6.6233,
+      1.8082,
+      1.6164,
+      0.3151
+     ]
+    },
+    "seals": [
+     {
+      "x": 730.0,
+      "y": 965.0,
+      "w": 68,
+      "h": 68,
+      "cells": [
+       1.0068,
+       5.6849,
+       0.4658,
+       0.4658
+      ]
+     },
+     {
+      "x": 828.0,
+      "y": 965.0,
+      "w": 68,
+      "h": 68,
+      "cells": [
+       1.6781,
+       5.6849,
+       0.4658,
+       0.4658
+      ]
+     },
+     {
+      "x": 926.0,
+      "y": 965.0,
+      "w": 68,
+      "h": 68,
+      "cells": [
+       2.3493,
+       5.6849,
+       0.4658,
+       0.4658
+      ]
+     },
+     {
+      "x": 1024.0,
+      "y": 965.0,
+      "w": 68,
+      "h": 68,
+      "cells": [
+       3.0205,
+       5.6849,
+       0.4658,
+       0.4658
+      ]
+     },
+     {
+      "x": 1122.0,
+      "y": 965.0,
+      "w": 68,
+      "h": 68,
+      "cells": [
+       3.6918,
+       5.6849,
+       0.4658,
+       0.4658
+      ]
+     }
+    ],
+    "sonar": {
+     "x": 1525.9787234042553,
+     "y": 137.25,
+     "w": 267.0,
+     "h": 249.5,
+     "cells": [
+      6.4588,
+      0.0154,
+      1.8288,
+      1.7089
+     ]
+    },
+    "sonar_glass": {
+     "cx": 1668,
+     "cy": 262,
+     "r": 86.07749999999999,
+     "cells": [
+      7.4315,
+      0.8699,
+      0.5896
+     ]
+    },
+    "wheel": {
+     "x": 1533.0,
+     "y": 747.0,
+     "w": 270,
+     "h": 270,
+     "cells": [
+      6.5068,
+      4.1918,
+      1.8493,
+      1.8493
+     ]
+    },
+    "hub": {
+     "x": 1614.0,
+     "y": 828.0,
+     "w": 108.0,
+     "h": 108.0,
+     "cells": [
+      7.0616,
+      4.7466,
+      0.7397,
+      0.7397
+     ]
+    },
+    "xbet": {
+     "x": 1556.0,
+     "y": 470.0,
+     "w": 224,
+     "h": 72,
+     "cells": [
+      6.6644,
+      2.2945,
+      1.5342,
+      0.4932
+     ]
+    },
+    "buy": {
+     "x": 1556.0,
+     "y": 552.0,
+     "w": 224,
+     "h": 72,
+     "cells": [
+      6.6644,
+      2.8562,
+      1.5342,
+      0.4932
+     ]
+    },
+    "auto": {
+     "x": 1556.0,
+     "y": 635.0,
+     "w": 108,
+     "h": 62,
+     "cells": [
+      6.6644,
+      3.4247,
+      0.7397,
+      0.4247
+     ]
+    },
+    "turbo": {
+     "x": 1672.0,
+     "y": 635.0,
+     "w": 108,
+     "h": 62,
+     "cells": [
+      7.4589,
+      3.4247,
+      0.7397,
+      0.4247
+     ]
+    },
+    "auto_knob": {
+     "x": 1565.92,
+     "y": 643.06,
+     "w": 45.88,
+     "h": 45.88,
+     "cells": [
+      6.7323,
+      3.4799,
+      0.3142,
+      0.3142
+     ]
+    },
+    "turbo_knob": {
+     "x": 1681.92,
+     "y": 643.06,
+     "w": 45.88,
+     "h": 45.88,
+     "cells": [
+      7.5268,
+      3.4799,
+      0.3142,
+      0.3142
+     ]
+    },
+    "bet_minus": {
+     "x": 155.0,
+     "y": 964.0,
+     "w": 70,
+     "h": 88,
+     "cells": [
+      -2.9315,
+      5.6781,
+      0.4795,
+      0.6027
+     ]
+    },
+    "bet_plus": {
+     "x": 365.0,
+     "y": 964.0,
+     "w": 70,
+     "h": 88,
+     "cells": [
+      -1.4932,
+      5.6781,
+      0.4795,
+      0.6027
+     ]
+    },
+    "dom_reserved": {
+     "x": 1500,
+     "y": 16,
+     "w": 404,
+     "h": 92,
+     "cells": [
+      6.2808,
+      -0.8151,
+      2.7671,
+      0.6301
+     ]
+    }
+   }
+  },
+  "portrait": {
+   "stage": [
+    1080,
+    1920
+   ],
+   "cell": 184,
+   "grid": {
+    "x": 108,
+    "y": 478,
+    "cols": 5,
+    "rows": 5,
+    "cell": 184
+   },
+   "opening": {
+    "x": 100,
+    "y": 470,
+    "w": 936,
+    "h": 936,
+    "margin": 8
+   },
+   "pieces": [
+    {
+     "id": "pillar_l",
+     "file": "pillar_l_portrait.webp",
+     "x": 0.0,
+     "y": 467.0,
+     "w": 106.0,
+     "h": 945.0,
+     "cells": [
+      -0.5435,
+      -0.0163,
+      0.5761,
+      5.1359
+     ]
+    },
+    {
+     "id": "pillar_r",
+     "file": "pillar_r_portrait.webp",
+     "x": 1033.0,
+     "y": 467.0,
+     "w": 47.0,
+     "h": 945.0,
+     "cells": [
+      5.0707,
+      -0.0163,
+      0.2554,
+      5.1359
+     ]
+    },
+    {
+     "id": "console",
+     "file": "console_portrait.webp",
+     "x": 0.0,
+     "y": 1569.0,
+     "w": 1080.0,
+     "h": 351.0,
+     "cells": [
+      -0.5435,
+      5.9728,
+      5.8696,
+      1.9076
+     ]
+    },
+    {
+     "id": "lintel",
+     "file": "lintel_portrait.webp",
+     "x": 0.0,
+     "y": 344.0,
+     "w": 1080.0,
+     "h": 144.0,
+     "cells": [
+      -0.5435,
+      -0.6848,
+      5.8696,
+      0.7826
+     ]
+    },
+    {
+     "id": "sill",
+     "file": "sill_portrait.webp",
+     "x": 0.0,
+     "y": 1398.0,
+     "w": 1080.0,
+     "h": 192.0,
+     "cells": [
+      -0.5435,
+      5.0435,
+      5.8696,
+      1.0435
+     ]
+    }
+   ],
+   "place": {
+    "gauge_tube": {
+     "x": 49.18,
+     "y": 616.7,
+     "w": 10.8,
+     "h": 642.6,
+     "cells": [
+      -0.2762,
+      0.7973,
+      0.0587,
+      3.4924
+     ]
+    },
+    "ritual_bar": {
+     "x": 347.0,
+     "y": 1427.315,
+     "w": 442.0,
+     "h": 8.9,
+     "cells": [
+      1.3424,
+      5.2028,
+      2.4022,
+      0.0484
+     ]
+    },
+    "win": {
+     "x": 350.0,
+     "y": 376.0,
+     "w": 380,
+     "h": 88,
+     "cells": [
+      1.3587,
+      -0.5109,
+      2.0652,
+      0.4783
+     ]
+    },
+    "balance": {
+     "x": 16.0,
+     "y": 1592.0,
+     "w": 370,
+     "h": 92,
+     "cells": [
+      -0.4565,
+      6.0978,
+      2.0109,
+      0.5
+     ]
+    },
+    "bet": {
+     "x": 16.0,
+     "y": 1692.0,
+     "w": 370,
+     "h": 92,
+     "cells": [
+      -0.4565,
+      6.6413,
+      2.0109,
+      0.5
+     ]
+    },
+    "zone": {
+     "x": 35.0,
+     "y": 312.0,
+     "w": 230,
+     "h": 44,
+     "cells": [
+      -0.3533,
+      -0.8587,
+      1.25,
+      0.2391
+     ]
+    },
+    "seals": [
+     {
+      "x": 328.0,
+      "y": 1476.0,
+      "w": 64,
+      "h": 64,
+      "cells": [
+       1.2391,
+       5.4674,
+       0.3478,
+       0.3478
+      ]
+     },
+     {
+      "x": 432.0,
+      "y": 1476.0,
+      "w": 64,
+      "h": 64,
+      "cells": [
+       1.8043,
+       5.4674,
+       0.3478,
+       0.3478
+      ]
+     },
+     {
+      "x": 536.0,
+      "y": 1476.0,
+      "w": 64,
+      "h": 64,
+      "cells": [
+       2.3696,
+       5.4674,
+       0.3478,
+       0.3478
+      ]
+     },
+     {
+      "x": 640.0,
+      "y": 1476.0,
+      "w": 64,
+      "h": 64,
+      "cells": [
+       2.9348,
+       5.4674,
+       0.3478,
+       0.3478
+      ]
+     },
+     {
+      "x": 744.0,
+      "y": 1476.0,
+      "w": 64,
+      "h": 64,
+      "cells": [
+       3.5,
+       5.4674,
+       0.3478,
+       0.3478
+      ]
+     }
+    ],
+    "sonar": {
+     "x": 25.0,
+     "y": 80.0,
+     "w": 235.0,
+     "h": 220.0,
+     "cells": [
+      -0.4076,
+      -2.1196,
+      1.2772,
+      1.1957
+     ]
+    },
+    "sonar_glass": {
+     "cx": 150,
+     "cy": 190,
+     "r": 75.89999999999998,
+     "cells": [
+      0.2717,
+      -1.5217,
+      0.4125
+     ]
+    },
+    "wheel": {
+     "x": 390.0,
+     "y": 1597.0,
+     "w": 300,
+     "h": 300,
+     "cells": [
+      1.5761,
+      6.125,
+      1.6304,
+      1.6304
+     ]
+    },
+    "hub": {
+     "x": 480.0,
+     "y": 1687.0,
+     "w": 120.0,
+     "h": 120.0,
+     "cells": [
+      2.0652,
+      6.6141,
+      0.6522,
+      0.6522
+     ]
+    },
+    "xbet": {
+     "x": 700.0,
+     "y": 1596.0,
+     "w": 364,
+     "h": 100,
+     "cells": [
+      3.2609,
+      6.1196,
+      1.9783,
+      0.5435
+     ]
+    },
+    "buy": {
+     "x": 700.0,
+     "y": 1706.0,
+     "w": 364,
+     "h": 100,
+     "cells": [
+      3.2609,
+      6.7174,
+      1.9783,
+      0.5435
+     ]
+    },
+    "auto": {
+     "x": 700.0,
+     "y": 1816.0,
+     "w": 178,
+     "h": 90,
+     "cells": [
+      3.2609,
+      7.3152,
+      0.9674,
+      0.4891
+     ]
+    },
+    "turbo": {
+     "x": 886.0,
+     "y": 1816.0,
+     "w": 178,
+     "h": 90,
+     "cells": [
+      4.2717,
+      7.3152,
+      0.9674,
+      0.4891
+     ]
+    },
+    "auto_knob": {
+     "x": 714.4,
+     "y": 1827.7,
+     "w": 66.6,
+     "h": 66.6,
+     "cells": [
+      3.3391,
+      7.3788,
+      0.362,
+      0.362
+     ]
+    },
+    "turbo_knob": {
+     "x": 900.4,
+     "y": 1827.7,
+     "w": 66.6,
+     "h": 66.6,
+     "cells": [
+      4.35,
+      7.3788,
+      0.362,
+      0.362
+     ]
+    },
+    "bet_minus": {
+     "x": 16.0,
+     "y": 1798.0,
+     "w": 180,
+     "h": 104,
+     "cells": [
+      -0.4565,
+      7.2174,
+      0.9783,
+      0.5652
+     ]
+    },
+    "bet_plus": {
+     "x": 206.0,
+     "y": 1798.0,
+     "w": 180,
+     "h": 104,
+     "cells": [
+      0.5761,
+      7.2174,
+      0.9783,
+      0.5652
+     ]
+    },
+    "dom_reserved": {
+     "x": 690,
+     "y": 16,
+     "w": 376,
+     "h": 94,
+     "cells": [
+      3.2065,
+      -2.4674,
+      2.0435,
+      0.5109
+     ]
+    }
+   }
+  }
+ },
+ "sprites": {
+  "plate": {
+   "file": "plate_blank.webp",
+   "nine_slice_border": 18,
+   "use": "win, balance, bet, zone: scale or 9-slice to the placement rect; draw label + live value on top"
+  },
+  "sonar": {
+   "file": "sonar_housing.webp",
+   "glass": "dark painted glass inside place.sonar_glass: draw sweep, rings and blips there"
+  },
+  "wheel": {
+   "file": "spin_wheel.webp",
+   "use": "rotate about its centre while spinning"
+  },
+  "hub_idle": {
+   "file": "spin_hub_idle.webp"
+  },
+  "hub_ready": {
+   "file": "spin_hub_ready.webp"
+  },
+  "hub_spinning": {
+   "file": "spin_hub_spinning.webp"
+  },
+  "seal_1_off": {
+   "file": "seal_1_off.webp"
+  },
+  "seal_1_lit": {
+   "file": "seal_1_lit.webp"
+  },
+  "seal_2_off": {
+   "file": "seal_2_off.webp"
+  },
+  "seal_2_lit": {
+   "file": "seal_2_lit.webp"
+  },
+  "seal_3_off": {
+   "file": "seal_3_off.webp"
+  },
+  "seal_3_lit": {
+   "file": "seal_3_lit.webp"
+  },
+  "seal_4_off": {
+   "file": "seal_4_off.webp"
+  },
+  "seal_4_lit": {
+   "file": "seal_4_lit.webp"
+  },
+  "seal_5_off": {
+   "file": "seal_5_off.webp"
+  },
+  "seal_5_lit": {
+   "file": "seal_5_lit.webp"
+  },
+  "button": {
+   "file": "button_blank.webp",
+   "nine_slice_border": 20,
+   "use": "xbet, buy, auto, turbo backing: 9-slice to the placement rect; label and price are live text"
+  },
+  "knob": {
+   "file": "switch_knob.webp",
+   "use": "auto / turbo state lamp; omit both sprites and the button when the jurisdiction forbids them"
+  },
+  "button_on": {
+   "file": "button_blank_on.webp",
+   "nine_slice_border": 20,
+   "use": "xbet, buy, auto, turbo backing: 9-slice to the placement rect; label and price are live text"
+  },
+  "knob_on": {
+   "file": "switch_knob_on.webp",
+   "use": "auto / turbo state lamp; omit both sprites and the button when the jurisdiction forbids them"
+  },
+  "stepper_minus": {
+   "file": "stepper_minus.webp",
+   "use": "glyph only: draw centred on a 'button' 9-sliced to place.bet_minus / place.bet_plus, at 0.6 x the button's shorter side"
+  },
+  "stepper_plus": {
+   "file": "stepper_plus.webp",
+   "use": "glyph only: draw centred on a 'button' 9-sliced to place.bet_minus / place.bet_plus, at 0.6 x the button's shorter side"
+  }
+ }
+}

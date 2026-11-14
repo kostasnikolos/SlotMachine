@@ -71,7 +71,7 @@ def main():
         errs = []
         page.on("pageerror", lambda e: errs.append(f"pageerror: {e}"))
         page.on("console", lambda m: errs.append(f"console.error: {m.text}") if m.type == "error" and "favicon" not in (m.location.get("url", "") or "") else None)
-        page.goto(PAGE + f"?profile=mga&v={int(time.time())}", wait_until="load")
+        page.goto(PAGE + f"?profile=mga&director=1&v={int(time.time())}", wait_until="load")
         page.wait_for_function("window.__FEEL_READY === true && !!window.__canvasGame && !!window.__canvasGame.L3", timeout=60000)
         # start the audio context (bioluminescence reads the analyser) with a click on the stage
         page.mouse.click(60, 60)

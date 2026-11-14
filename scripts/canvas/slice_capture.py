@@ -26,7 +26,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "artifacts" / "canvas"
-PAGE = "http://127.0.0.1:8080/static/canvas/index.html"
+PAGE = "http://127.0.0.1:8080/static/canvas/index.html?director=1"
 GPU_ARGS = ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist", "--autoplay-policy=no-user-gesture-required"]
 # beat -> (anchor event, offset ms): where in the real sequence each storyboard frame is taken
 # a fixed board with all twelve symbols, so two captures can be compared symbol for symbol

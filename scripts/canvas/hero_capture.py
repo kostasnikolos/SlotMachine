@@ -61,7 +61,7 @@ def main():
         page.on("pageerror", lambda e: errs.append(f"pageerror: {e}"))
         page.on("console", lambda m: errs.append(f"console.error: {m.text} ({m.location.get('url', '')})")
                 if m.type == "error" and "favicon" not in (m.location.get("url", "") or "") else None)
-        page.goto(PAGE + f"?engine=local&v={int(time.time())}", wait_until="load")
+        page.goto(PAGE + f"?engine=local&director=1&v={int(time.time())}", wait_until="load")
         page.wait_for_function("window.__FEEL_READY === true && !!window.__canvasGame", timeout=60000)
         page.wait_for_function("(() => { const H = window.__canvasGame.hero; return H && (H.loaded || H.failed); })()", timeout=30000)
 

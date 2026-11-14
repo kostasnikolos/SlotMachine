@@ -1,7 +1,167 @@
-# Moments target: master key frame, the Help, the Win (round 2)
+# Moments target: master key frame, the Help, the Win (round 3)
 
-Target paintings for the rebuild. Nothing here is a screenshot of the game. Round 2 answers
-`docs/targets/review_round1.md` (master, help and win all FAIL in round 1).
+Round 3 answers `docs/targets/review_round2.md` (T1, T2, T3, T5) and adds the game-ready frame pack. The round-2 notes
+follow below; where they disagree with this section, this section is current.
+
+## Round 3: what changed
+
+**New and changed files**
+
+| File | What |
+| --- | --- |
+| `generated/targets/moments/game_frame/` | The game pack: 33 WebP files + `frame_layout.json`, 0.48 MB on disk |
+| `artifacts/targets/keyframe_master_from_pack.png` | Landscape master rebuilt from the pack + JSON only (`assemble_from_pack.py`) |
+| `artifacts/targets/game_frame_assembled.png` | The pack alone, assembled on transparency, unlit |
+| `artifacts/targets/keyframe_master_390.png` | Portrait master at 390 px wide (legibility proof) |
+| `artifacts/targets/keyframe_master.png`, `keyframe_master_portrait.png`, `storyboard_win.png`, `storyboard_help.png` | Rebuilt |
+| `generated/targets/_scripts/hud.py` | Everything the game draws live (labels, values, lit states), driven by `frame_layout.json` |
+| `generated/targets/_scripts/measure.py` | The 8 px blur tier-ladder check |
+| `generated/targets/_scripts/make_cone.py` | Builds the head-on jet sprite |
+
+Build order: `frame.py` (layers + pack), `build_master.py`, `assemble_from_pack.py`, `build_help.py`, `build_win.py`, `measure.py`.
+
+**T1, frame parts.**
+- The generator's nonsense engraving is removed from the brass scale (a tall vertical blur of the strip keeps the brass
+  shading) and `frame.py` cuts a real scale: 50 even ticks with 0 / 1K / 2K / 5K / 11K on the depth gauge, 25 ticks
+  with 1-5 on the ritual bar.
+- Five distinct rune seals: one painted blank basalt disc (`r3_seal_blank`) with five different runes cut in code, each
+  in an off and a lit state (the whole cut fills with sulfur light and the iron ring catches it).
+- Plates are blank in the layers and in the pack. No label, value or lit state is baked anywhere.
+- Four different corner plates (four separate paintings). Two different pillars (two paintings). Lintel and sill use
+  the same girder painting, the sill rotated 180 degrees and offset: the second girder paint came out too thin to use.
+- The basalt outline fades into the water over about 7 px instead of ending in a hard cut, and is darker.
+
+**T2, HUD.** Read-only instruments stay painted (gauge, sonar, ritual bar, seals, zone plate). Controls:
+- Balance, bet and win: Bone values in a dark window let into the brass plate, drawn live by `hud.py`.
+- Bet steppers: minus and plus buttons either side of BET (landscape 70x88, portrait 180x104 stage px).
+- Spin: the wheel with a hub in three states (`spin_hub_idle`, `_ready`, `_spinning`). Ready is lit sulfur with a
+  circular-arrow glyph; spinning is a cyan stop square.
+- xBet and bonus buy: hull-plate buttons with the label and the price on the face (`button_blank`, `button_blank_on`).
+- Autoplay and turbo: two separate small buttons with a knob lamp; `hud.draw(..., auto_turbo=False)` omits them.
+- A reserved DOM rectangle top right (`place.dom_reserved`): 404x92 in landscape, 376x94 in portrait. Nothing is drawn there.
+- Portrait was laid out again: sonar and zone plate moved up into the world band; the console holds balance, bet,
+  steppers, wheel, price buttons, auto and turbo.
+- Measured on the 390 px render: digit height is about 7 px for balance, bet, win and prices. The reviewer's bar was
+  14 px. See weaknesses.
+
+**T3, tier ladder.** `stage.sym_gain()` grades every symbol by measurement: it blurs the scaled symbol by 8 px and sets
+the gain that puts its peak on its tier's target (low 46, mid 92, high 116, apex 190, wild 195), so the ladder no
+longer depends on how a file happens to be graded. The key falloff on symbols is limited to 0.94-1.07 (narrower than
+the 0.85-1.15 asked for; at 0.90-1.10 a top-row low still beat a far-corner helmet). The glow on the backplane behind
+the top-left cells was cut from 0.30 to 0.13 because it was adding to the lows there. `measure.py` on the final masters
+(8 px blur, peak in the inner 56% of each cell):
+
+| Tier | Landscape | Portrait |
+| --- | --- | --- |
+| lows (17) | 43-79 | 39-80 |
+| mids (4) | 88-95 | 87-92 |
+| highs (3) | 100-119 | 94-98 |
+| Leviathan | 139 | 141 |
+
+No low beats a mid, no mid beats a high, nothing ties the Leviathan. The check uses the inner 56% of each cell because
+with the whole cell a high's overflow into a neighbouring low's cell is counted as that low (measured that way, the top-left
+low reads 111 from the viper's head beside it).
+
+**T5, win.**
+- The seam is `stage.fracture()`: it wanders (two scales of displacement), its width varies along its length, its edge
+  is chipped, and two faint secondary fractures leave it. It no longer turns a right angle: it runs along the row 2/3
+  joint and then cuts diagonally through the third winner down to the joint under the fourth. It does not box the viper.
+- W2 jets are hard head-on cones (`r3_fx_cone_headon`): dense radial spray, a broken spray ring on the glass, droplets
+  thrown outward, one per winner, composited as lit refracting water; two jets then fall. Z-Image painted a side-view
+  fountain for both head-on prompts (`r3_fx_cone_a/b`, unused), so the cone is built in code by `make_cone.py`.
+- The lens-flare star and the dash marks are gone.
+- W3b: the winners are folded, not shrunk. `stage.crumple()` squeezes the real angler file sideways into accordion
+  folds with dark creases and lit ridges (100%, 82%, 58%, 28% along the way) in a soft cloud of silt. It is a warp of
+  the real symbol, not a painted strip: three painted crush frames were tried (`r3_crush_1..3`) and rejected because
+  the model painted a different, intact fish each time.
+
+## The game pack: `generated/targets/moments/game_frame/`
+
+Authored at 1x for a 1920x1080 stage (and 1080x1920 portrait). 0.48 MB on disk. As RGBA8 on the GPU: landscape
+pieces 3.4 MB + shared sprites 1.4 MB = 4.9 MB; portrait pieces 3.4 MB instead of the
+landscape ones (load one orientation at a time). The round-2 sheet was about 33 MB.
+
+`frame_layout.json` has, per layout: `stage`, `grid` (x, y, 5x5, cell), `opening` (the transparent rect: grid + margin),
+`pieces` (file, x, y, w, h in stage px, and `cells`: the same rect in units of one cell from the opening's top-left),
+and `place`: a rect for every sprite and live element (`win`, `balance`, `bet`, `zone`, `seals[5]`, `sonar`,
+`sonar_glass` as centre + radius, `gauge_tube`, `ritual_bar`, `wheel`, `hub`, `xbet`, `buy`, `auto`, `turbo`,
+`auto_knob`, `turbo_knob`, `bet_minus`, `bet_plus`, `dom_reserved`). `sprites` maps each shared sprite to its file and use.
+
+Frame pieces: top lintel and bottom sill (each with its two corner plates), left pillar (with the gauge housing and
+its scale), right pillar, plus the left and right outriggers (landscape) or the console (portrait). The opening is
+transparent in every piece and is the 5x5 grid of square cells plus a margin (12 px landscape, 8 px portrait). Each
+piece carries its own shadow and its share of the basalt, so they are drawn in file order with no further work. For a
+different cell size, multiply every `cells` rect by the new cell. The pieces are four fixed pieces, not a 9-slice
+(the left pillar holds the gauge), so far from 146 px (landscape) or 184 px (portrait) cells they will soften.
+
+| File | Size | Disk | Used by |
+| --- | --- | --- | --- |
+| `button_blank.webp` | 364x100 | 8 KB | shared |
+| `button_blank_on.webp` | 364x100 | 9 KB | shared |
+| `console_portrait.webp` | 1080x351 | 66 KB | portrait |
+| `lintel.webp` | 1056x167 | 43 KB | landscape |
+| `lintel_portrait.webp` | 1080x144 | 41 KB | portrait |
+| `outrigger_l.webp` | 348x215 | 16 KB | landscape |
+| `outrigger_r.webp` | 322x635 | 13 KB | landscape |
+| `pillar_l.webp` | 182x763 | 30 KB | landscape |
+| `pillar_l_portrait.webp` | 106x945 | 21 KB | portrait |
+| `pillar_r.webp` | 125x763 | 27 KB | landscape |
+| `pillar_r_portrait.webp` | 47x945 | 14 KB | portrait |
+| `plate_blank.webp` | 380x92 | 9 KB | shared |
+| `seal_1_lit.webp` | 68x68 | 3 KB | shared |
+| `seal_1_off.webp` | 68x68 | 3 KB | shared |
+| `seal_2_lit.webp` | 68x68 | 3 KB | shared |
+| `seal_2_off.webp` | 68x68 | 3 KB | shared |
+| `seal_3_lit.webp` | 68x68 | 3 KB | shared |
+| `seal_3_off.webp` | 68x68 | 3 KB | shared |
+| `seal_4_lit.webp` | 68x68 | 3 KB | shared |
+| `seal_4_off.webp` | 68x68 | 3 KB | shared |
+| `seal_5_lit.webp` | 68x68 | 3 KB | shared |
+| `seal_5_off.webp` | 68x68 | 3 KB | shared |
+| `sill.webp` | 1056x199 | 52 KB | landscape |
+| `sill_portrait.webp` | 1080x192 | 50 KB | portrait |
+| `sonar_housing.webp` | 267x249 | 15 KB | shared |
+| `spin_hub_idle.webp` | 120x120 | 3 KB | shared |
+| `spin_hub_ready.webp` | 120x120 | 5 KB | shared |
+| `spin_hub_spinning.webp` | 120x120 | 4 KB | shared |
+| `spin_wheel.webp` | 300x300 | 31 KB | shared |
+| `stepper_minus.webp` | 72x72 | 0 KB | shared |
+| `stepper_plus.webp` | 72x72 | 0 KB | shared |
+| `switch_knob.webp` | 67x67 | 2 KB | shared |
+| `switch_knob_on.webp` | 67x67 | 2 KB | shared |
+
+`assemble_from_pack.py` rebuilds the landscape master from these files and the JSON only, over
+`layers/master_plate_noframe.png` (the scene with no frame: backdrop, creature, reels, symbols). Its lighting is a
+ten-line radial multiply. The result matches `keyframe_master.png` apart from small differences in sprite shadows and
+the absence of film grain.
+
+## Round 3: what is still not right
+
+1. **Money text is about 7 px tall at 390 px wide**, half the reviewer's 14 px bar. It is readable in the render but
+   does not meet the number. Meeting it needs balance and bet plates about twice as tall, so a taller console and a
+   smaller grid in portrait. Not done.
+2. **Landscape on a phone was not proved.** The right column (prices, auto, turbo) is small there; only portrait was
+   rendered at 390.
+3. **The W2 cones are procedural** and look it up close: straight streaks, slightly firework-like. A painted head-on
+   jet would be better; the model would not give one.
+4. **W3b is a warp, not a painting.** It reads as crushed at full size; at sheet size the first winner is a small dark
+   crumple that is hard to identify as an angler.
+5. **The seam's first third is still a fairly straight run** along the row 2/3 joint (it wanders by about 8 px). At
+   sheet size that part can still read as a line.
+6. **Help panels show the spin hub as "ready"** during the strike; it should be idle or spinning there. The help
+   storyboard was rebuilt on the new frame and symbols and not otherwise touched.
+7. **Lintel and sill share one girder painting** (rotated); outriggers and console use it too.
+8. **Runes are drawn in code** with straight strokes: distinct, but mechanical next to the paint.
+9. **Buttons are a 9-sliced corner plate.** They read as hull plates more than as buttons; there is no pressed or
+   disabled state, and no confirm step is designed for xBet or bonus buy.
+10. **Highs in portrait sit at 94-98**, just above the mids (87-92): the ladder holds there by a small margin.
+11. **The pack is 1x.** Right for a 1920x1080 stage as asked; on a high-density phone the frame will be softer than
+    the symbols.
+12. Backdrop (and its stretch in portrait), reuse of one creature painting, cyan tier only, stills only: unchanged.
+
+---
+
+## Round 2 notes
 
 | Deliverable | File |
 | --- | --- |
@@ -223,6 +383,9 @@ No studio, game or artist is named in any prompt. Prompts and seeds: section 6.
 ---
 
 ## 6. Prompts, seeds, sizes
+
+Round 3 added 11 paints (`r3_*`): three corner plates, a pillar, a blank seal, and six that are not used (a girder, two cones, three crush frames). 63 paints in total.
+
 
 Round-1 suffix, appended only where the table says so:
 
@@ -493,3 +656,49 @@ Prompts as sent (before any suffix):
 
 > Seawater running down a vertical pane of dark glass: several thin wavering rivulets from top to bottom, clinging beads and droplets, a few drips falling off the bottom. Sparse, mostly empty. Water only: no bubbles, no rings, no circles. Lit from the upper left by a cold white light, the water itself is dark and translucent with white foam and highlights. Isolated on a pure flat black background, nothing else. Realistic oil painting, high contrast.
 
+
+Round-3 prompts as sent (no suffix):
+
+**`r3_corner_b`** (seed 301, 768x768)
+
+> A single square heavy blackened steel corner gusset plate, thick, with chamfered corners, a border row of large dome rivets all around its edge, one diagonal weld seam, rust streaks, wet sheen. Plain: no brass, no symbols, no text. Centred, filling most of the picture. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_corner_c`** (seed 302, 768x768)
+
+> A single square heavy blackened steel corner gusset plate, thick, with chamfered corners, a border row of large dome rivets all around its edge, one diagonal weld seam, rust streaks, wet sheen. Plain: no brass, no symbols, no text. Centred, filling most of the picture. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_corner_d`** (seed 303, 768x768)
+
+> A single square heavy blackened steel corner gusset plate, thick, with chamfered corners, a border row of large dome rivets all around its edge, one diagonal weld seam, rust streaks, wet sheen. Plain: no brass, no symbols, no text. Centred, filling most of the picture. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_pillar_c`** (seed 304, 768x1344)
+
+> A single long straight vertical heavy steel girder beam spanning the full height of the picture from the top edge to the bottom edge. Blackened corroded steel plate, one neat row of large dome rivets along its left edge and one along its right edge, a few horizontal weld seams dividing it into plates, thin rust streaks bleeding down from some rivets, wet sheen. Plain clean surface: no brass, no ornaments, no symbols, no text, no debris. The beam is a thick straight band across the middle of the picture; left and right of it is flat solid pure bright green. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_girder_c`** (seed 305, 1344x768)
+
+> A single long straight horizontal heavy steel girder beam spanning the full width of the picture from the left edge to the right edge. Blackened corroded steel plate, one neat row of large dome rivets along its top edge and one along its bottom edge, a few vertical weld seams dividing it into plates, thin rust streaks bleeding down from some rivets, wet sheen. Plain clean surface: no brass, no ornaments, no symbols, no text, no debris. The beam is a thick straight band across the middle of the picture; above and below it is flat solid pure bright green. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_seal_blank`** (seed 306, 768x768)
+
+> A single round dark basalt stone disc set in a thin dark iron ring, with a perfectly blank, smooth, slightly worn flat face: no carving, no symbols, no letters, no marks, no pattern. Centred, filling most of the picture. Front-on flat orthographic view, no perspective. Lit by one cold light from the upper left. Realistic gritty oil painting, muted dark colours, fine brushwork. Isolated game asset on a flat solid pure bright green background.
+
+**`r3_fx_cone_a`** (seed 311, 1024x1024)
+
+> Seen exactly head-on from the front: a hard narrow high-pressure jet of seawater firing straight at the camera through a tiny hole in a pane of glass. A small dense bright white core in the exact centre of the picture, sharp straight spray streaks radiating outward from it in all directions like spokes, a thin circular ring of fine spray around the core where the jet tears through the glass, and fine mist. Symmetric radial composition. No fountain, no falling water, no bubbles, no round droplets. Water only. Lit from the upper left by a cold white light. Isolated on a pure flat black background, nothing else. Realistic oil painting, high contrast.
+
+**`r3_fx_cone_b`** (seed 312, 1024x1024)
+
+> Seen exactly head-on from the front: a hard narrow high-pressure jet of seawater firing straight at the camera through a tiny hole in a pane of glass. A small dense bright white core in the exact centre of the picture, sharp straight spray streaks radiating outward from it in all directions like spokes, a thin circular ring of fine spray around the core where the jet tears through the glass, and fine mist. Symmetric radial composition. No fountain, no falling water, no bubbles, no round droplets. Water only. Lit from the upper left by a cold white light. Isolated on a pure flat black background, nothing else. Realistic oil painting, high contrast.
+
+**`r3_crush_1`** (seed 321, 768x768)
+
+> A deep-sea anglerfish with warty brown-violet skin, a wide jaw of long pale needle teeth and a thin lure stalk, being crushed by enormous water pressure, its body just beginning to buckle: squeezed narrower from both sides, deep creases forming along its flanks, jaw forced half shut. Single object centred, isolated on a pure flat black background, lit by one cold light from the upper left. Realistic gritty oil painting, muted colours, game symbol icon.
+
+**`r3_crush_2`** (seed 322, 768x768)
+
+> A deep-sea anglerfish with warty brown-violet skin, a wide jaw of long pale needle teeth and a thin lure stalk, being crushed by enormous water pressure, its body collapsed to half its size like a crumpled tin can: deep folds, fins bent, jaw twisted shut, lure stalk snapped. Single object centred, isolated on a pure flat black background, lit by one cold light from the upper left. Realistic gritty oil painting, muted colours, game symbol icon.
+
+**`r3_crush_3`** (seed 323, 768x768)
+
+> A deep-sea anglerfish with warty brown-violet skin, a wide jaw of long pale needle teeth and a thin lure stalk, being crushed by enormous water pressure, reduced to a small tight crumpled knot of folded flesh, teeth and fins, like a crushed ball, with a thin ring of dark silt around it. Single object centred, isolated on a pure flat black background, lit by one cold light from the upper left. Realistic gritty oil painting, muted colours, game symbol icon.
