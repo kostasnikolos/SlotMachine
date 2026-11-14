@@ -16,6 +16,7 @@ when a decision changes. Use it for anything systematic; keep AI generation for 
 | File | Makes | Command |
 | --- | --- | --- |
 | `sfx.py` | The sound set (dissolve, land, crush, impact, riser, roar, seam jet, hull creak, tick, shimmer) as 48 kHz WAVs | `python scripts/ai/assetgen/sfx.py --sheet` |
+| `moments.py` | The two set pieces as stems on the storyboard's beats (the Leviathan's help; the seam-breach win at cascade steps 1/3/5) and a land + win stinger per symbol. Sheets in `artifacts/targets/`, spec in `docs/targets/sound_design_target.md` | `python scripts/ai/assetgen/moments.py --sheet` |
 | `symbols.py` | The five low-rune medallions: cast brass, corroded, the rune carved in, one cyan rim light | `python scripts/ai/assetgen/symbols.py --sheet` |
 | `synth.py` | The offline synthesiser behind `sfx.py` (oscillators, noise, biquads with sweeping cutoff, FM, convolution reverb) | library |
 
