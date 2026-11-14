@@ -215,10 +215,12 @@ def thud(D, weight=0.5, f=80.0):
 # Beat times in seconds from the first frame of the sequence. FULL is the first-time version, SHORT the repeat / xBet
 # one. recede = where the creature starts to go down (under the transformation), drain = where the water leaves.
 
-BEATS_FULL = dict(name="full", dread=0.0, approach=0.90, vacuum=1.42, impact=1.50, transform=1.58, cell_gap=0.11,
-                  recede=1.72, drain=2.30, end=3.10, cells=4)
-BEATS_SHORT = dict(name="short", dread=0.0, approach=0.35, vacuum=0.64, impact=0.70, transform=0.77, cell_gap=0.11,
-                   recede=0.88, drain=1.25, end=1.70, cells=4)
+# Cell and recede offsets are the game's own (strikePace in the canvas front end): first cell 200 / 150 ms after the bite,
+# cells 110 / 70 ms apart, the recede 60 ms after the first cell. last_ring = how long the weighted last cell rings.
+BEATS_FULL = dict(name="full", dread=0.0, approach=0.90, vacuum=1.42, impact=1.50, transform=1.70, cell_gap=0.11,
+                  recede=1.76, drain=2.30, end=3.10, cells=4, last_ring=1.7)
+BEATS_SHORT = dict(name="short", dread=0.0, approach=0.35, vacuum=0.64, impact=0.70, transform=0.85, cell_gap=0.07,
+                   recede=0.91, drain=1.25, end=1.70, cells=4, last_ring=0.75)
 HELP_STEMS = ("dread", "targeting", "vacuum", "impact", "transform", "aftermath")
 MINOR = (0, 2, 3, 5, 7, 8, 10, 12, 14, 15)
 CELL_BASE = 1975.53            # B6: every struck cell is above 1.5 kHz
@@ -335,12 +337,12 @@ def cell_semis(n):
     return body + [next(v for v in (7, 12, 19, 24) if v > body[-1])]
 
 
-def cell_voice(rng, D, semi=0, last=False):
+def cell_voice(rng, D, semi=0, last=False, ring=1.7):
     """H4, one struck cell: cold glass, not a chime. Inharmonic bar partials (1 : 2.756 : 5.404) with a beating twin,
     a soft 6 ms onset so it never 'dings', and a breath of frost. The LAST cell carries the weight: it is doubled a
-    fifth below (an open fifth), rings 1.7 times as long and is 4 dB up."""
+    fifth below (an open fifth), rings `ring` times as long (1.7 full, 0.75 short) and is 4 dB up."""
     f0 = CELL_BASE * 2 ** (semi / 12)
-    k = 1.7 if last else 1.0
+    k = ring if last else 1.0
     dur = 0.7 * D.tail * k
     fr = [f0, f0 * 1.004, f0 * 2.756, f0 * 5.404]
     dc = np.array([0.42, 0.38, 0.2, 0.09]) * D.tail * k
@@ -363,8 +365,8 @@ def cell_voice(rng, D, semi=0, last=False):
 
 
 def seat(D, amp=0.3):
-    """What the last cell lands ON: a short, soft, low-mid thud (150 -> 95 Hz with a 300 Hz knock). It lives in the
-    aftermath stem so the transformation stem stays above 1.5 kHz."""
+    """What the last cell lands ON: a short, soft, low-mid thud (150 -> 95 Hz with a 300 Hz knock). It exists only in
+    the help_cell_last one-shots the game fires; no stem carries it, so the mixes do not contain it."""
     p = D.pitch
     x = S.osc(S.sweep(150 * p, 95 * p, 0.1), 0.22) * S.env(0.22, 0.004, 0.21, amp, 2.0)
     put(x, modal(np.array([300, 452]) * p, [0.06, 0.04], [1, 0.6], 0.15) * amp * 0.6, 0.0)
@@ -375,14 +377,14 @@ def st_transform(rng, B, D, L):
     x = np.zeros(L, dtype=F32)
     semis = cell_semis(B["cells"])
     for i, sm in enumerate(semis):
-        put(x, cell_voice(rng, D, sm, last=(i == len(semis) - 1)), B["transform"] + i * B["cell_gap"])
+        put(x, cell_voice(rng, D, sm, last=(i == len(semis) - 1), ring=B["last_ring"]), B["transform"] + i * B["cell_gap"])
     x = verb(x, 0.3 + D.wet)[:L]
     return ffilt(x, "highpass", 1500, 0.707, order=2)             # it lives above the tail, by construction
 
 
 def st_aftermath(rng, B, D, L):
     """Under H4 and through H5: the creature goes down (one low tone falling an octave, its throat faint behind it, and a
-    250-500 Hz moan a phone can carry), the last cell seats, then the water leaves (a falling wash, no bubbles) while
+    250-500 Hz moan a phone can carry), then the water leaves (a falling wash, no bubbles) while
     the plates keep ringing."""
     p = D.pitch
     dur = B["end"] - B["recede"]
@@ -395,7 +397,6 @@ def st_aftermath(rng, B, D, L):
     x += moan * S.env(dur, 0.12, dur * 0.85, 0.07, 1.2)
     growl = ffilt(S.ring_mod(S.osc(fall * 0.55, dur, "saw"), S.osc(31 * p, dur)), "lowpass", 300, 0.8)
     x += growl * S.env(dur, 0.1, dur * 0.7, 0.07, 1.4)
-    put(x, seat(D), B["transform"] + (B["cells"] - 1) * B["cell_gap"] - B["recede"])
     dd = B["end"] - B["drain"]
     off = B["drain"] - B["recede"]
     drain = sfilt(fnoise(dd, rng, "pink"), "bandpass", S.sweep(1500, 260, dd), 1.2) * S.env(dd, 0.1, dd - 0.11, 0.36, 1.4)
@@ -820,7 +821,7 @@ def maw_sting(rng, D):
     return verb(x, 0.16 + D.wet, "short")
 
 
-# name -> (tier, land fn, stinger fn, land peak dBFS, stinger peak dBFS). Worth more = louder, heavier.
+# name -> (tier, land fn, stinger fn, [old peak targets, unused: the level now comes from MID_TARGET])
 SYMBOLS = {}
 for _k in LOW_F:
     _l, _s = v_low(_k)
@@ -836,25 +837,86 @@ SYMBOLS.update({
 })
 
 
-VARIANTS = ((0.0, 0.0), (0.6, -1.2), (-0.7, -0.6))     # round-robin lands: (semitones, dB) on top of a new seed
+VARIANTS = ((0.0, 0.0), (0.6, -0.5), (-0.7, -0.3))     # round-robin lands: (semitones, dB) on top of a new seed
+
+# The loudness ladder is set where a phone can hear it: RMS in 200 Hz - 4 kHz, 2 dB a tier, (land, stinger) in dBFS.
+# Worth more = louder in that band, whatever the sub is doing. Peaks follow from it and stay under -1.5 dBFS.
+MID_TARGET = {"LOW stone": (-27.0, -25.0), "MID brass": (-25.0, -23.0), "HIGH living": (-23.0, -21.0),
+              "APEX": (-21.0, -19.0), "WILD": (-19.0, -17.0)}
+TIERS = tuple(MID_TARGET)
+TILT = {}                                               # name -> how much mid-band was added to reach the target
+
+
+def mid_rms_db(x):
+    xd = x.astype(np.float64)
+    P = np.abs(np.fft.rfft(xd)) ** 2
+    f = np.fft.rfftfreq(len(xd), 1 / SR)
+    return db(float(np.sqrt(P[(f >= 200) & (f <= 4000)].sum() * 2) / len(xd)))
+
+
+def knee(y, cap=PEAK, t=0.7):
+    """A soft knee: untouched below 70 % of the cap, folding smoothly into it above."""
+    T = cap * t
+    a = np.abs(y)
+    return np.where(a <= T, y, np.sign(y) * (T + (cap - T) * np.tanh((a - T) / (cap - T)))).astype(F32)
+
+
+def to_ladder(x, target_db, ms=4.5):
+    """Gain the voice to its tier's 200 Hz - 4 kHz level. If that would push the peak over -1.5 dBFS, the voice is too
+    bottom- or top-heavy for its rung: mix in more of its own mid band (same sound, re-weighted) until it fits. A voice
+    that is mostly clicks cannot get there by weighting alone, so as a last resort its tallest peaks (up to 6 dB over)
+    are folded on a soft knee. Returns (voice, mid-band added, dB of peak folded)."""
+    mid = ffilt(ffilt(x, "highpass", 200, 0.707, order=2), "lowpass", 4000, 0.707, order=2)
+    steps = (0, 0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4, 6, 8, 12)
+    for allow in (0.0, 6.0):
+        for g in steps:
+            base = edges(x + g * mid, ms)
+            y = (base * 10 ** ((target_db - mid_rms_db(base)) / 20)).astype(F32)
+            over = db(float(np.max(np.abs(y))) / PEAK)
+            if over <= 0:
+                return y, g, 0.0
+            if over <= allow:
+                for _ in range(6):                       # fold, then re-trim to the target (folding costs a little level)
+                    z = knee(y)
+                    y = (y * 10 ** ((target_db - mid_rms_db(z)) / 20)).astype(F32)
+                z = knee(y)
+                if abs(mid_rms_db(z) - target_db) < 0.05:
+                    return z, g, round(over, 1)
+    raise RuntimeError("cannot reach %.1f dBFS in 200 Hz-4 kHz under the peak limit" % target_db)
 
 
 def symbol_voice(key, kind, depth=2, var=0):
     """kind 'land' takes var 1..3 (the round-robin takes: own seed, slightly different pitch and level)."""
-    tier, land, sting, pl, ps = SYMBOLS[key]
+    tier, land, sting = SYMBOLS[key][:3]
     D = Depth(depth)
-    fn, mx, pk = (land, LAND_MAX, pl) if kind == "land" else (sting, STING_MAX, ps)
+    fn, mx, target = (land, LAND_MAX, MID_TARGET[tier][0]) if kind == "land" else (sting, STING_MAX, MID_TARGET[tier][1])
     name = "sym/%s/%s" % (key, kind)
     if var:
         st, gdb = VARIANTS[var - 1]
         D.pitch *= 2 ** (st / 12)
-        pk += gdb
+        target += gdb
         name += "/v%d" % var
     x = np.concatenate([np.zeros(N(0.005), dtype=F32), finish(fn(rng_of(name), D), D, hp=30.0)])[:N(mx)]   # 5 ms lead-in: the fade never eats the transient
     tail = N(0.03)
     x[-tail:] *= np.linspace(1, 0, tail, dtype=F32) ** 1.5       # the room is cut off inside the length budget
-    x = edges(x, 4.5)
-    return (x * (10 ** (pk / 20) / float(np.max(np.abs(x))))).astype(F32)
+    y, g, fold = to_ladder(x, target)
+    TILT[name] = (g, fold)
+    return y
+
+
+def ladder_check(manifest):
+    """Per tier, the lowest and highest 200 Hz - 4 kHz RMS among its lands and its stingers, and the gap up to the next tier."""
+    out = {}
+    for kind in ("land", "stinger"):
+        rows = []
+        for tier in TIERS:
+            v = [e["rms_200_4k_dbfs"] for k, e in manifest.items() if e.get("tier") == tier and (("_land_" in k) if kind == "land" else k.endswith("_stinger"))]
+            rows.append([tier, min(v), max(v)])
+        for i, r in enumerate(rows):
+            r.append(round(rows[i + 1][1] - r[2], 2) if i + 1 < len(rows) else None)
+        out[kind] = [{"tier": t, "min_dbfs": a, "max_dbfs": b, "step_to_next_db": st} for t, a, b, st in rows]
+    out["ok"] = all(r["step_to_next_db"] is None or r["step_to_next_db"] >= 1.5 for k in ("land", "stinger") for r in out[k])
+    return out
 
 
 # ====================================================================== measurement ==================================
@@ -1232,11 +1294,13 @@ def main():
             emit("help_full_mix_d%d" % dv, full, "help_depth", depth=dv, profile="full", beat_offset_s=0.0)
             report["help_full_d%d" % dv] = help_checks(stems, full, BEATS_FULL)
         D = Depth(a.depth)                                                    # the one-shots the runtime fires per struck cell
-        for nm, last in (("help_cell", False), ("help_cell_last", True)):
-            cv = verb(cell_voice(rng_of("help/" + nm), D, 7 if last else 0, last), 0.3 + D.wet, tail=0.25)
+        for nm, last, ring, cap in (("help_cell", False, 1.0, None), ("help_cell_last", True, 1.7, None), ("help_cell_last_short", True, 0.75, 0.70)):
+            cv = verb(cell_voice(rng_of("help/" + ("help_cell_last" if last else nm)), D, 7 if last else 0, last, ring), 0.3 + D.wet, tail=0.25)
             cv = ffilt(finish(cv, D, drive=False), "highpass", 1500, 0.707, order=3)
             if last:
                 put(cv, finish(seat(D), D), 0.0)                              # the one-shot carries its own seat
+            if cap:
+                cv = cv[:N(cap)]
             cv[-N(0.1):] *= np.linspace(1, 0, N(0.1), dtype=F32)
             cv = edges(cv)
             emit(nm, (cv * (10 ** ((-6 if last else -10) / 20) / float(np.max(np.abs(cv))))).astype(F32), "help", depth=a.depth, profile="any")
@@ -1260,8 +1324,10 @@ def main():
             sting = symbol_voice(k, "stinger", a.depth)
             voices[k] = (lands[0], sting)
             for v, land in enumerate(lands, 1):
-                emit("sym_%s_land_v%d" % (k, v), land, "symbols", depth=a.depth, tier=SYMBOLS[k][0], variant=v)
-            emit("sym_%s_stinger" % k, sting, "symbols", depth=a.depth, tier=SYMBOLS[k][0])
+                emit("sym_%s_land_v%d" % (k, v), land, "symbols", depth=a.depth, tier=SYMBOLS[k][0], variant=v, mid_tilt=TILT["sym/%s/land/v%d" % (k, v)][0], peak_fold_db=TILT["sym/%s/land/v%d" % (k, v)][1])
+            emit("sym_%s_stinger" % k, sting, "symbols", depth=a.depth, tier=SYMBOLS[k][0], mid_tilt=TILT["sym/%s/stinger" % k][0], peak_fold_db=TILT["sym/%s/stinger" % k][1])
+        report["symbol_ladder"] = ladder_check(manifest)
+        print("[moments] ladder: %s" % json.dumps(report["symbol_ladder"]))
         if a.sheet:
             symbols_sheet(SHEETS / "sound_symbols_sheet.png", voices)
             print("[moments] sheet -> artifacts/targets/sound_symbols_sheet.png")

@@ -29,7 +29,19 @@ OUT = ROOT / "artifacts" / "canvas"
 PAGE = "http://127.0.0.1:8080/static/canvas/index.html"
 GPU_ARGS = ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist", "--autoplay-policy=no-user-gesture-required"]
 # beat -> (anchor event, offset ms): where in the real sequence each storyboard frame is taken
-BEATS = [("H0 dead spin", "pace", -120), ("H1 dread", "pace", 0.6), ("H2 targeting", "bite", -200), ("H3 impact", "bite", 45),
+# a fixed board with all twelve symbols, so two captures can be compared symbol for symbol
+SET_BOARD = [["LOW_10", "LOW_J", "LOW_Q", "LOW_K", "LOW_A"],
+             ["MID_HELMET", "LOW_A", "HIGH_VIPER", "LOW_10", "MID_COMPASS"],
+             ["LOW_Q", "HIGH_ANGLER", "WILD_MAW", "HIGH_SQUID", "LOW_J"],
+             ["LOW_K", "LOW_10", "HIGH_LEVIATHAN", "LOW_Q", "LOW_A"],
+             ["MID_COMPASS", "LOW_J", "LOW_K", "MID_HELMET", "LOW_10"]]
+# the help needs lows around the strike cell to show the full transformation
+LOW_BOARD = [["LOW_10", "LOW_J", "LOW_Q", "LOW_K", "LOW_A"], ["LOW_A", "LOW_10", "LOW_J", "LOW_Q", "LOW_K"],
+             ["LOW_K", "LOW_A", "LOW_10", "LOW_J", "LOW_Q"], ["LOW_Q", "LOW_K", "LOW_A", "LOW_10", "LOW_J"],
+             ["LOW_J", "LOW_Q", "LOW_K", "LOW_A", "LOW_10"]]
+SET_JS = """(rows) => { const g = window.__canvasGame; const G = { rows: 5, cols: 5, grid: rows, multipliers: {}, pearl_tokens: [] };
+  g.G = G; g.engOut(); g.engDropGrid(G); }"""
+BEATS = [("H0 dead spin", "pace", -120), ("H1 dread", "pace", 0.6), ("H2 targeting", "bite", -200), ("H3 impact", "bite", 110),
          ("H4 transformation", "bite", 520), ("H5 aftermath", "end", -80)]
 
 
@@ -110,6 +122,9 @@ def main():
             page.wait_for_function("window.__FEEL_READY === true || !!window.__canvasGame", timeout=30000)
             page.wait_for_timeout(3500)
             page.screenshot(path=str(OUT / f"{name}.png"))
+            page.evaluate(SET_JS, SET_BOARD)
+            page.wait_for_timeout(2600)
+            page.screenshot(path=str(OUT / f"{name.replace('idle', 'set')}.png"))
             ctx.close()
         # ---- the help, full then short, through the screencast ----
         ctx = br.new_context(viewport={"width": 1280, "height": 720})
@@ -130,6 +145,8 @@ def main():
 
         cdp.on("Page.screencastFrame", on_frame)
         for label in ("full", "short"):
+            page.evaluate(SET_JS, LOW_BOARD)
+            page.wait_for_timeout(2400)
             frames.clear()
             cdp.send("Page.startScreencast", {"format": "jpeg", "quality": 88, "everyNthFrame": 1})
             page.wait_for_timeout(400)

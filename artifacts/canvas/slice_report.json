@@ -1,35 +1,50 @@
 {
   "full": {
-    "hushMs": 911,
-    "lungeMs": 612,
-    "totalMs": 2570,
+    "hushMs": 921,
+    "lungeMs": 600,
+    "totalMs": 2558,
     "v": "full",
-    "frames": 224
+    "frames": 223
   },
   "short": {
-    "hushMs": 363,
-    "lungeMs": 354,
-    "totalMs": 1446,
+    "hushMs": 361,
+    "lungeMs": 344,
+    "totalMs": 1488,
     "v": "short",
-    "frames": 154
+    "frames": 156
   },
   "clips": {
     "state": "ready",
-    "loaded": 62,
+    "loaded": 63,
     "played": [
+      "sym_low_j_land_v2",
+      "sym_low_k_land_v1",
+      "sym_low_10_land_v3",
+      "sym_low_10_land_v1",
+      "sym_low_j_land_v3",
+      "sym_low_q_land_v2",
+      "sym_low_k_land_v3",
       "help_full_lead",
       "help_full_impact",
       "help_cell",
       "help_full_recede",
       "help_cell",
       "help_cell_last",
+      "sym_low_j_land_v1",
+      "sym_low_k_land_v1",
+      "sym_low_10_land_v2",
+      "sym_low_j_land_v2",
+      "sym_low_j_land_v1",
+      "sym_low_q_land_v3",
+      "sym_low_k_land_v3",
       "help_short_lead",
       "help_short_impact",
       "help_cell",
       "help_short_recede",
       "help_cell",
       "help_cell",
-      "help_cell_last"
+      "help_cell",
+      "help_cell_last_short"
     ]
   },
   "pageErrors": []

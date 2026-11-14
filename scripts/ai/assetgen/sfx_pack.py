@@ -82,7 +82,7 @@ def main() -> int:
         x, sr = read(f"help_{v}_aftermath")
         a, b = bounds(x, sr)
         put(f"help_{v}_recede", x[a:b], sr, from_impact_ms=round((a / sr - t_imp) * 1000))
-    for name in ("help_cell", "help_cell_last"):
+    for name in ("help_cell", "help_cell_last", "help_cell_last_short"):
         x, sr = read(name)
         a, b = bounds(x, sr)
         put(name, x[a:b], sr)

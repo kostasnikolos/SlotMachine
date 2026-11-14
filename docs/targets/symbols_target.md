@@ -1,6 +1,6 @@
-# Symbol set target - what good looks like (round two)
+# Symbol set target - what good looks like (round three)
 
-Reference target for art-bible phase P2 (symbol set v2), revised after `docs/targets/review_round1.md` (FAIL, close: G1 4, G2 3, G3 3, G5 4, G6 3). Everything is painted locally with Z-Image-Turbo (Apache 2.0) through `scripts/ai/comfy_tools.py paint` (8 steps, 1024x1024, no negative prompt), cut out with BiRefNet (`comfy_tools.py cutout`) and finished with Pillow/numpy/scipy. Nothing under `slot_engine/` was touched. 104 paint calls in total (88 in round one, 16 in round two).
+Reference target for art-bible phase P2 (symbol set v2), revised after `docs/targets/review_round1.md` (FAIL, close: G1 4, G2 3, G3 3, G5 4, G6 3). Everything is painted locally with Z-Image-Turbo (Apache 2.0) through `scripts/ai/comfy_tools.py paint` (8 steps, 1024x1024, no negative prompt), cut out with BiRefNet (`comfy_tools.py cutout`) and finished with Pillow/numpy/scipy. Nothing under `slot_engine/` was touched. 104 paint calls in total (88 in round one, 16 in round two, none in round three). Round two passed review (`docs/targets/review_round2.md`, G1-G6 all 4); round three is fix T4 plus the atlas albedo export.
 
 ## Deliverables
 
@@ -10,7 +10,8 @@ Reference target for art-bible phase P2 (symbol set v2), revised after `docs/tar
 - `generated/targets/symbols/<key>.png` - the 12 RGBA cut-outs, 768 px, same file names as round one. For the lows this file is now the **REST** state.
 - `generated/targets/symbols/low_*_emissive.png` - greyscale emissive mask per glyph (groove light only), pixel-aligned with `low_*.png`.
 - `generated/targets/symbols/low_*_win.png` - WIN state (groove at 100% plus a small boost; the bloom is additive from the mask and is not baked in). `low_*_full.png` - the levelled paint at 100% emission with no boost.
-- `generated/targets/symbols/tier_peaks.json` - the measured numbers printed by `finalize.py`.
+- `generated/targets/symbols/<key>_albedo.png` - atlas variant of all 12: tier grade removed, shadows lifted, no baked glow.
+- `generated/targets/symbols/tier_peaks.json` - the measured numbers printed by `finalize.py`, including every `_albedo` file.
 - `generated/targets/raw/` - every paint with its provenance `.json`; `generated/targets/cut/` - BiRefNet mattes and check sheets (`_r2_fin.png`, `_r2_low.png`: dark and magenta grounds).
 - `generated/targets/_scripts/` - `batch.py`, `jobs*.json` (every prompt and seed run), `picks.json`, `tiers.py` (tier scales, targets, the blurred-peak measurement), `finalize.py`, `build_sheets.py`, `write_doc.py`.
 
@@ -24,40 +25,63 @@ python generated/targets/_scripts/build_sheets.py
 python generated/targets/_scripts/write_doc.py
 ```
 
-## What changed, per review item
+## Round three: what changed (fix T4 and the atlas export)
 
-| Review item | Status | How |
+| Item | Status | How |
 | --- | --- | --- |
-| 2. Leviathan is the wrong animal | Repainted | New head painted after looking at `lev_eye`, `lev_lunge`, `lev_rise`, `lev_maw`: dark teal-grey plated scales, heavy brow, round cyan eye with a black vertical slit, pale needle fangs, cyan-lit throat, dorsal spines, no horns, no red. The neck runs out of the right edge of the paint and `finalize.py` fades its alpha over the last 22%, so there is no stump. Drawn at 120%, nudged up-right in the mock grid so the neck lies across the neighbouring cells, and drawn last. |
-| 3. Lows: emissive mask, rest and win | Done | Mask keyed from the cyan of each paint (min(G,B)-R, flecks closed, stone crystals rejected by component size). REST: groove floor at 38% of the levelled emission and pulled 55% toward Mist; the pale cut rim carries the letter. WIN: 100% plus boost, bloom added from the mask. Base `low_*.png` is REST. |
-| 3b. Five identical outlines | Done, matte only | `chip()` in `finalize.py`: per glyph, a noise field seeded by crc32 of the key bites two corners and notches one edge; of 60 seeded attempts it keeps the largest bite that stays 11 px clear of the glyph, and darkens a fracture band inside the new edge. No model call. |
-| 5. Tier grade to measured peaks | Done, shortfalls listed below | `finalize.py` solves one gain per symbol by bisection against the blurred-peak measurement in `tiers.py`. Helmet: lights pulled 80% toward a desaturated tarnish, flecks on the collar median-filled, gain 0.73 (a 27% cut, more than the 15% asked, because that is what peak 85 needs), cool rim at 0.70 strength. Wild: the iron ring is darkened 30% and excluded from the lift; throat and teeth lifted x2.2, then a Blood glow keyed from the red of the throat is added until the peak reaches 150. Leviathan: lift capped at x1.45, the rest comes from a Biolume glow keyed from its own eye and throat. |
-| K's groove flatter and greyer | Done in the grade | Every glyph's groove floor is scaled to the same mean luminance (150) and mixed 40% toward one Biolume hue before the states are derived. |
-| 6. Squid | Repainted | Front view, arms in a radial fan filling the cell, opaque dark wine-red and near-black flesh with pale highlights on the lit side, amber eyes, no iridescence. Saturation cut to 0.70 in the grade so red stays the Wild's. |
-| 7. Compass | Repainted (two rounds) | Gimballed bowl in three-quarter view inside a brass ring, one bold arrow needle, wordless black face, tarnished brass. Mids are now drawn at 90% so they stay inside the cell. |
-| 8. J | Repainted | Bolder J with a wide curled hook (`low4_a_j_s11_1`), same seed as the other tablets. Rest-state blurred peak 68 against 64 for the 10 and 70 for the K. |
-| One light (7 of 12 self-lit) | Partly | All 12 get a thin cool rim where the matte faces the upper left (`rim_light()`); the five grooves are dimmed at rest. Leviathan (eye, throat), Wild (throat) and the angler's lure are still self-lit by design. |
-| Viper tail enters the cell below | Done | The viper sprite gets 12% extra canvas so at 112% it stays inside its own cell. |
-| Angler stalk too thin | Partly | Thin structures in the stalk zone are dilated 3 px at 768; at a 64 px cell that is still only about 2 px. |
+| Helmet over-cut | Done | Gain is fixed at 0.92 instead of the 0.73 solved for peak 85; it stays de-yellowed (lights pulled 70% toward a desaturated tarnish, saturation 0.90) with the cool rim at 0.70. Consequence: its blurred peak is now 106.7, close to the highs' 110. |
+| Wild accent pink | Done, peak short of 150 | The additive glow is gone. True Blood #E0314B is mixed (never added) into the throat only: inside the tooth ring, weighted by how red the paint already is, never on the ivory. The lift then goes to the teeth, with the gums getting 60% of it and the iron ring none. Blurred peak is 136.8, not 150: Blood itself has a luminance of 104, so a confined, true-Blood throat cannot carry 150 without bleaching the teeth further. |
+| Win peaks uneven (133-176) | Done | Every glyph gets the same lit groove (Biolume boost 0.45); the peak is levelled with a per-glyph bloom gain recorded as `win_bloom_gain` in `tier_peaks.json` (K 0.47, A 0.53, Q 1.39, 10 1.71, J 1.73). All five now measure 149.5-150.0. The engine has to apply that gain to the bloom it draws from the mask. |
+| J on a different slab | Done | Re-picked `low4_a_j_s11_0`: same seed and the same slab proportions as the other four, bolder than the round-one J but lighter than the round-two one. Its rest emission is 0.55 instead of 0.38, because with the least groove area its rest peak fell to 56; it now measures 62.3. |
+| Chips too alike | Done, matte only | `BREAKS` in `finalize.py` gives each tablet its own fracture planes (the 10 loses its upper right, the J its lower left, the Q is sheared on the left, the K is broken along the bottom, the A is knapped toward a point), each backed off until it clears the glyph by 30 px, wobbled by a noise field seeded from the key, plus one notch. |
+| Atlas albedo | Done | `<key>_albedo.png` for all 12: the same matte, repairs, saturation and rim, but no tier gain and no accent glow; a gamma curve lifts the shadows until the painted pixels average 105 (mids, highs, apex, wild) or 65 (lows). Lows use the rest-state groove; win light comes from `low_*_emissive.png`. |
+
+## Atlas albedo variants (measured)
+
+Mean is the Rec.601 luminance over pixels with alpha above 0.5. Blurred peak and cell mean use the same method as the ladder below. These files carry no tier ladder on purpose: the helmet's albedo peak is the highest of the set, so the ladder must come from the shader.
+
+| Symbol | Gamma applied | Mean luminance (painted) | Blurred peak | Cell mean |
+| --- | --- | --- | --- | --- |
+| low_10_albedo | 0.774 | 65.0 | 74.9 | 32.5 |
+| low_j_albedo | 0.782 | 65.0 | 78.3 | 30.5 |
+| low_q_albedo | 0.75 | 65.0 | 79.8 | 30.9 |
+| low_k_albedo | 0.79 | 65.0 | 84.7 | 30.8 |
+| low_a_albedo | 0.737 | 65.0 | 82.2 | 28.4 |
+| mid_helmet_albedo | 0.575 | 105.0 | 156.7 | 50.6 |
+| mid_compass_albedo | 0.5 | 105.0 | 114.1 | 47.3 |
+| high_viper_albedo | 0.699 | 105.0 | 129.3 | 50.5 |
+| high_angler_albedo | 0.593 | 105.0 | 137.1 | 62.3 |
+| high_squid_albedo | 0.632 | 105.0 | 130.2 | 48.9 |
+| high_leviathan_albedo | 0.522 | 105.0 | 132.4 | 70.8 |
+| wild_maw_albedo | 0.517 | 105.0 | 135.5 | 74.2 |
+
+## Round two: what changed, per review item (kept for the record)
+
+- Leviathan repainted as the hero animal (teal plated scales, cyan slit eye, needle fangs, cyan throat, dorsal spines, no horns, no red); neck fades into the cell edge; drawn at 120% and last.
+- Lows: emissive mask keyed from each paint's cyan; REST is the base file, WIN beside it; groove floors levelled to one luminance and hue.
+- Squid repainted front-on with fanned arms; compass repainted as a gimballed bowl with one needle; viper padded to stay in its cell; angler stalk thickened.
+- Tier gains solved by bisection against `tiers.blurred_peak`; a thin cool upper-left rim on all 12.
 
 ## Measured tier ladder
 
 Measurement (`tiers.blurred_peak`): the 768 px sprite is drawn at its tier scale in the middle of a 2x2-cell field of Trench #0B1418 at 150 px per cell and blurred with an 8 px Gaussian. Peak is the maximum Rec.601 luminance (0-255); cell mean is the mean over the central cell. Lows are measured in the REST state; their win peak includes the additive bloom.
 
-| Symbol | Scale | Target peak | Measured peak | Cell mean | Win peak | Gain applied |
-| --- | --- | --- | --- | --- | --- | --- |
-| low_10 | 70% | 70 | 64.4 | 28.8 | 132.6 | 1.6 |
-| low_j | 70% | 70 | 67.7 | 27.8 | 146.5 | 1.6 |
-| low_q | 70% | 70 | 68.2 | 27.9 | 140.3 | 1.6 |
-| low_k | 70% | 70 | 69.7 | 27.6 | 175.8 | 1.348 |
-| low_a | 70% | 70 | 60.4 | 26.4 | 168.8 | 1.6 |
-| mid_helmet | 90% | 85 | 84.9 | 27.7 |  | 0.734 |
-| mid_compass | 90% | 85 | 85.4 | 31.6 |  | 1.58 |
-| high_viper | 112% | 110 | 110.0 | 40.4 |  | 1.093 |
-| high_angler | 112% | 110 | 110.3 | 41.3 |  | 1.114 |
-| high_squid | 112% | 110 | 110.0 | 37.5 |  | 1.223 |
-| high_leviathan | 120% | 130 | 129.8 | 49.2 |  | 1.45 + accent 0.49 |
-| wild_maw | 100% | 150 | 149.9 | 49.5 |  | 2.2 + accent 1.05 |
+| Symbol | Scale | Target peak | Measured peak | Cell mean | Mean (painted) | Win peak | Gain applied |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| low_10 | 70% | 70 | 64.4 | 28.0 | 50.3 | 150.0 | 1.6 |
+| low_j | 70% | 70 | 62.3 | 26.4 | 49.5 | 149.9 | 1.6 |
+| low_q | 70% | 70 | 68.2 | 25.9 | 46.8 | 149.7 | 1.6 |
+| low_k | 70% | 70 | 69.7 | 26.6 | 49.6 | 149.5 | 1.348 |
+| low_a | 70% | 70 | 60.4 | 23.7 | 43.9 | 149.9 | 1.6 |
+| mid_helmet | 90% | 85 | 106.7 | 32.0 | 55.3 |  | 0.92 |
+| mid_compass | 90% | 85 | 85.4 | 31.6 | 58.4 |  | 1.58 |
+| high_viper | 112% | 110 | 110.0 | 40.4 | 77.9 |  | 1.093 |
+| high_angler | 112% | 110 | 110.3 | 41.3 | 64.3 |  | 1.114 |
+| high_squid | 112% | 110 | 110.0 | 37.5 | 72.5 |  | 1.223 |
+| high_leviathan | 120% | 130 | 129.8 | 49.2 | 68.5 |  | 1.45 + accent 0.49 |
+| wild_maw | 100% | 150 | 136.8 | 51.8 | 69.8 |  | 4.5 |
+
+Two rows miss their target on purpose after round three: the helmet (106.7 against 85, gain fixed at 0.92 as the review asked) and the Wild (136.8 against 150, true Blood confined to the throat). The Wild is still the highest peak on the grid.
 
 Lows land at 60-70, not all at 70: the lift is applied to the stone and the cut rim only (never to the groove floor, which would undo the rest state) and is capped at x1.6, past which the basalt crystals start to sparkle. For comparison the same tablets at 100% emission measure 87-103 by this method.
 
@@ -79,11 +103,11 @@ All 1024x1024, 8 steps. Final file is `generated/targets/symbols/<key>.png` (768
 
 ### low_j
 
-- source paint: `generated/targets/raw/low4_a_j_s11_1.png`
+- source paint: `generated/targets/raw/low4_a_j_s11_0.png`
 - seed: `11`, size: `1024x1024`, steps: `8`
 - prompt:
 
-> A flat irregular shard of black basalt, a broken ancient stone tablet with chipped uneven edges, hairline cracks and a little pale barnacle crust. Carved into it, very large and bold, filling almost the whole tablet, is a very bold heavy capital letter "J" with a thick stem and a broad curling hook: a wide deep chiselled trench with thick strokes, its floor glowing evenly along every stroke with clear cyan bioluminescent light, its cut rim worn pale grey. Matte wet dark stone. Lit by one hard cold cyan light from the upper left, the lower right side falling into black shadow. Dark moody realistic oil painting, grim deep-sea horror concept art, muted desaturated colours, heavy visible brushwork, gritty film grain. Centered, front view, isolated on a plain flat mid-grey background
+> A flat irregular shard of black basalt, a broken ancient stone tablet with chipped uneven edges, hairline cracks and a little pale barnacle crust. Carved into it, very large and bold, filling almost the whole tablet, is the capital letter "J" drawn in very thick heavy bold strokes with a wide heavy hook: a wide deep chiselled trench with thick strokes, its floor glowing evenly along every stroke with clear cyan bioluminescent light, its cut rim worn pale grey. Matte wet dark stone. Lit by one hard cold cyan light from the upper left, the lower right side falling into black shadow. Dark moody realistic oil painting, grim deep-sea horror concept art, muted desaturated colours, heavy visible brushwork, gritty film grain. Centered, front view, isolated on a plain flat mid-grey background
 
 ### low_q
 
@@ -183,26 +207,25 @@ All 1024x1024, 8 steps. Final file is `generated/targets/symbols/<key>.png` (768
 - For the Leviathan, describing the hero animal feature by feature (plated scales, brow ridge, slit eye as the brightest point, fangs like cage bars, neck cut off by the picture edge) and the word "hornless" worked.
 - Asking for a bolder glyph by comparison ("the same strokes as a bold letter K") produced a K/J hybrid; describing the J itself worked.
 
-## Self-scores after round two
+## Self-scores after round three
 
 | Gate | Score | Why |
 | --- | --- | --- |
-| G1 readable at 64 px | 4 | All 12 identifiable. Rest-state lows are dimmer than round one by design; they still read at 45 px but with less margin (A is the weakest, peak 60). The compass is now a ring with a needle, clearer than the bowl but small. |
-| G2 tier hierarchy under blur | 4 | The measured ladder is ordered: lows 60-70, mids 85, highs 110, Leviathan 130, Wild 150. By eye the Wild is clearly loudest and the lows recede. The squid meets its peak number but has the lowest cell mean of the highs (37.5) and looks dimmer than the helmet's warm blob under blur. |
-| G3 one light | 3 | Upper-left cool rim on all 12 and the grooves are quiet at rest. The rim is a matte-edge effect, not relighting: interior forms keep the light they were painted with, and the helmet is still lit fairly frontally. |
-| G5 cohesion | 4 | One brush and grain. The new squid and Leviathan sit better with the angler and viper than the old ones. The Leviathan's and the Wild's added glow is composited light and looks slightly airbrushed against the oil paint. |
-| G6 reference parity | 3 | The demon head and the top-down bowl are gone, but this was not judged against real reference frames here, so no higher claim is made. |
+| G1 readable at 64 px | 4 | All 12 identifiable. A is the weakest low (rest peak 60, smallest tablet after knapping). |
+| G2 tier hierarchy under blur | 3-4 | Lows 60-70, compass 85, highs 110, Leviathan 130, Wild 137 hold. The helmet at 107 now sits with the highs, and the Wild leads the Leviathan by 7 rather than 20. On the base files the ladder is weaker than in round two; it is meant to be applied in the shader from the albedo set. |
+| G3 one light | 3 | Unchanged: an upper-left rim overlay on all 12, no relighting. |
+| G5 cohesion | 4 | The Wild's glow is no longer airbrushed pink and the helmet is no longer muddy. The chipped tablets have cut, not painted, fracture edges. |
+| G6 reference parity | not scored | Not judged against reference frames here. |
 
 ## What still falls short
 
-- **Leviathan matches the hero in kind, not in detail.** It is a teal scaled serpent with a cyan slit eye and fangs, but the hero's eye is larger with a heavier lid, its fangs are longer rib-like needles, and the lure hanging in the throat is only a glow here. The head is a long diagonal, not the largest mass on the grid; its apex status rests on the eye and throat light and the 120% overlap.
-- **The 130 and 150 peaks are reached with added glow**, not with paint alone (Leviathan lift capped at x1.45 plus a Biolume accent; Wild x2.2 plus a Blood accent). The Wild's glow reads pinkish rather than blood red.
-- **Lows do not all reach 70** at rest (60-70), and their **win peaks are uneven** (133 for the 10 to 176 for the K): the floor is levelled, but glyph area and stroke width differ.
-- **Chipped outlines are matte-only.** The new edges get a dark fracture band but no painted broken face; at 768 px the J's right side shows a ragged cut and a small detached speck. A second slab seed per glyph would be the proper fix.
-- **The J sits on a different slab** (taller, narrower) from the other four, because the bolder prompt changed the paint.
-- **Squid**: two amber eyes rather than one focal eye, seen from the front rather than from below, and dark enough to be the weakest high under blur.
-- **Compass** keeps a short chain link at the top, and its arrow needle leans toward a gauge.
-- **Helmet** was cut 27% and desaturated to hit 85; it reads slightly muddy at full size.
-- **One light is a rim overlay**; no normal maps or relighting.
-- **Angler lure** still needs its glow halo as an additive sprite in the engine.
-- **Not covered**: Pearl/scatter, Dead Sediment, WILD lettering, atlas packing, any in-engine check, and the art-bible wording change. The sheets are Pillow composites, not game captures.
+- **Wild peak is 136.8, not 150.** A true-Blood throat confined to the throat cannot reach it; the remaining lift is on the teeth (gain 4.5 on ivory), which are close to white.
+- **Helmet ties the highs under blur** (106.7) on the base files. This follows from the requested gain; the ladder for mids now depends on the shader.
+- **Albedo files have no hierarchy at all** by design (helmet albedo peak 156.7 is the highest). If the shader does not apply the ladder, the helmet will lead.
+- **The albedo lift is a global gamma**, so it flattens deep shadows a little and greys the Wild's iron ring and the lows' basalt; it is not a relight.
+- **Albedo lows carry the rest-state groove**, lifted with everything else, so the groove reads paler than in `low_*.png`. The engine review asked for the rest emissive to be halved; that is a shader value, not baked here.
+- **Win levelling needs per-glyph bloom gain** (0.47 to 1.73) in the engine; with one global bloom the peaks return to an uneven spread.
+- **Chips are matte-only**: dark fracture band, no painted broken face. The A's tablet is visibly the smallest of the five and the J's rest emission is higher than the others (0.55).
+- **Leviathan matches the hero in kind, not in detail** (smaller eye, shorter fangs, throat lure only a glow); its peak still leans on added Biolume glow in the base file (not in the albedo).
+- **Squid** has two eyes, is seen from the front and is the dimmest-looking high; **compass** keeps a chain link on top and an arrow needle.
+- **Not covered**: Pearl/scatter, Dead Sediment, WILD lettering, atlas packing, any in-engine check, the art-bible wording change. Sheets are Pillow composites, not game captures.

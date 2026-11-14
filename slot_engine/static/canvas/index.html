@@ -74,7 +74,11 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 @keyframes strikep{to{box-shadow:0 0 70px rgba(255,122,26,1),inset 0 0 60px rgba(255,122,26,.6)}}
 .strikecard{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 14px);white-space:nowrap;text-align:center;padding:10px 20px;border-radius:12px;background:rgba(14,4,0,.92);border:1px solid #ff7a1a;box-shadow:0 0 30px rgba(255,122,26,.3);animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
 /* under the painted jaws the zone keeps its edge but not its glow: the creature carries one cyan light */
-.strike.hero{box-shadow:0 0 16px rgba(255,122,26,.3);animation:strikein .5s cubic-bezier(.2,1.4,.4,1)}
+.strike.hero{border-color:transparent;box-shadow:none;animation:none}
+/* after the bite: a quiet ring in the depth's own light around what the creature left */
+.strike.after{border-color:rgba(var(--a),.5);box-shadow:0 0 26px rgba(var(--a),.3),inset 0 0 18px rgba(var(--a),.14);animation:none;transition:border-color .3s,box-shadow .3s}
+/* the name card rides on the frame's top edge, never on the reels */
+.strikecard.off{bottom:auto;top:0;left:0;transform:translate(-50%,-100%);animation:cardin .4s cubic-bezier(.2,1.4,.4,1)}
 /* strikes in the top row show their card under the zone */
 .strikecard.below{bottom:auto;top:calc(100% + 14px)}
 /* the painted jaws cover the zone: the card goes beside the cell, on the side away from the painting's bulk */
@@ -297,7 +301,7 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 <sc-if value="{{strike.show}}" hint-placeholder-val="{{ false }}">
 <div class="strike {{strike.cls}}" style="left: {{strike.x}}px; top: {{strike.y}}px; width: {{strike.w}}px; height: {{strike.h}}px">
 <sc-if value="{{strike.card}}" hint-placeholder-val="{{ false }}">
-<div class="strikecard {{strike.cardCls}}">
+<div class="strikecard {{strike.cardCls}}" style="margin-left: {{strike.cdx}}px; margin-top: {{strike.cdy}}px">
 <div style="font-size: 12px; letter-spacing: 0.3em; color: #ffb27a">LEVIATHAN LIFELINE</div>
 <div style="font-size: 24px; font-weight: 700; letter-spacing: 0.14em; color: #fff">{{strike.name}}</div>
 <div style="font-size: 13px; letter-spacing: 0.12em; color: #ffd2ad">{{strike.blurb}}</div>
@@ -559,6 +563,12 @@ class Component extends DCLogic {
       WILD_MAW: { t: 6, cat: 'WILD', amp: 1.3, name: 'WILD MAW', wild: true },
       DEAD_SEDIMENT: { t: 8, cat: 'BLOCK', amp: 0, name: 'DEAD SEDIMENT', blocker: true }
     };
+    // the tier ladder on screen (docs/targets/review_round2.md, G1/G2). k = size of the quad relative to the standard one, set so the
+    // symbol's longest side is 0.70 / 0.90 / 1.06 / 1.14 / 1.00 of a cell (the atlas fills 0.94 of its tile; the standard quad is 0.89
+    // of a cell); g = gain on the lit paint, so creatures out-shine the runes whatever the light is doing
+    const tier = { LOW: { k: 0.836, g: 1.0 }, MID: { k: 1.075, g: 1.7 }, HIGH: { k: 1.266, g: 1.85 }, APEX: { k: 1.362, g: 2.9 },
+      WILD: { k: 1.194, g: 2.2 }, BLOCK: { k: 1.1, g: 1.3 } };
+    for (const k2 in sym) sym[k2].tier = tier[sym[k2].cat] || { k: 1, g: 1 };
     // symbol weights per depth level (relative), from config/weights.py after the 96% rebalance: no sediment
     const weights = [
       { LOW_10: 320, LOW_J: 280, LOW_Q: 250, LOW_K: 220, LOW_A: 180, MID_HELMET: 120, MID_COMPASS: 100, HIGH_VIPER: 70, HIGH_ANGLER: 50, HIGH_SQUID: 30, HIGH_LEVIATHAN: 20, WILD_MAW: 31 },
@@ -611,7 +621,7 @@ class Component extends DCLogic {
     return {
       grid: g, cols: 5, level: 0, meters: 0, pts: 0, banked: 0, free: false, inFeature: false, gmult: 1, pearls: 0,
       balance: 1000, betIdx: 2, win: 0, winLabel: '', winCells: [], dimCells: [], vents: [],
-      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '', card: false, cls: '' }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s', heroZ: 7, ctlOp: 1,
+      strike: { show: false, x: 0, y: 0, w: 0, h: 0, name: '', blurb: '', cardCls: '', card: false, cls: '', cdx: 0, cdy: 0 }, creatureState: 'DORMANT', levZ: 0, levOp: 1, levOpT: '0s', heroZ: 7, ctlOp: 1,
       lu: { show: false, meters: '0', name: '', level: 0, points: 0, rewards: [] },
       feat: { show: false, kicker: '', title: '', sub: '', detail: '', color: '#ff9a4d' },
       bw: { show: false, stage: '', cls: 't1', title: '', kicker: '', titleAnim: '', amount: '', xStr: '', hint: '', punch: 'pa', jit: '', amtScale: 1 }, shake: '', shatter: false, buyOpen: false,
@@ -2180,13 +2190,14 @@ class Component extends DCLogic {
     // 1. it swims in over the reels to the strike zone; the water there starts to churn
     if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: P.churn, splashed: false };
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
-      strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: d.spins_added ? 'SECOND BREATH' : C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero } });
+      strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: d.spins_added ? 'SECOND BREATH' : C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero, cdx: 0, cdy: 0 } });
     if (this.hero && this.hero.tex && this.hero.tex.lev_lunge) {
       // beat 1 (plan C of the presentation brief): the WHOLE creature rushes out of the dark at the strike cell, far -> near,
       // so the jaws that follow belong to a body; the painting's throat lands on the cell centre, 2.6x the zone wide
       const Sa = this.strikeAnim, swimMs = Sa ? Math.max(160, 0.16 * Sa.dur * 1000 / this.strikeRate) : 800;
       const lw = Math.min(G.W * 0.9, Math.max(1100, Math.max(w, h) * 312 * 2.6));
-      this.hero.play('lev_lunge', { anchor: 'throat', at: [sx0, sy0], w: lw, h: lw * 768 / 1344, margin: 0, dur: swimMs + 2000, hold: true,
+      this.hero.play('lev_lunge', { anchor: 'throat', at: [sx0, sy0], w: lw, h: lw * 768 / 1344, dur: swimMs + 2000, hold: true,   // no stage clamp: on an edge cell the body runs off-screen, the throat stays on the cell
+       
         zoomFrom: 0.22, zoomTo: 1.0, zoomMs: swimMs, z: 7, enter: { alphaMs: 180 }, fog: 0.5, par: 0.4 });
       this.setState({ levOp: 0, levOpT: '0.2s', levZ: 0 });
     }
@@ -2227,9 +2238,11 @@ class Component extends DCLogic {
     if (heroJaws && this.hero) this.hero.chomp();
     this.levBite(foot, px, py, w, h, sx, sy, zw, zh);
     this.heavyImpact('leviathan', this.FT.hitStopMs);
+    this.biteFlash(sx0, sy0, this.FT.hitStopMs);
     // the creature's name card is revealed on the chomp's hit-stop, beside the cell on the side away from the painting's bulk
-    const sideCls = G.por ? (r0 === 0 ? 'below' : '') : (c0 + w / 2 > cols / 2 ? 'sideL' : 'sideR');
-    this.setState({ strike: Object.assign({}, this.state.strike, { card: true, cardCls: sideCls }) });
+    // (review_round2 G4) the card sits centred on the frame's top edge, off the reels: its offsets undo the zone's own position
+    this.setState({ strike: Object.assign({}, this.state.strike, { card: true, cardCls: 'off',
+      cdx: Math.round(cols * G.pitch / 2 - c0 * G.pitch), cdy: Math.round(-r0 * G.pitch + 6) }) });
     // 4. the jaws have shut (P.turn ms): the transformation starts straight away, and the creature tears away down and out
     //    into the deep UNDERNEATH it, so the player sees what the bite left while the painting is still leaving
     await this.waitRaw(P.turn);
@@ -2240,7 +2253,7 @@ class Component extends DCLogic {
       this.levVisT = 0;
       // the water layer rides above the painting while it is up, and carries the depth darkness with it: hand it back to the
       // world as the creature leaves, so the cells it turned are the brightest thing on the board (storyboard H4)
-      this.setState({ creatureState: 'SUBMERGED', levOp: 0, levOpT: '0.6s', strike: Object.assign({}, this.state.strike, { cls: '' }) });
+      this.setState({ creatureState: 'SUBMERGED', levOp: 0, levOpT: '0.6s', strike: Object.assign({}, this.state.strike, { cls: 'after' }) });
       this.momSfx('helpRecede', P.v) || this.levSfx('plunge');
       this.timers.push(setTimeout(() => { if (!this.dead) this.setState({ levZ: 0 }); }, 850));
     };
@@ -2258,7 +2271,7 @@ class Component extends DCLogic {
     for (const i of order) {
       const t = tm.get(i);
       this.engSurface(i, t ? t.new_symbol : fin[i].sym, t ? t.multiplier : fin[i].mult, fin[i].pearl, P.rise);
-      this.momSfx('cellTurn', turn++, turns) || this.levSfx('wildRise');
+      this.momSfx('cellTurn', turn++, turns, P.v) || this.levSfx('wildRise');
       await this.waitRaw(lv >= 4 ? Math.min(70, P.gap) : P.gap);
     }
     // symbols the strike upgraded outside the bite surface in place, as before
@@ -2266,10 +2279,13 @@ class Component extends DCLogic {
       const i = t.coord[0] * cols + t.coord[1];
       this.engTransmute(i, t.new_symbol, t.multiplier, true);
       if (this.E && this.E.cells[i]) this.E.cells[i].surfRate = P.rise;
-      this.momSfx('cellTurn', turn++, turns);
+      this.momSfx('cellTurn', turn++, turns, P.v);
       await this.waitRaw(60);
     }
     this.G = d.grid;
+    // the board comes back now (about 600 ms after the bite), not at the very end: the player reads the new symbols on a lit board
+    this.engDim(others, false);
+    this.setState({ dimCells: [] });
     if (d.spins_added) {
       // second breath: the bite banked a spin; the bank ticks up under a shimmer once the wilds have surfaced
       this.flog('retrigger', { spins: d.spins_added });
@@ -2287,6 +2303,19 @@ class Component extends DCLogic {
     this.engDim(others, false);
     this.setState({ creatureState: 'SPENT', dimCells: [], strike: Object.assign({}, this.state.strike, { show: false, card: false, cls: '' }) });
     await this.waitRaw(250);
+  }
+
+  // (review_round2 G3) the bite is the brightest frame of the help: one soft burst of the depth's own light from the struck cell,
+  // held for the hit-stop and gone inside a quarter of a second. One flash, local, never white: not a strobe.
+  biteFlash(x, y, holdMs) {
+    const host = document.querySelector('canvas[data-hero]');
+    if (!host || !host.parentNode) return;
+    const G = this.geo(), f = document.createElement('div');
+    f.style.cssText = 'position:absolute;left:0;top:0;width:' + G.W + 'px;height:' + G.H + 'px;pointer-events:none;z-index:9;mix-blend-mode:screen;opacity:1;'
+      + 'background:radial-gradient(circle at ' + Math.round(x) + 'px ' + Math.round(y) + 'px, rgba(215,255,250,.9) 0, rgba(120,235,225,.5) 150px, rgba(63,224,208,.16) 420px, rgba(63,224,208,0) 760px)';
+    host.parentNode.appendChild(f);
+    this.timers.push(setTimeout(() => { f.style.transition = 'opacity .24s ease-out'; f.style.opacity = '0'; }, holdMs || 67));
+    this.timers.push(setTimeout(() => { f.remove(); }, (holdMs || 67) + 300));
   }
 
   // a designed moment cue (audio_moments.js): true only if a clip actually started, so the caller can fall back
@@ -2344,6 +2373,19 @@ class Component extends DCLogic {
     if (A && typeof A.hush === 'function') A.hush(-12, ms + 200, 400);
     // the lead clip runs from here to the bite (hush + lunge), so nothing else may rise under it
     this.lv.lead = this.momSfx('helpLead', v);
+    // (review_round2 G5, storyboard H1) the eye opens BEHIND the reels: the hero layer drops under the frame for this one shot, the
+    // symbols lose their own light and stand as dark shapes against the iris
+    if (this.hero && this.hero.tex && this.hero.tex.lev_eye && this.E) {
+      const G = this.geo(), w = G.frameW * 1.5, h = w * 9 / 16;
+      const cx = G.frameLeft + G.frameW * 0.5, cy = G.frameTop + G.frameH * 0.42;
+      this.E.glowOff = true;
+      this.E.cells.forEach((c) => { if (c) c.darkT = 0.42; });
+      this.setState({ heroZ: 0 });
+      this.hero.play('lev_eye', { x: cx - 0.661 * w, y: cy - 0.476 * h, w, h, dur: ms + 120, zoomFrom: 0.94, zoomTo: 1.03, zoomMs: ms, z: 0, pivot: [0.661, 0.476],
+        enter: { dx: 0, dy: 0, ms: 1, alphaMs: Math.min(320, ms * 0.5) }, exit: { dx: 0, dy: 0, ms: 120, alphaMs: 120 },
+        tint: this.defs().levels[this.state.level || 0].accent });
+      this.lv.eyeUp = true;
+    }
     if (this.lv.lead) {
       await this.waitRaw(ms);
       this.lv.roared = true;
@@ -2351,6 +2393,12 @@ class Component extends DCLogic {
       await this.waitRaw(Math.max(0, ms - 100));
       this.lv.roared = !!(A && A.__dark && this.levSfx('roar', 1));
       await this.waitRaw(100);
+    }
+    if (this.lv.eyeUp) {
+      this.lv.eyeUp = false;
+      if (this.hero && this.hero.cur && this.hero.cur.id === 'lev_eye') this.hero.stop(90);
+      if (this.E) { this.E.glowOff = false; this.E.cells.forEach((c) => { if (c) c.darkT = 1; }); }
+      this.setState({ heroZ: 7 });
     }
     this.lv.hush = false;
   }
@@ -2424,7 +2472,7 @@ class Component extends DCLogic {
         if (!c || c.state === 'gone') continue;
         c.eatT = 0; c.ex = bx + (c.x - bx) * 0.12; c.ey = by + (c.y - by) * 0.12;
         c.eatSpin = (c.x < bx ? -1 : 1) * (0.8 + Math.random() * 0.8); c.hitT = 0; c.flash = this.hero && this.hero.cur ? 0.15 : 0.6;
-        this.biteDiscs(8, c.x, c.y, 320);
+        this.biteDiscs(3, c.x, c.y, 320);
       }
       for (let j = 0; j < 10 + 4 * foot.size; j++) {
         const a = Math.random() * 6.283, sp = 120 + Math.random() * 420;
@@ -2434,10 +2482,13 @@ class Component extends DCLogic {
       if (E.rip) { E.rip.x = px; E.rip.y = py; }
     }
     // the white splash (drops + mist on the levfx canvas) only without the painting: under the painted jaws the discs are the burst
-    if (!(this.hero && this.hero.cur && this.hero.cur.id === 'lev_jaws')) this.spawnWater('splash', sx, sy, zw, zh);
+    // (review_round2 G3) the hit itself must be the brightest frame of the sequence: a geyser bursts from the cell, and every
+    // cell around it catches the flash
+    if (!(this.hero && this.hero.cur && this.hero.cur.id === 'lev_jaws')) this.spawnWater('geyser', sx, sy, zw, zh);
+    if (E && !E.fail) for (const c of E.cells) if (c && c.state !== 'gone') { const dd = Math.hypot(c.x - px, c.y - py); if (dd < 700) c.flash = Math.max(c.flash || 0, 0.9 * (1 - dd / 700)); }
     // the stream above the painting: a thin column of discs rising from the bite
     const St = this.biteStream || (this.biteStream = []);
-    for (let j = 0; j < 10 && St.length < 16; j++) St.push(this.disc(sx + zw / 2 + (Math.random() - 0.5) * 24, sy + zh / 2 + (Math.random() - 0.5) * 30, 1));
+    for (let j = 0; j < 4 && St.length < 16; j++) St.push(this.disc(sx + zw / 2 + (Math.random() - 0.5) * 24, sy + zh / 2 + (Math.random() - 0.5) * 30, 1));
   }
 
   // an eaten cell comes back: the new symbol rises up out of the water on its own
@@ -2450,7 +2501,7 @@ class Component extends DCLogic {
     if (old && old.state !== 'gone' && old.eatT >= 0) E.outgoing.push(old);
     E.cells[i] = c;
     this.engTransmute(i, sym, mult, true);
-    if (rate) c.surfRate = rate;                       // the help's pacing: the symbol must be readable inside its own beat
+    if (rate) { c.surfRate = rate; c.pop = 1; }        // the help's pacing: the symbol must be readable inside its own beat
     this.biteDiscs(10, c.x, c.y + 90, 200);
   }
 
@@ -4298,7 +4349,7 @@ precision mediump float;
 uniform sampler2D uAlb, uNrm, uEmi, uAux;
 uniform vec4 uTile;
 uniform vec3 uLight, uLightCol;
-uniform float uGlow, uDissolve, uHit, uDark, uAlpha, uSeed, uBreath, uRip, uTime;
+uniform float uGlow, uDissolve, uHit, uDark, uAlpha, uSeed, uBreath, uRip, uTime, uGain;
 uniform vec2 uRipC;
 varying vec2 vUv;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -4322,11 +4373,16 @@ void main(){
   vec3 n = normalize(vec3(nm.xy * (1.0 + uBreath * 0.4), max(nm.z, 0.2)));
   vec3 pos = vec3(vUv.x * 2.0 - 1.0, 1.0 - vUv.y * 2.0, aux.b * 0.1);
   vec3 L = uLight - pos; float d = length(L); L /= d;
-  float att = 1.0 / (1.0 + 0.08 * d * d);
+  // art bible section 3: one key light from the upper left. The moving light only leans it, so a rune next to the light
+  // cannot out-shine a creature across the grid
+  L = normalize(mix(normalize(vec3(-0.42, 0.5, 1.0)), L, 0.3));
+  // the key light shapes the symbol (direction) but barely ranks it: distance moves brightness by about +-15%, the tier does the rest
+  float att = mix(0.62, 1.0 / (1.0 + 0.08 * d * d), 0.22);
   float dif = max(dot(n, L), 0.0);
   float sp = pow(max(dot(n, normalize(L + vec3(0.0, 0.0, 1.0))), 0.0), 28.0) * aux.g;
   vec3 amb = vec3(0.30, 0.42, 0.50) * (0.75 + 0.25 * n.y);
-  vec3 col = alb * amb * 0.9 + alb * dif * uLightCol * att * 1.15 + sp * uLightCol * att * 0.85;
+  vec3 col = alb * amb * 0.72 + alb * dif * uLightCol * att * 0.88 + sp * uLightCol * att * 0.7;
+  col *= uGain;
   col += emi * uGlow;
   float rim = pow(1.0 - clamp(n.z, 0.0, 1.0), 2.0);
   col += vec3(0.25, 0.9, 1.0) * rim * 0.12 * uGlow;
@@ -4335,7 +4391,7 @@ void main(){
   float el = dot(emi, vec3(0.333));
   // a struck symbol lights in its OWN light (a rune's groove, a lure, a throat) rather than one orange for everything;
   // only the wet highlights still catch the warm flash
-  col += emi * uHit * 2.4;
+  col += emi * uHit * 4.5;
   col += vec3(1.0, 0.45, 0.08) * uHit * (0.06 + 0.5 * sp);
   col = mix(col, col * vec3(1.10, 0.97, 0.86), uHit * 0.5);
   float a = mask * uAlpha;
@@ -4398,7 +4454,7 @@ void main(){
       else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     });
     const U = {};
-    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uAlb', 'uNrm', 'uEmi', 'uAux']
+    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uGain', 'uAlb', 'uNrm', 'uEmi', 'uAux']
       .forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
     gl.uniform1i(U.uAlb, 0); gl.uniform1i(U.uNrm, 1); gl.uniform1i(U.uEmi, 2); gl.uniform1i(U.uAux, 3);
     gl.uniform2f(U.uRes, E.W, E.H);
@@ -4494,7 +4550,8 @@ void main(){
     E.cells.forEach((c) => { if (c) step(c); });
     if (E.rate && !E.cells.some((c) => c && c.state === 'fall')) E.rate = 0; // slam / cascade rate ends when the grid has settled
 
-    const live = E.cells.filter((c) => c && c.state !== 'gone');
+    const tk = (c) => { const y = D.sym[c.sym]; return y && y.tier ? y.tier.k : 1; };
+    const live = E.cells.filter((c) => c && c.state !== 'gone').sort((a, b) => tk(a) - tk(b));
     const list = E.outgoing.concat(live.filter((c) => c.hitT < 0), live.filter((c) => c.hitT >= 0));
     const half = 139;
     const gl = E.gl;
@@ -4554,11 +4611,13 @@ void main(){
         const ea = c.eatT >= 0 ? Math.min(1, c.eatT / 0.45) : 0, ee = ea * ea;
         const al = (c.rise ? 1 - 0.9 * Math.min(1, se * 1.3) : 1) * (1 - ee);
         if (al < 1) gl.uniform1f(U.uAlpha, Math.max(0, al));
+        gl.uniform1f(U.uGain, sy.tier.g);
         quad(c, c.x + ((c.ex || c.x) - c.x) * ee, c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half, c.rot + shake + ee * (c.eatSpin || 1.2) + ik * 0.55 * (c.i % 2 ? 1 : -1), sy.t,
-          sc * (1 - 0.45 * se) * (1 - 0.8 * ee), 0.45 + 0.65 * b * sy.amp + c.flash * 1.6, b * sy.amp,
+          sc * sy.tier.k * (1 - 0.45 * se) * (1 - 0.8 * ee), (E.glowOff ? 0 : 0.45 + 0.65 * b * sy.amp) + c.flash * 1.6, b * sy.amp,
           hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35, dis, c.dark * (1 - 0.7 * ee));
         if (al < 1) gl.uniform1f(U.uAlpha, 1);
         // pearl token riding on the cell
+        gl.uniform1f(U.uGain, 1.2);
         if (c.pearl && dis < 0.5 && !(c.eatT >= 0)) quad(c, c.x + half * 0.62, c.y - half * 0.62, half * 0.3, 0, 7, 1 + 0.08 * Math.sin(T * 4 + c.phase), 1.4 + 0.6 * b, 0, 0, 0, c.dark);
       }
     } else if (E.ctx2d) {

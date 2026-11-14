@@ -30,6 +30,7 @@
     HIGH_VIPER: 'high_viper', HIGH_ANGLER: 'high_angler', HIGH_SQUID: 'high_squid',
     HIGH_LEVIATHAN: 'apex_leviathan', WILD_MAW: 'wild_maw'
   };
+  const RANK = { low: 1, mid: 2, high: 3, apex: 4, wild: 5 };
   const nearest = (step) => (step >= 4 ? 5 : step >= 2 ? 3 : 1);
 
   function install(A, base) {
@@ -86,13 +87,14 @@
     A.helpImpact = (v) => {
       const ok = play('help_' + ver(v) + '_impact');
       // the clip's own pre-impact dip only exists in the file: pull the bed down hard under the hit
-      if (ok && typeof A.duck === 'function') { try { A.duck(-24, 5, 700); } catch (e) { /* bed stays */ } }
+      if (ok && typeof A.duck === 'function') { try { A.duck(-40, 5, 700); } catch (e) { /* bed stays */ } }
       return ok;
     };
     A.helpRecede = (v) => play('help_' + ver(v) + '_recede');
     // cells climb a minor scale by step; the last one is its own clip (a fifth up, longer, with a low seat under it)
-    A.cellTurn = (i, n) => {
-      if (n > 1 && i >= n - 1) return play('help_cell_last');
+    A.cellTurn = (i, n, v) => {
+      // the last cell (or the only one) carries the weight; the short pass uses the shorter ring when it exists
+      if (i >= n - 1) return (v === 'short' && play('help_cell_last_short')) || play('help_cell_last');
       const semi = [0, 2, 3, 5, 7, 8, 10, 12][Math.min(7, Math.max(0, i))];
       return play('help_cell', { rate: Math.pow(2, semi / 12) });
     };
@@ -102,8 +104,10 @@
       const k = SYM[sym];
       if (!k || !running()) return false;
       // same 60 ms rate limit as the procedural land, so a column of stops does not machine-gun
-      const t = A.ctx.currentTime;
-      if (t - M.lastLand < 0.06) return true;
+      const t = A.ctx.currentTime, rank = RANK[k.split('_')[0]] || 0;
+      // inside one 60 ms window only a MORE valuable symbol may speak over the one that got there first
+      if (t - M.lastLand < 0.06) { if (rank <= M.lastRank) return true; }
+      M.lastRank = rank;
       let n = 1 + Math.floor(Math.random() * 3);
       if (n === M.take[k]) n = 1 + (n % 3);
       const ok = play('sym_' + k + '_land_v' + n, { db: -3 });

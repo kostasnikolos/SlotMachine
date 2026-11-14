@@ -8,6 +8,10 @@
    "ms": 1583,
    "peak_db": -6.0
   },
+  "help_cell_last_short": {
+   "ms": 700,
+   "peak_db": -6.0
+  },
   "help_full_impact": {
    "from_impact_ms": -3,
    "ms": 1603,
@@ -19,9 +23,9 @@
    "peak_db": -8.7
   },
   "help_full_recede": {
-   "from_impact_ms": 217,
-   "ms": 1350,
-   "peak_db": -12.5
+   "from_impact_ms": 257,
+   "ms": 1313,
+   "peak_db": -15.2
   },
   "help_short_impact": {
    "from_impact_ms": -3,
@@ -34,9 +38,9 @@
    "peak_db": -8.1
   },
   "help_short_recede": {
-   "from_impact_ms": 177,
-   "ms": 802,
-   "peak_db": -12.5
+   "from_impact_ms": 207,
+   "ms": 770,
+   "peak_db": -13.9
   },
   "seam_implode_s1": {
    "ms": 1406,
@@ -64,183 +68,183 @@
   },
   "sym_apex_leviathan_land_v1": {
    "ms": 233,
-   "peak_db": -4.0
+   "peak_db": -5.9
   },
   "sym_apex_leviathan_land_v2": {
    "ms": 233,
-   "peak_db": -5.2
+   "peak_db": -7.5
   },
   "sym_apex_leviathan_land_v3": {
    "ms": 233,
-   "peak_db": -4.6
+   "peak_db": -5.4
   },
   "sym_apex_leviathan_stinger": {
    "ms": 643,
-   "peak_db": -2.5
+   "peak_db": -2.0
   },
   "sym_high_angler_land_v1": {
    "ms": 213,
-   "peak_db": -7.0
+   "peak_db": -7.9
   },
   "sym_high_angler_land_v2": {
    "ms": 213,
-   "peak_db": -8.2
+   "peak_db": -8.6
   },
   "sym_high_angler_land_v3": {
    "ms": 213,
-   "peak_db": -7.6
+   "peak_db": -7.8
   },
   "sym_high_angler_stinger": {
    "ms": 641,
-   "peak_db": -5.0
+   "peak_db": -7.7
   },
   "sym_high_squid_land_v1": {
    "ms": 213,
-   "peak_db": -7.0
+   "peak_db": -7.2
   },
   "sym_high_squid_land_v2": {
    "ms": 213,
-   "peak_db": -8.2
+   "peak_db": -7.3
   },
   "sym_high_squid_land_v3": {
    "ms": 213,
-   "peak_db": -7.6
+   "peak_db": -7.9
   },
   "sym_high_squid_stinger": {
    "ms": 623,
-   "peak_db": -5.0
+   "peak_db": -8.1
   },
   "sym_high_viper_land_v1": {
    "ms": 153,
-   "peak_db": -7.0
+   "peak_db": -2.0
   },
   "sym_high_viper_land_v2": {
    "ms": 153,
-   "peak_db": -8.2
+   "peak_db": -2.2
   },
   "sym_high_viper_land_v3": {
    "ms": 153,
-   "peak_db": -7.6
+   "peak_db": -2.5
   },
   "sym_high_viper_stinger": {
    "ms": 623,
-   "peak_db": -5.0
+   "peak_db": -1.6
   },
   "sym_low_10_land_v1": {
    "ms": 203,
-   "peak_db": -10.0
+   "peak_db": -12.6
   },
   "sym_low_10_land_v2": {
    "ms": 203,
-   "peak_db": -11.2
+   "peak_db": -11.5
   },
   "sym_low_10_land_v3": {
    "ms": 203,
-   "peak_db": -10.6
+   "peak_db": -12.7
   },
   "sym_low_10_stinger": {
    "ms": 423,
-   "peak_db": -8.0
+   "peak_db": -12.0
   },
   "sym_low_a_land_v1": {
    "ms": 203,
-   "peak_db": -10.0
+   "peak_db": -14.8
   },
   "sym_low_a_land_v2": {
    "ms": 203,
-   "peak_db": -11.2
+   "peak_db": -12.0
   },
   "sym_low_a_land_v3": {
    "ms": 203,
-   "peak_db": -10.6
+   "peak_db": -14.9
   },
   "sym_low_a_stinger": {
    "ms": 423,
-   "peak_db": -8.0
+   "peak_db": -13.3
   },
   "sym_low_j_land_v1": {
    "ms": 203,
-   "peak_db": -10.0
+   "peak_db": -13.8
   },
   "sym_low_j_land_v2": {
    "ms": 203,
-   "peak_db": -11.2
+   "peak_db": -14.4
   },
   "sym_low_j_land_v3": {
    "ms": 203,
-   "peak_db": -10.6
+   "peak_db": -11.9
   },
   "sym_low_j_stinger": {
    "ms": 423,
-   "peak_db": -8.0
+   "peak_db": -11.7
   },
   "sym_low_k_land_v1": {
    "ms": 203,
-   "peak_db": -10.0
+   "peak_db": -12.9
   },
   "sym_low_k_land_v2": {
    "ms": 203,
-   "peak_db": -11.2
+   "peak_db": -14.2
   },
   "sym_low_k_land_v3": {
    "ms": 203,
-   "peak_db": -10.6
+   "peak_db": -13.4
   },
   "sym_low_k_stinger": {
    "ms": 423,
-   "peak_db": -8.0
+   "peak_db": -10.1
   },
   "sym_low_q_land_v1": {
    "ms": 203,
-   "peak_db": -10.0
+   "peak_db": -15.5
   },
   "sym_low_q_land_v2": {
    "ms": 203,
-   "peak_db": -11.2
+   "peak_db": -14.0
   },
   "sym_low_q_land_v3": {
    "ms": 203,
-   "peak_db": -10.6
+   "peak_db": -13.9
   },
   "sym_low_q_stinger": {
    "ms": 423,
-   "peak_db": -8.0
+   "peak_db": -12.7
   },
   "sym_mid_compass_land_v1": {
    "ms": 203,
-   "peak_db": -8.5
+   "peak_db": -9.6
   },
   "sym_mid_compass_land_v2": {
    "ms": 203,
-   "peak_db": -9.7
+   "peak_db": -9.6
   },
   "sym_mid_compass_land_v3": {
    "ms": 203,
-   "peak_db": -9.1
+   "peak_db": -11.1
   },
   "sym_mid_compass_stinger": {
    "ms": 623,
-   "peak_db": -6.5
+   "peak_db": -9.1
   },
   "sym_mid_helmet_land_v1": {
    "ms": 203,
-   "peak_db": -8.5
+   "peak_db": -10.8
   },
   "sym_mid_helmet_land_v2": {
    "ms": 203,
-   "peak_db": -9.7
+   "peak_db": -11.7
   },
   "sym_mid_helmet_land_v3": {
    "ms": 203,
-   "peak_db": -9.1
+   "peak_db": -11.1
   },
   "sym_mid_helmet_stinger": {
    "ms": 623,
-   "peak_db": -6.5
+   "peak_db": -9.4
   },
   "sym_wild_maw_land_v1": {
    "ms": 228,
-   "peak_db": -3.0
+   "peak_db": -2.6
   },
   "sym_wild_maw_land_v2": {
    "ms": 228,
@@ -248,11 +252,11 @@
   },
   "sym_wild_maw_land_v3": {
    "ms": 228,
-   "peak_db": -3.6
+   "peak_db": -3.0
   },
   "sym_wild_maw_stinger": {
-   "ms": 627,
-   "peak_db": -1.5
+   "ms": 633,
+   "peak_db": -1.6
   }
  },
  "note": "Written by scripts/ai/assetgen/sfx_pack.py. Source: procedural, licence: ours."

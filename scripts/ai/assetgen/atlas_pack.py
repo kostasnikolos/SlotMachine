@@ -25,8 +25,9 @@ CELL, GRID = 384, 4
 # tile index in the atlas -> cut-out key; the order is fixed by `defs()` in index.html
 TILES = {0: "high_leviathan", 1: "high_angler", 2: "high_viper", 3: "high_squid", 4: "mid_helmet", 5: "mid_compass",
          6: "wild_maw", 7: "pearl", 8: "dead_sediment", 9: "low_a", 10: "low_k", 11: "low_q", 12: "low_j", 13: "low_10"}
-# how much of the cell each tier fills (art bible section 4): lows recede, highs press against the edge
-FILL = {"low": 0.74, "mid": 0.90, "high": 0.98, "wild": 0.98, "pearl": 0.9, "dead": 0.96}
+# every symbol fills its tile the same, so each gets the atlas's full resolution; the tier sizes are applied on the quad
+# (the `tier` table in index.html `defs()`), which is also where a creature is allowed to overscan its cell
+FILL_ALL = 0.94
 CURRENT = {"albedo": "932e6db068e183257c71db1d184f4769.jpg", "normal": "ec0c40a9a29bbc7b0af8e8c64037ff4f.jpg",
            "emissive": "cce5679e94efc084d333dd7f158a50da.jpg", "aux": "30372f0d03094629ce827ea21961a81d.jpg"}
 
@@ -44,7 +45,7 @@ def fit_cell(im: Image.Image, fill: float) -> Image.Image:
     return cell
 
 
-LOW_GLOW = 0.32     # a rune's groove light in the atlas: the shader shows ~0.6x of it at rest and ~3x on a win
+LOW_GLOW = 0.16     # a rune's groove light in the atlas: the shader shows ~0.6x of it at rest and ~5x on a win
 
 
 def maps_for(cell: Image.Image, emissive_gain: float, glow_rgb=None):
@@ -91,7 +92,7 @@ def main() -> int:
     ap.add_argument("src", help="folder of RGBA cut-outs named <key>.png (low_10, high_angler, wild_maw, ...)")
     ap.add_argument("--out", default=str(ASSETS / "atlas"), help="output prefix; writes <prefix>_{albedo,normal,emissive,aux}.jpg")
     ap.add_argument("--quality", type=int, default=92)
-    ap.add_argument("--emissive-gain", type=float, default=1.0)
+    ap.add_argument("--emissive-gain", type=float, default=0.55)
     ap.add_argument("--preview", help="also write a lit preview sheet here")
     a = ap.parse_args()
     src = Path(a.src).resolve()
@@ -101,8 +102,10 @@ def main() -> int:
         p = src / f"{key}.png"
         if not p.exists():
             continue
-        fill = FILL.get(tier_of(key), 0.9)
-        cell = fit_cell(Image.open(p), fill)
+        fill = FILL_ALL
+        # <key>_albedo.png, when the artist supplies it, is the un-graded paint meant for the engine's own lighting
+        pa = src / f"{key}_albedo.png"
+        cell = fit_cell(Image.open(pa if pa.exists() else p), fill)
         glow = None
         pm, pw = src / f"{key}_emissive.png", src / f"{key}_win.png"
         if pm.exists() and pw.exists():

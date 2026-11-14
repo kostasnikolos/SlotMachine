@@ -2,14 +2,15 @@
 
 Status: **rendered and measured, not heard.** Everything below was designed by layer and frequency band and verified on
 meters (peak, RMS, band energy, spectrograms). Nobody has listened to it. The last section lists what only an ear can
-settle. Nothing here is wired into the game.
+settle. Since round 3 the cues are wired into the game by `slot_engine/static/canvas/audio_moments.js`, from clips cut by
+`scripts/ai/assetgen/sfx_pack.py`; section 1 says what lines up with the game's timings and what does not.
 
 - Generator: `scripts/ai/assetgen/moments.py` (numpy + Pillow only; `python scripts/ai/assetgen/moments.py --sheet`, about 6 s)
-- Output: `generated/sfx/moments/` (git-ignored): 78 WAVs (48 kHz, 16-bit, mono), `manifest.json` (source, licence,
+- Output: `generated/sfx/moments/` (git-ignored): 79 WAVs (48 kHz, 16-bit, mono), `manifest.json` (source, licence,
   sha256 and measurements per file), `report.json` (the help and win checks)
 - Sheets: `artifacts/targets/sound_help_sheet.png` (full), `sound_help_short_sheet.png`, `sound_win_sheet.png`, `sound_symbols_sheet.png`
-- Determinism: two renders in separate processes, 78 WAVs + both JSON files byte-identical
-  (`help_full_mix.wav` sha256 `f2ac0ddfe0bb13bb618896bc91e535620a407b1b4743ef061f3fc1fffb33760e`). Seeds come from SHA-256 of each sound's name;
+- Determinism: two renders in separate processes, 79 WAVs + both JSON files byte-identical
+  (`help_full_mix.wav` sha256 `a18e20999d3cda7049b0f9fe763913f9fdee28c5e7e242541418ccb0f78df4c0`). Seeds come from SHA-256 of each sound's name;
   depth and cue length do not change a seed. Verified on one machine only.
 
 ## 0. What changed in round 2 (`docs/targets/review_round1.md`, fix item 15, and the timing decision)
@@ -26,6 +27,31 @@ settle. Nothing here is wired into the game.
 Not asked, changed anyway: every symbol file now starts with 5 ms of silence so the fade cannot eat its transient (two
 viper takes failed the fade check without it); both help mixes fade over their last 200 ms so nothing is cut off ringing.
 
+## 0b. Round 3 (`docs/targets/review_round2.md`): the loudness ladder is now set in the band a phone plays
+
+The symbol voices used to be levelled by peak, which let a sub-heavy APEX stinger sit under two HIGH stingers at
+200 Hz-4 kHz. Level is now set by **RMS in 200 Hz-4 kHz**, 2 dB a tier (`MID_TARGET`, `to_ladder()` in `moments.py`).
+Peaks follow from that and all stay at or below -1.5 dBFS.
+
+| Tier | Lands (three takes each), lowest to highest | Step up to the next tier | Stingers | Step up to the next tier |
+| --- | --- | --- | --- | --- |
+| LOW stone | -27.5 to -27.0 | +1.5 dB | -25.0 | +2.0 dB |
+| MID brass | -25.5 to -25.0 | +1.5 dB | -23.0 | +2.0 dB |
+| HIGH living | -23.5 to -23.0 | +1.5 dB | -21.0 | +2.0 dB |
+| APEX | -21.5 to -21.0 | +1.5 dB | -19.0 | +2.0 dB |
+| WILD | -19.5 to -19.0 | top | -17.0 | top |
+
+- Every step is at least 1.5 dB (lands, counting all three takes: the takes now differ by 0 / -0.5 / -0.3 dB instead
+  of 0 / -1.2 / -0.6) and exactly 2.0 dB between stingers. `report.json` carries this table as `symbol_ladder`.
+- No recipe was changed and no voice needed its mid band re-weighted. Two click-heavy voices could not reach their rung
+  under the peak limit by gain alone, so their tallest peaks are folded on a soft knee: `sym_high_viper_stinger` (2.6 dB), `sym_wild_maw_stinger` (2.0 dB). Everything else is
+  gain only.
+- The price: the ladder holds in that band, not in full-band peak. The viper's lands peak at -2.0 to -2.5 dBFS (its
+  click is mostly above 4 kHz), higher than the APEX lands' -5.4 to -7.5. The stones are now 3-6 dB quieter than in round 2.
+- The help and win files were byte-identical to round 2 at that point (the help changed again in round 4, section 1).
+- **The game is still playing the round-2 symbol clips** until `python scripts/ai/assetgen/sfx_pack.py` is re-run: it
+  writes under `slot_engine/static/canvas/assets/sfx/`, which this task may not touch.
+
 ## 1. Timings
 
 ### The help: target beats (the engine is being re-timed to these)
@@ -36,20 +62,46 @@ viper takes failed the fade check without it); both help mixes fade over their l
 | H2 targeting | 900-1500 | 350-700 | `targeting` |
 | dip | 1420-1500 (80 ms) | 640-700 (60 ms) | `vacuum`: suction from 1280 / 500, then silence |
 | H3 impact | 1500 | 700 | `impact` |
-| H4 transformation | 1580, 1690, 1800, 1910 (four cells, 110 ms apart) | 770, 880, 990, 1100 | `transform`; `aftermath` (recede) from 1720 / 880 |
+| H4 transformation | 1700, 1810, 1920, 2030 (bite + 200 ms, four cells, 110 ms apart: the game's offsets) | 850, 920, 990, 1060 (bite + 150 ms, 70 ms apart) | `transform`; `aftermath` (recede) from 1760 / 910 |
 | H5 aftermath | 2300-3100 | 1250-1700 | drain inside `aftermath` |
 
 Four cells is an assumption (`cells=4` in the beat table). The hit-stop is treated as picture only: the sound does not stop.
 
-### The help: what `strikeSeq` does today (`slot_engine/static/canvas/index.html:2148`)
+### The help: what the game does now, and what no longer lines up
 
-Paced by `waitK(k)` (`:2136`); `strikeAnim.dur = 10` (`:5230`) and the swim clock runs at 2x during a strike (`:5299`),
-so `waitK(k)` = k x 5.0 s. From `levStrike` (`:2170`): jaws at 800 ms (`:2184`), bite at **1700 ms** (`waitK(0.34)`
-`:2214`, `chomp` `:2215`, `heavyImpact` `:2218`, hit-stop 67 ms from `feel.js:29`), recede at 1960 ms (`:2222`, `plunge`
-`:2228`), cells surface from **3060 ms**, one per 110 ms (`:2233-2242`), end near 4900 ms. Before it, `levPreStrike`
-(`:2165`, body `:2300`) hushes the bed for 1.5-2.4 s and fires `roar(1)` at -100 ms (`:2306`), whose impact lands at
-+1740 ms on top of `chomp`'s own. `plunge` and `absorb` still come from the base audio set, not the dark one.
-**None of this matches the target beats yet: these files will be out of sync until the engine is re-timed.**
+Read from `slot_engine/static/canvas/index.html` (`strikePace`, `levPreStrike`, `strikeSeq`; the file was being edited
+while this was written, so no line numbers), `audio_moments.js` and `sfx_pack.py`.
+
+| | Game, FULL | Stems, FULL | Game, SHORT | Stems, SHORT | Lines up? |
+| --- | --- | --- | --- | --- | --- |
+| Lead starts | start of the hush (`helpLead` in `levPreStrike`) | 0 | same | 0 | yes |
+| Lunge starts (H2) | 900 ms | targeting at 900 | 350 ms | targeting at 350 | yes |
+| Dip | lead clip is cut at 1500 ms; its last 80 ms are silent | 1420-1500 | cut at 700 ms; last 60 ms silent | 640-700 | yes |
+| Bite (`helpImpact`, on the hit-stop line) | hush 900 + lunge 600 = 1500 ms, clock-gated | 1500 | 350 + 350 = 700 ms | 700 | yes on a healthy frame rate; a late bite lengthens the dip |
+| First cell (`cellTurn`) | bite + 200 ms | bite + 200 | bite + 150 ms | bite + 150 | yes since round 4 |
+| Cell spacing | 110 ms (**70** at level 4-5) | 110 | 70 ms | 70 | yes, except full at levels 4-5 (mix only) |
+| Recede (`helpRecede`) | bite + 260 ms (`turn` + 60) | bite + 260 | bite + 210 ms | bite + 210 | yes since round 4 |
+| Sequence ends | last cell + 600 ms | 1600 ms after the bite | last cell + 300 ms | 1000 ms after the bite | **no**, see 3 |
+
+1. **Fixed in round 4:** the mixes and both help sheets now lay the cells out at the game's offsets (bite + 200 ms and
+   110 ms apart, full; bite + 150 ms and 70 ms apart, short), so they describe what plays for a four-cell strike.
+2. **Fixed in round 4:** the seat thud is out of the `aftermath` stem and lives only in the `help_cell_last` clips, so
+   it plays once. The mixes and sheets therefore do not contain the seat at all.
+3. **Partly fixed in round 4:** `help_cell_last_short` (700 ms) exists for the short version, so its ring ends about
+   0.4 s after the short sequence does instead of 1.3 s. It is not used until the packer and `cellTurn` pick it up.
+   The full version's last cell (1583 ms) still rings about 1.0 s past the end of the full sequence.
+4. **A one-cell strike never gets the weighted cell.** `cellTurn` plays `help_cell_last` only when `n > 1`.
+5. **The drain inside the recede clip** starts 540 ms into it (full) and 340 ms (short): bite + 800 / + 550 ms in the
+   game. That is after the last of four cells in both versions, but it does not move with the cell count.
+6. **The bed duck under the bite is -24 dB**, not the -60 dB the dip was designed around, and nothing ducks the bed
+   during the dip itself (the hush holds it at -12 dB). The dip will be audible as "quieter", not as a hole.
+7. **`symLand` keeps the first land inside any 60 ms window, not the most valuable one**, so when a Wild and a stone
+   land together the stone can win. The ladder above is only heard when the valuable symbol is first.
+8. Clip gains in the runtime are uniform within a kind (lands -3 dB, stingers -2 dB, master trim -8 dB), so the ladder
+   survives them.
+
+Before the re-time the bite sat at 1700 ms and the cells at 3060 ms; that description is in git history (round 2 of
+this file).
 
 ### The win: `WIN_EVALUATION` (`index.html:1925`) then `CASCADE_DROP` (`:1990`) — unchanged, the cue follows the code
 
@@ -71,7 +123,7 @@ cue length; `beat_offset_s` in the manifest says where it really starts.
 | `vacuum` | The breath in. | Up to 140 ms of suction (high-pass 600 Hz -> 7 kHz, plus a 70 -> 210 Hz rising tone), then the dip. Pre-impact stems are gated shut across it; the file is digitally silent there. |
 | `impact` | The sea comes in. | 8 ms click; sub 64 -> 30 Hz; punch 125 -> 46 Hz; **new:** a 520 Hz slap (200 ms) for small speakers; water closing 5.2 kHz -> 170 Hz in **350 ms** (was 500) so the transformation has clear air; rumble under 110 Hz; plates at 187 / 311 / 523 / 742 / 1180 Hz; throat (saw 45 x sine 31 Hz). |
 | `transform` | Relief turning into appetite: cold glass that climbs and lands. | Per cell: glass-bar partials 1 : 2.756 : 5.404 with a beating twin, 6 ms soft onset, a breath of frost above 5-6 kHz. Cells 1-3 at 1976, 2217, 2349 Hz; the last at 2960 Hz doubled at 1976 Hz, 1.7x as long, +4 dB. High-passed at 1.5 kHz (6th order). |
-| `aftermath` | It goes down under the transformation; then the water leaves. | From the recede: tone falling 84 -> 33 Hz, its throat, and a moan four and six times higher (roughly 330 -> 130 Hz and up) that a phone can carry. The "seat" under the last cell (150 -> 95 Hz with a 300 Hz knock). From H5: drain, pink noise band-pass falling 1500 -> 260 Hz with a turbulent level, no bubbles; plates still ringing. |
+| `aftermath` | It goes down under the transformation; then the water leaves. | From the recede: tone falling 84 -> 33 Hz, its throat, and a moan four and six times higher (roughly 330 -> 130 Hz and up) that a phone can carry. From H5: drain, pink noise band-pass falling 1500 -> 260 Hz with a turbulent level, no bubbles; plates still ringing. |
 
 Pitches are as written, at depth 0. The default render is depth 2, one semitone lower on everything but the transformation.
 
@@ -83,9 +135,9 @@ Pitches are as written, at depth 0. The default render is depth 2, one semitone 
 | `help_full_targeting.wav` | 3.10 | -11.8 | -34.3 | 1116 | 2.0% | 93.8% | -34.6 |
 | `help_full_vacuum.wav` | 3.10 | -14.6 | -42.4 | 2248 | 0.1% | 6.6% | -54.2 |
 | `help_full_impact.wav` | 3.10 | -1.5 | -17.3 | 119 | 84.8% | 5.1% | -30.3 |
-| `help_full_transform.wav` | 3.10 | -11.3 | -28.4 | 2789 | 0.0% | 95.8% | -28.6 |
-| `help_full_aftermath.wav` | 3.10 | -12.5 | -30.2 | 438 | 19.3% | 54.9% | -32.8 |
-| `help_full_mix.wav` | 3.10 | -1.5 | -16.3 | 336 | 70.4% | 18.6% | -23.6 |
+| `help_full_transform.wav` | 3.10 | -11.3 | -28.6 | 2788 | 0.0% | 95.6% | -28.7 |
+| `help_full_aftermath.wav` | 3.10 | -15.2 | -31.9 | 572 | 26.4% | 70.9% | -33.4 |
+| `help_full_mix.wav` | 3.10 | -1.5 | -16.4 | 335 | 71.8% | 17.8% | -23.9 |
 
 ### Measured, SHORT (depth 2)
 
@@ -95,57 +147,59 @@ Pitches are as written, at depth 0. The default render is depth 2, one semitone 
 | `help_short_targeting.wav` | 1.70 | -12.4 | -33.4 | 1094 | 1.5% | 93.7% | -33.7 |
 | `help_short_vacuum.wav` | 1.70 | -14.6 | -39.8 | 2248 | 0.1% | 6.6% | -51.6 |
 | `help_short_impact.wav` | 1.70 | -1.5 | -14.9 | 122 | 85.5% | 5.1% | -27.8 |
-| `help_short_transform.wav` | 1.70 | -11.3 | -27.5 | 2808 | 0.0% | 94.0% | -27.8 |
-| `help_short_aftermath.wav` | 1.70 | -12.5 | -29.2 | 334 | 19.1% | 48.8% | -32.3 |
-| `help_short_mix.wav` | 1.70 | -1.5 | -14.3 | 285 | 74.7% | 15.0% | -22.6 |
+| `help_short_transform.wav` | 1.70 | -10.6 | -29.2 | 2836 | 0.0% | 93.5% | -29.5 |
+| `help_short_aftermath.wav` | 1.70 | -13.9 | -31.7 | 464 | 33.0% | 64.2% | -33.6 |
+| `help_short_mix.wav` | 1.70 | -1.5 | -14.5 | 249 | 76.6% | 13.4% | -23.2 |
 
-Also rendered: the depth ladder's two ends (full mix only) and the per-cell one-shots the runtime would fire
-(`help_cell_last` carries its own seat thud).
+Also rendered: the depth ladder's two ends (full mix only) and the per-cell one-shots the game fires. Both last-cell
+clips carry the seat thud (no stem does); `help_cell_last_short` is the same voice with a 0.75x ring, cut to 700 ms,
+for the short version.
 
 | File | s | Peak dBFS | RMS dBFS | Centroid Hz | Sub 30-80 Hz | 200 Hz-4 kHz share | 200 Hz-4 kHz RMS dBFS |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `help_full_mix_d0.wav` | 3.10 | -1.5 | -20.0 | 436 | 73.6% | 17.2% | -27.6 |
-| `help_full_mix_d5.wav` | 3.10 | -1.5 | -15.0 | 338 | 69.1% | 17.1% | -22.7 |
+| `help_full_mix_d0.wav` | 3.10 | -1.5 | -20.0 | 433 | 74.6% | 17.1% | -27.6 |
+| `help_full_mix_d5.wav` | 3.10 | -1.5 | -14.9 | 331 | 69.8% | 17.1% | -22.5 |
 | `help_cell.wav` | 1.03 | -10.0 | -27.4 | 2309 | 0.0% | 92.7% | -27.7 |
 | `help_cell_last.wav` | 1.58 | -6.0 | -24.7 | 2528 | 0.1% | 88.1% | -25.3 |
+| `help_cell_last_short.wav` | 0.70 | -6.0 | -24.4 | 2200 | 0.1% | 77.3% | -25.5 |
 
 ### Small-speaker check: 200 Hz-4 kHz RMS per beat window (dBFS), and the distance to the impact
 
 A beat is flagged when it is more than 12 dB under the impact in this band (the dip is exempt). Each window is
-filtered on its own, so nothing leaks across a beat line. The impact window is impact -> first cell (80 / 70 ms).
+filtered on its own, so nothing leaks across a beat line. The impact window is impact -> first cell, which since round 4
+is the game's own 200 ms (full) and 150 ms (short).
 
 | Render | H1 dread | H2 targeting | H3 impact | H4 transformation | H5 aftermath | Flagged | Impact lead |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| FULL, depth 2 | -29.1 (-10.6) | -21.9 (-3.4) | -18.5 (+0.0) | -21.6 (-3.1) | -24.5 (-6.0) | none | +3.1 dB |
-| SHORT, depth 2 | -29.5 (-11.2) | -21.9 (-3.6) | -18.3 (+0.0) | -21.3 (-3.0) | -22.3 (-4.1) | none | +3.0 dB |
-| FULL, depth 0 | -33.2 (-13.9) | -26.0 (-6.7) | -19.3 (+0.0) | -25.9 (-6.6) | -29.2 (-9.9) | H1 dread | +6.6 dB |
-| FULL, depth 5 | -28.9 (-10.2) | -22.5 (-3.7) | -18.8 (+0.0) | -20.5 (-1.8) | -21.8 (-3.0) | none | +1.8 dB |
+| FULL, depth 2 | -29.1 (-8.2) | -21.9 (-1.0) | -20.9 (+0.0) | -22.9 (-2.1) | -23.8 (-2.9) | none | +1.0 dB |
+| SHORT, depth 2 | -29.5 (-9.6) | -21.9 (-2.0) | -19.9 (+0.0) | -21.7 (-1.8) | -24.1 (-4.3) | none | +1.8 dB |
+| FULL, depth 0 | -33.2 (-11.1) | -26.0 (-3.8) | -22.1 (+0.0) | -27.0 (-4.8) | -28.2 (-6.1) | none | +3.8 dB |
+| FULL, depth 5 | -28.8 (-7.6) | -22.3 (-1.2) | -21.1 (+0.0) | -20.8 (+0.4) | -20.8 (+0.3) | none | -0.4 dB |
 
-- At depth 2 and 5 no beat is flagged. **At depth 0 the dread is flagged (-13.9 dB)**: with no drive the impact's
-  peaks stand taller, and the quiet stems are not lifted. `strikeSeq` clamps the level to 1-5, so depth 0 should not occur
-  for the help, but depths 1, 3 and 4 were not rendered.
-- The dread passes by 0.8-1.4 dB at depth 2. It is the quietest beat by design and it is close to the line.
-- "Impact lead" is the impact against the next loudest beat in this band. At depth 5 it shrinks to 1.8 dB because the
-  transformation window fills up; on a phone the hit and the cells will read as nearly equal there.
+- No beat is flagged in any of the four renders.
+- **The impact's lead has shrunk to 1.0 dB (full) and 1.8 dB (short), and at depth 5 it is gone (-0.4 dB).** The audio
+  of the hit did not change in round 4; its window did (it was 80 / 70 ms, an average over the first transient, and is
+  now 200 / 150 ms of a decaying hit). So on this meter the impact is the loudest beat in the phone band by a small
+  margin at best. Its first 80 ms still measure about 3 dB over everything else (round 2 and 3 figures).
 - This is a band-limited meter, not a phone. It says the energy exists at 200 Hz-4 kHz; it does not say it sounds good.
 
 ### Engineering targets
 
 | Render | Mix peak dBFS | Sub 30-80 Hz peak (50 ms RMS) | vs anything before the dip | vs every other stem | vs the cue 0.9 s later | Dip | Transform vs rest above 1.5 kHz | Stems-sum error |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FULL, depth 2 | -1.50 | -8.0 dBFS at 1.695 s | +18.5 dB | +17.9 dB | +11.9 dB | 80 ms, silent (before: -19.0 dBFS) | +10.1 dB | 2 LSB |
-| SHORT, depth 2 | -1.50 | -8.0 dBFS at 0.895 s | +19.0 dB | +19.5 dB | +24.1 dB | 60 ms, silent (before: -19.8 dBFS) | +7.3 dB | 2 LSB |
-| FULL, depth 0 | -1.50 | -10.8 dBFS at 1.725 s | +18.9 dB | +19.9 dB | +14.3 dB | 80 ms, silent (before: -23.0 dBFS) | +8.8 dB | 2 LSB |
-| FULL, depth 5 | -1.50 | -7.3 dBFS at 1.645 s | +24.1 dB | +19.3 dB | +6.3 dB | 80 ms, silent (before: -19.4 dBFS) | +11.1 dB | 2 LSB |
+| FULL, depth 2 | -1.50 | -7.9 dBFS at 1.695 s | +18.5 dB | +18.0 dB | +11.2 dB | 80 ms, silent (before: -19.0 dBFS) | +11.6 dB | 2 LSB |
+| SHORT, depth 2 | -1.50 | -8.0 dBFS at 0.895 s | +19.0 dB | +19.5 dB | +24.0 dB | 60 ms, silent (before: -19.8 dBFS) | +9.8 dB | 2 LSB |
+| FULL, depth 0 | -1.50 | -10.8 dBFS at 1.725 s | +19.0 dB | +19.9 dB | +13.6 dB | 80 ms, silent (before: -23.0 dBFS) | +12.1 dB | 2 LSB |
+| FULL, depth 5 | -1.50 | -7.1 dBFS at 1.645 s | +24.1 dB | +19.3 dB | +6.6 dB | 80 ms, silent (before: -19.2 dBFS) | +11.0 dB | 2 LSB |
 
-- **Peak <= -1 dBFS:** all 78 files and both summed cues peak at or below -1.5 dBFS. Sample peak, not true peak.
-- **No DC:** worst |mean| 0.00001 (0.4 LSB). **Fades:** every file starts and ends at zero inside a linear 4 ms ramp to its own
+- **Peak <= -1 dBFS:** all 79 files and both summed cues peak at or below -1.5 dBFS. Sample peak, not true peak.
+- **No DC:** worst |mean| 0.00024 (7.8 LSB, on a stinger whose peaks were folded in round 3; 0.00001 on everything else). **Fades:** every file starts and ends at zero inside a linear 4 ms ramp to its own
   peak. The generator exits non-zero if any file misses peak, DC or fade.
 - **Impact sub is the strongest moment:** the 30-80 Hz peak is inside the impact window in all four renders, about 18 dB
   or more above anything before the dip and above every other stem. At depth 5 the impact's own tail is only 6.3 dB down
   0.9 s later (longer ring, heavier drive).
-- **Transformation above 1.5 kHz:** more than 99.99 % of its energy. In its window it is 10.1 dB (full) and 7.3 dB
-  (short) above the rest of the mix above 1.5 kHz. The review expected 5.6 dB once it moved onto the impact's tail;
+- **Transformation above 1.5 kHz:** more than 99.99 % of its energy. In its window it is 11.6 dB (full) and 9.8 dB
+  (short) above the rest of the mix above 1.5 kHz, with the cells at the game's offsets. The review expected 5.6 dB once it moved onto the impact's tail;
   closing the water in 350 ms bought the difference, without ducking anything.
 - **The dip:** 80 ms (full) and 60 ms (short) of digital silence in the file, against -19 dBFS RMS just before it. In
   the game the bed and any reverb tail will fill it unless the bed is ducked (section 5).
@@ -200,8 +254,9 @@ Where the weight sits (mix RMS in the W2 window 240-750 ms and the W3 window 750
 
 One family, by construction: every land sits on the same short pressure thud (80 -> 44 Hz, 90 ms, scaled by tier); every
 pitch is from D minor, with the flat second reserved for the creature; every stinger bends downward at the end;
-everything is in the same 0.55 s steel room. Worth more means lower, heavier and louder (peak targets, land v1 /
-stinger: LOW -10 / -8, MID -8.5 / -6.5, HIGH -7 / -5, APEX -4 / -2.5, WILD -3 / -1.5 dBFS).
+everything is in the same 0.55 s steel room. Worth more means lower, heavier and louder, where
+"louder" is RMS in 200 Hz-4 kHz (land / stinger: LOW -27 / -25, MID -25 / -23, HIGH -23 / -21, APEX -21 / -19,
+WILD -19 / -17 dBFS; section 0b).
 
 | Symbol | Land (three takes, <= 250 ms) | Win stinger (<= 700 ms) |
 | --- | --- | --- |
@@ -218,57 +273,58 @@ stinger: LOW -10 / -8, MID -8.5 / -6.5, HIGH -7 / -5, APEX -4 / -2.5, WILD -3 / 
 | APEX Leviathan | **Rebuilt.** A mid-band knock (650 Hz, 16 ms) and click; a body falling 240 -> 150 Hz; the throat in two bands (saw 45 x 31 Hz under 500 Hz, and saw 110 x 31 Hz through a 260 Hz band-pass, the louder of the two); sub 62 -> 32 Hz at a quarter of its old level. | The same knock and body, the two-band throat for 620 ms, D against Eb at 147 / 156 Hz (an octave up from before) with 73 Hz under it. |
 | WILD Maw | **Rebuilt.** 30 ms breath in, click and an 800 Hz knock, a jaw body at 300 Hz (140 ms), plates at 187 / 311 / 523 Hz, water closing 3 kHz -> 200 Hz, sub 70 -> 36 Hz at a third of its old level. | 200 ms inhale, 25 ms of nothing, then the snap with the same body, plates and knock. The help cue in miniature. |
 
-Land take 1 and the stinger per symbol:
+Land take 1 and the stinger per symbol (the last column is the one the ladder is set in):
 
 | File | s | Peak dBFS | RMS dBFS | Centroid Hz | Sub 30-80 Hz | 200 Hz-4 kHz share | 200 Hz-4 kHz RMS dBFS |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `sym_low_10_land_v1.wav` | 0.20 | -10.0 | -23.5 | 444 | 16.1% | 81.4% | -24.4 |
-| `sym_low_10_stinger.wav` | 0.42 | -8.0 | -20.4 | 385 | 10.9% | 86.7% | -21.0 |
-| `sym_low_j_land_v1.wav` | 0.20 | -10.0 | -22.4 | 402 | 14.0% | 83.7% | -23.2 |
-| `sym_low_j_stinger.wav` | 0.42 | -8.0 | -19.9 | 395 | 13.7% | 71.0% | -21.4 |
-| `sym_low_q_land_v1.wav` | 0.20 | -10.0 | -20.9 | 456 | 10.6% | 88.0% | -21.5 |
-| `sym_low_q_stinger.wav` | 0.42 | -8.0 | -19.6 | 401 | 7.9% | 84.2% | -20.3 |
-| `sym_low_k_land_v1.wav` | 0.20 | -10.0 | -22.9 | 319 | 22.2% | 75.2% | -24.1 |
-| `sym_low_k_stinger.wav` | 0.42 | -8.0 | -21.0 | 304 | 15.5% | 63.7% | -22.9 |
-| `sym_low_a_land_v1.wav` | 0.20 | -10.0 | -20.0 | 248 | 14.0% | 59.4% | -22.2 |
-| `sym_low_a_stinger.wav` | 0.42 | -8.0 | -18.0 | 246 | 7.8% | 68.0% | -19.7 |
-| `sym_mid_helmet_land_v1.wav` | 0.20 | -8.5 | -20.8 | 320 | 15.7% | 64.8% | -22.7 |
-| `sym_mid_helmet_stinger.wav` | 0.62 | -6.5 | -19.1 | 351 | 6.6% | 79.1% | -20.1 |
-| `sym_mid_compass_land_v1.wav` | 0.20 | -8.5 | -22.2 | 666 | 26.0% | 68.1% | -23.9 |
-| `sym_mid_compass_stinger.wav` | 0.62 | -6.5 | -19.9 | 320 | 10.0% | 88.7% | -20.4 |
-| `sym_high_viper_land_v1.wav` | 0.15 | -7.0 | -23.2 | 1744 | 28.8% | 33.0% | -28.0 |
-| `sym_high_viper_stinger.wav` | 0.62 | -5.0 | -21.7 | 2213 | 17.4% | 28.9% | -27.1 |
-| `sym_high_angler_land_v1.wav` | 0.21 | -7.0 | -19.7 | 290 | 37.0% | 56.8% | -22.1 |
-| `sym_high_angler_stinger.wav` | 0.65 | -5.0 | -17.0 | 283 | 21.3% | 74.0% | -18.3 |
-| `sym_high_squid_land_v1.wav` | 0.21 | -7.0 | -18.6 | 260 | 24.2% | 38.3% | -22.8 |
-| `sym_high_squid_stinger.wav` | 0.62 | -5.0 | -16.7 | 1114 | 0.0% | 76.0% | -17.9 |
-| `sym_apex_leviathan_land_v1.wav` | 0.23 | -4.0 | -15.6 | 231 | 19.6% | 45.2% | -19.1 |
-| `sym_apex_leviathan_stinger.wav` | 0.65 | -2.5 | -14.0 | 184 | 17.9% | 27.9% | -19.5 |
-| `sym_wild_maw_land_v1.wav` | 0.23 | -3.0 | -14.9 | 533 | 15.8% | 35.6% | -19.4 |
-| `sym_wild_maw_stinger.wav` | 0.65 | -1.5 | -14.1 | 508 | 21.0% | 32.3% | -19.0 |
+| `sym_low_10_land_v1.wav` | 0.20 | -12.6 | -26.1 | 444 | 16.1% | 81.4% | **-27.0** |
+| `sym_low_10_stinger.wav` | 0.42 | -12.0 | -24.4 | 385 | 10.9% | 86.7% | **-25.0** |
+| `sym_low_j_land_v1.wav` | 0.20 | -13.8 | -26.2 | 402 | 14.0% | 83.7% | **-27.0** |
+| `sym_low_j_stinger.wav` | 0.42 | -11.7 | -23.5 | 395 | 13.7% | 71.0% | **-25.0** |
+| `sym_low_q_land_v1.wav` | 0.20 | -15.6 | -26.4 | 456 | 10.6% | 88.0% | **-27.0** |
+| `sym_low_q_stinger.wav` | 0.42 | -12.7 | -24.2 | 401 | 7.9% | 84.2% | **-25.0** |
+| `sym_low_k_land_v1.wav` | 0.20 | -12.9 | -25.8 | 319 | 22.2% | 75.2% | **-27.0** |
+| `sym_low_k_stinger.wav` | 0.42 | -10.1 | -23.0 | 304 | 15.5% | 63.7% | **-25.0** |
+| `sym_low_a_land_v1.wav` | 0.20 | -14.8 | -24.7 | 248 | 14.0% | 59.4% | **-27.0** |
+| `sym_low_a_stinger.wav` | 0.42 | -13.3 | -23.3 | 246 | 7.8% | 68.0% | **-25.0** |
+| `sym_mid_helmet_land_v1.wav` | 0.20 | -10.8 | -23.1 | 320 | 15.7% | 64.8% | **-25.0** |
+| `sym_mid_helmet_stinger.wav` | 0.62 | -9.4 | -22.0 | 351 | 6.6% | 79.1% | **-23.0** |
+| `sym_mid_compass_land_v1.wav` | 0.20 | -9.6 | -23.3 | 666 | 26.0% | 68.1% | **-25.0** |
+| `sym_mid_compass_stinger.wav` | 0.62 | -9.1 | -22.5 | 320 | 10.0% | 88.7% | **-23.0** |
+| `sym_high_viper_land_v1.wav` | 0.15 | -2.0 | -18.2 | 1743 | 28.8% | 33.0% | **-23.0** |
+| `sym_high_viper_stinger.wav` | 0.62 | -1.6 | -15.7 | 2218 | 17.3% | 29.2% | **-21.0** |
+| `sym_high_angler_land_v1.wav` | 0.21 | -7.9 | -20.5 | 290 | 37.0% | 56.8% | **-23.0** |
+| `sym_high_angler_stinger.wav` | 0.65 | -7.7 | -19.7 | 283 | 21.3% | 74.0% | **-21.0** |
+| `sym_high_squid_land_v1.wav` | 0.21 | -7.2 | -18.8 | 260 | 24.2% | 38.3% | **-23.0** |
+| `sym_high_squid_stinger.wav` | 0.62 | -8.1 | -19.8 | 1114 | 0.0% | 76.0% | **-21.0** |
+| `sym_apex_leviathan_land_v1.wav` | 0.23 | -5.9 | -17.6 | 231 | 19.6% | 45.2% | **-21.0** |
+| `sym_apex_leviathan_stinger.wav` | 0.65 | -2.0 | -13.5 | 184 | 17.9% | 27.9% | **-19.0** |
+| `sym_wild_maw_land_v1.wav` | 0.23 | -2.6 | -14.5 | 533 | 15.8% | 35.6% | **-19.0** |
+| `sym_wild_maw_stinger.wav` | 0.65 | -1.6 | -12.0 | 509 | 21.0% | 31.7% | **-17.0** |
 
 The three land takes (peak dBFS / centroid Hz / 200 Hz-4 kHz RMS dBFS):
 
 | Symbol | v1 | v2 | v3 |
 | --- | --- | --- | --- |
-| low_10 | -10.0 / 444 / -24.4 | -11.2 / 455 / -27.2 | -10.6 / 439 / -25.2 |
-| low_j | -10.0 / 402 / -23.2 | -11.2 / 394 / -24.3 | -10.6 / 402 / -26.0 |
-| low_q | -10.0 / 456 / -21.5 | -11.2 / 420 / -24.7 | -10.6 / 393 / -24.0 |
-| low_k | -10.0 / 319 / -24.1 | -11.2 / 315 / -24.5 | -10.6 / 293 / -24.5 |
-| low_a | -10.0 / 248 / -22.2 | -11.2 / 231 / -26.7 | -10.6 / 247 / -23.0 |
-| mid_helmet | -8.5 / 320 / -22.7 | -9.7 / 326 / -23.5 | -9.1 / 299 / -23.3 |
-| mid_compass | -8.5 / 666 / -23.9 | -9.7 / 645 / -25.6 | -9.1 / 637 / -23.3 |
-| high_viper | -7.0 / 1744 / -28.0 | -8.2 / 1658 / -29.5 | -7.6 / 1825 / -28.4 |
-| high_angler | -7.0 / 290 / -22.1 | -8.2 / 306 / -23.1 | -7.6 / 284 / -23.1 |
-| high_squid | -7.0 / 260 / -22.8 | -8.2 / 255 / -24.4 | -7.6 / 270 / -23.0 |
-| apex_leviathan | -4.0 / 231 / -19.1 | -5.2 / 228 / -19.2 | -4.6 / 228 / -20.5 |
-| wild_maw | -3.0 / 533 / -19.4 | -4.2 / 559 / -19.5 | -3.6 / 560 / -19.9 |
+| low_10 | -12.6 / 444 / -27.0 | -11.5 / 455 / -27.5 | -12.7 / 439 / -27.3 |
+| low_j | -13.8 / 402 / -27.0 | -14.4 / 394 / -27.5 | -11.9 / 402 / -27.3 |
+| low_q | -15.6 / 456 / -27.0 | -14.0 / 420 / -27.5 | -13.9 / 393 / -27.3 |
+| low_k | -12.9 / 319 / -27.0 | -14.2 / 315 / -27.5 | -13.4 / 293 / -27.3 |
+| low_a | -14.8 / 248 / -27.0 | -12.0 / 231 / -27.5 | -14.9 / 247 / -27.3 |
+| mid_helmet | -10.8 / 320 / -25.0 | -11.7 / 326 / -25.5 | -11.1 / 299 / -25.3 |
+| mid_compass | -9.6 / 666 / -25.0 | -9.6 / 645 / -25.5 | -11.1 / 637 / -25.3 |
+| high_viper | -2.0 / 1743 / -23.0 | -2.2 / 1658 / -23.5 | -2.5 / 1824 / -23.3 |
+| high_angler | -7.9 / 290 / -23.0 | -8.7 / 306 / -23.5 | -7.8 / 284 / -23.3 |
+| high_squid | -7.2 / 260 / -23.0 | -7.3 / 255 / -23.5 | -7.9 / 270 / -23.3 |
+| apex_leviathan | -5.9 / 231 / -21.0 | -7.5 / 228 / -21.5 | -5.4 / 228 / -21.3 |
+| wild_maw | -2.6 / 533 / -19.0 | -4.2 / 559 / -19.5 | -3.0 / 560 / -19.3 |
 
-Read this honestly: APEX and WILD now have 28-49 % of their energy at 200 Hz-4 kHz and about -19 to -20 dBFS RMS there.
-Their lands are 2-5 dB above the stone and brass lands there. Their stingers are not: the APEX stinger (-19.5) is level
-with the heaviest stone's (-19.7), and **the squid and angler stingers (-17.9, -18.3) are louder than it in that band.** On a phone the top symbols now exist; they do not yet dominate.
+Read this honestly: the ladder is now exact on the meter, in one band, for files played alone. It says nothing about
+how heavy a voice *feels*: the squid's stinger is a breath with no transient and the viper's is mostly clicks, and equal
+band RMS does not make them equally present. And 2 dB a tier is a small step; whether a player hears five rungs or two
+is a listening question.
 
-## 5. How to wire it into `audio_dark.js` later (not done)
+## 5. Wiring (done since round 3 in `audio_moments.js`, by the sample route; kept here as the design it was built from)
 
 `audio_dark.js` is all-procedural today: there is no sample player. Two honest routes.
 
@@ -327,8 +383,8 @@ Nothing in this list can be answered by a meter. In rough order of risk:
    cold, and whether the last cell's weight is felt at all on a phone (its seat is 95-300 Hz), needs listening.
 4. **Is the breach water or a snare?** A broadband slap with a 420 Hz body and a low push is also the description of a
    drum hit. The zap is gone on paper; whether "water coming at you" replaced it is not measurable.
-5. **Phone weight of APEX and WILD:** they exist in the band now, but two HIGH stingers are still louder there. Is
-   the top of the pay table the heaviest thing a phone player hears? Probably not yet.
+5. **Phone weight of APEX and WILD:** the ladder now ranks them on top in the 200 Hz-4 kHz band by 2 dB a tier. Is
+   2 dB audible as rank, and do the two folded voices (viper and Wild stingers) sound squashed?
 6. **The dip:** 80 and 60 ms of digital silence may read as a dropout, and both are shorter than Bluetooth latency.
 7. **The short version's pacing:** 350 ms of dread, 350 ms of targeting. Does it still build, or is it just a hit
    with a preamble? Heard dozens of times a session, is 1.7 s still too long?
@@ -340,5 +396,6 @@ Nothing in this list can be answered by a meter. In rough order of risk:
     and may smear. Depth 0 flags the dread.
 11. **In the mix:** everything was measured solo, through no master chain. The scar hum and the eye tone share 147 /
     156 Hz by design and may pile up over a long cascade.
-12. **Sync:** the engine is not re-timed yet; nobody has seen the picture with this sound. Four cells is assumed.
+12. **Sync:** wired, but never watched with the picture by a person. See section 1 for the
+    tails that outlast the sequence and the -24 dB duck.
 13. **Loudness:** peak and RMS only. No LUFS, no true-peak, no check after lossy encoding; mono.

@@ -1,6 +1,6 @@
 [
  {
-  "t": 30.8,
+  "t": 33.3,
   "f": 1,
   "type": "profile",
   "profile": "mga",
@@ -16,15 +16,15 @@
   "shakeMs": 250
  },
  {
-  "t": 209.4,
+  "t": 220.9,
   "f": 4,
   "type": "ready",
   "profile": "mga",
   "front": "canvas"
  },
  {
-  "t": 2101,
-  "f": 52,
+  "t": 2165.3,
+  "f": 47,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -34,105 +34,246 @@
   "front": "canvas"
  },
  {
-  "t": 2475.9,
-  "f": 76,
+  "t": 2533.5,
+  "f": 70,
   "type": "slam"
  },
  {
-  "t": 3718.8,
-  "f": 151,
+  "t": 3773,
+  "f": 145,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1618,
+  "atMs": 1608,
   "turbo": false
  },
  {
-  "t": 3718.8,
-  "f": 151,
+  "t": 3773,
+  "f": 145,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 3818.7,
-  "f": 157,
+  "t": 3873,
+  "f": 151,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1718,
+  "atMs": 1708,
   "turbo": false
  },
  {
-  "t": 3818.7,
-  "f": 157,
+  "t": 3873,
+  "f": 151,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 3918.9,
-  "f": 163,
+  "t": 3973.7,
+  "f": 157,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1818,
+  "atMs": 1808,
   "turbo": false
  },
  {
-  "t": 3919,
-  "f": 163,
+  "t": 3973.7,
+  "f": 157,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 4019,
-  "f": 169,
+  "t": 4073,
+  "f": 163,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1918,
+  "atMs": 1908,
   "turbo": false
  },
  {
-  "t": 4019,
-  "f": 169,
+  "t": 4073,
+  "f": 163,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 4118.9,
-  "f": 175,
+  "t": 4173.5,
+  "f": 169,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2018,
+  "atMs": 2008,
   "turbo": false
  },
  {
-  "t": 4118.9,
-  "f": 175,
+  "t": 4173.5,
+  "f": 169,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 4345.4,
-  "f": 188,
-  "type": "pad",
-  "ms": 0,
-  "beforePadMs": 2244
+  "t": 4400.8,
+  "f": 182,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
  },
  {
-  "t": 4345.5,
-  "f": 188,
+  "t": 4401.6,
+  "f": 182,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 4402.1,
+  "f": 182,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.0011
+ },
+ {
+  "t": 5160.3,
+  "f": 228,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 5791.8,
+  "f": 266,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 5825.3,
+  "f": 268,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 5841.1,
+  "f": 269,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 5874.7,
+  "f": 271,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 6127.6,
+  "f": 286,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1727,
+  "interMs": 0
+ },
+ {
+  "t": 6127.6,
+  "f": 286,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 6127.9,
+  "f": 286,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 6128.4,
+  "f": 286,
+  "type": "stepWin",
+  "step": 2,
+  "total": 0.0146
+ },
+ {
+  "t": 6881.5,
+  "f": 331,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 7526.5,
+  "f": 370,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 7542.9,
+  "f": 371,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 7543,
+  "f": 371,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 7560.4,
+  "f": 372,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 7576,
+  "f": 373,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 7847.6,
+  "f": 389,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1720,
+  "interMs": 0
+ },
+ {
+  "t": 7848.2,
+  "f": 389,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.01,
+  "stake": 1
+ },
+ {
+  "t": 7848.3,
+  "f": 389,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 5683
+ },
+ {
+  "t": 7848.4,
+  "f": 389,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2245,
-  "won": 0,
+  "cycleMs": 5683,
+  "won": 0.01,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 4957.4,
-  "f": 202,
+  "t": 8532.7,
+  "f": 405,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -142,100 +283,100 @@
   "front": "canvas"
  },
  {
-  "t": 6571.2,
-  "f": 299,
+  "t": 10144.8,
+  "f": 502,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1614,
+  "atMs": 1612,
   "turbo": false
  },
  {
-  "t": 6571.2,
-  "f": 299,
+  "t": 10144.8,
+  "f": 502,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 6671.3,
-  "f": 305,
+  "t": 10244.7,
+  "f": 508,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1714,
+  "atMs": 1712,
   "turbo": false
  },
  {
-  "t": 6671.3,
-  "f": 305,
+  "t": 10244.7,
+  "f": 508,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 6771.6,
-  "f": 311,
+  "t": 10344.6,
+  "f": 514,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1814,
+  "atMs": 1812,
   "turbo": false
  },
  {
-  "t": 6771.6,
-  "f": 311,
+  "t": 10344.6,
+  "f": 514,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 6871.4,
-  "f": 317,
+  "t": 10446.4,
+  "f": 520,
   "type": "reelStop",
   "col": 3,
   "atMs": 1914,
   "turbo": false
  },
  {
-  "t": 6871.4,
-  "f": 317,
+  "t": 10446.4,
+  "f": 520,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 6971.3,
-  "f": 323,
+  "t": 10545.1,
+  "f": 526,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2014,
+  "atMs": 2012,
   "turbo": false
  },
  {
-  "t": 6971.3,
-  "f": 323,
+  "t": 10545.1,
+  "f": 526,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 7189.9,
-  "f": 336,
+  "t": 10790.6,
+  "f": 540,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 2233
+  "beforePadMs": 2258
  },
  {
-  "t": 7189.9,
-  "f": 336,
+  "t": 10790.6,
+  "f": 540,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2233,
+  "cycleMs": 2258,
   "won": 0,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 7458.9,
-  "f": 352,
+  "t": 11057.8,
+  "f": 556,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -245,214 +386,214 @@
   "front": "canvas"
  },
  {
-  "t": 9073,
-  "f": 449,
+  "t": 12663.5,
+  "f": 653,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1614,
+  "atMs": 1606,
   "turbo": false
  },
  {
-  "t": 9073,
-  "f": 449,
+  "t": 12663.5,
+  "f": 653,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 9173.2,
-  "f": 455,
+  "t": 12763.2,
+  "f": 659,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1714,
+  "atMs": 1705,
   "turbo": false
  },
  {
-  "t": 9173.2,
-  "f": 455,
+  "t": 12763.2,
+  "f": 659,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 9273.3,
-  "f": 461,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 1814,
-  "turbo": false
- },
- {
-  "t": 9273.3,
-  "f": 461,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 9290.1,
-  "f": 462,
+  "t": 12763.3,
+  "f": 659,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 9290.1,
-  "f": 462,
+  "t": 12763.4,
+  "f": 659,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 9290.1,
-  "f": 462,
+  "t": 12763.4,
+  "f": 659,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 9372.6,
-  "f": 467,
+  "t": 12845.7,
+  "f": 664,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 9440.3,
-  "f": 471,
+  "t": 12930.6,
+  "f": 669,
   "type": "reelStop",
-  "col": 3,
-  "atMs": 1981,
+  "col": 2,
+  "atMs": 1873,
   "turbo": false
  },
  {
-  "t": 9440.4,
-  "f": 471,
+  "t": 12930.7,
+  "f": 669,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 13016.3,
+  "f": 674,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 13031.1,
+  "f": 675,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 1973,
+  "turbo": false
+ },
+ {
+  "t": 13031.1,
+  "f": 675,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 9540.3,
-  "f": 477,
+  "t": 13130.4,
+  "f": 681,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2081,
+  "atMs": 2073,
   "turbo": false
  },
  {
-  "t": 9540.3,
-  "f": 477,
+  "t": 13130.4,
+  "f": 681,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 9541.9,
-  "f": 477,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 9742,
-  "f": 489,
+  "t": 13348.8,
+  "f": 694,
   "type": "stepStart",
   "step": 1,
   "factor": 1
  },
  {
-  "t": 9742.7,
-  "f": 489,
+  "t": 13349.2,
+  "f": 694,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 9743.1,
-  "f": 489,
+  "t": 13349.5,
+  "f": 694,
   "type": "stepWin",
   "step": 1,
-  "total": 0.054
+  "total": 0.0313
  },
  {
-  "t": 10493.3,
-  "f": 534,
+  "t": 14101,
+  "f": 739,
   "type": "impact",
   "kind": "explode",
-  "n": 8
+  "n": 11
  },
  {
-  "t": 11125,
-  "f": 572,
+  "t": 14732.6,
+  "f": 777,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 11141.5,
-  "f": 573,
+  "t": 14748.4,
+  "f": 778,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 11158.8,
-  "f": 574,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 11225.1,
-  "f": 578,
+  "t": 14781.9,
+  "f": 780,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 11241.8,
-  "f": 579,
+  "t": 14798.5,
+  "f": 781,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 11552.6,
-  "f": 597,
+  "t": 14866,
+  "f": 785,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 15200.6,
+  "f": 805,
   "type": "stepEnd",
   "step": 1,
-  "ms": 1811,
+  "ms": 1852,
   "interMs": 0
  },
  {
-  "t": 11552.8,
-  "f": 597,
+  "t": 15200.8,
+  "f": 805,
   "type": "win",
   "celebrate": false,
-  "total": 0.05,
+  "total": 0.03,
   "stake": 1
  },
  {
-  "t": 11552.9,
-  "f": 597,
+  "t": 15200.8,
+  "f": 805,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 4094
+  "beforePadMs": 4143
  },
  {
-  "t": 11552.9,
-  "f": 597,
+  "t": 15200.8,
+  "f": 805,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 4094,
-  "won": 0.05,
+  "cycleMs": 4143,
+  "won": 0.03,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 11813,
-  "f": 613,
+  "t": 15469.9,
+  "f": 821,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -462,178 +603,333 @@
   "front": "canvas"
  },
  {
-  "t": 13427,
-  "f": 710,
+  "t": 17083.5,
+  "f": 918,
   "type": "reelStop",
   "col": 0,
   "atMs": 1614,
   "turbo": false
  },
  {
-  "t": 13427,
-  "f": 710,
+  "t": 17083.5,
+  "f": 918,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 13527.2,
-  "f": 716,
+  "t": 17183.7,
+  "f": 924,
   "type": "reelStop",
   "col": 1,
   "atMs": 1714,
   "turbo": false
  },
  {
-  "t": 13527.2,
-  "f": 716,
+  "t": 17183.7,
+  "f": 924,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 13626.9,
-  "f": 722,
+  "t": 17283.6,
+  "f": 930,
   "type": "reelStop",
   "col": 2,
   "atMs": 1814,
   "turbo": false
  },
  {
-  "t": 13626.9,
-  "f": 722,
+  "t": 17283.6,
+  "f": 930,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 13727.3,
-  "f": 728,
+  "t": 17384.6,
+  "f": 936,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1914,
+  "atMs": 1915,
   "turbo": false
  },
  {
-  "t": 13727.3,
-  "f": 728,
+  "t": 17384.6,
+  "f": 936,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 13827.3,
-  "f": 734,
+  "t": 17483.9,
+  "f": 942,
   "type": "reelStop",
   "col": 4,
   "atMs": 2014,
   "turbo": false
  },
  {
-  "t": 13827.3,
-  "f": 734,
+  "t": 17483.9,
+  "f": 942,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 14045.6,
-  "f": 747,
+  "t": 17685.5,
+  "f": 954,
   "type": "stepStart",
   "step": 1,
   "factor": 1
  },
  {
-  "t": 14045.8,
-  "f": 747,
+  "t": 17685.6,
+  "f": 954,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 14046.1,
-  "f": 747,
+  "t": 17685.9,
+  "f": 954,
   "type": "stepWin",
   "step": 1,
-  "total": 0.027
+  "total": 0.0121
  },
  {
-  "t": 14796.4,
-  "f": 792,
+  "t": 18436.6,
+  "f": 999,
   "type": "impact",
   "kind": "explode",
-  "n": 6
+  "n": 8
  },
  {
-  "t": 15428.5,
-  "f": 830,
+  "t": 19068.6,
+  "f": 1037,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 15445.4,
-  "f": 831,
+  "t": 19085.4,
+  "f": 1038,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 15462,
-  "f": 832,
+  "t": 19102,
+  "f": 1039,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 15495.6,
-  "f": 834,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 15511.9,
-  "f": 835,
+  "t": 19118.5,
+  "f": 1040,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 15858.4,
-  "f": 855,
+  "t": 19537.3,
+  "f": 1065,
   "type": "stepEnd",
   "step": 1,
-  "ms": 1813,
+  "ms": 1852,
   "interMs": 0
  },
  {
-  "t": 15858.5,
-  "f": 855,
+  "t": 19537.4,
+  "f": 1065,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 19537.4,
+  "f": 1065,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 19537.8,
+  "f": 1065,
+  "type": "stepWin",
+  "step": 2,
+  "total": 0.0175
+ },
+ {
+  "t": 20288.1,
+  "f": 1110,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 20920.1,
+  "f": 1148,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 20937,
+  "f": 1149,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 20953.7,
+  "f": 1150,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 20970.5,
+  "f": 1151,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 21070.3,
+  "f": 1157,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 21070.3,
+  "f": 1157,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 21070.3,
+  "f": 1157,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 21152.9,
+  "f": 1162,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 21322.5,
+  "f": 1172,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 21398.7,
+  "f": 1176,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1861,
+  "interMs": 0
+ },
+ {
+  "t": 21398.8,
+  "f": 1176,
+  "type": "stepStart",
+  "step": 3,
+  "factor": 1
+ },
+ {
+  "t": 21398.9,
+  "f": 1176,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 21399.2,
+  "f": 1176,
+  "type": "stepWin",
+  "step": 3,
+  "total": 0.0218
+ },
+ {
+  "t": 22149.5,
+  "f": 1221,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 22771.8,
+  "f": 1259,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 22789.2,
+  "f": 1260,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 22805.3,
+  "f": 1261,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 22855.4,
+  "f": 1264,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 23158.4,
+  "f": 1282,
+  "type": "stepEnd",
+  "step": 3,
+  "ms": 1760,
+  "interMs": 0
+ },
+ {
+  "t": 23158.4,
+  "f": 1282,
   "type": "win",
   "celebrate": false,
-  "total": 0.03,
+  "total": 0.02,
   "stake": 1
  },
  {
-  "t": 15858.5,
-  "f": 855,
+  "t": 23158.4,
+  "f": 1282,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 4046
+  "beforePadMs": 7689
  },
  {
-  "t": 15858.5,
-  "f": 855,
+  "t": 23158.4,
+  "f": 1282,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 4046,
-  "won": 0.03,
+  "cycleMs": 7689,
+  "won": 0.02,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 16200.2,
-  "f": 876,
+  "t": 23493.8,
+  "f": 1302,
   "type": "press",
   "kind": "bonus",
   "profile": "mga",
@@ -643,182 +939,261 @@
   "front": "canvas"
  },
  {
-  "t": 20232.8,
-  "f": 1115,
+  "t": 27442.5,
+  "f": 1537,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 27442.5,
+  "f": 1537,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 27442.5,
+  "f": 1537,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 27524.8,
+  "f": 1542,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 27592.5,
+  "f": 1546,
   "type": "reelStop",
   "col": 0,
-  "atMs": 4033,
+  "atMs": 4099,
   "turbo": false
  },
  {
-  "t": 20232.9,
-  "f": 1115,
+  "t": 27592.5,
+  "f": 1546,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 20332.7,
-  "f": 1121,
+  "t": 27692.8,
+  "f": 1552,
   "type": "reelStop",
   "col": 1,
-  "atMs": 4133,
+  "atMs": 4199,
   "turbo": false
  },
  {
-  "t": 20332.7,
-  "f": 1121,
+  "t": 27692.8,
+  "f": 1552,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 20432.9,
-  "f": 1127,
+  "t": 27696.2,
+  "f": 1552,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 254
+ },
+ {
+  "t": 27792.7,
+  "f": 1558,
   "type": "reelStop",
   "col": 2,
-  "atMs": 4233,
+  "atMs": 4299,
   "turbo": false
  },
  {
-  "t": 20432.9,
-  "f": 1127,
+  "t": 27792.7,
+  "f": 1558,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 20532.9,
-  "f": 1133,
+  "t": 27892.9,
+  "f": 1564,
   "type": "reelStop",
   "col": 3,
-  "atMs": 4333,
+  "atMs": 4399,
   "turbo": false
  },
  {
-  "t": 20532.9,
-  "f": 1133,
+  "t": 27892.9,
+  "f": 1564,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 20632.8,
-  "f": 1139,
+  "t": 27993.2,
+  "f": 1570,
   "type": "reelStop",
   "col": 4,
-  "atMs": 4433,
+  "atMs": 4499,
   "turbo": false
  },
  {
-  "t": 20632.8,
-  "f": 1139,
+  "t": 27993.2,
+  "f": 1570,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 21389.7,
-  "f": 1184,
+  "t": 28754.5,
+  "f": 1615,
   "type": "stepStart",
   "step": 1,
   "factor": 1
  },
  {
-  "t": 21389.8,
-  "f": 1184,
+  "t": 28754.7,
+  "f": 1615,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 21390.1,
-  "f": 1184,
+  "t": 28755,
+  "f": 1615,
   "type": "stepWin",
   "step": 1,
-  "total": 0.108
+  "total": 0.5346
  },
  {
-  "t": 22152.7,
-  "f": 1230,
+  "t": 29513.8,
+  "f": 1661,
   "type": "impact",
-  "kind": "explode",
-  "n": 8
+  "kind": "bigCascade",
+  "heavy": true
  },
  {
-  "t": 22801.6,
-  "f": 1269,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
+  "t": 29513.8,
+  "f": 1661,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
  },
  {
-  "t": 22818.3,
-  "f": 1270,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
+  "t": 29513.8,
+  "f": 1661,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
  },
  {
-  "t": 22835,
-  "f": 1271,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
+  "t": 29593.2,
+  "f": 1666,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
  },
  {
-  "t": 22835,
-  "f": 1271,
+  "t": 29764.7,
+  "f": 1676,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 30194.8,
+  "f": 1702,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 22851.4,
-  "f": 1272,
+  "t": 30261.6,
+  "f": 1706,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 23222.7,
-  "f": 1294,
+  "t": 30295,
+  "f": 1708,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 30345.1,
+  "f": 1711,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 30394.8,
+  "f": 1714,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 30764,
+  "f": 1736,
   "type": "stepEnd",
   "step": 1,
-  "ms": 1833,
+  "ms": 2010,
   "interMs": 0
  },
  {
-  "t": 23223.3,
-  "f": 1294,
+  "t": 30764.6,
+  "f": 1736,
   "type": "strikePace",
   "v": "full",
   "level": 3
  },
  {
-  "t": 24127,
-  "f": 1348,
+  "t": 30773.9,
+  "f": 1736,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 1020,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 31675.4,
+  "f": 1790,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2282.3529411764707,
   "rect": [
-   298,
-   131,
+   245,
+   -25,
    1622,
    927
   ]
  },
  {
-  "t": 24728.8,
-  "f": 1384,
+  "t": 32265.4,
+  "f": 1826,
   "type": "strikeBite",
   "v": "full",
-  "lungeMs": 602,
+  "lungeMs": 590,
   "plannedMs": 600
  },
  {
-  "t": 24729,
-  "f": 1384,
+  "t": 32265.5,
+  "f": 1826,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -826,2405 +1201,388 @@
   "playMs": 542
  },
  {
-  "t": 24729.2,
-  "f": 1384,
+  "t": 32265.9,
+  "f": 1826,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 24729.2,
-  "f": 1384,
+  "t": 32265.9,
+  "f": 1826,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 24729.2,
-  "f": 1384,
+  "t": 32265.9,
+  "f": 1826,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 24802.3,
-  "f": 1389,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 73,
-  "frames": 4
- },
- {
-  "t": 24938,
-  "f": 1397,
-  "type": "strikeTurn",
-  "atMs": 212,
-  "cells": 4
- },
- {
-  "t": 24988,
-  "f": 1400,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 259
- },
- {
-  "t": 25470.3,
-  "f": 1429,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1343
- },
- {
-  "t": 26005.3,
-  "f": 1461,
-  "type": "strikeEnd",
-  "v": "full",
-  "totalMs": 2779
- },
- {
-  "t": 28005.7,
-  "f": 1581,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 11806,
-  "turbo": false
- },
- {
-  "t": 28005.8,
-  "f": 1581,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 28105.7,
-  "f": 1587,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 11906,
-  "turbo": false
- },
- {
-  "t": 28105.7,
-  "f": 1587,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 28205.9,
-  "f": 1593,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 12006,
-  "turbo": false
- },
- {
-  "t": 28205.9,
-  "f": 1593,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 28305.9,
-  "f": 1599,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 12106,
-  "turbo": false
- },
- {
-  "t": 28305.9,
-  "f": 1599,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 28406,
-  "f": 1605,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 12206,
-  "turbo": false
- },
- {
-  "t": 28406,
-  "f": 1605,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 28617,
-  "f": 1617,
-  "type": "stepStart",
-  "step": 2,
-  "factor": 1
- },
- {
-  "t": 28617.3,
-  "f": 1617,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 28617.7,
-  "f": 1617,
-  "type": "stepWin",
-  "step": 2,
-  "total": 0.1485
- },
- {
-  "t": 29375.2,
-  "f": 1663,
-  "type": "impact",
-  "kind": "explode",
-  "n": 4
- },
- {
-  "t": 30007.7,
-  "f": 1701,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 30024.6,
-  "f": 1702,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 30074.1,
-  "f": 1705,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 30091.2,
-  "f": 1706,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 30351.5,
-  "f": 1721,
-  "type": "stepEnd",
-  "step": 2,
-  "ms": 1735,
-  "interMs": 0
- },
- {
-  "t": 30351.6,
-  "f": 1721,
-  "type": "stepStart",
-  "step": 3,
-  "factor": 1
- },
- {
-  "t": 30351.8,
-  "f": 1721,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 30352.2,
-  "f": 1721,
-  "type": "stepWin",
-  "step": 3,
-  "total": 0.15339999999999998
- },
- {
-  "t": 31103.8,
-  "f": 1766,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 31742.5,
-  "f": 1805,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 31759.1,
-  "f": 1806,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 31759.1,
-  "f": 1806,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 32210.9,
-  "f": 1833,
-  "type": "stepEnd",
-  "step": 3,
-  "ms": 1859,
-  "interMs": 0
- },
- {
-  "t": 32211,
-  "f": 1833,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 32561.6,
-  "f": 1854,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   0,
-   0,
-   1622,
-   927
-  ]
- },
- {
-  "t": 32916.9,
-  "f": 1875,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 355,
-  "plannedMs": 350
- },
- {
-  "t": 32917,
-  "f": 1875,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 32917.1,
-  "f": 1875,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 32917.1,
-  "f": 1875,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 32917.1,
-  "f": 1875,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 32992.4,
-  "f": 1880,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 75,
-  "frames": 4
- },
- {
-  "t": 33068.9,
-  "f": 1884,
-  "type": "strikeTurn",
-  "atMs": 157,
-  "cells": 4
- },
- {
-  "t": 33178.5,
-  "f": 1891,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 261
- },
- {
-  "t": 33593.8,
-  "f": 1916,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1032
- },
- {
-  "t": 33679.6,
-  "f": 1921,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1468
- },
- {
-  "t": 34082.8,
-  "f": 1945,
-  "type": "stepStart",
-  "step": 4,
-  "factor": 0.92
- },
- {
-  "t": 34083,
-  "f": 1945,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 34083.4,
-  "f": 1945,
-  "type": "stepWin",
-  "step": 4,
-  "total": 1.4537
- },
- {
-  "t": 34834.3,
-  "f": 1990,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 34834.3,
-  "f": 1990,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 34834.3,
-  "f": 1990,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 34910.7,
-  "f": 1995,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 76,
-  "frames": 4
- },
- {
-  "t": 35097.2,
-  "f": 2006,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 263
- },
- {
-  "t": 35462.3,
-  "f": 2028,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 35495.8,
-  "f": 2030,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 35495.8,
-  "f": 2030,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 35529.5,
-  "f": 2032,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 35529.5,
-  "f": 2032,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 35970.7,
-  "f": 2058,
-  "type": "stepEnd",
-  "step": 4,
-  "ms": 1888,
-  "interMs": 0
- },
- {
-  "t": 36531,
-  "f": 2092,
-  "type": "stepStart",
-  "step": 5,
-  "factor": 0.84
- },
- {
-  "t": 36531.2,
-  "f": 2092,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 36531.5,
-  "f": 2092,
-  "type": "stepWin",
-  "step": 5,
-  "total": 1.5185
- },
- {
-  "t": 37282,
-  "f": 2137,
-  "type": "impact",
-  "kind": "explode",
-  "n": 6
- },
- {
-  "t": 37830.8,
-  "f": 2170,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 37864.2,
-  "f": 2172,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 37881.3,
-  "f": 2173,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 37897.7,
-  "f": 2174,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 37931,
-  "f": 2176,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 38228,
-  "f": 2193,
-  "type": "stepEnd",
-  "step": 5,
-  "ms": 1697,
-  "interMs": 0
- },
- {
-  "t": 39649.1,
-  "f": 2279,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 39649.1,
-  "f": 2279,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 39649.1,
-  "f": 2279,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 39731.5,
-  "f": 2284,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 39899.3,
-  "f": 2294,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 23699,
-  "turbo": false
- },
- {
-  "t": 39899.3,
-  "f": 2294,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 39900.7,
-  "f": 2294,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 39999.5,
-  "f": 2300,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 23799,
-  "turbo": false
- },
- {
-  "t": 39999.5,
-  "f": 2300,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 40099.4,
-  "f": 2306,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 23899,
-  "turbo": false
- },
- {
-  "t": 40099.4,
-  "f": 2306,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 40199.5,
-  "f": 2312,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 23999,
-  "turbo": false
- },
- {
-  "t": 40199.5,
-  "f": 2312,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 40299.6,
-  "f": 2318,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 24099,
-  "turbo": false
- },
- {
-  "t": 40299.7,
-  "f": 2318,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 41084.8,
-  "f": 2365,
-  "type": "stepStart",
-  "step": 6,
-  "factor": 0.76
- },
- {
-  "t": 41084.9,
-  "f": 2365,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 41085.2,
-  "f": 2365,
-  "type": "stepWin",
-  "step": 6,
-  "total": 3.3545
- },
- {
-  "t": 41835.9,
-  "f": 2410,
-  "type": "impact",
-  "kind": "explode",
-  "n": 13
- },
- {
-  "t": 42401.2,
-  "f": 2444,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 42401.3,
-  "f": 2444,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 42418,
-  "f": 2445,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 42434.7,
-  "f": 2446,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 42501.4,
-  "f": 2450,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 42501.4,
-  "f": 2450,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 42501.4,
-  "f": 2450,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 42583.7,
-  "f": 2455,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 42753.5,
-  "f": 2465,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 42823.2,
-  "f": 2469,
-  "type": "stepEnd",
-  "step": 6,
-  "ms": 1738,
-  "interMs": 0
- },
- {
-  "t": 43387.1,
-  "f": 2503,
-  "type": "stepStart",
-  "step": 7,
-  "factor": 0.7
- },
- {
-  "t": 43387.2,
-  "f": 2503,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 43387.5,
-  "f": 2503,
-  "type": "stepWin",
-  "step": 7,
-  "total": 3.4926999999999997
- },
- {
-  "t": 44138,
-  "f": 2548,
-  "type": "impact",
-  "kind": "explode",
-  "n": 12
- },
- {
-  "t": 44619.8,
-  "f": 2577,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 44669.9,
-  "f": 2580,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 44686.5,
-  "f": 2581,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 44703.5,
-  "f": 2582,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 44736.6,
-  "f": 2584,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 45047.5,
-  "f": 2602,
-  "type": "stepEnd",
-  "step": 7,
-  "ms": 1661,
-  "interMs": 0
- },
- {
-  "t": 45598,
-  "f": 2635,
-  "type": "stepStart",
-  "step": 8,
-  "factor": 0.7
- },
- {
-  "t": 45598.2,
-  "f": 2635,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 45598.5,
-  "f": 2635,
-  "type": "stepWin",
-  "step": 8,
-  "total": 3.5606999999999998
- },
- {
-  "t": 46348.8,
-  "f": 2680,
-  "type": "impact",
-  "kind": "explode",
-  "n": 10
- },
- {
-  "t": 46838.3,
-  "f": 2710,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 46888.6,
-  "f": 2713,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 46905,
-  "f": 2714,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 46905.1,
-  "f": 2714,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 46921.9,
-  "f": 2715,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 46972.1,
-  "f": 2718,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 46972.1,
-  "f": 2718,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 46972.1,
-  "f": 2718,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 47054.2,
-  "f": 2723,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 47223.8,
-  "f": 2733,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 47290.2,
-  "f": 2737,
-  "type": "stepEnd",
-  "step": 8,
-  "ms": 1692,
-  "interMs": 0
- },
- {
-  "t": 47840.6,
-  "f": 2770,
-  "type": "stepStart",
-  "step": 9,
-  "factor": 0.7
- },
- {
-  "t": 47840.7,
-  "f": 2770,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 47841,
-  "f": 2770,
-  "type": "stepWin",
-  "step": 9,
-  "total": 3.5688
- },
- {
-  "t": 48591.8,
-  "f": 2815,
-  "type": "impact",
-  "kind": "explode",
-  "n": 3
- },
- {
-  "t": 49073.5,
-  "f": 2844,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 49090.2,
-  "f": 2845,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 49106.6,
-  "f": 2846,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 49358.9,
-  "f": 2861,
-  "type": "stepEnd",
-  "step": 9,
-  "ms": 1518,
-  "interMs": 0
- },
- {
-  "t": 49359,
-  "f": 2861,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 49709.9,
-  "f": 2882,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   245,
-   0,
-   1622,
-   927
-  ]
- },
- {
-  "t": 50061,
-  "f": 2903,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 351,
-  "plannedMs": 350
- },
- {
-  "t": 50061,
-  "f": 2903,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 50061,
-  "f": 2903,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 50061,
-  "f": 2903,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 50061,
-  "f": 2903,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 50140.2,
-  "f": 2908,
+  "t": 32345.8,
+  "f": 1831,
   "type": "hitStopEnd",
   "kind": "leviathan",
   "actualMs": 79,
   "frames": 4
  },
  {
-  "t": 50216.9,
-  "f": 2912,
+  "t": 32466.6,
+  "f": 1838,
   "type": "strikeTurn",
-  "atMs": 157,
+  "atMs": 192,
   "cells": 4
  },
  {
-  "t": 50326.1,
-  "f": 2919,
+  "t": 32525.3,
+  "f": 1841,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 265
+  "ms": 259
  },
  {
-  "t": 50741.4,
-  "f": 2944,
+  "t": 32997.2,
+  "f": 1870,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1032
+  "el": 1322
  },
  {
-  "t": 50826.6,
-  "f": 2949,
+  "t": 33532.3,
+  "f": 1902,
   "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1467
+  "v": "full",
+  "totalMs": 2757
  },
  {
-  "t": 51230.4,
-  "f": 2973,
+  "t": 33944.3,
+  "f": 1926,
   "type": "stepStart",
-  "step": 10,
-  "factor": 0.7
+  "step": 2,
+  "factor": 1
  },
  {
-  "t": 51230.6,
-  "f": 2973,
+  "t": 33944.6,
+  "f": 1926,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 51230.9,
-  "f": 2973,
+  "t": 33944.8,
+  "f": 1926,
   "type": "stepWin",
-  "step": 10,
-  "total": 19.7688
+  "step": 2,
+  "total": 2.8674
  },
  {
-  "t": 51986.5,
-  "f": 3018,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 51986.6,
-  "f": 3018,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 51986.6,
-  "f": 3018,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 52058.5,
-  "f": 3023,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 72,
-  "frames": 4
- },
- {
-  "t": 52238.1,
-  "f": 3033,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 252
- },
- {
-  "t": 52493.5,
-  "f": 3049,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 52543.3,
-  "f": 3052,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 52576.6,
-  "f": 3054,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 52593.4,
-  "f": 3055,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 52610,
-  "f": 3056,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 52895.2,
-  "f": 3073,
-  "type": "stepEnd",
-  "step": 10,
-  "ms": 1665,
-  "interMs": 0
- },
- {
-  "t": 54494.6,
-  "f": 3169,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 38294,
-  "turbo": false
- },
- {
-  "t": 54494.6,
-  "f": 3169,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 54594.7,
-  "f": 3175,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 38395,
-  "turbo": false
- },
- {
-  "t": 54594.7,
-  "f": 3175,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 54594.8,
-  "f": 3175,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 54594.8,
-  "f": 3175,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 54594.8,
-  "f": 3175,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 54677.4,
-  "f": 3180,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 54761.5,
-  "f": 3185,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 38561,
-  "turbo": false
- },
- {
-  "t": 54761.5,
-  "f": 3185,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 54846.6,
-  "f": 3190,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 54862,
-  "f": 3191,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 38662,
-  "turbo": false
- },
- {
-  "t": 54862,
-  "f": 3191,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 54961.8,
-  "f": 3197,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 38762,
-  "turbo": false
- },
- {
-  "t": 54961.8,
-  "f": 3197,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 55763.8,
-  "f": 3245,
-  "type": "stepStart",
-  "step": 11,
-  "factor": 0.7
- },
- {
-  "t": 55764,
-  "f": 3245,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 55764.2,
-  "f": 3245,
-  "type": "stepWin",
-  "step": 11,
-  "total": 20.5113
- },
- {
-  "t": 56514.7,
-  "f": 3290,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 56997,
-  "f": 3319,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 57030,
-  "f": 3321,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 57046.9,
-  "f": 3322,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 57063.4,
-  "f": 3323,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 57080.2,
-  "f": 3324,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 57431.7,
-  "f": 3345,
-  "type": "stepEnd",
-  "step": 11,
-  "ms": 1668,
-  "interMs": 0
- },
- {
-  "t": 57431.7,
-  "f": 3345,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 57782.1,
-  "f": 3366,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   0,
-   131,
-   1622,
-   927
-  ]
- },
- {
-  "t": 58137,
-  "f": 3387,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 355,
-  "plannedMs": 350
- },
- {
-  "t": 58137.1,
-  "f": 3387,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 58137.2,
-  "f": 3387,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 58137.2,
-  "f": 3387,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 58137.2,
-  "f": 3387,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 58213.7,
-  "f": 3392,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 76,
-  "frames": 4
- },
- {
-  "t": 58299.6,
-  "f": 3397,
-  "type": "strikeTurn",
-  "atMs": 168,
-  "cells": 4
- },
- {
-  "t": 58392.4,
-  "f": 3402,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 255
- },
- {
-  "t": 58814.7,
-  "f": 3428,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1033
- },
- {
-  "t": 58916.5,
-  "f": 3434,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1485
- },
- {
-  "t": 59317.7,
-  "f": 3458,
-  "type": "stepStart",
-  "step": 12,
-  "factor": 0.7
- },
- {
-  "t": 59317.9,
-  "f": 3458,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 59318.2,
-  "f": 3458,
-  "type": "stepWin",
-  "step": 12,
-  "total": 22.5525
- },
- {
-  "t": 60068.8,
-  "f": 3503,
-  "type": "impact",
-  "kind": "explode",
-  "n": 12
- },
- {
-  "t": 60600,
-  "f": 3535,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 60600,
-  "f": 3535,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 60616.8,
-  "f": 3536,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 60633.5,
-  "f": 3537,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 60666.8,
-  "f": 3539,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 60968.7,
-  "f": 3557,
-  "type": "stepEnd",
-  "step": 12,
-  "ms": 1651,
-  "interMs": 0
- },
- {
-  "t": 60968.7,
-  "f": 3557,
-  "type": "stepStart",
-  "step": 13,
-  "factor": 0.7
- },
- {
-  "t": 60968.8,
-  "f": 3557,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 60969.1,
-  "f": 3557,
-  "type": "stepWin",
-  "step": 13,
-  "total": 22.566499999999998
- },
- {
-  "t": 61720.3,
-  "f": 3602,
+  "t": 34700.3,
+  "f": 1972,
   "type": "impact",
   "kind": "explode",
   "n": 11
  },
  {
-  "t": 62234.7,
-  "f": 3633,
+  "t": 35333,
+  "f": 2010,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 35349.9,
+  "f": 2011,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 62268.1,
-  "f": 3635,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 62301.4,
-  "f": 3637,
+  "t": 35416.6,
+  "f": 2015,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 62368.4,
-  "f": 3641,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 62669.6,
-  "f": 3659,
-  "type": "stepEnd",
-  "step": 13,
-  "ms": 1701,
-  "interMs": 0
- },
- {
-  "t": 63221.5,
-  "f": 3692,
-  "type": "stepStart",
-  "step": 14,
-  "factor": 0.7
- },
- {
-  "t": 63221.7,
-  "f": 3692,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 63221.9,
-  "f": 3692,
-  "type": "stepWin",
-  "step": 14,
-  "total": 22.728499999999997
- },
- {
-  "t": 63972.1,
-  "f": 3737,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 64453,
-  "f": 3766,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 64503.2,
-  "f": 3769,
+  "t": 35433.1,
+  "f": 2016,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 64519.8,
-  "f": 3770,
+  "t": 35450,
+  "f": 2017,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 64519.8,
-  "f": 3770,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 64536.6,
-  "f": 3771,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 64569.9,
-  "f": 3773,
+  "t": 35483,
+  "f": 2019,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 64569.9,
-  "f": 3773,
+  "t": 35483,
+  "f": 2019,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 64569.9,
-  "f": 3773,
+  "t": 35483,
+  "f": 2019,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 64652.6,
-  "f": 3778,
+  "t": 35565.1,
+  "f": 2024,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 64822.7,
-  "f": 3788,
+  "t": 35736.3,
+  "f": 2034,
   "type": "shakeEnd",
   "kind": "wildMaw",
   "ms": 253
  },
  {
-  "t": 64881.1,
-  "f": 3791,
+  "t": 35902.6,
+  "f": 2044,
   "type": "stepEnd",
-  "step": 14,
-  "ms": 1660,
+  "step": 2,
+  "ms": 1958,
   "interMs": 0
  },
  {
-  "t": 64881.1,
-  "f": 3791,
+  "t": 36454,
+  "f": 2077,
   "type": "stepStart",
-  "step": 15,
-  "factor": 0.7
+  "step": 3,
+  "factor": 1
  },
  {
-  "t": 64881.3,
-  "f": 3791,
+  "t": 36454.2,
+  "f": 2077,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 64881.6,
-  "f": 3791,
+  "t": 36454.5,
+  "f": 2077,
   "type": "stepWin",
-  "step": 15,
-  "total": 22.731699999999996
+  "step": 3,
+  "total": 3.5802
  },
  {
-  "t": 65634.5,
-  "f": 3836,
+  "t": 37209,
+  "f": 2121,
   "type": "impact",
-  "kind": "explode",
-  "n": 4
- },
- {
-  "t": 66121.4,
-  "f": 3866,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 66171.3,
-  "f": 3869,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 66238,
-  "f": 3873,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 66502.7,
-  "f": 3888,
-  "type": "stepEnd",
-  "step": 15,
-  "ms": 1622,
-  "interMs": 0
- },
- {
-  "t": 68023.2,
-  "f": 3980,
-  "type": "impact",
-  "kind": "wildMaw",
+  "kind": "bigCascade",
   "heavy": true
  },
  {
-  "t": 68023.2,
-  "f": 3980,
+  "t": 37209,
+  "f": 2121,
   "type": "hitStopStart",
-  "kind": "wildMaw",
+  "kind": "bigCascade",
   "plannedMs": 67
  },
  {
-  "t": 68023.2,
-  "f": 3980,
+  "t": 37209,
+  "f": 2121,
   "type": "shakeStart",
-  "kind": "wildMaw",
+  "kind": "bigCascade",
   "px": 6
  },
  {
-  "t": 68105.3,
-  "f": 3985,
+  "t": 37283.4,
+  "f": 2126,
   "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
+  "kind": "bigCascade",
+  "actualMs": 74,
   "frames": 4
  },
  {
-  "t": 68172.9,
-  "f": 3989,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 51973,
-  "turbo": false
- },
- {
-  "t": 68172.9,
-  "f": 3989,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 68273,
-  "f": 3995,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 52073,
-  "turbo": false
- },
- {
-  "t": 68273,
-  "f": 3995,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 68275,
-  "f": 3995,
+  "t": 37471,
+  "f": 2137,
   "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
+  "kind": "bigCascade",
+  "ms": 262
  },
  {
-  "t": 68373.5,
-  "f": 4001,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 52173,
-  "turbo": false
- },
- {
-  "t": 68373.5,
-  "f": 4001,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 68473.2,
-  "f": 4007,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 52273,
-  "turbo": false
- },
- {
-  "t": 68473.2,
-  "f": 4007,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 68573.3,
-  "f": 4013,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 52373,
-  "turbo": false
- },
- {
-  "t": 68573.3,
-  "f": 4013,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 69326.3,
-  "f": 4058,
-  "type": "stepStart",
-  "step": 16,
-  "factor": 0.7
- },
- {
-  "t": 69326.4,
-  "f": 4058,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 69326.8,
-  "f": 4058,
-  "type": "stepWin",
-  "step": 16,
-  "total": 23.379699999999996
- },
- {
-  "t": 70077.6,
-  "f": 4103,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 70558.6,
-  "f": 4132,
+  "t": 37901.7,
+  "f": 2163,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 70575.3,
-  "f": 4133,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 70608.3,
-  "f": 4135,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 70625.3,
-  "f": 4136,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 70625.4,
-  "f": 4136,
+  "t": 37937.3,
+  "f": 2165,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 70980.7,
-  "f": 4157,
+  "t": 37969,
+  "f": 2167,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 38068.6,
+  "f": 2173,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 38118.5,
+  "f": 2176,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 38470.9,
+  "f": 2197,
   "type": "stepEnd",
-  "step": 16,
-  "ms": 1654,
+  "step": 3,
+  "ms": 2017,
   "interMs": 0
  },
  {
-  "t": 70980.7,
-  "f": 4157,
+  "t": 40070,
+  "f": 2293,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 16576,
+  "turbo": false
+ },
+ {
+  "t": 40070,
+  "f": 2293,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 40170.4,
+  "f": 2299,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 16677,
+  "turbo": false
+ },
+ {
+  "t": 40170.4,
+  "f": 2299,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 40270,
+  "f": 2305,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 16776,
+  "turbo": false
+ },
+ {
+  "t": 40270,
+  "f": 2305,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 40372,
+  "f": 2311,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 16878,
+  "turbo": false
+ },
+ {
+  "t": 40372,
+  "f": 2311,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 40470.3,
+  "f": 2317,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 16976,
+  "turbo": false
+ },
+ {
+  "t": 40470.3,
+  "f": 2317,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 40706.5,
+  "f": 2331,
   "type": "strikePace",
   "v": "short",
   "level": 3
  },
  {
-  "t": 71343.8,
-  "f": 4179,
+  "t": 40706.7,
+  "f": 2331,
   "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
   "rect": [
-   0,
-   0,
-   1622,
-   927
+   155,
+   122,
+   1218,
+   680
   ]
  },
  {
-  "t": 71703.1,
-  "f": 4200,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 360,
-  "plannedMs": 350
- },
- {
-  "t": 71703.2,
-  "f": 4200,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 71703.2,
-  "f": 4200,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 71703.2,
-  "f": 4200,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 71703.2,
-  "f": 4200,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 71774.9,
-  "f": 4205,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 71,
-  "frames": 4
- },
- {
-  "t": 71862.7,
-  "f": 4210,
-  "type": "strikeTurn",
-  "atMs": 169,
-  "cells": 4
- },
- {
-  "t": 71957.9,
-  "f": 4215,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 255
- },
- {
-  "t": 72393.2,
-  "f": 4242,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1049
- },
- {
-  "t": 72478.7,
-  "f": 4247,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1485
- },
- {
-  "t": 73445.8,
-  "f": 4305,
-  "type": "stepStart",
-  "step": 17,
-  "factor": 0.7
- },
- {
-  "t": 73446,
-  "f": 4305,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 73446.3,
-  "f": 4305,
-  "type": "stepWin",
-  "step": 17,
-  "total": 24.351699999999997
- },
- {
-  "t": 74197.1,
-  "f": 4350,
-  "type": "impact",
-  "kind": "explode",
-  "n": 10
- },
- {
-  "t": 74745.7,
-  "f": 4383,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 74745.8,
-  "f": 4383,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 74762.3,
-  "f": 4384,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 74912.2,
-  "f": 4393,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 75130.8,
-  "f": 4406,
-  "type": "stepEnd",
-  "step": 17,
-  "ms": 1685,
-  "interMs": 0
- },
- {
-  "t": 75130.9,
-  "f": 4406,
-  "type": "stepStart",
-  "step": 18,
-  "factor": 0.7
- },
- {
-  "t": 75131,
-  "f": 4406,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 75131.2,
-  "f": 4406,
-  "type": "stepWin",
-  "step": 18,
-  "total": 24.648699999999998
- },
- {
-  "t": 75886.8,
-  "f": 4451,
-  "type": "impact",
-  "kind": "explode",
-  "n": 13
- },
- {
-  "t": 76363.3,
-  "f": 4480,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 76379.9,
-  "f": 4481,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 76396.9,
-  "f": 4482,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 76430.8,
-  "f": 4484,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 76513.7,
-  "f": 4489,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 76821.5,
-  "f": 4507,
-  "type": "stepEnd",
-  "step": 18,
-  "ms": 1691,
-  "interMs": 0
- },
- {
-  "t": 78415,
-  "f": 4603,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 62215,
-  "turbo": false
- },
- {
-  "t": 78415,
-  "f": 4603,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 78514.8,
-  "f": 4609,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 62315,
-  "turbo": false
- },
- {
-  "t": 78514.8,
-  "f": 4609,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 78615.1,
-  "f": 4615,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 62415,
-  "turbo": false
- },
- {
-  "t": 78615.1,
-  "f": 4615,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 78715.2,
-  "f": 4621,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 62515,
-  "turbo": false
- },
- {
-  "t": 78715.2,
-  "f": 4621,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 78815.6,
-  "f": 4627,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 62615,
-  "turbo": false
- },
- {
-  "t": 78815.6,
-  "f": 4627,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 79602.1,
-  "f": 4674,
-  "type": "stepStart",
-  "step": 19,
-  "factor": 0.7
- },
- {
-  "t": 79602.2,
-  "f": 4674,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 79602.5,
-  "f": 4674,
-  "type": "stepWin",
-  "step": 19,
-  "total": 24.700499999999998
- },
- {
-  "t": 80355.3,
-  "f": 4719,
-  "type": "impact",
-  "kind": "explode",
-  "n": 6
- },
- {
-  "t": 80833.4,
-  "f": 4748,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 80851.2,
-  "f": 4749,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 80867.6,
-  "f": 4750,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 80883.9,
-  "f": 4751,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 81216.1,
-  "f": 4770,
-  "type": "stepEnd",
-  "step": 19,
-  "ms": 1614,
-  "interMs": 0
- },
- {
-  "t": 81769.8,
-  "f": 4804,
-  "type": "stepStart",
-  "step": 20,
-  "factor": 0.7
- },
- {
-  "t": 81769.9,
-  "f": 4804,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 81770.2,
-  "f": 4804,
-  "type": "stepWin",
-  "step": 20,
-  "total": 24.8463
- },
- {
-  "t": 82521.4,
-  "f": 4849,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 83035.6,
-  "f": 4880,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 83052.5,
-  "f": 4881,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 83068.9,
-  "f": 4882,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 83068.9,
-  "f": 4882,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 83068.9,
-  "f": 4882,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 83069,
-  "f": 4882,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 83151.4,
-  "f": 4887,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 83168.9,
-  "f": 4888,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 83322.8,
-  "f": 4897,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 254
- },
- {
-  "t": 83481.6,
-  "f": 4906,
-  "type": "stepEnd",
-  "step": 20,
-  "ms": 1712,
-  "interMs": 0
- },
- {
-  "t": 83481.6,
-  "f": 4906,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 83837.9,
-  "f": 4928,
+  "t": 41057.6,
+  "f": 2352,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2164.705882352941,
   "rect": [
    89,
-   0,
+   -25,
    1622,
    927
   ]
  },
  {
-  "t": 84197.9,
-  "f": 4949,
+  "t": 41417.6,
+  "f": 2373,
   "type": "strikeBite",
   "v": "short",
   "lungeMs": 360,
   "plannedMs": 350
  },
  {
-  "t": 84198.1,
-  "f": 4949,
+  "t": 41417.6,
+  "f": 2373,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -3232,316 +1590,6668 @@
   "playMs": 542
  },
  {
-  "t": 84198.1,
-  "f": 4949,
+  "t": 41417.8,
+  "f": 2373,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 84198.1,
-  "f": 4949,
+  "t": 41417.8,
+  "f": 2373,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 84198.1,
-  "f": 4949,
+  "t": 41417.8,
+  "f": 2373,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 84269,
-  "f": 4954,
+  "t": 41486.8,
+  "f": 2378,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 70,
+  "actualMs": 68,
   "frames": 4
  },
  {
-  "t": 84357.7,
-  "f": 4959,
+  "t": 41574.3,
+  "f": 2383,
   "type": "strikeTurn",
-  "atMs": 170,
+  "atMs": 167,
   "cells": 4
  },
  {
-  "t": 84451.8,
-  "f": 4964,
+  "t": 41686.6,
+  "f": 2389,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 254
+  "ms": 269
  },
  {
-  "t": 84887.1,
-  "f": 4991,
+  "t": 42104.7,
+  "f": 2415,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1049
+  "el": 1047
  },
  {
-  "t": 84972.4,
-  "f": 4996,
+  "t": 42191.9,
+  "f": 2420,
   "type": "strikeEnd",
   "v": "short",
-  "totalMs": 1485
+  "totalMs": 1484
  },
  {
-  "t": 85939.1,
-  "f": 5054,
+  "t": 43171.2,
+  "f": 2478,
   "type": "stepStart",
-  "step": 21,
-  "factor": 0.7
+  "step": 4,
+  "factor": 0.92
  },
  {
-  "t": 85939.2,
-  "f": 5054,
+  "t": 43171.5,
+  "f": 2478,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 85939.7,
-  "f": 5054,
+  "t": 43171.9,
+  "f": 2478,
   "type": "stepWin",
-  "step": 21,
-  "total": 25.656299999999998
+  "step": 4,
+  "total": 13.0086
  },
  {
-  "t": 86690.7,
-  "f": 5099,
+  "t": 43925.6,
+  "f": 2523,
   "type": "impact",
-  "kind": "explode",
-  "n": 8
+  "kind": "bigCascade",
+  "heavy": true
  },
  {
-  "t": 87205.8,
-  "f": 5130,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
+  "t": 43925.6,
+  "f": 2523,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
  },
  {
-  "t": 87239.1,
-  "f": 5132,
+  "t": 43925.6,
+  "f": 2523,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 44005.7,
+  "f": 2528,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 44177,
+  "f": 2538,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 44574.1,
+  "f": 2562,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 87305.9,
-  "f": 5136,
+  "t": 44590.7,
+  "f": 2563,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 44624,
+  "f": 2565,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 44657.4,
+  "f": 2567,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 87306,
-  "f": 5136,
+  "t": 44724.6,
+  "f": 2571,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 87306,
-  "f": 5136,
+  "t": 44724.6,
+  "f": 2571,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 87306,
-  "f": 5136,
+  "t": 44724.6,
+  "f": 2571,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 87388.1,
-  "f": 5141,
+  "t": 44806.4,
+  "f": 2576,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 81,
+  "frames": 4
+ },
+ {
+  "t": 44808,
+  "f": 2576,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 44976.2,
+  "f": 2586,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 45135.1,
+  "f": 2595,
+  "type": "stepEnd",
+  "step": 4,
+  "ms": 1964,
+  "interMs": 0
+ },
+ {
+  "t": 45687.2,
+  "f": 2628,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
+ },
+ {
+  "t": 45687.4,
+  "f": 2628,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 45687.8,
+  "f": 2628,
+  "type": "stepWin",
+  "step": 5,
+  "total": 14.0292
+ },
+ {
+  "t": 46443.7,
+  "f": 2674,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 46992.8,
+  "f": 2707,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 47026.6,
+  "f": 2709,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 47043,
+  "f": 2710,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 47109.5,
+  "f": 2714,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 47109.5,
+  "f": 2714,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 47176.5,
+  "f": 2718,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 47176.5,
+  "f": 2718,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 47176.5,
+  "f": 2718,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 47258.5,
+  "f": 2723,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 81,
+  "frames": 4
+ },
+ {
+  "t": 47431.2,
+  "f": 2733,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 255
+ },
+ {
+  "t": 47540,
+  "f": 2739,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1853,
+  "interMs": 0
+ },
+ {
+  "t": 47540,
+  "f": 2739,
+  "type": "stepStart",
+  "step": 6,
+  "factor": 0.76
+ },
+ {
+  "t": 47540.2,
+  "f": 2739,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 47540.6,
+  "f": 2739,
+  "type": "stepWin",
+  "step": 6,
+  "total": 14.046999999999999
+ },
+ {
+  "t": 48295,
+  "f": 2785,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 48810.3,
+  "f": 2816,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 48843.8,
+  "f": 2818,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 48860.5,
+  "f": 2819,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 48877.3,
+  "f": 2820,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 48894,
+  "f": 2821,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 49236.4,
+  "f": 2841,
+  "type": "stepEnd",
+  "step": 6,
+  "ms": 1696,
+  "interMs": 0
+ },
+ {
+  "t": 50845.5,
+  "f": 2938,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 27352,
+  "turbo": false
+ },
+ {
+  "t": 50845.5,
+  "f": 2938,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 50945.3,
+  "f": 2944,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 27452,
+  "turbo": false
+ },
+ {
+  "t": 50945.3,
+  "f": 2944,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 51045.7,
+  "f": 2950,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 27552,
+  "turbo": false
+ },
+ {
+  "t": 51045.7,
+  "f": 2950,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 51045.7,
+  "f": 2950,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 51045.7,
+  "f": 2950,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 51045.7,
+  "f": 2950,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 51128,
+  "f": 2955,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 87557.5,
-  "f": 5151,
+  "t": 51212.4,
+  "f": 2960,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 27719,
+  "turbo": false
+ },
+ {
+  "t": 51212.4,
+  "f": 2960,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 51297.5,
+  "f": 2965,
   "type": "shakeEnd",
   "kind": "wildMaw",
   "ms": 252
  },
  {
-  "t": 87632.9,
-  "f": 5155,
-  "type": "stepEnd",
-  "step": 21,
-  "ms": 1694,
-  "interMs": 0
+  "t": 51312.8,
+  "f": 2966,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 27819,
+  "turbo": false
  },
  {
-  "t": 88191.5,
-  "f": 5189,
+  "t": 51312.8,
+  "f": 2966,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 51530.6,
+  "f": 2979,
   "type": "stepStart",
-  "step": 22,
+  "step": 7,
   "factor": 0.7
  },
  {
-  "t": 88191.7,
-  "f": 5189,
+  "t": 51530.8,
+  "f": 2979,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 88192,
-  "f": 5189,
+  "t": 51531.1,
+  "f": 2979,
   "type": "stepWin",
-  "step": 22,
-  "total": 28.5723
+  "step": 7,
+  "total": 14.166899999999998
  },
  {
-  "t": 88942.7,
-  "f": 5234,
+  "t": 52282.8,
+  "f": 3024,
   "type": "impact",
-  "kind": "explode",
-  "n": 12
+  "kind": "bigCascade",
+  "heavy": true
  },
  {
-  "t": 89457.9,
-  "f": 5265,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
+  "t": 52282.8,
+  "f": 3024,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
  },
  {
-  "t": 89491.3,
-  "f": 5267,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
+  "t": 52282.8,
+  "f": 3024,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
  },
  {
-  "t": 89524.1,
-  "f": 5269,
+  "t": 52362.6,
+  "f": 3029,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 52541.7,
+  "f": 3039,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 259
+ },
+ {
+  "t": 52814.1,
+  "f": 3056,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 89558.2,
-  "f": 5271,
+  "t": 52880.8,
+  "f": 3060,
   "type": "impact",
   "kind": "drop",
-  "col": 2
+  "col": 1
  },
  {
-  "t": 89591.7,
-  "f": 5273,
+  "t": 52898.2,
+  "f": 3061,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 52930.8,
+  "f": 3063,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 89860.3,
-  "f": 5289,
+  "t": 52963.9,
+  "f": 3065,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 52963.9,
+  "f": 3065,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 52964,
+  "f": 3065,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 53046.4,
+  "f": 3070,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 53047.4,
+  "f": 3070,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 53212.3,
+  "f": 3079,
   "type": "stepEnd",
-  "step": 22,
-  "ms": 1669,
+  "step": 7,
+  "ms": 1682,
   "interMs": 0
  },
  {
-  "t": 89860.3,
-  "f": 5289,
+  "t": 53212.4,
+  "f": 3079,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 53212.7,
+  "f": 3079,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 53217.8,
+  "f": 3080,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 254
+ },
+ {
+  "t": 53565.9,
+  "f": 3101,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   245,
+   -25,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 53916.8,
+  "f": 3122,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 351,
+  "plannedMs": 350
+ },
+ {
+  "t": 53916.9,
+  "f": 3122,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 53917.1,
+  "f": 3122,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 53917.1,
+  "f": 3122,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 53917.1,
+  "f": 3122,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 53997.1,
+  "f": 3127,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 54067.4,
+  "f": 3131,
+  "type": "strikeTurn",
+  "atMs": 152,
+  "cells": 4
+ },
+ {
+  "t": 54167.1,
+  "f": 3137,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 250
+ },
+ {
+  "t": 54598.3,
+  "f": 3163,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1032
+ },
+ {
+  "t": 54694.5,
+  "f": 3168,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1479
+ },
+ {
+  "t": 55651.3,
+  "f": 3226,
   "type": "stepStart",
-  "step": 23,
+  "step": 8,
   "factor": 0.7
  },
  {
-  "t": 89860.5,
-  "f": 5289,
+  "t": 55651.4,
+  "f": 3226,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 89860.9,
-  "f": 5289,
+  "t": 55651.9,
+  "f": 3226,
   "type": "stepWin",
-  "step": 23,
-  "total": 28.5885
+  "step": 8,
+  "total": 22.8069
  },
  {
-  "t": 90611.1,
-  "f": 5334,
+  "t": 56421.1,
+  "f": 3272,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 56421.1,
+  "f": 3272,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 56421.1,
+  "f": 3272,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 56499.3,
+  "f": 3277,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 78,
+  "frames": 4
+ },
+ {
+  "t": 56681.6,
+  "f": 3287,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 261
+ },
+ {
+  "t": 56900.9,
+  "f": 3301,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 56917.5,
+  "f": 3302,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 56984.2,
+  "f": 3306,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 57000.6,
+  "f": 3307,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 57017.9,
+  "f": 3308,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 57034.1,
+  "f": 3309,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 57034.1,
+  "f": 3309,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 57034.1,
+  "f": 3309,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 57116.5,
+  "f": 3314,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 57286.3,
+  "f": 3324,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 57369.2,
+  "f": 3329,
+  "type": "stepEnd",
+  "step": 8,
+  "ms": 1718,
+  "interMs": 0
+ },
+ {
+  "t": 57920.2,
+  "f": 3362,
+  "type": "stepStart",
+  "step": 9,
+  "factor": 0.7
+ },
+ {
+  "t": 57920.3,
+  "f": 3362,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 57920.6,
+  "f": 3362,
+  "type": "stepWin",
+  "step": 9,
+  "total": 22.8231
+ },
+ {
+  "t": 58683.7,
+  "f": 3407,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 59169.1,
+  "f": 3437,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 59235.9,
+  "f": 3441,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 59269.2,
+  "f": 3443,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 59497.2,
+  "f": 3456,
+  "type": "stepEnd",
+  "step": 9,
+  "ms": 1577,
+  "interMs": 0
+ },
+ {
+  "t": 60054.2,
+  "f": 3490,
+  "type": "stepStart",
+  "step": 10,
+  "factor": 0.7
+ },
+ {
+  "t": 60054.3,
+  "f": 3490,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 60054.8,
+  "f": 3490,
+  "type": "stepWin",
+  "step": 10,
+  "total": 22.8474
+ },
+ {
+  "t": 60805.9,
+  "f": 3535,
   "type": "impact",
   "kind": "explode",
   "n": 6
  },
  {
-  "t": 91109.1,
-  "f": 5364,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 91126.1,
-  "f": 5365,
+  "t": 61321,
+  "f": 3566,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 91142.5,
-  "f": 5366,
+  "t": 61337.7,
+  "f": 3567,
   "type": "impact",
   "kind": "drop",
-  "col": 0
+  "col": 1
  },
  {
-  "t": 91158.9,
-  "f": 5367,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 91176.5,
-  "f": 5368,
+  "t": 61337.7,
+  "f": 3567,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 91411.3,
-  "f": 5382,
+  "t": 61337.7,
+  "f": 3567,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 61667.6,
+  "f": 3586,
   "type": "stepEnd",
-  "step": 23,
+  "step": 10,
+  "ms": 1613,
+  "interMs": 0
+ },
+ {
+  "t": 62222.9,
+  "f": 3620,
+  "type": "stepStart",
+  "step": 11,
+  "factor": 0.7
+ },
+ {
+  "t": 62223.1,
+  "f": 3620,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 62223.3,
+  "f": 3620,
+  "type": "stepWin",
+  "step": 11,
+  "total": 22.8636
+ },
+ {
+  "t": 62973.8,
+  "f": 3665,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 63456,
+  "f": 3694,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 63489.2,
+  "f": 3696,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 63506,
+  "f": 3697,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 63790.7,
+  "f": 3714,
+  "type": "stepEnd",
+  "step": 11,
+  "ms": 1568,
+  "interMs": 0
+ },
+ {
+  "t": 65374.5,
+  "f": 3809,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 41881,
+  "turbo": false
+ },
+ {
+  "t": 65374.5,
+  "f": 3809,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 65475,
+  "f": 3815,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 41981,
+  "turbo": false
+ },
+ {
+  "t": 65475,
+  "f": 3815,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 65491.4,
+  "f": 3816,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 65491.4,
+  "f": 3816,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 65491.4,
+  "f": 3816,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 65574,
+  "f": 3821,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 65641.6,
+  "f": 3825,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 42148,
+  "turbo": false
+ },
+ {
+  "t": 65641.6,
+  "f": 3825,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 65741.3,
+  "f": 3831,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 42248,
+  "turbo": false
+ },
+ {
+  "t": 65741.3,
+  "f": 3831,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 65742.9,
+  "f": 3831,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 65841.5,
+  "f": 3837,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 42348,
+  "turbo": false
+ },
+ {
+  "t": 65841.5,
+  "f": 3837,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 66042.9,
+  "f": 3849,
+  "type": "stepStart",
+  "step": 12,
+  "factor": 0.7
+ },
+ {
+  "t": 66043,
+  "f": 3849,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 66043.4,
+  "f": 3849,
+  "type": "stepWin",
+  "step": 12,
+  "total": 22.890600000000003
+ },
+ {
+  "t": 66794.5,
+  "f": 3894,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 67293,
+  "f": 3924,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 67309.3,
+  "f": 3925,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 67326,
+  "f": 3926,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 67342.7,
+  "f": 3927,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 67359.2,
+  "f": 3928,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 67359.2,
+  "f": 3928,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 67359.2,
+  "f": 3928,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 67359.3,
+  "f": 3928,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 67441.7,
+  "f": 3933,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 67607.2,
+  "f": 3942,
+  "type": "stepEnd",
+  "step": 12,
+  "ms": 1564,
+  "interMs": 0
+ },
+ {
+  "t": 67607.3,
+  "f": 3942,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 67607.5,
+  "f": 3942,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 67612.1,
+  "f": 3943,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 67961.5,
+  "f": 3964,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -67,
+   -337,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 68319.6,
+  "f": 3985,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 358,
+  "plannedMs": 350
+ },
+ {
+  "t": 68319.7,
+  "f": 3985,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 68319.8,
+  "f": 3985,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 68319.8,
+  "f": 3985,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 68319.8,
+  "f": 3985,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 68393,
+  "f": 3990,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 72,
+  "frames": 4
+ },
+ {
+  "t": 68479.1,
+  "f": 3995,
+  "type": "strikeTurn",
+  "atMs": 168,
+  "cells": 4
+ },
+ {
+  "t": 68579.5,
+  "f": 4001,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 260
+ },
+ {
+  "t": 68795.8,
+  "f": 4014,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 69010.3,
+  "f": 4027,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1049
+ },
+ {
+  "t": 69096.2,
+  "f": 4032,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1485
+ },
+ {
+  "t": 70062.7,
+  "f": 4090,
+  "type": "stepStart",
+  "step": 13,
+  "factor": 0.7
+ },
+ {
+  "t": 70062.8,
+  "f": 4090,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 70063.3,
+  "f": 4090,
+  "type": "stepWin",
+  "step": 13,
+  "total": 53.589600000000004
+ },
+ {
+  "t": 70814.8,
+  "f": 4135,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 70814.8,
+  "f": 4135,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 70814.8,
+  "f": 4135,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 70894.8,
+  "f": 4140,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 71064.9,
+  "f": 4150,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 250
+ },
+ {
+  "t": 71296.1,
+  "f": 4164,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 71395.9,
+  "f": 4170,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 71446.1,
+  "f": 4173,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 71463.1,
+  "f": 4174,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 71546.5,
+  "f": 4179,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 71731.3,
+  "f": 4190,
+  "type": "stepEnd",
+  "step": 13,
+  "ms": 1669,
+  "interMs": 0
+ },
+ {
+  "t": 71731.3,
+  "f": 4190,
+  "type": "stepStart",
+  "step": 14,
+  "factor": 0.7
+ },
+ {
+  "t": 71731.5,
+  "f": 4190,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 71731.8,
+  "f": 4190,
+  "type": "stepWin",
+  "step": 14,
+  "total": 53.616600000000005
+ },
+ {
+  "t": 72482.5,
+  "f": 4235,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 72997.3,
+  "f": 4266,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 73013.9,
+  "f": 4267,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 73013.9,
+  "f": 4267,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 73030.7,
+  "f": 4268,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 73030.7,
+  "f": 4268,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 73320.1,
+  "f": 4285,
+  "type": "stepEnd",
+  "step": 14,
+  "ms": 1589,
+  "interMs": 0
+ },
+ {
+  "t": 73882.8,
+  "f": 4319,
+  "type": "stepStart",
+  "step": 15,
+  "factor": 0.7
+ },
+ {
+  "t": 73882.9,
+  "f": 4319,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 73883.2,
+  "f": 4319,
+  "type": "stepWin",
+  "step": 15,
+  "total": 53.620900000000006
+ },
+ {
+  "t": 74634.6,
+  "f": 4364,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 75116.2,
+  "f": 4393,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 75166,
+  "f": 4396,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 75182.9,
+  "f": 4397,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 75447.2,
+  "f": 4412,
+  "type": "stepEnd",
+  "step": 15,
+  "ms": 1564,
+  "interMs": 0
+ },
+ {
+  "t": 76001.7,
+  "f": 4446,
+  "type": "stepStart",
+  "step": 16,
+  "factor": 0.7
+ },
+ {
+  "t": 76001.9,
+  "f": 4446,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 76002.2,
+  "f": 4446,
+  "type": "stepWin",
+  "step": 16,
+  "total": 53.901700000000005
+ },
+ {
+  "t": 76752.9,
+  "f": 4491,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 77234.9,
+  "f": 4520,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 77251,
+  "f": 4521,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 77268.1,
+  "f": 4522,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 77301.3,
+  "f": 4524,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 77335.3,
+  "f": 4526,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 77614.2,
+  "f": 4542,
+  "type": "stepEnd",
+  "step": 16,
+  "ms": 1613,
+  "interMs": 0
+ },
+ {
+  "t": 79219.8,
+  "f": 4639,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 55726,
+  "turbo": false
+ },
+ {
+  "t": 79219.8,
+  "f": 4639,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 79219.8,
+  "f": 4639,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 79219.8,
+  "f": 4639,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 79219.8,
+  "f": 4639,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 79302,
+  "f": 4644,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 79386.4,
+  "f": 4649,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 55893,
+  "turbo": false
+ },
+ {
+  "t": 79386.4,
+  "f": 4649,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 79471.3,
+  "f": 4654,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 79487.3,
+  "f": 4655,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 55994,
+  "turbo": false
+ },
+ {
+  "t": 79487.3,
+  "f": 4655,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 79586.4,
+  "f": 4661,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 56093,
+  "turbo": false
+ },
+ {
+  "t": 79586.4,
+  "f": 4661,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 79686.2,
+  "f": 4667,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 56192,
+  "turbo": false
+ },
+ {
+  "t": 79686.2,
+  "f": 4667,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 80488.9,
+  "f": 4715,
+  "type": "stepStart",
+  "step": 17,
+  "factor": 0.7
+ },
+ {
+  "t": 80489,
+  "f": 4715,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 80489.4,
+  "f": 4715,
+  "type": "stepWin",
+  "step": 17,
+  "total": 54.02590000000001
+ },
+ {
+  "t": 81240.3,
+  "f": 4760,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 81240.3,
+  "f": 4760,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 81240.3,
+  "f": 4760,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 81320.2,
+  "f": 4765,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 81490.6,
+  "f": 4775,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 250
+ },
+ {
+  "t": 81721.6,
+  "f": 4789,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 81771.7,
+  "f": 4792,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 81855.4,
+  "f": 4797,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 81855.4,
+  "f": 4797,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 81955.4,
+  "f": 4803,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 82173.9,
+  "f": 4816,
+  "type": "stepEnd",
+  "step": 17,
+  "ms": 1685,
+  "interMs": 0
+ },
+ {
+  "t": 82173.9,
+  "f": 4816,
+  "type": "stepStart",
+  "step": 18,
+  "factor": 0.7
+ },
+ {
+  "t": 82174.1,
+  "f": 4816,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 82174.3,
+  "f": 4816,
+  "type": "stepWin",
+  "step": 18,
+  "total": 54.02910000000001
+ },
+ {
+  "t": 82924.8,
+  "f": 4861,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 83423.1,
+  "f": 4891,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 83439.5,
+  "f": 4892,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 83489.5,
+  "f": 4895,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 83724.7,
+  "f": 4909,
+  "type": "stepEnd",
+  "step": 18,
   "ms": 1551,
   "interMs": 0
  },
  {
-  "t": 91411.5,
-  "f": 5382,
-  "type": "win",
-  "celebrate": false,
-  "total": 28.59,
-  "stake": 100
+  "t": 83724.7,
+  "f": 4909,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
  },
  {
-  "t": 94013,
-  "f": 5538,
+  "t": 83725,
+  "f": 4909,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 84075.3,
+  "f": 4930,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   401,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 84432.5,
+  "f": 4951,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 357,
+  "plannedMs": 350
+ },
+ {
+  "t": 84432.5,
+  "f": 4951,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 84432.7,
+  "f": 4951,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 84432.7,
+  "f": 4951,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 84432.7,
+  "f": 4951,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 84506,
+  "f": 4956,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 73,
+  "frames": 4
+ },
+ {
+  "t": 84588.7,
+  "f": 4960,
+  "type": "strikeTurn",
+  "atMs": 163,
+  "cells": 4
+ },
+ {
+  "t": 84693.5,
+  "f": 4967,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 261
+ },
+ {
+  "t": 85107.6,
+  "f": 4992,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1032
+ },
+ {
+  "t": 85217.2,
+  "f": 4998,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1492
+ },
+ {
+  "t": 87225.7,
+  "f": 5119,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 63732,
+  "turbo": false
+ },
+ {
+  "t": 87225.7,
+  "f": 5119,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 87326.2,
+  "f": 5125,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 63832,
+  "turbo": false
+ },
+ {
+  "t": 87326.2,
+  "f": 5125,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 87426.7,
+  "f": 5131,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 63933,
+  "turbo": false
+ },
+ {
+  "t": 87426.7,
+  "f": 5131,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 87526,
+  "f": 5137,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 64032,
+  "turbo": false
+ },
+ {
+  "t": 87526,
+  "f": 5137,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 87626.2,
+  "f": 5143,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 64132,
+  "turbo": false
+ },
+ {
+  "t": 87626.2,
+  "f": 5143,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 88395.1,
+  "f": 5189,
+  "type": "stepStart",
+  "step": 19,
+  "factor": 0.7
+ },
+ {
+  "t": 88395.3,
+  "f": 5189,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 88395.6,
+  "f": 5189,
+  "type": "stepWin",
+  "step": 19,
+  "total": 54.31940000000001
+ },
+ {
+  "t": 89146.4,
+  "f": 5234,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 89678,
+  "f": 5266,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 89678.1,
+  "f": 5266,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 89711.3,
+  "f": 5268,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 89778,
+  "f": 5272,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 90046.4,
+  "f": 5288,
+  "type": "stepEnd",
+  "step": 19,
+  "ms": 1651,
+  "interMs": 0
+ },
+ {
+  "t": 90046.4,
+  "f": 5288,
+  "type": "stepStart",
+  "step": 20,
+  "factor": 0.7
+ },
+ {
+  "t": 90046.5,
+  "f": 5288,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 90046.8,
+  "f": 5288,
+  "type": "stepWin",
+  "step": 20,
+  "total": 54.33020000000001
+ },
+ {
+  "t": 90797.1,
+  "f": 5333,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 91279.1,
+  "f": 5362,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 91295.9,
+  "f": 5363,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 91312.6,
+  "f": 5364,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 91329.3,
+  "f": 5365,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 91346,
+  "f": 5366,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 91564.2,
+  "f": 5379,
+  "type": "stepEnd",
+  "step": 20,
+  "ms": 1518,
+  "interMs": 0
+ },
+ {
+  "t": 91564.2,
+  "f": 5379,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 91564.4,
+  "f": 5379,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 91914.9,
+  "f": 5400,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   401,
+   131,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 92265,
+  "f": 5421,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 350,
+  "plannedMs": 350
+ },
+ {
+  "t": 92265,
+  "f": 5421,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 92265.1,
+  "f": 5421,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 92265.1,
+  "f": 5421,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 92265.1,
+  "f": 5421,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 92346,
+  "f": 5426,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 92415.7,
+  "f": 5430,
+  "type": "strikeTurn",
+  "atMs": 151,
+  "cells": 4
+ },
+ {
+  "t": 92516.2,
+  "f": 5436,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 251
+ },
+ {
+  "t": 92930.2,
+  "f": 5461,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1015
+ },
+ {
+  "t": 93021.9,
+  "f": 5466,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1457
+ },
+ {
+  "t": 93982.4,
+  "f": 5524,
+  "type": "stepStart",
+  "step": 21,
+  "factor": 0.7
+ },
+ {
+  "t": 93982.6,
+  "f": 5524,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 93982.9,
+  "f": 5524,
+  "type": "stepWin",
+  "step": 21,
+  "total": 63.855800000000016
+ },
+ {
+  "t": 94734.3,
+  "f": 5569,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 94734.3,
+  "f": 5569,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 94734.3,
+  "f": 5569,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 94814.8,
+  "f": 5574,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 94985,
+  "f": 5584,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 95215.8,
+  "f": 5598,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 95232.8,
+  "f": 5599,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 95249.2,
+  "f": 5600,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 95316.6,
+  "f": 5604,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 95333.3,
+  "f": 5605,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 95350.2,
+  "f": 5606,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 95350.2,
+  "f": 5606,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 95350.2,
+  "f": 5606,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 95431.8,
+  "f": 5611,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 81,
+  "frames": 4
+ },
+ {
+  "t": 95601.3,
+  "f": 5621,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 251
+ },
+ {
+  "t": 95668.9,
+  "f": 5625,
+  "type": "stepEnd",
+  "step": 21,
+  "ms": 1687,
+  "interMs": 0
+ },
+ {
+  "t": 97267.4,
+  "f": 5721,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 73774,
+  "turbo": false
+ },
+ {
+  "t": 97267.4,
+  "f": 5721,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 97284.3,
+  "f": 5722,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 97284.3,
+  "f": 5722,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 97284.3,
+  "f": 5722,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 97366.6,
+  "f": 5727,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 97434.3,
+  "f": 5731,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 73941,
+  "turbo": false
+ },
+ {
+  "t": 97434.3,
+  "f": 5731,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 97534.2,
+  "f": 5737,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 74040,
+  "turbo": false
+ },
+ {
+  "t": 97534.2,
+  "f": 5737,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 97535.7,
+  "f": 5737,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 97634.5,
+  "f": 5743,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 74141,
+  "turbo": false
+ },
+ {
+  "t": 97634.5,
+  "f": 5743,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 97734.6,
+  "f": 5749,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 74241,
+  "turbo": false
+ },
+ {
+  "t": 97734.6,
+  "f": 5749,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 98520.9,
+  "f": 5796,
+  "type": "stepStart",
+  "step": 22,
+  "factor": 0.7
+ },
+ {
+  "t": 98521,
+  "f": 5796,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 98521.3,
+  "f": 5796,
+  "type": "stepWin",
+  "step": 22,
+  "total": 63.89140000000002
+ },
+ {
+  "t": 99271.8,
+  "f": 5841,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 99752.9,
+  "f": 5870,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 99820,
+  "f": 5874,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 99886.9,
+  "f": 5878,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 100188.1,
+  "f": 5896,
+  "type": "stepEnd",
+  "step": 22,
+  "ms": 1667,
+  "interMs": 0
+ },
+ {
+  "t": 100738.7,
+  "f": 5929,
+  "type": "stepStart",
+  "step": 23,
+  "factor": 0.7
+ },
+ {
+  "t": 100738.8,
+  "f": 5929,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 100739.2,
+  "f": 5929,
+  "type": "stepWin",
+  "step": 23,
+  "total": 63.89570000000002
+ },
+ {
+  "t": 101489.6,
+  "f": 5974,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 101988.6,
+  "f": 6004,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 102005.2,
+  "f": 6005,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 102005.4,
+  "f": 6005,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 102248.5,
+  "f": 6019,
+  "type": "stepEnd",
+  "step": 23,
+  "ms": 1510,
+  "interMs": 0
+ },
+ {
+  "t": 102248.6,
+  "f": 6019,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 102248.8,
+  "f": 6019,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 102607,
+  "f": 6041,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   89,
+   131,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 102961.5,
+  "f": 6062,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 355,
+  "plannedMs": 350
+ },
+ {
+  "t": 102961.7,
+  "f": 6062,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 102961.7,
+  "f": 6062,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 102961.7,
+  "f": 6062,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 102961.7,
+  "f": 6062,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 103038.3,
+  "f": 6067,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 76,
+  "frames": 4
+ },
+ {
+  "t": 103113,
+  "f": 6071,
+  "type": "strikeTurn",
+  "atMs": 156,
+  "cells": 4
+ },
+ {
+  "t": 103224.9,
+  "f": 6078,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 263
+ },
+ {
+  "t": 103412.5,
+  "f": 6089,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 103639.6,
+  "f": 6103,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1033
+ },
+ {
+  "t": 103725.2,
+  "f": 6108,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1468
+ },
+ {
+  "t": 104691.9,
+  "f": 6166,
+  "type": "stepStart",
+  "step": 24,
+  "factor": 0.7
+ },
+ {
+  "t": 104692.1,
+  "f": 6166,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 104692.3,
+  "f": 6166,
+  "type": "stepWin",
+  "step": 24,
+  "total": 77.39570000000002
+ },
+ {
+  "t": 105471,
+  "f": 6212,
+  "type": "heroPlay",
+  "id": "lev_rise",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+  "dur": 6000,
+  "rect": [
+   -4,
+   247,
+   1928,
+   1076
+  ]
+ },
+ {
+  "t": 109080,
+  "f": 6428,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 109080,
+  "f": 6428,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 109080,
+  "f": 6428,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 109159.9,
+  "f": 6433,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 109334.7,
+  "f": 6443,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 255
+ },
+ {
+  "t": 109594.7,
+  "f": 6459,
+  "type": "heroEnd",
+  "id": "lev_rise",
+  "el": 4129
+ },
+ {
+  "t": 109628,
+  "f": 6461,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 109644.6,
+  "f": 6462,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 109661.4,
+  "f": 6463,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 109678.1,
+  "f": 6464,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 109794.5,
+  "f": 6471,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 109794.5,
+  "f": 6471,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 109794.5,
+  "f": 6471,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 109877.2,
+  "f": 6476,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 110031.7,
+  "f": 6485,
+  "type": "stepEnd",
+  "step": 24,
+  "ms": 1703,
+  "interMs": 3637
+ },
+ {
+  "t": 110049.9,
+  "f": 6486,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 256
+ },
+ {
+  "t": 110583,
+  "f": 6518,
+  "type": "stepStart",
+  "step": 25,
+  "factor": 0.7
+ },
+ {
+  "t": 110583.2,
+  "f": 6518,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 110583.7,
+  "f": 6518,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 25
+ },
+ {
+  "t": 110583.9,
+  "f": 6518,
+  "type": "stepWin",
+  "step": 25,
+  "total": 78.07610000000003
+ },
+ {
+  "t": 111334.9,
+  "f": 6563,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 111863.3,
+  "f": 6595,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 111897,
+  "f": 6597,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 111947,
+  "f": 6600,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 111947,
+  "f": 6600,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 111963.2,
+  "f": 6601,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 112225.4,
+  "f": 6616,
+  "type": "stepEnd",
+  "step": 25,
+  "ms": 1643,
+  "interMs": 0
+ },
+ {
+  "t": 112781.9,
+  "f": 6650,
+  "type": "stepStart",
+  "step": 26,
+  "factor": 0.7
+ },
+ {
+  "t": 112782.1,
+  "f": 6650,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 112782.4,
+  "f": 6650,
+  "type": "stepWin",
+  "step": 26,
+  "total": 78.73710000000003
+ },
+ {
+  "t": 113534.2,
+  "f": 6695,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 114082.1,
+  "f": 6728,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 114082.2,
+  "f": 6728,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 114098.6,
+  "f": 6729,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 114098.6,
+  "f": 6729,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 114115.4,
+  "f": 6730,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 114450.6,
+  "f": 6750,
+  "type": "stepEnd",
+  "step": 26,
+  "ms": 1669,
+  "interMs": 0
+ },
+ {
+  "t": 115011.8,
+  "f": 6783,
+  "type": "stepStart",
+  "step": 27,
+  "factor": 0.7
+ },
+ {
+  "t": 115011.9,
+  "f": 6783,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 115012.3,
+  "f": 6783,
+  "type": "stepWin",
+  "step": 27,
+  "total": 78.89910000000003
+ },
+ {
+  "t": 115768.5,
+  "f": 6829,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 116250.2,
+  "f": 6858,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 116267,
+  "f": 6859,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 116333.6,
+  "f": 6863,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 116618.7,
+  "f": 6880,
+  "type": "stepEnd",
+  "step": 27,
+  "ms": 1607,
+  "interMs": 0
+ },
+ {
+  "t": 116618.7,
+  "f": 6880,
+  "type": "stepStart",
+  "step": 28,
+  "factor": 0.7
+ },
+ {
+  "t": 116618.9,
+  "f": 6880,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 116619.1,
+  "f": 6880,
+  "type": "stepWin",
+  "step": 28,
+  "total": 79.70910000000003
+ },
+ {
+  "t": 117369.7,
+  "f": 6925,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 117902.2,
+  "f": 6957,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 117902.2,
+  "f": 6957,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 117918.4,
+  "f": 6958,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 117985.1,
+  "f": 6962,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 117985.1,
+  "f": 6962,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 118002.2,
+  "f": 6963,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 118002.2,
+  "f": 6963,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 118002.2,
+  "f": 6963,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 118084.1,
+  "f": 6968,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 118254.2,
+  "f": 6978,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 118320.2,
+  "f": 6982,
+  "type": "stepEnd",
+  "step": 28,
+  "ms": 1702,
+  "interMs": 0
+ },
+ {
+  "t": 118320.2,
+  "f": 6982,
+  "type": "stepStart",
+  "step": 29,
+  "factor": 0.7
+ },
+ {
+  "t": 118320.4,
+  "f": 6982,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 118320.7,
+  "f": 6982,
+  "type": "stepWin",
+  "step": 29,
+  "total": 80.04850000000003
+ },
+ {
+  "t": 119072.2,
+  "f": 7027,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 119570.2,
+  "f": 7057,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 119586.6,
+  "f": 7058,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 119620,
+  "f": 7060,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 119653.7,
+  "f": 7062,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 119653.7,
+  "f": 7062,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 119978.5,
+  "f": 7081,
+  "type": "stepEnd",
+  "step": 29,
+  "ms": 1658,
+  "interMs": 0
+ },
+ {
+  "t": 119978.6,
+  "f": 7081,
+  "type": "strikePace",
+  "v": "full",
+  "level": 4
+ },
+ {
+  "t": 119978.9,
+  "f": 7081,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 1020,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 120889.8,
+  "f": 7136,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2282.3529411764707,
+  "rect": [
+   272,
+   -143,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 121499.9,
+  "f": 7172,
+  "type": "strikeBite",
+  "v": "full",
+  "lungeMs": 610,
+  "plannedMs": 600
+ },
+ {
+  "t": 121500,
+  "f": 7172,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 121500.2,
+  "f": 7172,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 121500.2,
+  "f": 7172,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 121500.2,
+  "f": 7172,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 121570.5,
+  "f": 7177,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 121707.5,
+  "f": 7185,
+  "type": "strikeTurn",
+  "atMs": 218,
+  "cells": 9
+ },
+ {
+  "t": 121757.7,
+  "f": 7188,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 258
+ },
+ {
+  "t": 122238.6,
+  "f": 7217,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1349
+ },
+ {
+  "t": 123024.4,
+  "f": 7264,
+  "type": "strikeEnd",
+  "v": "full",
+  "totalMs": 3035
+ },
+ {
+  "t": 123427.9,
+  "f": 7288,
+  "type": "stepStart",
+  "step": 30,
+  "factor": 0.7
+ },
+ {
+  "t": 123428.6,
+  "f": 7288,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 123429.4,
+  "f": 7288,
+  "type": "stepWin",
+  "step": 30,
+  "total": 80.55480000000003
+ },
+ {
+  "t": 124192.7,
+  "f": 7334,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 124674.3,
+  "f": 7363,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 124691,
+  "f": 7364,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 124707.6,
+  "f": 7365,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 124741.3,
+  "f": 7367,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 124824.3,
+  "f": 7372,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 125126.7,
+  "f": 7390,
+  "type": "stepEnd",
+  "step": 30,
+  "ms": 1699,
+  "interMs": 0
+ },
+ {
+  "t": 126726,
+  "f": 7486,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 103232,
+  "turbo": false
+ },
+ {
+  "t": 126726,
+  "f": 7486,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 126726,
+  "f": 7486,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 126726,
+  "f": 7486,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 126726,
+  "f": 7486,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 126808.4,
+  "f": 7491,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 126893.2,
+  "f": 7496,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 103399,
+  "turbo": false
+ },
+ {
+  "t": 126893.2,
+  "f": 7496,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 126978.3,
+  "f": 7501,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 126993.7,
+  "f": 7502,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 103500,
+  "turbo": false
+ },
+ {
+  "t": 126993.7,
+  "f": 7502,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 127093,
+  "f": 7508,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 103599,
+  "turbo": false
+ },
+ {
+  "t": 127093,
+  "f": 7508,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 127193.1,
+  "f": 7514,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 103699,
+  "turbo": false
+ },
+ {
+  "t": 127193.1,
+  "f": 7514,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 127412.3,
+  "f": 7527,
+  "type": "stepStart",
+  "step": 31,
+  "factor": 0.7
+ },
+ {
+  "t": 127412.6,
+  "f": 7527,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 127412.9,
+  "f": 7527,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 31
+ },
+ {
+  "t": 127413.1,
+  "f": 7527,
+  "type": "stepWin",
+  "step": 31,
+  "total": 80.98610000000002
+ },
+ {
+  "t": 128166.2,
+  "f": 7571,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 128166.2,
+  "f": 7571,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 128166.2,
+  "f": 7571,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 128243.4,
+  "f": 7576,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 76,
+  "frames": 4
+ },
+ {
+  "t": 128423.3,
+  "f": 7586,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 257
+ },
+ {
+  "t": 128711.2,
+  "f": 7604,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 128727.7,
+  "f": 7605,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 128727.7,
+  "f": 7605,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 128795.7,
+  "f": 7609,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 128795.7,
+  "f": 7609,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 128795.7,
+  "f": 7609,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 128795.7,
+  "f": 7609,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 128795.9,
+  "f": 7609,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 128876.7,
+  "f": 7614,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 129049.3,
+  "f": 7624,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 254
+ },
+ {
+  "t": 129080.4,
+  "f": 7626,
+  "type": "stepEnd",
+  "step": 31,
+  "ms": 1668,
+  "interMs": 0
+ },
+ {
+  "t": 129630.8,
+  "f": 7659,
+  "type": "stepStart",
+  "step": 32,
+  "factor": 0.7
+ },
+ {
+  "t": 129631,
+  "f": 7659,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 129631.3,
+  "f": 7659,
+  "type": "stepWin",
+  "step": 32,
+  "total": 83.41610000000003
+ },
+ {
+  "t": 130383.3,
+  "f": 7702,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 130383.3,
+  "f": 7702,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 130383.3,
+  "f": 7702,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 130461.5,
+  "f": 7707,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 78,
+  "frames": 4
+ },
+ {
+  "t": 130638.1,
+  "f": 7717,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 255
+ },
+ {
+  "t": 130880.1,
+  "f": 7732,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 130913.8,
+  "f": 7734,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 130929.9,
+  "f": 7735,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 130996.5,
+  "f": 7739,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 131029.6,
+  "f": 7741,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 131029.6,
+  "f": 7741,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 131029.6,
+  "f": 7741,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 131111.9,
+  "f": 7746,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 131146.6,
+  "f": 7748,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 131282.1,
+  "f": 7756,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 131285.3,
+  "f": 7756,
+  "type": "stepEnd",
+  "step": 32,
+  "ms": 1655,
+  "interMs": 0
+ },
+ {
+  "t": 131285.4,
+  "f": 7756,
+  "type": "stepStart",
+  "step": 33,
+  "factor": 0.7
+ },
+ {
+  "t": 131285.6,
+  "f": 7756,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 131286,
+  "f": 7756,
+  "type": "stepWin",
+  "step": 33,
+  "total": 83.77250000000002
+ },
+ {
+  "t": 132043.3,
+  "f": 7797,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 132548.6,
+  "f": 7828,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 132614.2,
+  "f": 7832,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 132631,
+  "f": 7833,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 132648.1,
+  "f": 7834,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 132664.8,
+  "f": 7835,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 133000.1,
+  "f": 7855,
+  "type": "stepEnd",
+  "step": 33,
+  "ms": 1715,
+  "interMs": 0
+ },
+ {
+  "t": 133000.2,
+  "f": 7855,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 133000.4,
+  "f": 7855,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 133351,
+  "f": 7876,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   116,
+   -299,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 133711.3,
+  "f": 7897,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 361,
+  "plannedMs": 350
+ },
+ {
+  "t": 133711.4,
+  "f": 7897,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 133711.4,
+  "f": 7897,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 133711.4,
+  "f": 7897,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 133711.4,
+  "f": 7897,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 133781.1,
+  "f": 7902,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 69,
+  "frames": 4
+ },
+ {
+  "t": 133862.5,
+  "f": 7906,
+  "type": "strikeTurn",
+  "atMs": 162,
+  "cells": 9
+ },
+ {
+  "t": 133968.3,
+  "f": 7913,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 257
+ },
+ {
+  "t": 134381.8,
+  "f": 7938,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1031
+ },
+ {
+  "t": 134552,
+  "f": 7948,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 134858,
+  "f": 7966,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1857
+ },
+ {
+  "t": 135828.3,
+  "f": 8024,
+  "type": "stepStart",
+  "step": 34,
+  "factor": 0.7
+ },
+ {
+  "t": 135828.6,
+  "f": 8024,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 135829,
+  "f": 8024,
+  "type": "stepWin",
+  "step": 34,
+  "total": 91.06250000000003
+ },
+ {
+  "t": 136587.5,
+  "f": 8070,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 136587.5,
+  "f": 8070,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 136587.5,
+  "f": 8070,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 136666.6,
+  "f": 8075,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 136847.6,
+  "f": 8085,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 260
+ },
+ {
+  "t": 137068.6,
+  "f": 8099,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 137085.8,
+  "f": 8100,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 137102.2,
+  "f": 8101,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 137218.9,
+  "f": 8108,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 137234.7,
+  "f": 8109,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 137504.3,
+  "f": 8125,
+  "type": "stepEnd",
+  "step": 34,
+  "ms": 1676,
+  "interMs": 0
+ },
+ {
+  "t": 139102.7,
+  "f": 8221,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 115609,
+  "turbo": false
+ },
+ {
+  "t": 139102.7,
+  "f": 8221,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 139203.2,
+  "f": 8227,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 115709,
+  "turbo": false
+ },
+ {
+  "t": 139203.2,
+  "f": 8227,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 139303,
+  "f": 8233,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 115809,
+  "turbo": false
+ },
+ {
+  "t": 139303,
+  "f": 8233,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 139402.9,
+  "f": 8239,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 115909,
+  "turbo": false
+ },
+ {
+  "t": 139402.9,
+  "f": 8239,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 139503.4,
+  "f": 8245,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 116010,
+  "turbo": false
+ },
+ {
+  "t": 139503.4,
+  "f": 8245,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 140256.3,
+  "f": 8290,
+  "type": "stepStart",
+  "step": 35,
+  "factor": 0.7
+ },
+ {
+  "t": 140256.5,
+  "f": 8290,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 140256.8,
+  "f": 8290,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 35
+ },
+ {
+  "t": 140257.1,
+  "f": 8290,
+  "type": "stepWin",
+  "step": 35,
+  "total": 92.29210000000003
+ },
+ {
+  "t": 141015.4,
+  "f": 8335,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 141505.1,
+  "f": 8365,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 141588.7,
+  "f": 8370,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 141588.8,
+  "f": 8370,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 141588.8,
+  "f": 8370,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 141588.9,
+  "f": 8370,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 141671,
+  "f": 8375,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 141672.3,
+  "f": 8375,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 141689.6,
+  "f": 8376,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 141689.7,
+  "f": 8376,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 141840.6,
+  "f": 8385,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 141924.4,
+  "f": 8390,
+  "type": "stepEnd",
+  "step": 35,
+  "ms": 1668,
+  "interMs": 0
+ },
+ {
+  "t": 142491,
+  "f": 8424,
+  "type": "stepStart",
+  "step": 36,
+  "factor": 0.7
+ },
+ {
+  "t": 142491.1,
+  "f": 8424,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 142491.4,
+  "f": 8424,
+  "type": "stepWin",
+  "step": 36,
+  "total": 92.49460000000003
+ },
+ {
+  "t": 143242.1,
+  "f": 8469,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 143791.1,
+  "f": 8502,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 143807,
+  "f": 8503,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 143823.5,
+  "f": 8504,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 143857.3,
+  "f": 8506,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 144105,
+  "f": 8520,
+  "type": "stepEnd",
+  "step": 36,
+  "ms": 1614,
+  "interMs": 0
+ },
+ {
+  "t": 144105.1,
+  "f": 8520,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 144105.4,
+  "f": 8520,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 144459.8,
+  "f": 8542,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -40,
+   13,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 144817.3,
+  "f": 8563,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 358,
+  "plannedMs": 350
+ },
+ {
+  "t": 144817.4,
+  "f": 8563,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 144817.4,
+  "f": 8563,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 144817.4,
+  "f": 8563,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 144817.4,
+  "f": 8563,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 144890.2,
+  "f": 8568,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 72,
+  "frames": 4
+ },
+ {
+  "t": 144977,
+  "f": 8573,
+  "type": "strikeTurn",
+  "atMs": 167,
+  "cells": 9
+ },
+ {
+  "t": 145077.5,
+  "f": 8579,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 260
+ },
+ {
+  "t": 145508.4,
+  "f": 8605,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1049
+ },
+ {
+  "t": 145983.4,
+  "f": 8633,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1874
+ },
+ {
+  "t": 146948.7,
+  "f": 8691,
+  "type": "stepStart",
+  "step": 37,
+  "factor": 0.7
+ },
+ {
+  "t": 146949.2,
+  "f": 8691,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 146949.6,
+  "f": 8691,
+  "type": "stepWin",
+  "step": 37,
+  "total": 107.32250000000003
+ },
+ {
+  "t": 147700.5,
+  "f": 8735,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 147700.5,
+  "f": 8735,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 147700.5,
+  "f": 8735,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 147775.8,
+  "f": 8740,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 75,
+  "frames": 4
+ },
+ {
+  "t": 147956.3,
+  "f": 8750,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 256
+ },
+ {
+  "t": 148244.1,
+  "f": 8768,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 148260.5,
+  "f": 8769,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 148311.8,
+  "f": 8772,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 148327.6,
+  "f": 8773,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 148343.7,
+  "f": 8774,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 148657,
+  "f": 8792,
+  "type": "stepEnd",
+  "step": 37,
+  "ms": 1708,
+  "interMs": 0
+ },
+ {
+  "t": 148657.1,
+  "f": 8792,
+  "type": "stepStart",
+  "step": 38,
+  "factor": 0.7
+ },
+ {
+  "t": 148657.2,
+  "f": 8792,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 148657.6,
+  "f": 8792,
+  "type": "stepWin",
+  "step": 38,
+  "total": 107.40350000000004
+ },
+ {
+  "t": 149413.5,
+  "f": 8838,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 149928.8,
+  "f": 8869,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 149962.3,
+  "f": 8871,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 150011.7,
+  "f": 8874,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 150274.2,
+  "f": 8889,
+  "type": "stepEnd",
+  "step": 38,
+  "ms": 1617,
+  "interMs": 0
+ },
+ {
+  "t": 150825.4,
+  "f": 8922,
+  "type": "stepStart",
+  "step": 39,
+  "factor": 0.7
+ },
+ {
+  "t": 150825.6,
+  "f": 8922,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 150826,
+  "f": 8922,
+  "type": "stepWin",
+  "step": 39,
+  "total": 107.41000000000004
+ },
+ {
+  "t": 151578.4,
+  "f": 8967,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 152063.6,
+  "f": 8997,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 152096.6,
+  "f": 8999,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 152163.7,
+  "f": 9003,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 152389.8,
+  "f": 9016,
+  "type": "stepEnd",
+  "step": 39,
+  "ms": 1564,
+  "interMs": 0
+ },
+ {
+  "t": 153848.1,
+  "f": 9104,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 153848.1,
+  "f": 9104,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 153848.1,
+  "f": 9104,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 153930.6,
+  "f": 9109,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 154048.2,
+  "f": 9116,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 130554,
+  "turbo": false
+ },
+ {
+  "t": 154048.2,
+  "f": 9116,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 154100,
+  "f": 9119,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 154148.5,
+  "f": 9122,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 130655,
+  "turbo": false
+ },
+ {
+  "t": 154148.5,
+  "f": 9122,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 154248.6,
+  "f": 9128,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 130755,
+  "turbo": false
+ },
+ {
+  "t": 154248.6,
+  "f": 9128,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 154348.9,
+  "f": 9134,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 130855,
+  "turbo": false
+ },
+ {
+  "t": 154348.9,
+  "f": 9134,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 154448.6,
+  "f": 9140,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 130955,
+  "turbo": false
+ },
+ {
+  "t": 154448.6,
+  "f": 9140,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 155234.1,
+  "f": 9187,
+  "type": "stepStart",
+  "step": 40,
+  "factor": 0.7
+ },
+ {
+  "t": 155234.3,
+  "f": 9187,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 155234.5,
+  "f": 9187,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 40
+ },
+ {
+  "t": 155234.8,
+  "f": 9187,
+  "type": "stepWin",
+  "step": 40,
+  "total": 107.90900000000003
+ },
+ {
+  "t": 155985.3,
+  "f": 9232,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 156500.5,
+  "f": 9263,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 156533.6,
+  "f": 9265,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 156533.7,
+  "f": 9265,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 156700.8,
+  "f": 9275,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 156700.8,
+  "f": 9275,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 156700.8,
+  "f": 9275,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 156700.8,
+  "f": 9275,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 156783.1,
+  "f": 9280,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 156919.8,
+  "f": 9288,
+  "type": "stepEnd",
+  "step": 40,
+  "ms": 1686,
+  "interMs": 0
+ },
+ {
+  "t": 156919.9,
+  "f": 9288,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 156920,
+  "f": 9288,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 156952.5,
+  "f": 9290,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 157273.5,
+  "f": 9309,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   116,
+   -143,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 157625.3,
+  "f": 9330,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 352,
+  "plannedMs": 350
+ },
+ {
+  "t": 157625.4,
+  "f": 9330,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 157625.5,
+  "f": 9330,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 157625.5,
+  "f": 9330,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 157625.5,
+  "f": 9330,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 157700.6,
+  "f": 9335,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 75,
+  "frames": 4
+ },
+ {
+  "t": 157786.8,
+  "f": 9340,
+  "type": "strikeTurn",
+  "atMs": 163,
+  "cells": 9
+ },
+ {
+  "t": 157882.7,
+  "f": 9345,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 257
+ },
+ {
+  "t": 158318.3,
+  "f": 9372,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1045
+ },
+ {
+  "t": 158788.5,
+  "f": 9400,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1865
+ },
+ {
+  "t": 159754.2,
+  "f": 9458,
+  "type": "stepStart",
+  "step": 41,
+  "factor": 0.7
+ },
+ {
+  "t": 159754.3,
+  "f": 9458,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 159754.6,
+  "f": 9458,
+  "type": "stepWin",
+  "step": 41,
+  "total": 112.30240000000003
+ },
+ {
+  "t": 160505.9,
+  "f": 9503,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 160987.6,
+  "f": 9532,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 161004.3,
+  "f": 9533,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 161020.9,
+  "f": 9534,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 161037.6,
+  "f": 9535,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 161054.4,
+  "f": 9536,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 161422.7,
+  "f": 9558,
+  "type": "stepEnd",
+  "step": 41,
+  "ms": 1669,
+  "interMs": 0
+ },
+ {
+  "t": 161979.7,
+  "f": 9591,
+  "type": "stepStart",
+  "step": 42,
+  "factor": 0.7
+ },
+ {
+  "t": 161979.9,
+  "f": 9591,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 161980.3,
+  "f": 9591,
+  "type": "stepWin",
+  "step": 42,
+  "total": 113.93860000000004
+ },
+ {
+  "t": 162741.6,
+  "f": 9637,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 163222.9,
+  "f": 9666,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 163289.8,
+  "f": 9670,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 163289.9,
+  "f": 9670,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 163322.9,
+  "f": 9672,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 163356.5,
+  "f": 9674,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 163678.5,
+  "f": 9693,
+  "type": "stepEnd",
+  "step": 42,
+  "ms": 1699,
+  "interMs": 0
+ },
+ {
+  "t": 164229.4,
+  "f": 9726,
+  "type": "stepStart",
+  "step": 43,
+  "factor": 0.7
+ },
+ {
+  "t": 164229.6,
+  "f": 9726,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 164229.9,
+  "f": 9726,
+  "type": "stepWin",
+  "step": 43,
+  "total": 114.65950000000004
+ },
+ {
+  "t": 164992.9,
+  "f": 9772,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 164992.9,
+  "f": 9772,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 164992.9,
+  "f": 9772,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 165073.5,
+  "f": 9777,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 165243.9,
+  "f": 9787,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 165541.6,
+  "f": 9805,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 165558.1,
+  "f": 9806,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 165591.5,
+  "f": 9808,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 165608.5,
+  "f": 9809,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 165625,
+  "f": 9810,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 165725.1,
+  "f": 9816,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 165725.1,
+  "f": 9816,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 165725.1,
+  "f": 9816,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 165807.3,
+  "f": 9821,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 165897.4,
+  "f": 9826,
+  "type": "stepEnd",
+  "step": 43,
+  "ms": 1668,
+  "interMs": 0
+ },
+ {
+  "t": 165978.1,
+  "f": 9831,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 166457.6,
+  "f": 9859,
+  "type": "stepStart",
+  "step": 44,
+  "factor": 0.7
+ },
+ {
+  "t": 166458,
+  "f": 9859,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 166458.4,
+  "f": 9859,
+  "type": "stepWin",
+  "step": 44,
+  "total": 117.58360000000003
+ },
+ {
+  "t": 167211.7,
+  "f": 9905,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 167211.7,
+  "f": 9905,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 167211.7,
+  "f": 9905,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 167292,
+  "f": 9910,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 167462.2,
+  "f": 9920,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 167693.2,
+  "f": 9934,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 167743.3,
+  "f": 9937,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 167759.9,
+  "f": 9938,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 167827.3,
+  "f": 9942,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 167827.3,
+  "f": 9942,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 167827.3,
+  "f": 9942,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 167909,
+  "f": 9947,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 167926.5,
+  "f": 9948,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 167976.8,
+  "f": 9951,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 168078.7,
+  "f": 9957,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 251
+ },
+ {
+  "t": 168145.4,
+  "f": 9961,
+  "type": "stepEnd",
+  "step": 44,
+  "ms": 1688,
+  "interMs": 0
+ },
+ {
+  "t": 168699.4,
+  "f": 9994,
+  "type": "stepStart",
+  "step": 45,
+  "factor": 0.7
+ },
+ {
+  "t": 168699.7,
+  "f": 9994,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 168700,
+  "f": 9994,
+  "type": "stepWin",
+  "step": 45,
+  "total": 133.37860000000003
+ },
+ {
+  "t": 169456.1,
+  "f": 10039,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 169456.1,
+  "f": 10039,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 169456.1,
+  "f": 10039,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 169527.2,
+  "f": 10044,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 71,
+  "frames": 4
+ },
+ {
+  "t": 169707.1,
+  "f": 10054,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 169945.1,
+  "f": 10069,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 169961.9,
+  "f": 10070,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 170011.9,
+  "f": 10073,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 170029.1,
+  "f": 10074,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 170128.6,
+  "f": 10080,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 170128.6,
+  "f": 10080,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 170128.6,
+  "f": 10080,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 170211,
+  "f": 10085,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 170278.9,
+  "f": 10089,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 170364.4,
+  "f": 10094,
+  "type": "stepEnd",
+  "step": 45,
+  "ms": 1665,
+  "interMs": 0
+ },
+ {
+  "t": 170381.6,
+  "f": 10095,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 170923.9,
+  "f": 10127,
+  "type": "stepStart",
+  "step": 46,
+  "factor": 0.7
+ },
+ {
+  "t": 170924.1,
+  "f": 10127,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 170924.5,
+  "f": 10127,
+  "type": "stepWin",
+  "step": 46,
+  "total": 133.70260000000005
+ },
+ {
+  "t": 171682.3,
+  "f": 10173,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 172182,
+  "f": 10203,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 172196.9,
+  "f": 10204,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 172230.4,
+  "f": 10206,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 172247.1,
+  "f": 10207,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 172263.7,
+  "f": 10208,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 172579,
+  "f": 10226,
+  "type": "stepEnd",
+  "step": 46,
+  "ms": 1655,
+  "interMs": 0
+ },
+ {
+  "t": 173133,
+  "f": 10260,
+  "type": "stepStart",
+  "step": 47,
+  "factor": 0.7
+ },
+ {
+  "t": 173133.1,
+  "f": 10260,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 173133.5,
+  "f": 10260,
+  "type": "stepWin",
+  "step": 47,
+  "total": 133.71470000000005
+ },
+ {
+  "t": 173883.7,
+  "f": 10305,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 174399.1,
+  "f": 10336,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 174415.3,
+  "f": 10337,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 174432,
+  "f": 10338,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 174637.6,
+  "f": 10350,
+  "type": "stepEnd",
+  "step": 47,
+  "ms": 1505,
+  "interMs": 0
+ },
+ {
+  "t": 175198.4,
+  "f": 10383,
+  "type": "stepStart",
+  "step": 48,
+  "factor": 0.7
+ },
+ {
+  "t": 175198.6,
+  "f": 10383,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 175199,
+  "f": 10383,
+  "type": "stepWin",
+  "step": 48,
+  "total": 133.77950000000004
+ },
+ {
+  "t": 175951.7,
+  "f": 10429,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 176467.5,
+  "f": 10460,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 176484.3,
+  "f": 10461,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 176484.4,
+  "f": 10461,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 176534.1,
+  "f": 10464,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 176836,
+  "f": 10482,
+  "type": "stepEnd",
+  "step": 48,
+  "ms": 1638,
+  "interMs": 0
+ },
+ {
+  "t": 178435.4,
+  "f": 10578,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 154942,
+  "turbo": false
+ },
+ {
+  "t": 178435.5,
+  "f": 10578,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 178452,
+  "f": 10579,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 178452,
+  "f": 10579,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 178452,
+  "f": 10579,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 178534.7,
+  "f": 10584,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 83,
+  "frames": 4
+ },
+ {
+  "t": 178602.1,
+  "f": 10588,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 155108,
+  "turbo": false
+ },
+ {
+  "t": 178602.1,
+  "f": 10588,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 178702.2,
+  "f": 10594,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 155208,
+  "turbo": false
+ },
+ {
+  "t": 178702.2,
+  "f": 10594,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 178703.7,
+  "f": 10594,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 178802.3,
+  "f": 10600,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 155309,
+  "turbo": false
+ },
+ {
+  "t": 178802.3,
+  "f": 10600,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 178902.5,
+  "f": 10606,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 155409,
+  "turbo": false
+ },
+ {
+  "t": 178902.5,
+  "f": 10606,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 179117,
+  "f": 10618,
+  "type": "stepStart",
+  "step": 49,
+  "factor": 0.7
+ },
+ {
+  "t": 179117.2,
+  "f": 10618,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 179117.5,
+  "f": 10618,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 49
+ },
+ {
+  "t": 179117.8,
+  "f": 10618,
+  "type": "stepWin",
+  "step": 49,
+  "total": 135.52100000000004
+ },
+ {
+  "t": 179872.3,
+  "f": 10664,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 180370.7,
+  "f": 10694,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 180387.5,
+  "f": 10695,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 180404.2,
+  "f": 10696,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 180420.9,
+  "f": 10697,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 180454.7,
+  "f": 10699,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 180772.6,
+  "f": 10718,
+  "type": "stepEnd",
+  "step": 49,
+  "ms": 1656,
+  "interMs": 0
+ },
+ {
+  "t": 181322.8,
+  "f": 10751,
+  "type": "stepStart",
+  "step": 50,
+  "factor": 0.7
+ },
+ {
+  "t": 181322.9,
+  "f": 10751,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 181323.3,
+  "f": 10751,
+  "type": "stepWin",
+  "step": 50,
+  "total": 135.53720000000004
+ },
+ {
+  "t": 182074,
+  "f": 10796,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 182555.7,
+  "f": 10825,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 182572.4,
+  "f": 10826,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 182589.3,
+  "f": 10827,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 182836.7,
+  "f": 10841,
+  "type": "stepEnd",
+  "step": 50,
+  "ms": 1514,
+  "interMs": 0
+ },
+ {
+  "t": 182836.7,
+  "f": 10841,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 182836.9,
+  "f": 10841,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   155,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 183191.2,
+  "f": 10863,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -40,
+   -299,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 183546.8,
+  "f": 10884,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 356,
+  "plannedMs": 350
+ },
+ {
+  "t": 183546.8,
+  "f": 10884,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 183546.9,
+  "f": 10884,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 183546.9,
+  "f": 10884,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 183546.9,
+  "f": 10884,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 183622.3,
+  "f": 10889,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 75,
+  "frames": 4
+ },
+ {
+  "t": 183708.3,
+  "f": 10894,
+  "type": "strikeTurn",
+  "atMs": 167,
+  "cells": 9
+ },
+ {
+  "t": 183799.6,
+  "f": 10899,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 253
+ },
+ {
+  "t": 184240,
+  "f": 10926,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 1049
+ },
+ {
+  "t": 184719,
+  "f": 10954,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1878
+ },
+ {
+  "t": 185126.6,
+  "f": 10979,
+  "type": "stepStart",
+  "step": 51,
+  "factor": 0.7
+ },
+ {
+  "t": 185126.7,
+  "f": 10979,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 185126.9,
+  "f": 10979,
+  "type": "stepWin",
+  "step": 51,
+  "total": 136.80730000000005
+ },
+ {
+  "t": 185877.3,
+  "f": 11024,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 185877.3,
+  "f": 11024,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 185877.3,
+  "f": 11024,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 185957.7,
+  "f": 11029,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 186128,
+  "f": 11039,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 186359.2,
+  "f": 11053,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 186409,
+  "f": 11056,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 186493,
+  "f": 11061,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 186509.4,
+  "f": 11062,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 186509.4,
+  "f": 11062,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 186509.4,
+  "f": 11062,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 186509.5,
+  "f": 11062,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 186591.6,
+  "f": 11067,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 186676.4,
+  "f": 11072,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 186761.2,
+  "f": 11077,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 186828.2,
+  "f": 11081,
+  "type": "stepEnd",
+  "step": 51,
+  "ms": 1702,
+  "interMs": 0
+ },
+ {
+  "t": 186828.2,
+  "f": 11081,
+  "type": "stepStart",
+  "step": 52,
+  "factor": 0.7
+ },
+ {
+  "t": 186828.3,
+  "f": 11081,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 186828.6,
+  "f": 11081,
+  "type": "stepWin",
+  "step": 52,
+  "total": 137.05030000000005
+ },
+ {
+  "t": 187579.9,
+  "f": 11126,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 188110.9,
+  "f": 11158,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 188160.4,
+  "f": 11161,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 188160.4,
+  "f": 11161,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 188177.5,
+  "f": 11162,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 188210.8,
+  "f": 11164,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 188210.8,
+  "f": 11164,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 188210.8,
+  "f": 11164,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 188210.8,
+  "f": 11164,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 188292.9,
+  "f": 11169,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 188462.8,
+  "f": 11179,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 188505,
+  "f": 11181,
+  "type": "stepEnd",
+  "step": 52,
+  "ms": 1677,
+  "interMs": 0
+ },
+ {
+  "t": 189062.6,
+  "f": 11215,
+  "type": "stepStart",
+  "step": 53,
+  "factor": 0.7
+ },
+ {
+  "t": 189062.6,
+  "f": 11215,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 189063,
+  "f": 11215,
+  "type": "stepWin",
+  "step": 53,
+  "total": 139.96630000000005
+ },
+ {
+  "t": 189814.9,
+  "f": 11260,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 190295.6,
+  "f": 11289,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 190362.8,
+  "f": 11293,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 190362.8,
+  "f": 11293,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 190412.4,
+  "f": 11296,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 190529,
+  "f": 11303,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 190722.8,
+  "f": 11314,
+  "type": "stepEnd",
+  "step": 53,
+  "ms": 1660,
+  "interMs": 0
+ },
+ {
+  "t": 190725.2,
+  "f": 11314,
+  "type": "bwEscalate",
+  "tier": 1,
+  "dim": 0.9,
+  "dens": 1
+ },
+ {
+  "t": 190725.2,
+  "f": 11314,
+  "type": "countStart",
+  "target": 139.97,
+  "mult": 139.97,
+  "durMs": 9400,
+  "tier": "epic"
+ },
+ {
+  "t": 192651.9,
+  "f": 11429,
+  "type": "skipInput",
+  "inputF": 11429
+ },
+ {
+  "t": 192667,
+  "f": 11430,
+  "type": "bwEscalate",
+  "tier": 3,
+  "dim": 0.6,
+  "dens": 4
+ },
+ {
+  "t": 192667,
+  "f": 11430,
+  "type": "tier",
+  "id": "big",
+  "threshold": 15,
+  "mult": 139.97,
+  "skipped": true
+ },
+ {
+  "t": 192667,
+  "f": 11430,
+  "type": "impact",
+  "kind": "tier",
+  "heavy": true
+ },
+ {
+  "t": 192667,
+  "f": 11430,
+  "type": "hitStopStart",
+  "kind": "tier",
+  "plannedMs": 83
+ },
+ {
+  "t": 192667,
+  "f": 11430,
+  "type": "shakeStart",
+  "kind": "tier",
+  "px": 6
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "tier",
+  "id": "mega",
+  "threshold": 40,
+  "mult": 139.97,
+  "skipped": true
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "impact",
+  "kind": "tier",
+  "heavy": true
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "hitStopStart",
+  "kind": "tier",
+  "plannedMs": 83
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "shakeStart",
+  "kind": "tier",
+  "px": 6
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "tier",
+  "id": "epic",
+  "threshold": 100,
+  "mult": 139.97,
+  "skipped": true
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "impact",
+  "kind": "tier",
+  "heavy": true
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "hitStopStart",
+  "kind": "tier",
+  "plannedMs": 83
+ },
+ {
+  "t": 192667.2,
+  "f": 11430,
+  "type": "shakeStart",
+  "kind": "tier",
+  "px": 6
+ },
+ {
+  "t": 192667.6,
+  "f": 11430,
+  "type": "countEnd",
+  "value": 139.97,
+  "shownText": "139.97",
+  "skipped": true
+ },
+ {
+  "t": 192667.6,
+  "f": 11430,
+  "type": "skipLanded",
+  "value": 139.97
+ },
+ {
+  "t": 192763.4,
+  "f": 11436,
+  "type": "hitStopEnd",
+  "kind": "tier",
+  "actualMs": 96,
+  "frames": 5
+ },
+ {
+  "t": 192917.4,
+  "f": 11445,
+  "type": "shakeEnd",
+  "kind": "tier",
+  "ms": 250
+ },
+ {
+  "t": 201025.2,
+  "f": 11931,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 77813
+  "beforePadMs": 177531
  },
  {
-  "t": 94013,
-  "f": 5538,
+  "t": 201025.2,
+  "f": 11931,
   "type": "cycleEnd",
   "kind": "bonus",
-  "cycleMs": 77813,
-  "won": 28.59,
+  "cycleMs": 177531,
+  "won": 139.97,
   "stake": 100,
   "minCycleMs": 0
  }
