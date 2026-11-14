@@ -1,0 +1,36 @@
+{
+  "full": {
+    "hushMs": 911,
+    "lungeMs": 612,
+    "totalMs": 2570,
+    "v": "full",
+    "frames": 224
+  },
+  "short": {
+    "hushMs": 363,
+    "lungeMs": 354,
+    "totalMs": 1446,
+    "v": "short",
+    "frames": 154
+  },
+  "clips": {
+    "state": "ready",
+    "loaded": 62,
+    "played": [
+      "help_full_lead",
+      "help_full_impact",
+      "help_cell",
+      "help_full_recede",
+      "help_cell",
+      "help_cell_last",
+      "help_short_lead",
+      "help_short_impact",
+      "help_cell",
+      "help_short_recede",
+      "help_cell",
+      "help_cell",
+      "help_cell_last"
+    ]
+  },
+  "pageErrors": []
+}

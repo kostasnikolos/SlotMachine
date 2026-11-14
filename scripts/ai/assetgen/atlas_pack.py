@@ -44,7 +44,10 @@ def fit_cell(im: Image.Image, fill: float) -> Image.Image:
     return cell
 
 
-def maps_for(cell: Image.Image, emissive_gain: float):
+LOW_GLOW = 0.32     # a rune's groove light in the atlas: the shader shows ~0.6x of it at rest and ~3x on a win
+
+
+def maps_for(cell: Image.Image, emissive_gain: float, glow_rgb=None):
     rgba = np.asarray(cell, dtype=np.float32) / 255
     rgb, a = rgba[..., :3], rgba[..., 3]
     # feather the mask inward a touch so JPEG ringing never shows a pale fringe
@@ -68,6 +71,8 @@ def maps_for(cell: Image.Image, emissive_gain: float):
     glow = np.clip((mx - 0.45) / 0.4, 0, 1) * np.clip((sat - 0.35) / 0.35, 0, 1) * a
     glow = np.clip(blur(glow, 2.0) * 0.6 + glow, 0, 1)
     emissive = rgb * glow[..., None] * emissive_gain
+    if glow_rgb is not None:                      # an authored glow (a rune's groove) replaces the guessed one
+        emissive = glow_rgb * a[..., None]
     # specular: wet highlights follow local contrast; keep it modest so stone does not turn to chrome
     spec = np.clip((lum - blur(lum, 6)) * 3.0 + 0.18, 0, 1) * a
     aux = np.dstack([a, spec, height])
@@ -96,8 +101,20 @@ def main() -> int:
         p = src / f"{key}.png"
         if not p.exists():
             continue
-        cell = fit_cell(Image.open(p), FILL.get(tier_of(key), 0.9))
-        alb, nrm, emi, aux = maps_for(cell, a.emissive_gain)
+        fill = FILL.get(tier_of(key), 0.9)
+        cell = fit_cell(Image.open(p), fill)
+        glow = None
+        pm, pw = src / f"{key}_emissive.png", src / f"{key}_win.png"
+        if pm.exists() and pw.exists():
+            # <key>_emissive.png is the greyscale groove mask, <key>_win.png the lit state: glow = lit colour through the mask.
+            # Both are fitted with the base image's own trim box so they stay registered.
+            base = Image.open(p).convert("RGBA")
+            win = Image.open(pw).convert("RGBA"); win.putalpha(base.getchannel("A"))
+            mask = Image.merge("RGBA", [Image.open(pm).convert("L")] * 3 + [base.getchannel("A")])
+            wc = np.asarray(fit_cell(win, fill), dtype=np.float32)[..., :3] / 255
+            mc = np.asarray(fit_cell(mask, fill), dtype=np.float32)[..., 0] / 255
+            glow = wc * mc[..., None] * LOW_GLOW
+        alb, nrm, emi, aux = maps_for(cell, a.emissive_gain, glow)
         x, y = (tile % GRID) * CELL, (tile // GRID) * CELL
         for name, arr in (("albedo", alb), ("normal", nrm), ("emissive", emi), ("aux", aux)):
             sheets[name].paste(Image.fromarray((np.clip(arr, 0, 1) * 255).astype(np.uint8), "RGB"), (x, y))

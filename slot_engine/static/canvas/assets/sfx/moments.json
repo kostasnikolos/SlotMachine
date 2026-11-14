@@ -1,0 +1,259 @@
+{
+ "clips": {
+  "help_cell": {
+   "ms": 1034,
+   "peak_db": -10.0
+  },
+  "help_cell_last": {
+   "ms": 1583,
+   "peak_db": -6.0
+  },
+  "help_full_impact": {
+   "from_impact_ms": -3,
+   "ms": 1603,
+   "peak_db": -1.5
+  },
+  "help_full_lead": {
+   "impact_at_ms": 1500,
+   "ms": 1500,
+   "peak_db": -8.7
+  },
+  "help_full_recede": {
+   "from_impact_ms": 217,
+   "ms": 1350,
+   "peak_db": -12.5
+  },
+  "help_short_impact": {
+   "from_impact_ms": -3,
+   "ms": 1003,
+   "peak_db": -1.5
+  },
+  "help_short_lead": {
+   "impact_at_ms": 700,
+   "ms": 700,
+   "peak_db": -8.1
+  },
+  "help_short_recede": {
+   "from_impact_ms": 177,
+   "ms": 802,
+   "peak_db": -12.5
+  },
+  "seam_implode_s1": {
+   "ms": 1406,
+   "peak_db": -8.4
+  },
+  "seam_implode_s3": {
+   "ms": 1809,
+   "peak_db": -6.3
+  },
+  "seam_implode_s5": {
+   "ms": 2209,
+   "peak_db": -6.0
+  },
+  "seam_s1": {
+   "ms": 2170,
+   "peak_db": -3.2
+  },
+  "seam_s3": {
+   "ms": 2570,
+   "peak_db": -2.2
+  },
+  "seam_s5": {
+   "ms": 2970,
+   "peak_db": -1.5
+  },
+  "sym_apex_leviathan_land_v1": {
+   "ms": 233,
+   "peak_db": -4.0
+  },
+  "sym_apex_leviathan_land_v2": {
+   "ms": 233,
+   "peak_db": -5.2
+  },
+  "sym_apex_leviathan_land_v3": {
+   "ms": 233,
+   "peak_db": -4.6
+  },
+  "sym_apex_leviathan_stinger": {
+   "ms": 643,
+   "peak_db": -2.5
+  },
+  "sym_high_angler_land_v1": {
+   "ms": 213,
+   "peak_db": -7.0
+  },
+  "sym_high_angler_land_v2": {
+   "ms": 213,
+   "peak_db": -8.2
+  },
+  "sym_high_angler_land_v3": {
+   "ms": 213,
+   "peak_db": -7.6
+  },
+  "sym_high_angler_stinger": {
+   "ms": 641,
+   "peak_db": -5.0
+  },
+  "sym_high_squid_land_v1": {
+   "ms": 213,
+   "peak_db": -7.0
+  },
+  "sym_high_squid_land_v2": {
+   "ms": 213,
+   "peak_db": -8.2
+  },
+  "sym_high_squid_land_v3": {
+   "ms": 213,
+   "peak_db": -7.6
+  },
+  "sym_high_squid_stinger": {
+   "ms": 623,
+   "peak_db": -5.0
+  },
+  "sym_high_viper_land_v1": {
+   "ms": 153,
+   "peak_db": -7.0
+  },
+  "sym_high_viper_land_v2": {
+   "ms": 153,
+   "peak_db": -8.2
+  },
+  "sym_high_viper_land_v3": {
+   "ms": 153,
+   "peak_db": -7.6
+  },
+  "sym_high_viper_stinger": {
+   "ms": 623,
+   "peak_db": -5.0
+  },
+  "sym_low_10_land_v1": {
+   "ms": 203,
+   "peak_db": -10.0
+  },
+  "sym_low_10_land_v2": {
+   "ms": 203,
+   "peak_db": -11.2
+  },
+  "sym_low_10_land_v3": {
+   "ms": 203,
+   "peak_db": -10.6
+  },
+  "sym_low_10_stinger": {
+   "ms": 423,
+   "peak_db": -8.0
+  },
+  "sym_low_a_land_v1": {
+   "ms": 203,
+   "peak_db": -10.0
+  },
+  "sym_low_a_land_v2": {
+   "ms": 203,
+   "peak_db": -11.2
+  },
+  "sym_low_a_land_v3": {
+   "ms": 203,
+   "peak_db": -10.6
+  },
+  "sym_low_a_stinger": {
+   "ms": 423,
+   "peak_db": -8.0
+  },
+  "sym_low_j_land_v1": {
+   "ms": 203,
+   "peak_db": -10.0
+  },
+  "sym_low_j_land_v2": {
+   "ms": 203,
+   "peak_db": -11.2
+  },
+  "sym_low_j_land_v3": {
+   "ms": 203,
+   "peak_db": -10.6
+  },
+  "sym_low_j_stinger": {
+   "ms": 423,
+   "peak_db": -8.0
+  },
+  "sym_low_k_land_v1": {
+   "ms": 203,
+   "peak_db": -10.0
+  },
+  "sym_low_k_land_v2": {
+   "ms": 203,
+   "peak_db": -11.2
+  },
+  "sym_low_k_land_v3": {
+   "ms": 203,
+   "peak_db": -10.6
+  },
+  "sym_low_k_stinger": {
+   "ms": 423,
+   "peak_db": -8.0
+  },
+  "sym_low_q_land_v1": {
+   "ms": 203,
+   "peak_db": -10.0
+  },
+  "sym_low_q_land_v2": {
+   "ms": 203,
+   "peak_db": -11.2
+  },
+  "sym_low_q_land_v3": {
+   "ms": 203,
+   "peak_db": -10.6
+  },
+  "sym_low_q_stinger": {
+   "ms": 423,
+   "peak_db": -8.0
+  },
+  "sym_mid_compass_land_v1": {
+   "ms": 203,
+   "peak_db": -8.5
+  },
+  "sym_mid_compass_land_v2": {
+   "ms": 203,
+   "peak_db": -9.7
+  },
+  "sym_mid_compass_land_v3": {
+   "ms": 203,
+   "peak_db": -9.1
+  },
+  "sym_mid_compass_stinger": {
+   "ms": 623,
+   "peak_db": -6.5
+  },
+  "sym_mid_helmet_land_v1": {
+   "ms": 203,
+   "peak_db": -8.5
+  },
+  "sym_mid_helmet_land_v2": {
+   "ms": 203,
+   "peak_db": -9.7
+  },
+  "sym_mid_helmet_land_v3": {
+   "ms": 203,
+   "peak_db": -9.1
+  },
+  "sym_mid_helmet_stinger": {
+   "ms": 623,
+   "peak_db": -6.5
+  },
+  "sym_wild_maw_land_v1": {
+   "ms": 228,
+   "peak_db": -3.0
+  },
+  "sym_wild_maw_land_v2": {
+   "ms": 228,
+   "peak_db": -4.2
+  },
+  "sym_wild_maw_land_v3": {
+   "ms": 228,
+   "peak_db": -3.6
+  },
+  "sym_wild_maw_stinger": {
+   "ms": 627,
+   "peak_db": -1.5
+  }
+ },
+ "note": "Written by scripts/ai/assetgen/sfx_pack.py. Source: procedural, licence: ours."
+}

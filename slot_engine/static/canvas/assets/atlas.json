@@ -1,0 +1,54 @@
+{
+  "cell": 384,
+  "grid": 4,
+  "tiles": {
+    "high_leviathan": {
+      "tile": 0,
+      "source": "generated/targets/symbols/high_leviathan.png"
+    },
+    "high_angler": {
+      "tile": 1,
+      "source": "generated/targets/symbols/high_angler.png"
+    },
+    "high_viper": {
+      "tile": 2,
+      "source": "generated/targets/symbols/high_viper.png"
+    },
+    "high_squid": {
+      "tile": 3,
+      "source": "generated/targets/symbols/high_squid.png"
+    },
+    "mid_helmet": {
+      "tile": 4,
+      "source": "generated/targets/symbols/mid_helmet.png"
+    },
+    "mid_compass": {
+      "tile": 5,
+      "source": "generated/targets/symbols/mid_compass.png"
+    },
+    "wild_maw": {
+      "tile": 6,
+      "source": "generated/targets/symbols/wild_maw.png"
+    },
+    "low_a": {
+      "tile": 9,
+      "source": "generated/targets/symbols/low_a.png"
+    },
+    "low_k": {
+      "tile": 10,
+      "source": "generated/targets/symbols/low_k.png"
+    },
+    "low_q": {
+      "tile": 11,
+      "source": "generated/targets/symbols/low_q.png"
+    },
+    "low_j": {
+      "tile": 12,
+      "source": "generated/targets/symbols/low_j.png"
+    },
+    "low_10": {
+      "tile": 13,
+      "source": "generated/targets/symbols/low_10.png"
+    }
+  }
+}

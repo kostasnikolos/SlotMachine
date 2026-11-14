@@ -7,6 +7,7 @@
 <script src="assets/three.js"></script>
 <script src="../js/feel.js"></script>
 <script src="audio_dark.js"></script>
+<script src="audio_moments.js"></script>
 <script src="hero.js"></script>
 <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#dc-root{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}</style>
 <script>
@@ -306,10 +307,10 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </sc-if>
 </div>
 <sc-for list="{{vents}}" as="v" hint-placeholder-count="0"><div class="vent" style="left: {{v.x}}px">REEL {{v.r}} · ×{{v.m}}</div></sc-for>
-<img data-atlas="albedo" src="assets/932e6db068e183257c71db1d184f4769.jpg" alt="" style="display: none">
-<img data-atlas="normal" src="assets/ec0c40a9a29bbc7b0af8e8c64037ff4f.jpg" alt="" style="display: none">
-<img data-atlas="emissive" src="assets/cce5679e94efc084d333dd7f158a50da.jpg" alt="" style="display: none">
-<img data-atlas="aux" src="assets/30372f0d03094629ce827ea21961a81d.jpg" alt="" style="display: none">
+<img data-atlas="albedo" src="assets/atlas_albedo.jpg" alt="" style="display: none">
+<img data-atlas="normal" src="assets/atlas_normal.jpg" alt="" style="display: none">
+<img data-atlas="emissive" src="assets/atlas_emissive.jpg" alt="" style="display: none">
+<img data-atlas="aux" src="assets/atlas_aux.jpg" alt="" style="display: none">
 
 </section>
 
@@ -1359,6 +1360,8 @@ class Component extends DCLogic {
       this._aud = this.makeAudio();
       // Dark procedural sound set (audio_dark.js); ?audio=classic keeps the original bubbles.
       if (window.DarkAudio && !/[?&]audio=classic(&|$)/.test(location.search)) window.DarkAudio.install(this._aud);
+      // Designed moment cues as samples (audio_moments.js): the help, the win seam, a voice per symbol; ?moments=0 keeps the procedural set
+      if (window.MomentAudio && !/[?&]moments=0(&|$)/.test(location.search)) window.MomentAudio.install(this._aud, 'assets/sfx/');
       window.__aud = this._aud; // debug handle (audio lab / checks)
     }
     return this._aud;
@@ -1934,6 +1937,7 @@ class Component extends DCLogic {
         const idx = Array.from(cells);
         this.lastWinCells = idx;
         this.engSeam(idx, { quiet: !!ctx.quiet });
+        if (!ctx.quiet) { this.momSfx('seam', ctx.step); if (top && top.symbol) this.momSfx('symWin', top.symbol); }
         this.levLookAtCells(idx, 1400);
         // near-miss: the top line stops one reel short of the full board -> snap to the missing cell and hold
         const ncols = this.state.cols;
@@ -1998,7 +2002,7 @@ class Component extends DCLogic {
         const explodeMs = T.explodeMs * f;
         this.engDissolve(removed, 0.7 / (explodeMs * k / 1000) / (this.state.turbo ? 1.7 : 1), true); // the dissolve plays out inside the explode budget
         this.engSeamScar();
-        this.aud.fizz();
+        this.momSfx('seamImplode', ctx.step) || this.aud.fizz();
         await this.wait(explodeMs);
         this.aud.absorb();
         this.G = d.grid;
@@ -2162,20 +2166,25 @@ class Component extends DCLogic {
     const sx = sx0 - 4, sy = sy0 - 4, zw = w * G.pitch, zh = h * G.pitch;
     // 0. the stillness: the ambience drops 12 dB and the creature goes dark and still for 1.5-3 s; the riser starts under
     //    the end of it so its silence -> impact lands with the bite (riser 1.5 s + 0.3 s hole = 1.8 s before the bite)
-    await this.levPreStrike(1500 + Math.random() * 900);
+    const P = this.strikePace(lv);
+    this.flog('strikePace', { v: P.v, level: lv });
+    await this.levPreStrike(P.hush, P.v);
+    // the strike clock: the bite sits at k = 0.34 of a 10-unit path, so this rate lands it P.lunge ms after the strike starts
+    this.strikeRate = 0.34 * 10 * 1000 / P.lunge;
+    const tBite0 = performance.now();
     this.isStriking = true;
     this.levRecede = false;
     this.surge = 1.2;
     this.engDim(others, true);
     this.levStrike(r0 + h / 2, c0 + w / 2);
     // 1. it swims in over the reels to the strike zone; the water there starts to churn
-    if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: 4.3, splashed: false };
+    if (this.E) this.E.rip = { x: px, y: py, w: w * 312, h: h * 312, t: 0, hold: P.churn, splashed: false };
     this.setState({ creatureState: 'HUNTING', levZ: 6, dimCells: others,
       strike: { show: true, x: c0 * G.pitch, y: r0 * G.pitch, w: w * G.pitch - 8, h: h * G.pitch - 8, name: d.spins_added ? 'SECOND BREATH' : C.name, blurb: C.blurb, cardCls: r0 === 0 ? 'below' : '', card: !this.hero } });
     if (this.hero && this.hero.tex && this.hero.tex.lev_lunge) {
       // beat 1 (plan C of the presentation brief): the WHOLE creature rushes out of the dark at the strike cell, far -> near,
       // so the jaws that follow belong to a body; the painting's throat lands on the cell centre, 2.6x the zone wide
-      const Sa = this.strikeAnim, swimMs = Sa ? Math.max(500, 0.16 * Sa.dur * 1000 / 2) : 800;
+      const Sa = this.strikeAnim, swimMs = Sa ? Math.max(160, 0.16 * Sa.dur * 1000 / this.strikeRate) : 800;
       const lw = Math.min(G.W * 0.9, Math.max(1100, Math.max(w, h) * 312 * 2.6));
       this.hero.play('lev_lunge', { anchor: 'throat', at: [sx0, sy0], w: lw, h: lw * 768 / 1344, margin: 0, dur: swimMs + 2000, hold: true,
         zoomFrom: 0.22, zoomTo: 1.0, zoomMs: swimMs, z: 7, enter: { alphaMs: 180 }, fog: 0.5, par: 0.4 });
@@ -2197,7 +2206,7 @@ class Component extends DCLogic {
       // the painting pivots on its throat, which sits on the strike cell's centre; side = 2.4 x the strike zone (~750 px for a 1x1),
       // clamped inside the stage with a 40 px margin. The zoom 0.72 -> 1.0 completes at the chomp (k 0.16 -> 0.34 of the strike clock).
       const side = Math.max(w, h) * 312 * 2.4;
-      const Sa = this.strikeAnim, chompMs = Sa ? Math.max(400, (0.34 - Math.max(0.16, (this.levT - Sa.u0) / Sa.dur)) * Sa.dur * 1000 / 2) : 900;   // the swim clock runs at 2x during a strike
+      const Sa = this.strikeAnim, chompMs = Sa ? Math.max(400, (0.34 - Math.max(0.16, (this.levT - Sa.u0) / Sa.dur)) * Sa.dur * 1000 / this.strikeRate) : 900;   // the swim clock runs at strikeRate during a strike
       heroJaws = this.hero.play('lev_jaws', { anchor: 'throat', at: [sx0, sy0], w: side, h: side, margin: 40, minY: G.frameTop - 0.1 * side, dur: 6000, hold: true,
         zoomFrom: 0.72, zoomTo: 1.0, zoomMs: chompMs, z: 7, hitStopMs: this.FT.hitStopMs, enter: { alphaMs: 200 }, feather: { t: 0.1 * side },
         tint: this.defs().levels[this.state.level || 0].accent });
@@ -2212,39 +2221,52 @@ class Component extends DCLogic {
     await this.waitK(0.324);
     // 3. it lunges; the jaws slam shut on the strike zone and the symbols are dragged into the maw
     await this.waitK(0.34);
-    this.levSfx('chomp') || this.levSfx('boom');
+    // the sound of the bite fires on the same line as its hit-stop, never from a timer: a late frame lengthens the dip instead
+    this.momSfx('helpImpact', P.v) || this.levSfx('chomp') || this.levSfx('boom');
+    this.flog('strikeBite', { v: P.v, lungeMs: Math.round(performance.now() - tBite0), plannedMs: P.lunge });
     if (heroJaws && this.hero) this.hero.chomp();
     this.levBite(foot, px, py, w, h, sx, sy, zw, zh);
     this.heavyImpact('leviathan', this.FT.hitStopMs);
     // the creature's name card is revealed on the chomp's hit-stop, beside the cell on the side away from the painting's bulk
     const sideCls = G.por ? (r0 === 0 ? 'below' : '') : (c0 + w / 2 > cols / 2 ? 'sideL' : 'sideR');
     this.setState({ strike: Object.assign({}, this.state.strike, { card: true, cardCls: sideCls }) });
-    await this.waitK(0.392);
-    // 4. it tears away, down and out into the deep in one sweep: the painting drops off the bottom of the stage
-    if (heroJaws && this.hero) this.hero.stop(450);
-    this.levRecede = true;
-    this.levVisT = 0;
-    this.setState({ creatureState: 'SUBMERGED', levOp: 0, levOpT: '0.6s' });
-    this.levSfx('plunge');
-    await this.waitRaw(850);
-    this.setState({ levZ: 0 });
-    await this.waitRaw(250);
-    // 5. a beat later the wilds surface alone out of the churning water
-    this.levSfx('shimmer');
+    // 4. the jaws have shut (P.turn ms): the transformation starts straight away, and the creature tears away down and out
+    //    into the deep UNDERNEATH it, so the player sees what the bite left while the painting is still leaving
+    await this.waitRaw(P.turn);
+    const leave = () => {
+      if (this.dead) return;
+      if (heroJaws && this.hero) this.hero.stop(450);
+      this.levRecede = true;
+      this.levVisT = 0;
+      // the water layer rides above the painting while it is up, and carries the depth darkness with it: hand it back to the
+      // world as the creature leaves, so the cells it turned are the brightest thing on the board (storyboard H4)
+      this.setState({ creatureState: 'SUBMERGED', levOp: 0, levOpT: '0.6s', strike: Object.assign({}, this.state.strike, { cls: '' }) });
+      this.momSfx('helpRecede', P.v) || this.levSfx('plunge');
+      this.timers.push(setTimeout(() => { if (!this.dead) this.setState({ levZ: 0 }); }, 850));
+    };
+    this.timers.push(setTimeout(leave, 60));
+    // 5. the struck cells surface one by one out of the churning water, each with its own turn; the last carries the weight
+    const cued = !!(this.aud && this.aud.moments && this.aud.moments.state === 'ready');
+    if (!cued) this.levSfx('shimmer');
     const fin = this.gridCells(d.grid);
     const tm = new Map(d.transmuted.map((t) => [t.coord[0] * cols + t.coord[1], t]));
     const order = Array.from(foot).sort((a, b) => (a % cols) - (b % cols) || a - b);
+    const outside = d.transmuted.filter((t) => !foot.has(t.coord[0] * cols + t.coord[1]));
+    const turns = order.length + outside.length;
+    let turn = 0;
+    this.flog('strikeTurn', { atMs: Math.round(performance.now() - tBite0 - P.lunge), cells: turns });
     for (const i of order) {
       const t = tm.get(i);
-      this.engSurface(i, t ? t.new_symbol : fin[i].sym, t ? t.multiplier : fin[i].mult, fin[i].pearl);
-      this.levSfx('wildRise');
-      await this.waitRaw(lv >= 4 ? 70 : 110);
+      this.engSurface(i, t ? t.new_symbol : fin[i].sym, t ? t.multiplier : fin[i].mult, fin[i].pearl, P.rise);
+      this.momSfx('cellTurn', turn++, turns) || this.levSfx('wildRise');
+      await this.waitRaw(lv >= 4 ? Math.min(70, P.gap) : P.gap);
     }
     // symbols the strike upgraded outside the bite surface in place, as before
-    for (const t of d.transmuted) {
+    for (const t of outside) {
       const i = t.coord[0] * cols + t.coord[1];
-      if (foot.has(i)) continue;
       this.engTransmute(i, t.new_symbol, t.multiplier, true);
+      if (this.E && this.E.cells[i]) this.E.cells[i].surfRate = P.rise;
+      this.momSfx('cellTurn', turn++, turns);
       await this.waitRaw(60);
     }
     this.G = d.grid;
@@ -2254,7 +2276,9 @@ class Component extends DCLogic {
       this.aud.shimmer();
       this.setState({ banked: (this.state.banked || 0) + d.spins_added, strike: Object.assign({}, this.state.strike, { blurb: '+' + d.spins_added + ' FREE SPIN BANKED · ' + C.blurb }) });
     }
-    await this.waitRaw(1100);
+    await this.waitRaw(P.tail);
+    this.flog('strikeEnd', { v: P.v, totalMs: Math.round(performance.now() - tBite0 + P.hush) });
+    this.strikeRate = 2;
     this.levRecede = false;
     this.isStriking = false;
     this.levVisT = 1;
@@ -2263,6 +2287,22 @@ class Component extends DCLogic {
     this.engDim(others, false);
     this.setState({ creatureState: 'SPENT', dimCells: [], strike: Object.assign({}, this.state.strike, { show: false, card: false, cls: '' }) });
     await this.waitRaw(250);
+  }
+
+  // a designed moment cue (audio_moments.js): true only if a clip actually started, so the caller can fall back
+  momSfx(name, ...args) {
+    const A = this.aud;
+    try { return !!(A && A.ctx && typeof A[name] === 'function' && A[name](...args)); } catch (e) { return false; }
+  }
+
+  // the pacing of the help (docs/targets: storyboard_help, review_round1 answer 5): the FULL version the first time the creature
+  // strikes at a depth in this session, the SHORT one for repeats, turbo and xBet. Times are ms; lunge = strike start -> bite.
+  strikePace(lv) {
+    const seen = this._struck || (this._struck = {});
+    const short = !!(seen[lv] || this.state.turbo || this.state.xbet);
+    seen[lv] = true;
+    return short ? { v: 'short', hush: 350, lunge: 350, turn: 150, gap: 70, tail: 300, churn: 1.5, rise: 3.4 }
+      : { v: 'full', hush: 900, lunge: 600, turn: 200, gap: 110, tail: 600, churn: 2.4, rise: 2.5 };
   }
 
   // optional sound: the sound designer's newer methods may not exist yet, and nothing plays before the audio context starts
@@ -2297,14 +2337,21 @@ class Component extends DCLogic {
   }
 
   // the stillness before a strike: ambience -12 dB, the creature dark and motionless; the riser starts 100 ms before the end
-  async levPreStrike(ms) {
+  async levPreStrike(ms, v) {
     const A = this.aud;
     this.lv.hush = true;
     this.levAgitate(1, ms + 2500);
     if (A && typeof A.hush === 'function') A.hush(-12, ms + 200, 400);
-    await this.waitRaw(Math.max(0, ms - 100));
-    this.lv.roared = !!(A && A.__dark && this.levSfx('roar', 1));
-    await this.waitRaw(100);
+    // the lead clip runs from here to the bite (hush + lunge), so nothing else may rise under it
+    this.lv.lead = this.momSfx('helpLead', v);
+    if (this.lv.lead) {
+      await this.waitRaw(ms);
+      this.lv.roared = true;
+    } else {
+      await this.waitRaw(Math.max(0, ms - 100));
+      this.lv.roared = !!(A && A.__dark && this.levSfx('roar', 1));
+      await this.waitRaw(100);
+    }
     this.lv.hush = false;
   }
 
@@ -2382,7 +2429,7 @@ class Component extends DCLogic {
       for (let j = 0; j < 10 + 4 * foot.size; j++) {
         const a = Math.random() * 6.283, sp = 120 + Math.random() * 420;
         E.parts.push({ k: 'ink', x: bx + (Math.random() - 0.5) * w * 200, y: by + (Math.random() - 0.5) * h * 200, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          r: 50 + Math.random() * 60, gr: 120 + Math.random() * 100, life: 1.1 + Math.random() * 0.9, max: 2 });
+          r: 50 + Math.random() * 60, gr: 120 + Math.random() * 100, life: 0.4 + Math.random() * 0.35, max: 0.75 });   // gone before the turned cells are up
       }
       if (E.rip) { E.rip.x = px; E.rip.y = py; }
     }
@@ -2394,13 +2441,16 @@ class Component extends DCLogic {
   }
 
   // an eaten cell comes back: the new symbol rises up out of the water on its own
-  engSurface(i, sym, mult, pearl) {
+  engSurface(i, sym, mult, pearl, rate) {
     const E = this.E;
     if (!E || E.fail) return;
     const c = this.mkCell(sym, i, E.cols, mult, pearl);
     c.rise = true;
+    const old = E.cells[i];
+    if (old && old.state !== 'gone' && old.eatT >= 0) E.outgoing.push(old);
     E.cells[i] = c;
     this.engTransmute(i, sym, mult, true);
+    if (rate) c.surfRate = rate;                       // the help's pacing: the symbol must be readable inside its own beat
     this.biteDiscs(10, c.x, c.y + 90, 200);
   }
 
@@ -4283,8 +4333,11 @@ void main(){
   col = mix(col, col * vec3(0.5, 0.82, 1.05) + vec3(0.0, 0.05, 0.08) * (0.6 + 0.4 * rs), clamp(rk * 0.55, 0.0, 0.7));
   col *= uDark;
   float el = dot(emi, vec3(0.333));
-  col += vec3(1.0, 0.45, 0.08) * uHit * (0.18 + 1.1 * el + 0.5 * sp);
-  col = mix(col, col * vec3(1.18, 0.92, 0.72), uHit * 0.5);
+  // a struck symbol lights in its OWN light (a rune's groove, a lure, a throat) rather than one orange for everything;
+  // only the wet highlights still catch the warm flash
+  col += emi * uHit * 2.4;
+  col += vec3(1.0, 0.45, 0.08) * uHit * (0.06 + 0.5 * sp);
+  col = mix(col, col * vec3(1.10, 0.97, 0.86), uHit * 0.5);
   float a = mask * uAlpha;
   if (uDissolve > 0.0) {
     float nz = fbm(vUv * 5.0 + uSeed) * 0.8 + vUv.y * 0.25;
@@ -4386,7 +4439,7 @@ void main(){
       c.squash *= Math.exp(-dt * 7);
       c.flash *= Math.exp(-dt * 2.5);
       c.pop *= Math.exp(-dt * 5);
-      if (c.surf) c.surf = Math.max(0, c.surf - dt * (c.rise ? 0.95 : 1.3));
+      if (c.surf) c.surf = Math.max(0, c.surf - dt * (c.surfRate || (c.rise ? 0.95 : 1.3)));
       if (c.eatT >= 0) { c.eatT += dt; if (c.eatT > 0.5) c.state = 'gone'; }
       if (c.delay > 0) { c.delay -= sdt; return; }
       if (c.state === 'fall') {
@@ -4403,7 +4456,7 @@ void main(){
             c.landed = true;
             c.squash = 1;
             this.onLand(c, E);
-            this.aud.land();
+            this.momSfx('symLand', c.sym) || this.aud.land();
             this.burst(c.x, c.y0, 'puff');
             const sy = D.sym[c.sym];
             if (sy.wild) { c.flash = 1; this.burst(c.x, c.y0, 'glint'); }
@@ -5296,7 +5349,7 @@ void levDeform(vec3 p, vec3 n, out vec3 wp, out vec3 wn) {
       // during a lifeline strike the swim clock runs at a fixed pace so the breach stays in sync with the water
       const striking = this.strikeAnim && t < this.strikeAnim.u0 + this.strikeAnim.dur;
       // the pre-strike stillness all but stops the swim clock
-      t += dt * (striking ? 2 : 1 + sg * 1.8 + dv * 2) * (this.lv.hush ? 0.08 : 1) * (this.lv.freeze ? 0 : 1);
+      t += dt * (striking ? (this.strikeRate || 2) : 1 + sg * 1.8 + dv * 2) * (this.lv.hush ? 0.08 : 1) * (this.lv.freeze ? 0 : 1);
       this.levT = t;
       const ftb = this.lv.ft;
       if (rawMs > 0 && rawMs < 500) { ftb.push(rawMs); if (ftb.length > 700) ftb.shift(); }

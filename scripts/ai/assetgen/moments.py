@@ -3,19 +3,20 @@ moments.py - the sound of The Descent's MOMENTS, rendered offline, deterministic
 
 sfx.py renders one-shots. This module renders the two sequences the game is built around, plus a voice per symbol:
 
-  help    the Leviathan's "help" (CREATURE_LIFELINE_STRIKE, strikeSeq) as STEMS that sum to the full cue:
-          dread, approach, vacuum, impact, transform, aftermath  ->  help_<stem>.wav + help_full.wav
+  help    the Leviathan's "help" (CREATURE_LIFELINE_STRIKE, strikeSeq) as STEMS that sum to the mix:
+          dread, targeting, vacuum, impact, transform, aftermath
+          in two lengths: FULL (3.1 s, first time)  -> help_full_<stem>.wav  + help_full_mix.wav
+                          SHORT (1.7 s, repeats)    -> help_short_<stem>.wav + help_short_mix.wav
   win     the seam breach (WIN_EVALUATION -> CASCADE_DROP): crack, jet, implosion + scar hum, with a cascade-step
-          parameter 1..5 that makes it heavier, denser and longer, never brighter  ->  win_s<step>_<stem>.wav
-  sym     a land (<= 250 ms) and a win stinger (<= 700 ms) per symbol, one family: stone (LOW), brass (MID),
-          wet and living (HIGH viper / angler / squid), the Leviathan (APEX) and the Wild Maw
+          parameter 1..5 that makes it heavier, denser and longer  ->  win_s<step>_<stem>.wav
+  sym     three round-robin lands (<= 250 ms) and a win stinger (<= 700 ms) per symbol, one family: stone (LOW),
+          brass (MID), wet and living (HIGH viper / angler / squid), the Leviathan (APEX) and the Wild Maw
 
-    python scripts/ai/assetgen/moments.py --sheet            # everything -> generated/sfx/moments/ + three sheets
+    python scripts/ai/assetgen/moments.py --sheet            # everything -> generated/sfx/moments/ + four sheets
     python scripts/ai/assetgen/moments.py --only help --depth 5
 
-Two timing profiles exist for the help cue. CODE is what strikeSeq really does today (bite at 1.70 s, wilds surface at
-3.06 s); STORYBOARD is the 2.4 s beat sheet the frames are painted to. Files named help_* use CODE, help_sb_* use
-STORYBOARD. Same recipes, same seeds: only the beat times differ.
+The help's beat times are the ones the engine is being re-timed to (docs/targets/sound_design_target.md); they are a
+table (BEATS_FULL, BEATS_SHORT), so a re-time is a one-line change.
 
 Conventions as sfx.py: every sound seeds from its own name with SHA-256, 48 kHz 16-bit mono, a manifest.json with source
 and licence. numpy + Pillow only. The slow per-sample filters in synth.py are not used here: filtering is done in the
@@ -211,18 +212,28 @@ def thud(D, weight=0.5, f=80.0):
 
 
 # ====================================================================== the help cue =================================
-# Beat times in seconds from the moment strikeSeq dims the board (levStrike). See docs/targets/sound_design_target.md.
+# Beat times in seconds from the first frame of the sequence. FULL is the first-time version, SHORT the repeat / xBet
+# one. recede = where the creature starts to go down (under the transformation), drain = where the water leaves.
 
-BEATS_CODE = dict(name="code", dread=0.0, approach=0.80, vacuum=1.62, impact=1.70, transform=3.06, cell_gap=0.11,
-                  recede=1.96, end=4.90, cells=4)
-BEATS_STORYBOARD = dict(name="storyboard", dread=0.0, approach=0.60, vacuum=1.02, impact=1.10, transform=1.18,
-                        cell_gap=0.10, recede=1.70, end=2.60, cells=4)
-HELP_STEMS = ("dread", "approach", "vacuum", "impact", "transform", "aftermath")
+BEATS_FULL = dict(name="full", dread=0.0, approach=0.90, vacuum=1.42, impact=1.50, transform=1.58, cell_gap=0.11,
+                  recede=1.72, drain=2.30, end=3.10, cells=4)
+BEATS_SHORT = dict(name="short", dread=0.0, approach=0.35, vacuum=0.64, impact=0.70, transform=0.77, cell_gap=0.11,
+                   recede=0.88, drain=1.25, end=1.70, cells=4)
+HELP_STEMS = ("dread", "targeting", "vacuum", "impact", "transform", "aftermath")
+MINOR = (0, 2, 3, 5, 7, 8, 10, 12, 14, 15)
+CELL_BASE = 1975.53            # B6: every struck cell is above 1.5 kHz
+
+
+def turbulence(dur, rng, rate=18.0):
+    """A slow random 0..1 curve: water moving, not a tremolo."""
+    x = ffilt(fnoise(dur, rng), "lowpass", rate, 0.707, order=2)
+    return (0.5 + 0.5 * x / (np.max(np.abs(x)) + 1e-9)).astype(F32)
 
 
 def st_dread(rng, B, D, L):
-    """H1: a sub swell you feel before you hear, and the eye opening: a low minor-second pair behind a slow lid of noise.
-    It holds under the approach and is cut dead at the vacuum."""
+    """H1: the eye opens. Underneath, a sub swell you feel on real speakers. On top, so a phone has something to follow,
+    a slow bowed-metal tone: D4 against Eb4 with ringing partials up to 1.2 kHz, each breathing at its own rate.
+    It holds under the targeting and is cut dead at the vacuum."""
     dur = B["vacuum"] - B["dread"]
     t = S.t_of(dur)
     ap = B["approach"] - B["dread"]
@@ -232,122 +243,178 @@ def st_dread(rng, B, D, L):
     glide = 1 + 0.02 * np.clip(t / ap, 0, 1)
     ph = 2 * np.pi * np.cumsum(f0 * glide) / SR
     eye = np.sin(ph) + 0.8 * np.sin(ph * 1.0595 + 0.4) + 0.3 * np.sin(ph * 1.4983 + 1.1)
-    open_env = np.where(t < ap, 0.15 + 0.85 * (t / ap) ** 1.3, 1.0 - 0.45 * (t - ap) / max(1e-6, dur - ap))
+    open_env = np.where(t < ap, 0.15 + 0.85 * (t / ap) ** 1.3, 1.0 - 0.35 * (t - ap) / max(1e-6, dur - ap))
     eye = eye * open_env * (0.8 + 0.2 * np.sin(2 * np.pi * 0.9 * t)) * 0.09
-    lid = sfilt(fnoise(dur, rng, "pink"), "lowpass", S.sweep(150, 750, dur), 0.9) * open_env * 0.05
-    x = verb((sub + eye + lid).astype(F32), 0.25 + D.wet)[:len(t)]
+    # the layer a small speaker can carry: bowed metal, 294 Hz - 1.2 kHz
+    bow = np.zeros(len(t))
+    for i, (r, a) in enumerate(((2.0, 1.0), (2.119, 0.8), (4.0, 0.55), (5.52, 0.4), (8.14, 0.22))):
+        lfo = 0.65 + 0.35 * np.sin(2 * np.pi * (1.7 + 0.9 * i) * t + rng.random() * 6.283)
+        bow += a * lfo * np.sin(ph * r + rng.random() * 6.283)
+    bow = bow * open_env * 0.125
+    lid = sfilt(fnoise(dur, rng, "pink"), "bandpass", S.sweep(300, 1300, dur), 0.9) * open_env * 0.15
+    x = verb((sub + eye + bow + lid).astype(F32), 0.25 + D.wet)[:len(t)]
     return put(np.zeros(L, dtype=F32), x, B["dread"])
 
 
-def st_approach(rng, B, D, L):
-    """H2: the frame strains. A bowed-metal creak whose pitch and stick-slip density both climb, pings as rivets let go,
-    and a pressure noise that narrows upward. Everything accelerates into the vacuum."""
+def st_targeting(rng, B, D, L):
+    """H2: the pupil snaps onto the strike cell (one dry 'tok'), the water over that cell starts to churn, and the glass
+    bows inward: a bowed, high, narrow strain whose stick-slip ticks crowd together into the vacuum."""
     dur = B["vacuum"] - B["approach"]
     n = N(dur)
     k = np.linspace(0, 1, n, dtype=F32)
-    saw = S.osc(S.sweep(62 * D.pitch, 150 * D.pitch, dur), dur, "saw")
-    creak = sfilt(saw, "bandpass", S.sweep(260, 1100, dur), 9.0) * 2.2
+    x = np.zeros(n, dtype=F32)
+    # the lock: a click and a short damped knock, no pitch to speak of
+    put(x, click(rng, 3, 1800) * 0.4, 0)
+    put(x, modal(np.array([620, 930, 1480]) * D.pitch, [0.035, 0.025, 0.015], [1, 0.7, 0.4], 0.09, rng) * 0.28, 0.001)
+    # churn: water moving over the cell, 350 Hz -> 1.4 kHz, turbulent, rising
+    churn = sfilt(fnoise(dur, rng, "pink"), "bandpass", S.sweep(350, 1400, dur), 1.2)
+    x += churn * (0.25 + 0.75 * turbulence(dur, rng)) * (0.2 + 0.8 * k ** 1.3) * 0.5
+    # the glass bows: a narrow bowed strain climbing, letting go more and more often
+    saw = S.osc(S.sweep(196 * D.pitch, 262 * D.pitch, dur), dur, "saw")
+    bowed = sfilt(saw, "bandpass", S.sweep(700, 1500, dur), 12.0) * 2.4
     stick = np.ones(n, dtype=F32)
-    pings = np.zeros(n, dtype=F32)
-    te = 0.03
+    ticks = np.zeros(n, dtype=F32)
+    te = 0.05
     while te < dur - 0.02:
         kk = te / dur
         a = int(te * SR)
-        b = min(n, a + N(0.004 + rng.random() * 0.010))
-        stick[a:b] *= 0.2                                           # the groan stutters as the metal lets go
-        pf = (420 + 1100 * kk) * (0.85 + 0.3 * rng.random()) * D.pitch
-        pg = modal([pf, pf * 1.47, pf * 2.09], [0.03, 0.02, 0.012], [1, 0.5, 0.3], 0.08, rng) * (0.05 + 0.2 * kk)
+        b = min(n, a + N(0.004 + rng.random() * 0.008))
+        stick[a:b] *= 0.2
+        pf = (1800 + 1400 * rng.random()) * D.pitch
+        pg = modal([pf, pf * 2.756], [0.014, 0.008], [1, 0.4], 0.05, rng) * (0.06 + 0.2 * kk)
         m = min(n - b, len(pg))
         if m > 0:
-            pings[b:b + m] += pg[:m]
-        te += (0.13 - 0.10 * kk) * (0.7 + 0.6 * rng.random())       # 130 ms apart at first, 30 ms at the end
-    groan = S.osc(S.sweep(48 * D.pitch, 92 * D.pitch, dur), dur, "tri") * k ** 1.5 * 0.07
-    press = sfilt(fnoise(dur, rng, "pink"), "bandpass", S.sweep(200, 2200, dur), 4.0) * k ** 1.6 * 0.5
-    body = (creak * stick + pings + press) * (0.15 + 0.85 * k ** 1.4) * 0.75 + groan
-    x = verb(body.astype(F32), 0.22 + D.wet)[:n]
+            ticks[b:b + m] += pg[:m]
+        te += (0.12 - 0.09 * kk) * (0.7 + 0.6 * rng.random())
+    x += (bowed * stick + ticks) * (0.15 + 0.85 * k ** 1.4) * 0.4
+    x += S.osc(S.sweep(55 * D.pitch, 98 * D.pitch, dur), dur, "tri") * k ** 1.5 * 0.07
+    x = verb(x.astype(F32), 0.22 + D.wet)[:n]
     return put(np.zeros(L, dtype=F32), x, B["approach"])
 
 
 def st_vacuum(rng, B, D, L):
-    """The breath in: 140 ms of air being pulled out of the room, cut to nothing for the 80 ms before the impact.
+    """The breath in: air being pulled out of the room, cut to nothing for the dip before the impact.
     The stem is mostly silence on purpose: the dip is the sound."""
-    dur = 0.14
+    dur = min(0.14, 0.5 * (B["vacuum"] - B["approach"]))
     k = ramp(dur)
-    suck = sfilt(fnoise(dur, rng), "highpass", S.sweep(600, 7000, dur), 0.9) * k ** 3 * 0.16
+    suck = sfilt(fnoise(dur, rng), "highpass", S.sweep(600, 7000, dur), 0.9) * k ** 3 * 0.2
     tone = S.osc(S.sweep(70 * D.pitch, 210 * D.pitch, dur), dur) * k ** 2 * 0.22
     return put(np.zeros(L, dtype=F32), (suck + tone).astype(F32), B["vacuum"] - dur)
 
 
 def st_impact(rng, B, D, L):
-    """H3: the sea comes in. Click, a sub thump that is the loudest low-end event of the cue, a wall of water closing
-    from 5 kHz to 170 Hz in half a second, struck hull plates and the creature's ring-modulated throat under it."""
+    """H3: the sea comes in. Click, a sub thump that is the loudest low-end event of the cue, a 300-900 Hz slap and a
+    wall of water (both survive a phone speaker), struck hull plates and the creature's ring-modulated throat. The water's
+    top end closes in 350 ms so the transformation, 80 ms later, has the air above 1.5 kHz to itself."""
     p = D.pitch
     dur = 2.0 * D.tail
     x = np.zeros(N(dur), dtype=F32)
     put(x, click(rng, 8, 2500) * 0.7, 0)
     put(x, S.osc(S.sweep(64 * p, 30 * p, 0.5), 0.95) * S.env(0.95, 0.004, 0.9, 1.25 * D.sub, 1.8), 0.002)
     put(x, S.osc(S.sweep(125 * p, 46 * p, 0.09), 0.12) * S.env(0.12, 0.002, 0.115, 0.6, 1.6), 0.0)
-    body = sfilt(fnoise(0.6, rng), "lowpass", S.sweep(5200, 170, 0.5), 0.8) * S.env(0.6, 0.003, 0.58, 0.32, 1.9)
+    slap = ffilt(fnoise(0.2, rng), "bandpass", 520, 0.8) * S.env(0.2, 0.002, 0.19, 1.8, 2.0)
+    put(x, slap, 0.001)
+    body = sfilt(fnoise(0.5, rng), "lowpass", S.sweep(5200, 170, 0.35), 0.8) * S.env(0.5, 0.003, 0.48, 0.6, 1.9)
     put(x, body, 0.004)
     mass = ffilt(fnoise(1.4, rng, "brown"), "lowpass", 110, 0.7) * S.env(1.4, 0.03, 1.3, 0.16, 1.3)
     put(x, mass, 0.01)
     fr = np.array([187, 311, 523, 742, 1180]) * p
-    put(x, modal(fr, np.array([0.5, 0.4, 0.3, 0.2, 0.12]) * D.tail, [1, 0.8, 0.6, 0.4, 0.25], 1.2, rng) * 0.13, 0.003)
+    put(x, modal(fr, np.array([0.5, 0.4, 0.3, 0.2, 0.12]) * D.tail, [1, 0.8, 0.6, 0.4, 0.25], 1.2, rng) * 0.16, 0.003)
     growl = ffilt(S.ring_mod(S.osc(45 * p, 0.9, "saw"), S.osc(31 * p, 0.9)), "lowpass", 600, 0.8)
     put(x, growl * S.env(0.9, 0.01, 0.88, 0.42, 1.5), 0.02)
     x = verb(x, 0.22 + D.wet, tail=1.0)
     return put(np.zeros(L, dtype=F32), x, B["impact"])
 
 
-def cell_voice(rng, D, i=0):
+def cell_semis(n):
+    """The struck cells climb the minor scale by step (relief becoming appetite) and the last one resolves upward onto
+    the fifth or the octave: an open interval, neither major nor minor."""
+    if n <= 1:
+        return [7][:n]
+    body = list(MINOR[:n - 1])
+    return body + [next(v for v in (7, 12, 19, 24) if v > body[-1])]
+
+
+def cell_voice(rng, D, semi=0, last=False):
     """H4, one struck cell: cold glass, not a chime. Inharmonic bar partials (1 : 2.756 : 5.404) with a beating twin,
-    a soft 6 ms onset so it never 'dings', a breath of frost, and each next cell a semitone LOWER (never an arpeggio up)."""
-    f0 = 2349.3 * 2 ** (-i / 12)
-    dur = 0.7 * D.tail
-    tone = modal([f0, f0 * 1.004, f0 * 2.756, f0 * 5.404], np.array([0.42, 0.38, 0.2, 0.09]) * D.tail,
-                 [1, 0.7, 0.35, 0.12], dur, rng, droop=0.004)
+    a soft 6 ms onset so it never 'dings', and a breath of frost. The LAST cell carries the weight: it is doubled a
+    fifth below (an open fifth), rings 1.7 times as long and is 4 dB up."""
+    f0 = CELL_BASE * 2 ** (semi / 12)
+    k = 1.7 if last else 1.0
+    dur = 0.7 * D.tail * k
+    fr = [f0, f0 * 1.004, f0 * 2.756, f0 * 5.404]
+    dc = np.array([0.42, 0.38, 0.2, 0.09]) * D.tail * k
+    am = [1, 0.7, 0.35, 0.12]
+    if last:
+        under = f0 * 2 ** (-7 / 12)
+        fr += [under, under * 1.003, under * 2.756]
+        dc = np.concatenate([dc, np.array([0.5, 0.46, 0.22]) * D.tail * k])
+        am += [0.95, 0.6, 0.3]
+    tone = modal(fr, dc, am, dur, rng, droop=0.0 if last else 0.003)
     on = N(0.006)
     tone[:on] *= (0.5 - 0.5 * np.cos(np.linspace(0, np.pi, on))).astype(F32)
     if D.d > 0:                                                   # deeper = rougher: a little ring modulation
         tone = tone * (1 + 0.07 * D.d * S.osc(61.0, dur))
-    frost = ffilt(fnoise(0.03, rng) * S.env(0.03, 0.004, 0.026, 1.0, 1.5), "highpass", 6000, 0.7) * 0.12
-    x = tone * 0.13
-    put(x, frost, 0.0)
+    fd = 0.05 if last else 0.03
+    frost = ffilt(fnoise(fd, rng) * S.env(fd, 0.004, fd - 0.004, 1.0, 1.5), "highpass", 5000 if last else 6000, 0.7)
+    x = tone * (0.16 if last else 0.10)
+    put(x, frost * (0.22 if last else 0.12), 0.0)
+    return x.astype(F32)
+
+
+def seat(D, amp=0.3):
+    """What the last cell lands ON: a short, soft, low-mid thud (150 -> 95 Hz with a 300 Hz knock). It lives in the
+    aftermath stem so the transformation stem stays above 1.5 kHz."""
+    p = D.pitch
+    x = S.osc(S.sweep(150 * p, 95 * p, 0.1), 0.22) * S.env(0.22, 0.004, 0.21, amp, 2.0)
+    put(x, modal(np.array([300, 452]) * p, [0.06, 0.04], [1, 0.6], 0.15) * amp * 0.6, 0.0)
     return x.astype(F32)
 
 
 def st_transform(rng, B, D, L):
     x = np.zeros(L, dtype=F32)
-    for i in range(B["cells"]):
-        put(x, cell_voice(rng, D, i), B["transform"] + i * B["cell_gap"])
+    semis = cell_semis(B["cells"])
+    for i, sm in enumerate(semis):
+        put(x, cell_voice(rng, D, sm, last=(i == len(semis) - 1)), B["transform"] + i * B["cell_gap"])
     x = verb(x, 0.3 + D.wet)[:L]
-    return ffilt(x, "highpass", 1500, 0.707, order=3)             # it lives above the tail, by construction
+    return ffilt(x, "highpass", 1500, 0.707, order=2)             # it lives above the tail, by construction
 
 
 def st_aftermath(rng, B, D, L):
-    """H5: the water leaves (a falling wash, no bubbles), the plates keep ringing, and the creature goes down:
-    one low tone falling an octave and more, with its throat faint behind it."""
+    """Under H4 and through H5: the creature goes down (one low tone falling an octave, its throat faint behind it, and a
+    250-500 Hz moan a phone can carry), the last cell seats, then the water leaves (a falling wash, no bubbles) while
+    the plates keep ringing."""
     p = D.pitch
     dur = B["end"] - B["recede"]
     n = N(dur)
-    drain = sfilt(fnoise(dur, rng, "pink"), "bandpass", S.sweep(1500, 220, dur), 1.2) * S.env(dur, 0.12, dur - 0.13, 0.42, 1.5)
-    wash = sfilt(fnoise(dur, rng), "lowpass", S.sweep(3000, 300, dur * 0.6), 0.8) * S.env(dur, 0.05, dur * 0.6, 0.05, 2.0)
-    ring = modal(np.array([311, 523, 742]) * p, np.array([1.0, 0.7, 0.4]) * D.tail, [1, 0.6, 0.35], dur, rng) * 0.035
+    x = np.zeros(n, dtype=F32)
     t = S.t_of(dur)
     fall = S.sweep(84 * p, 33 * p, dur) * (1 + 0.015 * np.sin(2 * np.pi * 4.0 * t))
-    tone = S.osc(fall, dur) * S.env(dur, 0.08, dur * 0.9, 0.09, 1.3)
+    x += S.osc(fall, dur) * S.env(dur, 0.08, dur * 0.9, 0.09, 1.3)
+    moan = ffilt(S.osc(fall * 4, dur, "tri") + 0.6 * S.osc(fall * 6.02, dur, "tri"), "lowpass", 700, 0.7)
+    x += moan * S.env(dur, 0.12, dur * 0.85, 0.07, 1.2)
     growl = ffilt(S.ring_mod(S.osc(fall * 0.55, dur, "saw"), S.osc(31 * p, dur)), "lowpass", 300, 0.8)
-    growl = growl * S.env(dur, 0.1, dur * 0.7, 0.07, 1.4)
-    x = verb((drain + wash + ring + tone + growl)[:n].astype(F32), 0.28 + D.wet)[:n]
+    x += growl * S.env(dur, 0.1, dur * 0.7, 0.07, 1.4)
+    put(x, seat(D), B["transform"] + (B["cells"] - 1) * B["cell_gap"] - B["recede"])
+    dd = B["end"] - B["drain"]
+    off = B["drain"] - B["recede"]
+    drain = sfilt(fnoise(dd, rng, "pink"), "bandpass", S.sweep(1500, 260, dd), 1.2) * S.env(dd, 0.1, dd - 0.11, 0.36, 1.4)
+    drain = drain * (0.6 + 0.4 * turbulence(dd, rng, 12.0))
+    put(x, drain, off)
+    put(x, sfilt(fnoise(dd, rng), "lowpass", S.sweep(3000, 300, dd * 0.6), 0.8) * S.env(dd, 0.05, dd * 0.6, 0.06, 2.0), off)
+    put(x, modal(np.array([311, 523, 742]) * p, np.array([1.0, 0.7, 0.4]) * D.tail, [1, 0.6, 0.35], dur, rng) * 0.05, 0)
+    x = verb(x, 0.28 + D.wet)[:n]
     x[-N(0.25):] *= np.linspace(1, 0, N(0.25), dtype=F32) ** 1.5
     return put(np.zeros(L, dtype=F32), x, B["recede"])
 
 
-def edges(x, ms=5.0):
+def edges(x, ms=5.0, mask=None):
     """Fade both ends, then take out whatever DC is left WITHOUT lifting the ends off zero (the correction is shaped
-    by the same fade window)."""
+    by the same fade window, and by mask where the sound must stay digitally silent)."""
     w = S.fade_edges(np.ones(len(x), dtype=F32), ms)
     x = x.astype(F32) * w
+    if mask is not None:
+        w = w * mask
     return (x - w * (float(np.sum(x)) / float(np.sum(w)))).astype(F32)
 
 
@@ -357,11 +424,11 @@ def finish(x, D, drive=True, hp=20.0, ref=1.0):
     return ffilt(x, "highpass", hp, 0.707) if (drive and D.d > 0) else x
 
 
-def help_cue(depth=2, B=BEATS_CODE, tag="help"):
-    """Returns ({stem: array}, full). Stems share one gain, so they sum to the full mix exactly (before 16-bit rounding)."""
+def help_cue(depth=2, B=BEATS_FULL):
+    """Returns ({stem: array}, mix). Stems share one gain, so they sum to the mix exactly (before 16-bit rounding)."""
     D = Depth(depth)
     L = N(B["end"])
-    fns = dict(dread=st_dread, approach=st_approach, vacuum=st_vacuum, impact=st_impact, transform=st_transform,
+    fns = dict(dread=st_dread, targeting=st_targeting, vacuum=st_vacuum, impact=st_impact, transform=st_transform,
                aftermath=st_aftermath)
     stems = {}
     # nothing may sound inside the dip: the pre-impact stems are gated shut over the vacuum (3 ms ramp)
@@ -370,16 +437,20 @@ def help_cue(depth=2, B=BEATS_CODE, tag="help"):
     r = N(0.003)
     gate[v0 - r:v0] = np.linspace(1, 0, r, dtype=F32)
     gate[v0:] = 0
+    live = np.zeros(L, dtype=F32)
+    live[int(B["impact"] * SR):] = 1
+    out_fade = np.ones(L, dtype=F32)                         # nothing is still ringing when the cue ends
+    out_fade[-N(0.2):] = np.linspace(1, 0, N(0.2), dtype=F32) ** 1.5
     for name in HELP_STEMS:
-        x = fns[name](rng_of("help/" + name), B, D, L)      # the seed ignores depth and profile: only the design changes
+        x = fns[name](rng_of("help/" + name), B, D, L)      # the seed ignores depth and length: only the design changes
         x = finish(x, D, drive=(name != "transform"), ref=(2.0 if name == "impact" else 1.0))
         if name == "transform":
-            x = ffilt(x, "highpass", 1500, 0.707, order=2)
-        if name in ("dread", "approach", "vacuum"):
+            x = ffilt(x, "highpass", 1500, 0.707, order=1)
+        if name in ("dread", "targeting", "vacuum"):
             x = x * gate
-        elif name == "impact":
+        elif name in ("impact", "transform", "aftermath"):
             x[:int(B["impact"] * SR)] = 0                    # the filters' pre-roll must not leak into the dip
-        stems[name] = edges(x)
+        stems[name] = edges(x * out_fade, mask=(gate if name in ("dread", "targeting", "vacuum") else live))
     full = np.sum(list(stems.values()), axis=0).astype(F32)
     g = PEAK / max(float(np.max(np.abs(full))), max(float(np.max(np.abs(s))) for s in stems.values()))
     return {k: (v * g).astype(F32) for k, v in stems.items()}, (full * g).astype(F32)
@@ -399,50 +470,54 @@ def chain_factor(step):
 
 
 def win_seam_raw(step, depth=2):
-    """Escalation by cascade step: lower (1.5 semitones a step), denser (more fractures, more jets, more sub),
-    longer (the scar hum hangs on). Nothing gets brighter and nothing resolves."""
+    """Escalation by cascade step: lower (1.5 semitones a step), denser (more fractures, more jets, more water),
+    longer (the run-off and the scar hum hang on). The weight is on W2, the breach: that is the strongest picture."""
     step = int(max(1, min(5, step)))
     D = Depth(depth)
     e = step - 1
     p = D.pitch * 2 ** (-1.5 * e / 12)
     f = chain_factor(step)
     hum_len = 0.7 + 0.2 * step
+    tj = WIN_T["jet"]
     t_thud = WIN_T["implode"] + 0.07
     L = N(t_thud + 0.1 + hum_len + 0.35)
     out = {}
 
-    # W1 crack: hairline fractures, sparse then crowding toward the breach, over a thin glass-stress whine
+    # W1 crack: hairline fractures in glass, sparse then crowding toward the breach. Dry clicks and tiny damped pings at
+    # fixed pitches: nothing sweeps, so nothing sounds electric.
     rng = rng_of("win/crack/%d" % step)
     x = np.zeros(L, dtype=F32)
     nclk = 5 + 3 * step
-    times = np.sort(WIN_T["jet"] * rng.random(nclk) ** 0.6)
+    times = np.sort(tj * rng.random(nclk) ** 0.6)
     for j, tc in enumerate(times):
-        c = click(rng, 1.5 + 2.5 * rng.random(), 3500 * p ** 0.5, order=2)
-        put(x, c * (0.18 + 0.3 * (j + 1) / nclk), float(tc))
-    cd = WIN_T["jet"]
-    whine = S.osc(S.sweep(3800 * p, 2900 * p, cd), cd) * ramp(cd, 2.0) * 0.035
-    whine[-N(0.004):] *= np.linspace(1, 0, N(0.004), dtype=F32)
-    put(x, whine, 0.0)
+        a = 0.18 + 0.3 * (j + 1) / nclk
+        put(x, click(rng, 1.5 + 2.5 * rng.random(), 3000 * p ** 0.5, order=2) * a, float(tc))
+        pf = (2200 + 2300 * rng.random()) * p ** 0.5
+        put(x, modal([pf, pf * 2.756], [0.008, 0.004], [1, 0.4], 0.03, rng) * a * 0.35, float(tc) + 0.0005)
     put(x, S.osc(S.sweep(160 * p, 110 * p, 0.05), 0.05) * S.env(0.05, 0.002, 0.048, 0.10 + 0.03 * e, 2.0), 0.0)   # the glass ticks once, low
     out["crack"] = verb(x, 0.12 + D.wet, "short")[:L]
 
-    # W2 breach: needles of pressurised water, one per winning column, and the pressure drop under them
+    # W2 breach: the seam tears and water under pressure comes THROUGH, toward us: a hard broadband slap with a short
+    # low push behind it, a needle of spray per winning column, then the water running off the glass.
     rng = rng_of("win/jet/%d" % step)
     x = np.zeros(L, dtype=F32)
+    put(x, click(rng, 6, 1800) * (0.7 + 0.06 * e), tj - 0.002)
+    slap = sfilt(fnoise(0.14, rng), "lowpass", S.sweep(7000, 1400, 0.14), 0.7) * S.env(0.14, 0.002, 0.135, 0.5 * (1 + 0.10 * e), 1.6)
+    put(x, slap, tj)
+    put(x, ffilt(fnoise(0.16, rng), "bandpass", 420 * p, 0.8) * S.env(0.16, 0.003, 0.155, 0.9 * (1 + 0.10 * e), 1.8), tj)   # the body of the water
+    put(x, S.osc(S.sweep(105 * p, 60 * p, 0.14), 0.22) * S.env(0.22, 0.005, 0.21, (0.95 + 0.12 * e) * D.sub, 1.8), tj + 0.002)
     njet = 2 + step
     for qn in range(njet):
         jd = 0.34
         hi = 2600 * 2 ** (-e / 12) * (0.9 + 0.2 * rng.random())
-        j = sfilt(fnoise(jd, rng), "bandpass", S.sweep(hi, hi * 0.35, jd), 1.4)
-        put(x, j * S.env(jd, 0.012, jd - 0.014, 0.34 * (1 + 0.10 * e) / np.sqrt(njet), 1.5), WIN_T["jet"] + qn * 0.02)
-    put(x, click(rng, 6, 2800, order=2) * (0.45 + 0.05 * e), WIN_T["jet"] - 0.002)
-    put(x, S.osc(S.sweep(140 * p, 60 * p, 0.3), 0.3) * S.env(0.3, 0.005, 0.29, (0.30 + 0.07 * e) * D.sub, 2.0), WIN_T["jet"] + 0.004)
-    hold = WIN_T["implode"] - WIN_T["jet"]
-    hiss = ffilt(fnoise(hold, rng, "pink"), "bandpass", 1200 * p, 0.8) * S.env(hold, 0.08, hold - 0.09, 0.07 + 0.012 * e, 1.2)
-    put(x, hiss, WIN_T["jet"])
+        j = sfilt(fnoise(jd, rng), "bandpass", S.sweep(hi, hi * 0.7, jd), 0.8)          # broad and barely moving: spray, not a laser
+        put(x, j * S.env(jd, 0.012, jd - 0.014, 0.42 * (1 + 0.10 * e) / np.sqrt(njet), 1.5), tj + qn * 0.02)
+    rd = (WIN_T["implode"] - tj) + 0.35 + 0.08 * e                                       # run-off: it keeps falling under the implosion
+    run = sfilt(fnoise(rd, rng, "pink"), "lowpass", S.sweep(3600, 500, rd), 0.8) * (0.35 + 0.65 * turbulence(rd, rng, 14.0))
+    put(x, run * S.env(rd, 0.09, rd - 0.1, 0.30 + 0.04 * e, 1.3), tj + 0.06)
     out["jet"] = verb(x, 0.18 + 0.02 * e + D.wet)[:L]
 
-    # W3 implosion: 70 ms of suction, the crush (sub + a dull brass crunch, no ding), and the scar's hum
+    # W3 implosion: lighter than the breach on purpose. 70 ms of suction, a short crush (no ding), and the scar's hum.
     rng = rng_of("win/implode/%d" % step)
     x = np.zeros(L, dtype=F32)
     t0 = WIN_T["implode"]
@@ -451,8 +526,8 @@ def win_seam_raw(step, depth=2):
     suck[-N(0.003):] *= np.linspace(1, 0, N(0.003), dtype=F32)
     put(x, suck, t0)
     cl = (WIN_T["explode"] * f) - 0.07
-    put(x, S.osc(S.sweep(110 * p, 46 * p, 0.14), cl) * S.env(cl, 0.003, cl - 0.004, (0.55 + 0.11 * e) * D.sub, 2.0), t_thud)
-    cr = sfilt(fnoise(0.11, rng), "bandpass", S.sweep(900 * p, 250 * p, 0.11), 3.0) * S.env(0.11, 0.002, 0.105, 0.5 + 0.08 * e, 1.6)
+    put(x, S.osc(S.sweep(110 * p, 46 * p, 0.14), cl) * S.env(cl, 0.003, cl - 0.004, (0.34 + 0.05 * e) * D.sub, 2.2), t_thud)
+    cr = sfilt(fnoise(0.11, rng), "bandpass", S.sweep(900 * p, 250 * p, 0.11), 3.0) * S.env(0.11, 0.002, 0.105, 0.34 + 0.05 * e, 1.6)
     put(x, cr, t_thud)
     dust = modal(np.array([420, 660, 990]) * p, [0.05, 0.035, 0.02], [1, 0.6, 0.35], 0.12, rng) * (0.10 + 0.02 * e)
     put(x, dust, t_thud + 0.002)
@@ -460,7 +535,7 @@ def win_seam_raw(step, depth=2):
     th = S.t_of(hd)
     hf = 146.83 * p
     hum = (np.sin(2 * np.pi * hf * th) + 0.8 * np.sin(2 * np.pi * hf * 1.0595 * th + 0.7) + 0.3 * np.sin(2 * np.pi * hf * 1.4983 * th)
-           + 0.5 * np.sin(2 * np.pi * hf * 0.5 * th + 0.2))
+           + 0.5 * np.sin(2 * np.pi * hf * 0.5 * th + 0.2) + 0.35 * np.sin(2 * np.pi * hf * 2 * th + 0.9))
     put(x, (hum * S.env(hd, 0.08, hd - 0.09, 0.045 + 0.008 * e, 1.3)).astype(F32), t_thud + 0.03)
     out["implode"] = verb(x, 0.2 + 0.03 * e + D.wet)[:L]
 
@@ -487,28 +562,58 @@ def win_seams(depth=2, steps=(1, 3, 5)):
 # creature), every stinger droops downward at the end, and everything is in the same short steel room.
 
 LAND_MAX, STING_MAX = 0.25, 0.70
-LOW_F = {"low_10": 440.0, "low_j": 392.0, "low_q": 349.23, "low_k": 329.63, "low_a": 293.66}   # A G F E D: worth more = lower
+# The five stones are one family (a dead knock on the family thud) but not one sound: each has its own pitch, its own
+# partial spacing, damping and grit, and one detail of its own. Worth more = lower, longer, heavier.
+#            pitch   partial ratios            damp  grit Hz  thud  detail
+LOW = {
+    "low_10": (440.00, (1, 1.58, 2.21, 3.31), 0.75, 2600, 0.36, "dry"),        # smallest pebble: short, bright grit
+    "low_j": (392.00, (1, 1.47, 2.09, 3.10), 0.90, 2100, 0.40, "double"),     # two-part knock, 14 ms apart
+    "low_q": (349.23, (1, 1.62, 2.40, 3.50), 1.00, 1700, 0.45, "ring"),       # a second partial that rings on
+    "low_k": (329.63, (1, 1.35, 2.21, 2.90), 1.20, 1350, 0.50, "grind"),      # lands with a 40 ms scrape
+    "low_a": (293.66, (1, 1.50, 2.00, 2.76), 1.45, 1100, 0.58, "slab"),       # a slab: an octave-down partial under it
+}
+LOW_F = {k: v[0] for k, v in LOW.items()}
+
+
+def stone_knock(rng, D, key, f, dur=0.15, gain=0.6):
+    _, ratios, damp, grit, _, detail = LOW[key]
+    dec = np.array([0.045, 0.03, 0.02, 0.012]) * damp
+    amps = [1, 0.6, 0.4, 0.25]
+    fr = [f * r for r in ratios]
+    if detail == "ring":
+        dec[1] *= 2.6; amps[1] = 0.85
+    if detail == "slab":
+        fr.append(f * 0.5); dec = np.append(dec, 0.07); amps.append(0.7)
+    x = np.zeros(N(dur + 0.03), dtype=F32)
+    put(x, modal(fr, dec, amps, dur, rng) * gain, 0.001)
+    put(x, ffilt(fnoise(0.012, rng) * S.env(0.012, 0.0005, 0.0115, 1, 1.5), "bandpass", grit, 1.0) * gain * 0.85, 0)
+    if detail == "double":
+        put(x, modal(fr, dec * 0.7, amps, dur * 0.6, rng) * gain * 0.55, 0.014)
+    if detail == "grind":
+        g = sfilt(fnoise(0.04, rng, "pink"), "bandpass", S.sweep(700, 1100, 0.04), 2.5) * S.env(0.04, 0.004, 0.036, 1.0, 1.3)
+        put(x, g * gain * 0.7, 0.006)
+    return x
 
 
 def v_low(key):
     def land(rng, D):
         f = LOW_F[key] * D.pitch
         x = np.zeros(N(0.2), dtype=F32)
-        put(x, modal([f, f * 1.58, f * 2.21, f * 3.31], [0.045, 0.03, 0.02, 0.012], [1, 0.6, 0.4, 0.25], 0.15, rng) * 0.6, 0.001)
-        put(x, ffilt(fnoise(0.012, rng) * S.env(0.012, 0.0005, 0.0115, 1, 1.5), "bandpass", 1800, 1.0) * 0.5, 0)
-        put(x, thud(D, 0.45), 0)
+        put(x, stone_knock(rng, D, key, f), 0)
+        put(x, thud(D, LOW[key][4]), 0)
         return verb(x, 0.10 + D.wet, "short")
 
     def sting(rng, D):
         f = LOW_F[key] * D.pitch
         x = np.zeros(N(0.42), dtype=F32)
-        put(x, modal([f, f * 1.58, f * 2.21], [0.05, 0.03, 0.02], [1, 0.6, 0.4], 0.15, rng) * 0.5, 0)
+        put(x, stone_knock(rng, D, key, f, gain=0.5), 0)
         sc = sfilt(fnoise(0.17, rng, "pink"), "bandpass", S.sweep(520, 950, 0.17), 2.5)
         grains = np.repeat((rng.random(N(0.17) // 384 + 1) > 0.35).astype(F32), 384)[:len(sc)]   # stone dragging on stone
         put(x, sc * grains * ramp(0.17, 1.0, 0.3, 1.0) * 0.55, 0.03)
         f2 = f * 0.749
-        put(x, modal([f2, f2 * 1.58, f2 * 2.21, f * 0.5], [0.07, 0.04, 0.025, 0.16], [1, 0.6, 0.4, 0.35], 0.22, rng, droop=0.03) * 0.75, 0.2)
-        put(x, thud(D, 0.6), 0.2)
+        put(x, stone_knock(rng, D, key, f2, dur=0.2, gain=0.7), 0.2)
+        put(x, modal([f * 0.5], [0.16], [0.3], 0.2, rng, droop=0.03), 0.2)
+        put(x, thud(D, LOW[key][4] + 0.15), 0.2)
         return verb(x, 0.14 + D.wet, "short")
     return land, sting
 
@@ -639,13 +744,31 @@ def squid_sting(rng, D):
     return verb(x, 0.18 + D.wet, "short")
 
 
+def throat(D, dur, lo=500.0):
+    """The Leviathan's voice in two bands: the sub growl, and the same growl an octave and more up (150-400 Hz) so it
+    still exists when the speaker cannot move air."""
+    p = D.pitch
+    low = ffilt(S.ring_mod(S.osc(45 * p, dur, "saw"), S.osc(31 * p, dur)), "lowpass", lo, 0.8)
+    mid = ffilt(S.ring_mod(S.osc(110 * p, dur, "saw"), S.osc(31 * p, dur)), "bandpass", 260, 0.9)
+    return low, mid
+
+
+def knock(rng, f=700.0, amp=0.6):
+    """A hard, short, mid-band transient: the part of a heavy hit a phone speaker keeps."""
+    x = ffilt(fnoise(0.016, rng) * S.env(0.016, 0.0005, 0.0155, 1, 1.6), "bandpass", f, 1.5) * amp
+    put(x, click(rng, 4, 1500)[:len(x)] * amp * 0.7, 0)
+    return x.astype(F32)
+
+
 def lev_land(rng, D):
     p = D.pitch
     x = np.zeros(N(0.23), dtype=F32)
-    put(x, S.osc(S.sweep(62 * p, 32 * p, 0.2), 0.22) * S.env(0.22, 0.004, 0.21, 1.0 * D.sub, 1.8), 0)
-    g = ffilt(S.ring_mod(S.osc(45 * p, 0.2, "saw"), S.osc(31 * p, 0.2)), "lowpass", 500, 0.8) * S.env(0.2, 0.008, 0.19, 0.5, 1.6)
-    put(x, g, 0.004)
-    put(x, ffilt(fnoise(0.08, rng), "lowpass", 300, 0.8) * S.env(0.08, 0.002, 0.078, 0.35, 2.0), 0)
+    put(x, knock(rng, 650, 0.75), 0)
+    put(x, S.osc(S.sweep(62 * p, 32 * p, 0.2), 0.22) * S.env(0.22, 0.004, 0.21, 0.28 * D.sub, 1.8), 0)
+    put(x, S.osc(S.sweep(240 * p, 150 * p, 0.08), 0.12) * S.env(0.12, 0.002, 0.115, 0.5, 1.8), 0)         # the body: 150-240 Hz
+    low, mid = throat(D, 0.2)
+    put(x, low * S.env(0.2, 0.008, 0.19, 0.4, 1.6) + mid * S.env(0.2, 0.006, 0.19, 1.7, 1.5), 0.004)
+    put(x, ffilt(fnoise(0.08, rng), "lowpass", 400, 0.8) * S.env(0.08, 0.002, 0.078, 0.35, 2.0), 0)
     return verb(x, 0.12 + D.wet, "short")
 
 
@@ -653,12 +776,15 @@ def lev_sting(rng, D):
     p = D.pitch
     d = 0.62
     x = np.zeros(N(0.64), dtype=F32)
-    g = ffilt(S.ring_mod(S.osc(45 * p, d, "saw"), S.osc(31 * p, d)), "lowpass", 600, 0.8) * S.env(d, 0.04, d - 0.05, 0.55, 1.4)
-    put(x, g, 0)
-    put(x, S.osc(S.sweep(55 * p, 30 * p, 0.5), d) * S.env(d, 0.006, d - 0.01, 0.9 * D.sub, 1.7), 0)
-    cl = ffilt(S.osc(S.sweep(73.42 * p, 69.3 * p, d), d, "tri") + S.osc(S.sweep(77.78 * p, 73.42 * p, d), d, "tri"), "lowpass", 400, 0.7)
-    put(x, cl * S.env(d, 0.05, d - 0.06, 0.22, 1.3), 0)                           # D against Eb: the flat second is the creature
-    put(x, ffilt(fnoise(d, rng, "brown"), "lowpass", 250, 0.7) * S.env(d, 0.06, d - 0.07, 0.12, 1.4), 0)
+    put(x, knock(rng, 600, 0.7), 0)
+    low, mid = throat(D, d, 600.0)
+    put(x, low * S.env(d, 0.04, d - 0.05, 0.45, 1.4) + mid * S.env(d, 0.03, d - 0.04, 1.8, 1.3), 0)
+    put(x, S.osc(S.sweep(55 * p, 30 * p, 0.5), d) * S.env(d, 0.006, d - 0.01, 0.25 * D.sub, 1.7), 0)
+    put(x, S.osc(S.sweep(230 * p, 140 * p, 0.1), 0.14) * S.env(0.14, 0.002, 0.135, 0.45, 1.8), 0)
+    cl = ffilt(S.osc(S.sweep(146.83 * p, 138.6 * p, d), d, "tri") + S.osc(S.sweep(155.56 * p, 146.83 * p, d), d, "tri")
+               + 0.5 * S.osc(S.sweep(73.42 * p, 69.3 * p, d), d, "tri"), "lowpass", 700, 0.7)
+    put(x, cl * S.env(d, 0.05, d - 0.06, 0.45, 1.3), 0)                            # D against Eb: the flat second is the creature
+    put(x, ffilt(fnoise(d, rng, "brown"), "lowpass", 250, 0.7) * S.env(d, 0.06, d - 0.07, 0.10, 1.4), 0)
     return verb(x, 0.16 + D.wet, "short")
 
 
@@ -667,9 +793,12 @@ def maw_land(rng, D):
     x = np.zeros(N(0.23), dtype=F32)
     sk = ramp(0.03)
     put(x, sfilt(fnoise(0.03, rng), "highpass", S.sweep(800, 5000, 0.03), 0.8) * sk ** 3 * 0.12, 0)     # 30 ms of nothing but a breath in
-    put(x, click(rng, 6, 2000) * 0.7, 0.03)
-    put(x, sfilt(fnoise(0.15, rng), "lowpass", S.sweep(3000, 200, 0.14), 0.8) * S.env(0.15, 0.002, 0.145, 0.4, 1.9), 0.032)
-    put(x, S.osc(S.sweep(70 * p, 36 * p, 0.16), 0.18) * S.env(0.18, 0.003, 0.175, 0.95 * D.sub, 1.8), 0.032)
+    put(x, click(rng, 6, 2000) * 0.9, 0.03)
+    put(x, knock(rng, 800, 0.6), 0.03)
+    put(x, sfilt(fnoise(0.15, rng), "lowpass", S.sweep(3000, 200, 0.14), 0.8) * S.env(0.15, 0.002, 0.145, 0.45, 1.9), 0.032)
+    put(x, ffilt(fnoise(0.14, rng), "bandpass", 300, 0.9) * S.env(0.14, 0.002, 0.135, 1.2, 1.7), 0.032)   # jaw body, 150-400 Hz
+    put(x, modal(np.array([187, 311, 523]) * p, [0.09, 0.07, 0.05], [1, 0.8, 0.6], 0.16, rng) * 0.45, 0.033)
+    put(x, S.osc(S.sweep(70 * p, 36 * p, 0.16), 0.18) * S.env(0.18, 0.003, 0.175, 0.3 * D.sub, 1.8), 0.032)
     return verb(x, 0.12 + D.wet, "short")
 
 
@@ -682,10 +811,12 @@ def maw_sting(rng, D):
     x[N(0.2) - N(0.003):N(0.2)] *= np.linspace(1, 0, N(0.003), dtype=F32)
     x[N(0.2):] = 0                                                                 # 25 ms of nothing
     t0 = 0.225
-    put(x, click(rng, 8, 2000) * 0.8, t0)
-    put(x, sfilt(fnoise(0.3, rng), "lowpass", S.sweep(3500, 160, 0.28), 0.8) * S.env(0.3, 0.002, 0.29, 0.4, 1.9), t0 + 0.002)
-    put(x, S.osc(S.sweep(64 * p, 30 * p, 0.36), 0.4) * S.env(0.4, 0.004, 0.39, 1.0 * D.sub, 1.7), t0 + 0.002)
-    put(x, modal(np.array([187, 311, 523]) * p, [0.22, 0.16, 0.1], [1, 0.7, 0.5], 0.35, rng, droop=0.02) * 0.12, t0 + 0.003)
+    put(x, click(rng, 8, 2000) * 0.9, t0)
+    put(x, knock(rng, 750, 0.6), t0)
+    put(x, sfilt(fnoise(0.3, rng), "lowpass", S.sweep(3500, 160, 0.28), 0.8) * S.env(0.3, 0.002, 0.29, 0.45, 1.9), t0 + 0.002)
+    put(x, ffilt(fnoise(0.25, rng), "bandpass", 300, 0.9) * S.env(0.25, 0.002, 0.245, 1.2, 1.7), t0 + 0.002)
+    put(x, S.osc(S.sweep(64 * p, 30 * p, 0.36), 0.4) * S.env(0.4, 0.004, 0.39, 0.3 * D.sub, 1.7), t0 + 0.002)
+    put(x, modal(np.array([187, 311, 523]) * p, [0.22, 0.16, 0.1], [1, 0.8, 0.6], 0.35, rng, droop=0.02) * 0.45, t0 + 0.003)
     return verb(x, 0.16 + D.wet, "short")
 
 
@@ -705,11 +836,21 @@ SYMBOLS.update({
 })
 
 
-def symbol_voice(key, kind, depth=2):
+VARIANTS = ((0.0, 0.0), (0.6, -1.2), (-0.7, -0.6))     # round-robin lands: (semitones, dB) on top of a new seed
+
+
+def symbol_voice(key, kind, depth=2, var=0):
+    """kind 'land' takes var 1..3 (the round-robin takes: own seed, slightly different pitch and level)."""
     tier, land, sting, pl, ps = SYMBOLS[key]
     D = Depth(depth)
     fn, mx, pk = (land, LAND_MAX, pl) if kind == "land" else (sting, STING_MAX, ps)
-    x = finish(fn(rng_of("sym/%s/%s" % (key, kind)), D), D, hp=30.0)[:N(mx)]
+    name = "sym/%s/%s" % (key, kind)
+    if var:
+        st, gdb = VARIANTS[var - 1]
+        D.pitch *= 2 ** (st / 12)
+        pk += gdb
+        name += "/v%d" % var
+    x = np.concatenate([np.zeros(N(0.005), dtype=F32), finish(fn(rng_of(name), D), D, hp=30.0)])[:N(mx)]   # 5 ms lead-in: the fade never eats the transient
     tail = N(0.03)
     x[-tail:] *= np.linspace(1, 0, tail, dtype=F32) ** 1.5       # the room is cut off inside the length budget
     x = edges(x, 4.5)
@@ -749,6 +890,9 @@ def metrics(x):
         "seconds": round(len(x) / SR, 3),
         "centroid_hz": round(float((P * f).sum() / tot), 1),
         "sub_share_30_80": round(float(P[(f >= 30) & (f <= 80)].sum() / tot), 4),
+        # what a small speaker keeps: 200 Hz - 4 kHz
+        "share_200_4k": round(float(P[(f >= 200) & (f <= 4000)].sum() / tot), 4),
+        "rms_200_4k_dbfs": round(db(float(np.sqrt(P[(f >= 200) & (f <= 4000)].sum() * 2) / len(xd))), 2),
         "dc": round(float(np.mean(xd)), 6),
         # a 4 ms fade exists if the first and last 4 ms never exceed a linear ramp to the file's own peak
         "edge_ok": bool(abs(xd[0]) < thr and abs(xd[-1]) < thr
@@ -760,6 +904,15 @@ def metrics(x):
 def quant(x):
     """What is actually in the file: 16-bit."""
     return (np.clip(x, -1, 1) * 32767.0).astype("<i2")
+
+
+SMALL_SPEAKER_LIMIT_DB = 12.0
+
+
+def beat_windows(B):
+    return [("H1 dread", B["dread"], B["approach"]), ("H2 targeting", B["approach"], B["vacuum"]),
+            ("V dip", B["vacuum"], B["impact"]), ("H3 impact", B["impact"], B["transform"]),
+            ("H4 transformation", B["transform"], B["drain"]), ("H5 aftermath", B["drain"], B["end"])]
 
 
 def help_checks(stems, full, B):
@@ -775,13 +928,20 @@ def help_checks(stems, full, B):
     tr = stems["transform"].astype(np.float64)
     P = np.abs(np.fft.rfft(tr)) ** 2
     f = np.fft.rfftfreq(len(tr), 1 / SR)
-    a = int(B["transform"] * SR)
-    b = int(min(len(full) / SR, B["transform"] + B["cells"] * B["cell_gap"] + 0.35) * SR)
+    a, b = int(B["transform"] * SR), int(B["drain"] * SR)
     rest = (full - stems["transform"])[a:b]
     trw = stems["transform"][a:b]
     hi_tr = float(np.sqrt(np.mean(band(trw, 1500, 12000) ** 2)))
     hi_rest = float(np.sqrt(np.mean(band(rest, 1500, 12000) ** 2)))
     qsum = np.sum([quant(s).astype(np.int64) for s in stems.values()], axis=0)
+    # small-speaker read: the cue through a 200 Hz - 4 kHz window, beat by beat, against the impact
+    rows = {}
+    for name, t0, t1 in beat_windows(B):
+        seg = band(full[int(t0 * SR):int(t1 * SR)], 200, 4000)        # filtered per window: nothing leaks across a beat line
+        rows[name] = db(float(np.sqrt(np.mean(seg ** 2))))
+    ref = rows["H3 impact"]
+    beats = {k: {"rms_200_4k_dbfs": round(v, 1), "vs_impact_db": round(v - ref, 1),
+                 "flag": bool(k != "V dip" and k != "H3 impact" and ref - v > SMALL_SPEAKER_LIMIT_DB)} for k, v in rows.items()}
     return {
         "profile": B["name"],
         "full_peak_dbfs": round(db(float(np.max(np.abs(full)))), 2),
@@ -799,7 +959,23 @@ def help_checks(stems, full, B):
         "transform_centroid_hz": round(float((P * f).sum() / (P.sum() + 1e-20)), 1),
         "transform_vs_rest_above_1k5_db": round(db(hi_tr) - db(hi_rest), 2),
         "stems_sum_max_error_lsb": int(np.max(np.abs(qsum - quant(full).astype(np.int64)))),
+        "small_speaker_beats": beats,
+        "small_speaker_flags": [k for k, v in beats.items() if v["flag"]],
+        "impact_lead_200_4k_db": round(ref - max(v for k, v in rows.items() if k != "H3 impact"), 1),
     }
+
+
+def win_checks(seams):
+    """Where the win's weight sits: stem peaks, and RMS of the mix in the W2 and W3 windows."""
+    out = {}
+    for s, (st, full) in seams.items():
+        w2 = full[int(WIN_T["jet"] * SR):int(WIN_T["implode"] * SR)].astype(np.float64)
+        w3 = full[int(WIN_T["implode"] * SR):int((WIN_T["implode"] + WIN_T["explode"]) * SR)].astype(np.float64)
+        pk = {k: round(db(float(np.max(np.abs(v)))), 2) for k, v in st.items()}
+        out["step%d" % s] = {"stem_peak_dbfs": pk, "loudest_stem": max(pk, key=pk.get),
+                             "w2_rms_dbfs": round(db(float(np.sqrt(np.mean(w2 ** 2)))), 1),
+                             "w3_rms_dbfs": round(db(float(np.sqrt(np.mean(w3 ** 2)))), 1)}
+    return out
 
 
 # ====================================================================== files and sheets =============================
@@ -921,27 +1097,30 @@ def timeline_panel(img, origin, width, title, rows, full, beats, dur, checks=Non
 
 
 def help_beats(B):
-    c = B["name"] == "code"
-    b = [("H0/H1", B["dread"], "DREAD"), ("H2", B["approach"], "APPROACH"), ("V", B["vacuum"], "VACUUM"),
-         ("H3", B["impact"], "IMPACT"), ("H4", B["transform"], "TRANSFORM"), ("H5", B["recede"], "AFTERMATH" if not c else "RECEDE/DRAIN")]
-    return sorted(b, key=lambda r: r[1])
+    return [("H1", B["dread"], "DREAD"), ("H2", B["approach"], "TARGETING"), ("V", B["vacuum"], "DIP"),
+            ("H3", B["impact"], "IMPACT"), ("H4", B["transform"], "TRANSFORM"), ("H5", B["drain"], "AFTERMATH")]
 
 
 def help_sheet(path, stems, full, B, chk, depth):
     from PIL import Image
     W = 1800
-    H = 34 + 60 + 78 * 6 + 117 + 250 + 30 + 18 * 5 + 30
+    H = 34 + 60 + 78 * 6 + 117 + 250 + 30 + 18 * 7 + 30
     img = Image.new("RGB", (W, H), BG)
+    sb = chk["small_speaker_beats"]
     lines = [
         "sub 30-80 Hz (50 ms RMS): peak %.1f dBFS at %.3f s (impact at %.2f s)  |  +%.1f dB over anything before it, +%.1f dB over every other stem, +%.1f dB over the cue from 0.9 s after" % (
             chk["sub_peak_dbfs_30_80"], chk["sub_peak_time_s"], B["impact"], chk["sub_margin_vs_before_db"], chk["sub_margin_vs_other_stems_db"], chk["sub_margin_vs_after_db"] or 0),
-        "vacuum: %d ms at %.1f dBFS RMS (the 100 ms before it: %.1f dBFS)" % (chk["vacuum_ms"], chk["vacuum_rms_dbfs"], chk["pre_vacuum_rms_dbfs"]),
+        "dip: %d ms at %s (the 100 ms before it: %.1f dBFS RMS)" % (chk["vacuum_ms"], "digital silence" if chk["vacuum_rms_dbfs"] < -120 else "%.1f dBFS RMS" % chk["vacuum_rms_dbfs"], chk["pre_vacuum_rms_dbfs"]),
         "transformation: %.1f%% of its energy above 1.5 kHz, centroid %.0f Hz, %+.1f dB against the rest of the mix above 1.5 kHz in its window" % (
             100 * chk["transform_energy_above_1k5"], chk["transform_centroid_hz"], chk["transform_vs_rest_above_1k5_db"]),
-        "full mix peak %.2f dBFS  |  stems sum to the full mix within %d LSB (16-bit)" % (chk["full_peak_dbfs"], chk["stems_sum_max_error_lsb"]),
+        "small speaker (200 Hz-4 kHz RMS per beat, dB against the impact):  " + "   ".join(
+            "%s %.1f (%+.1f)%s" % (k.split()[0], v["rms_200_4k_dbfs"], v["vs_impact_db"], " FLAG" if v["flag"] else "") for k, v in sb.items() if k != "V dip"),
+        "   limit: no beat more than %.0f dB under the impact in that band (the dip is exempt)   ->   %s   |   the impact leads the next loudest beat by %+.1f dB in that band" % (
+            SMALL_SPEAKER_LIMIT_DB, ("FLAGGED: " + ", ".join(chk["small_speaker_flags"])) if chk["small_speaker_flags"] else "all beats inside", chk["impact_lead_200_4k_db"]),
+        "mix peak %.2f dBFS  |  stems sum to the mix within %d LSB (16-bit)" % (chk["full_peak_dbfs"], chk["stems_sum_max_error_lsb"]),
         "MEASURED, NOT HEARD: a human listen is still required.",
     ]
-    title = "THE HELP CUE  (CREATURE_LIFELINE_STRIKE)  -  timing profile: %s  -  depth %d  -  rows autoscaled, peak printed" % (B["name"].upper(), depth)
+    title = "THE HELP CUE  (CREATURE_LIFELINE_STRIKE)  -  %s version, %.1f s  -  depth %d  -  rows autoscaled, peak printed" % (B["name"].upper(), B["end"], depth)
     timeline_panel(img, (0, 10), W, title, [(n.upper(), stems[n]) for n in HELP_STEMS], full, help_beats(B), B["end"], lines)
     img.save(path)
 
@@ -951,7 +1130,7 @@ def win_sheet(path, seams):
     steps = sorted(seams)
     dur = max(len(seams[s][1]) for s in steps) / SR
     W, pw = 1860, 620
-    H = 34 + 60 + 78 * 3 + 117 + 250 + 30 + 18 * 4 + 40
+    H = 34 + 60 + 78 * 3 + 117 + 250 + 30 + 18 * 5 + 40
     img = Image.new("RGB", (W, H), BG)
     for i, s in enumerate(steps):
         st, full = seams[s]
@@ -959,12 +1138,14 @@ def win_sheet(path, seams):
         f = chain_factor(s)
         beats = [("W1", WIN_T["crack"], "CRACK"), ("W2", WIN_T["jet"], "BREACH"), ("W3", WIN_T["implode"], "IMPLODE")]
         m = metrics(full)
+        c = win_checks({s: seams[s]})["step%d" % s]
         lines = ["peak %.1f dBFS  RMS %.1f dBFS  %.2f s" % (m["peak_dbfs"], m["rms_dbfs"], m["seconds"]),
-                 "centroid %.0f Hz  sub share %.1f%%" % (m["centroid_hz"], 100 * m["sub_share_30_80"]),
+                 "centroid %.0f Hz  sub %.0f%%  200 Hz-4 kHz %.0f%%" % (m["centroid_hz"], 100 * m["sub_share_30_80"], 100 * m["share_200_4k"]),
+                 "loudest stem: %s   W2 %.1f / W3 %.1f dBFS RMS" % (c["loudest_stem"].upper(), c["w2_rms_dbfs"], c["w3_rms_dbfs"]),
                  "explode budget %d ms (chainFactor %.2f)" % (round(WIN_T["explode"] * f * 1000), f)]
         timeline_panel(img, (i * pw, 10), pw, "WIN SEAM - cascade step %d" % s, [(n.upper(), pad(st[n])) for n in WIN_STEMS],
                        pad(full), beats, dur, lines, gutter=150)
-    ImageDraw.Draw(img).text((8, H - 24), "Same time axis and one shared gain across the three steps: later steps are lower, denser, longer and louder. "
+    ImageDraw.Draw(img).text((8, H - 24), "Same time axis and one shared gain across the three steps: later steps are lower, denser, longer and louder. The weight is on W2. "
                              "MEASURED, NOT HEARD.", fill=CREAM, font=font(13))
     img.save(path)
 
@@ -984,17 +1165,17 @@ def symbols_sheet(path, voices):
         x0 = ox + 44
         avail = cw - 44 - 30
         lw = int(avail * LAND_MAX / (LAND_MAX + STING_MAX))
-        for j, (nm, x, bx, bw, mx) in enumerate((("LAND", land, x0, lw, LAND_MAX), ("STINGER", sting, x0 + lw + 14, avail - lw, STING_MAX))):
+        for j, (nm, x, bx, bw, mx) in enumerate((("LAND v1", land, x0, lw, LAND_MAX), ("STINGER", sting, x0 + lw + 14, avail - lw, STING_MAX))):
             xx = np.pad(x, (0, max(0, N(mx) - len(x))))
             m = metrics(x)
-            d.text((x0, oy + 24 + 16 * j), "%-7s %3d ms   peak %5.1f dBFS   rms %5.1f   centroid %5.0f Hz   sub %2.0f%%" % (
-                nm, round(m["seconds"] * 1000), m["peak_dbfs"], m["rms_dbfs"], m["centroid_hz"], 100 * m["sub_share_30_80"]), fill=DIM, font=fs)
+            d.text((x0, oy + 24 + 16 * j), "%-7s %3d ms  peak %5.1f  rms %5.1f dBFS  cen %4.0f Hz  sub %2.0f%%  200-4k %2.0f%%" % (
+                nm, round(m["seconds"] * 1000), m["peak_dbfs"], m["rms_dbfs"], m["centroid_hz"], 100 * m["sub_share_30_80"], 100 * m["share_200_4k"]), fill=DIM, font=fs)
             d.text((bx + 4, oy + 62), nm, fill=AMBER, font=fs)
             draw_wave(d, xx, (bx, oy + 60, bx + bw, oy + 130), scale=1.0)
             d.text((bx + 4, oy + 62), nm, fill=AMBER, font=fs)
             img.paste(spectro(xx, bw, 110, fmin=40.0, fmax=16000.0, win=2048), (bx, oy + 136))
         freq_ticks(d, (x0, oy + 136, x0, oy + 246), 40.0, 16000.0, fs, ticks=(100, 1000, 10000))
-    d.text((10, rows * ch + 14), "Per symbol: land (<= 250 ms) and win stinger (<= 700 ms). Waveforms on a 0 dBFS scale (so tiers compare), "
+    d.text((10, rows * ch + 14), "Per symbol: land take v1 of 3 (<= 250 ms) and win stinger (<= 700 ms). Waveforms on a 0 dBFS scale (so tiers compare), "
            "spectrograms log f 40 Hz-16 kHz. MEASURED, NOT HEARD.", fill=CREAM, font=font(13))
     img.save(path)
 
@@ -1025,36 +1206,40 @@ def main():
              "sha256": hashlib.sha256((out / (name + ".wav")).read_bytes()).hexdigest()}
         e.update(metrics(q)); e.update(extra)
         manifest[name] = e
-        print("[moments] %-26s %5.2fs  pk %6.2f  rms %6.2f  cen %7.0f Hz  sub %5.1f%%  dc %+.5f  edges %s" % (
-            name, e["seconds"], e["peak_dbfs"], e["rms_dbfs"], e["centroid_hz"], 100 * e["sub_share_30_80"], e["dc"], "ok" if e["edge_ok"] else "FAIL"))
+        print("[moments] %-28s %5.2fs  pk %6.2f  rms %6.2f  cen %6.0f Hz  sub %5.1f%%  200-4k %5.1f%% (%6.1f dBFS)  dc %+.5f  edges %s" % (
+            name, e["seconds"], e["peak_dbfs"], e["rms_dbfs"], e["centroid_hz"], 100 * e["sub_share_30_80"], 100 * e["share_200_4k"],
+            e["rms_200_4k_dbfs"], e["dc"], "ok" if e["edge_ok"] else "FAIL"))
 
     if a.sheet:
         SHEETS.mkdir(parents=True, exist_ok=True)
 
     if "help" in groups:
-        for B, tag in ((BEATS_CODE, "help"), (BEATS_STORYBOARD, "help_sb")):
-            stems, full = help_cue(a.depth, B, tag)
-            starts = dict(dread=B["dread"], approach=B["approach"], vacuum=B["vacuum"] - 0.14, impact=B["impact"],
-                          transform=B["transform"], aftermath=B["recede"])
+        for B, tag in ((BEATS_FULL, "help_full"), (BEATS_SHORT, "help_short")):
+            stems, full = help_cue(a.depth, B)
+            starts = dict(dread=B["dread"], targeting=B["approach"], vacuum=B["vacuum"] - min(0.14, 0.5 * (B["vacuum"] - B["approach"])),
+                          impact=B["impact"], transform=B["transform"], aftermath=B["recede"])
             for n in HELP_STEMS:
                 emit("%s_%s" % (tag, n), stems[n], tag, depth=a.depth, profile=B["name"], beat_offset_s=round(starts[n], 3))
-            emit(tag + "_full", full, tag, depth=a.depth, profile=B["name"], beat_offset_s=0.0)
+            emit(tag + "_mix", full, tag, depth=a.depth, profile=B["name"], beat_offset_s=0.0)
             report[tag] = help_checks(stems, full, B)
             print("[moments] checks %s: %s" % (tag, json.dumps(report[tag])))
             if a.sheet:
-                sp = SHEETS / ("sound_help_sheet.png" if tag == "help" else "sound_help_sheet_storyboard.png")
+                sp = SHEETS / ("sound_help_sheet.png" if tag == "help_full" else "sound_help_short_sheet.png")
                 help_sheet(sp, stems, full, B, report[tag], a.depth)
                 print("[moments] sheet -> %s" % sp.relative_to(REPO))
-        for dv in (0, 5):                                                     # the depth ladder's two ends, full mix only
-            stems, full = help_cue(dv, BEATS_CODE, "help")
-            emit("help_full_d%d" % dv, full, "help_depth", depth=dv, profile="code", beat_offset_s=0.0)
-            report["help_d%d" % dv] = help_checks(stems, full, BEATS_CODE)
-        D = Depth(a.depth)                                                    # the one-shot the runtime fires per struck cell
-        cv = finish(verb(cell_voice(rng_of("help/transform_cell"), D, 0), 0.3 + D.wet, tail=0.25), D, drive=False)
-        cv = ffilt(cv, "highpass", 1500, 0.707, order=3)
-        cv[-N(0.1):] *= np.linspace(1, 0, N(0.1), dtype=F32)
-        cv = edges(cv)
-        emit("help_transform_cell", (cv * (10 ** (-9 / 20) / float(np.max(np.abs(cv))))).astype(F32), "help", depth=a.depth, profile="any")
+        for dv in (0, 5):                                                     # the depth ladder's two ends, mix only
+            stems, full = help_cue(dv, BEATS_FULL)
+            emit("help_full_mix_d%d" % dv, full, "help_depth", depth=dv, profile="full", beat_offset_s=0.0)
+            report["help_full_d%d" % dv] = help_checks(stems, full, BEATS_FULL)
+        D = Depth(a.depth)                                                    # the one-shots the runtime fires per struck cell
+        for nm, last in (("help_cell", False), ("help_cell_last", True)):
+            cv = verb(cell_voice(rng_of("help/" + nm), D, 7 if last else 0, last), 0.3 + D.wet, tail=0.25)
+            cv = ffilt(finish(cv, D, drive=False), "highpass", 1500, 0.707, order=3)
+            if last:
+                put(cv, finish(seat(D), D), 0.0)                              # the one-shot carries its own seat
+            cv[-N(0.1):] *= np.linspace(1, 0, N(0.1), dtype=F32)
+            cv = edges(cv)
+            emit(nm, (cv * (10 ** ((-6 if last else -10) / 20) / float(np.max(np.abs(cv))))).astype(F32), "help", depth=a.depth, profile="any")
 
     if "win" in groups:
         seams = win_seams(a.depth, (1, 3, 5))
@@ -1062,6 +1247,8 @@ def main():
             for n in WIN_STEMS:
                 emit("win_s%d_%s" % (s, n), st[n], "win", depth=a.depth, cascade_step=s, beat_offset_s=WIN_T[n])
             emit("win_s%d_full" % s, full, "win", depth=a.depth, cascade_step=s, beat_offset_s=0.0)
+        report["win"] = win_checks(seams)
+        print("[moments] checks win: %s" % json.dumps(report["win"]))
         if a.sheet:
             win_sheet(SHEETS / "sound_win_sheet.png", seams)
             print("[moments] sheet -> artifacts/targets/sound_win_sheet.png")
@@ -1069,14 +1256,20 @@ def main():
     if "symbols" in groups:
         voices = {}
         for k in SYMBOLS:
-            land, sting = symbol_voice(k, "land", a.depth), symbol_voice(k, "stinger", a.depth)
-            voices[k] = (land, sting)
-            emit("sym_%s_land" % k, land, "symbols", depth=a.depth, tier=SYMBOLS[k][0])
+            lands = [symbol_voice(k, "land", a.depth, v) for v in (1, 2, 3)]
+            sting = symbol_voice(k, "stinger", a.depth)
+            voices[k] = (lands[0], sting)
+            for v, land in enumerate(lands, 1):
+                emit("sym_%s_land_v%d" % (k, v), land, "symbols", depth=a.depth, tier=SYMBOLS[k][0], variant=v)
             emit("sym_%s_stinger" % k, sting, "symbols", depth=a.depth, tier=SYMBOLS[k][0])
         if a.sheet:
             symbols_sheet(SHEETS / "sound_symbols_sheet.png", voices)
             print("[moments] sheet -> artifacts/targets/sound_symbols_sheet.png")
 
+    if not a.only:                                                            # a full render owns the folder: no stale files
+        for old in out.glob("*.wav"):
+            if old.stem not in manifest:
+                old.unlink()
     mpath.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
     (out / "report.json").write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
     bad = [k for k, e in manifest.items() if e["peak_dbfs"] > -1.0 or abs(e["dc"]) > 1e-3 or not e["edge_ok"]]
