@@ -1,0 +1,28 @@
+{
+  "files": {
+    "background_removal/birefnet.safetensors": {
+      "bytes": 444473596,
+      "commit": "e2bf8e4460fc8fa32bba5ea4d94b3233d367b0e4",
+      "file": "model.safetensors",
+      "licence": "mit",
+      "repo": "ZhengPeng7/BiRefNet",
+      "sha256": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154",
+      "used_by": [
+        "birefnet"
+      ]
+    },
+    "upscale_models/RealESRGAN_x4plus.safetensors": {
+      "bytes": 66857836,
+      "commit": "5fd49b7b278836f48af63ecd314d0f98ab336105",
+      "file": "RealESRGAN_x4plus.safetensors",
+      "licence": "bsd-3-clause",
+      "repo": "Comfy-Org/Real-ESRGAN_repackaged",
+      "sha256": "37f9a931c215f040aa6d50f711f2cb115f713c46df1d0d6469a8bd7bfe9a60bb",
+      "used_by": [
+        "esrgan"
+      ]
+    }
+  },
+  "nodes": {},
+  "note": "Per-file provenance of the local model stack. Written by scripts/ai/install_models.py."
+}
