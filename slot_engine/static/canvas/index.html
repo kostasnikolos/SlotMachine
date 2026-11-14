@@ -1933,6 +1933,7 @@ class Component extends DCLogic {
         const top = d.wins.slice().sort((a, b) => b.payout - a.payout)[0];
         const idx = Array.from(cells);
         this.lastWinCells = idx;
+        this.engSeam(idx, { quiet: !!ctx.quiet });
         this.levLookAtCells(idx, 1400);
         // near-miss: the top line stops one reel short of the full board -> snap to the missing cell and hold
         const ncols = this.state.cols;
@@ -1995,7 +1996,8 @@ class Component extends DCLogic {
         if ((O && O.pay >= 5 * ctx.bet) || removed.length >= 14) this.heavyImpact('bigCascade', T.hitStopMs);
         else if (this.F) this.F.onImpact('explode', { n: removed.length });
         const explodeMs = T.explodeMs * f;
-        this.engDissolve(removed, 0.7 / (explodeMs * k / 1000) / (this.state.turbo ? 1.7 : 1)); // the dissolve plays out inside the explode budget
+        this.engDissolve(removed, 0.7 / (explodeMs * k / 1000) / (this.state.turbo ? 1.7 : 1), true); // the dissolve plays out inside the explode budget
+        this.engSeamScar();
         this.aud.fizz();
         await this.wait(explodeMs);
         this.aud.absorb();
@@ -3909,6 +3911,7 @@ class Component extends DCLogic {
     this.aud.sink();
     this.setState({ dirLevel: n, level: n, meters: D.levels[n].m, pts: D.levels[n].pts, gmult: n >= 5 ? 2 : 1, vents: [], creatureState: n >= 1 ? 'ARMED' : 'DORMANT' });
     this.engOut();
+    this.engSeamScar();
     await this.wait(380);
     if (cols !== this.state.cols) { this.setState({ cols }); await this.wait(150); }
     const G = this.engPopulate(n, 5, cols, n >= 3);
@@ -4034,10 +4037,67 @@ class Component extends DCLogic {
     for (const i of idx) if (E.cells[i]) E.cells[i].darkT = on ? 0.28 : 1;
   }
 
-  engDissolve(idx, rate) {
+  // ---------- Seam Breach (docs/visual_mechanics_ideation.md idea 1): a win is the hull admitting the sea along the way ----------
+  // One node per winning column; the path is jagged in the glass in front of the symbols, so it crosses the gaps between cells.
+  engSeam(idx, opts) {
+    const E = this.E;
+    if (!E || E.fail || !idx || !idx.length) return;
+    const O = opts || {}, cols = E.cols;
+    const byCol = new Map();
+    for (const i of idx) { const c = i % cols; const p = this.cellCenter(i, cols); if (!byCol.has(c)) byCol.set(c, p); }
+    const nodes = [...byCol.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[1]);
+    if (nodes.length < 2) return;
+    const half = 156;
+    const jag = (a, b, n, amp) => { const out = []; for (let j = 1; j <= n; j++) { const t = j / n;
+      out.push([a[0] + (b[0] - a[0]) * t + (Math.random() - 0.5) * amp, a[1] + (b[1] - a[1]) * t + (Math.random() - 0.5) * amp]); } return out; };
+    const spineY = nodes.reduce((a, n2) => a + n2[1], 0) / nodes.length;
+    const x0 = nodes[0][0] - half * 1.1, x1 = nodes[nodes.length - 1][0] + half * 1.1;
+    const spine = [[x0, spineY + (Math.random() - 0.5) * 30]];
+    const steps = Math.max(8, nodes.length * 5);
+    for (let q = 1; q <= steps; q++) { const t = q / steps;
+      spine.push([x0 + (x1 - x0) * t, spineY + Math.sin(t * 7 + nodes.length) * 26 + (Math.random() - 0.5) * 34]); }
+    // one branch per winning cell, from the spine down or up to the symbol
+    const branches = nodes.map((nd) => {
+      let near = spine[0];
+      for (const sp of spine) if (Math.abs(sp[0] - nd[0]) < Math.abs(near[0] - nd[0])) near = sp;
+      return [near].concat(jag(near, [nd[0] + (Math.random() - 0.5) * 40, nd[1]], 4, 26));
+    });
+    E.seams = E.seams || [];
+    if (E.seams.length > 4) E.seams.splice(0, E.seams.length - 4);
+    E.seams.push({ pts: spine, branches, nodes, prog: 0, flow: 0, scar: 0, quiet: !!O.quiet, width: Math.max(0, nodes.length - 3), col: this.seamCol(), jet: O.quiet ? 0 : 1, t: 0 });
+  }
+
+  // the water that comes in takes the depth's colour: biolume near the surface, sulfur mid, blood at the Core
+  seamCol() {
+    const lv = this.state.level || 0;
+    return lv <= 1 ? [120, 240, 230] : lv <= 3 ? [232, 176, 74] : [224, 70, 86];
+  }
+
+  // every seam on the board becomes a scar (a new spin, or the symbols left)
+  engSeamScar() {
+    const E = this.E;
+    if (!E || !E.seams) return;
+    for (const sm of E.seams) if (!sm.scar) sm.scar = 1;
+  }
+
+  engDissolve(idx, rate, implode) {
     const E = this.E;
     if (!E || E.fail) return;
-    for (const i of idx) { const c = E.cells[i]; if (c) { c.disT = 0; c.disRate = rate || 1; c.hitT = c.hitT < 0 ? 0 : c.hitT; } }
+    for (const i of idx) {
+      const c = E.cells[i];
+      if (!c) continue;
+      c.disT = 0; c.disRate = rate || 1; c.hitT = c.hitT < 0 ? 0 : c.hitT;
+      // Hull Implosion (idea 3): the medallion is crushed to its centre instead of bursting outward; a ring of brass dust
+      // and a few bright flecks snap out and are pulled back by the suction, then one bubble of trapped air escapes.
+      if (implode && c.sym !== 'DEAD_SEDIMENT') {
+        c.imp = 0;
+        for (let j = 0; j < 12; j++) {
+          const a = Math.random() * 6.283, v = 190 + Math.random() * 260, bright = j < 3;
+          E.parts.push({ k: 'crush', x: c.x, y: c.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: (bright ? 7 : 12) + Math.random() * 10,
+            bright, flip: 0.12 / (c.disRate || 1), life: 0.55 / (c.disRate || 1), max: 0.55 / (c.disRate || 1) });
+        }
+      }
+    }
   }
 
   // slam stop (mga only): the columns still falling drop at once
@@ -4097,17 +4157,23 @@ class Component extends DCLogic {
       if (!c) continue;
       c.i = ti; c.y0 = this.cellCenter(ti, cols)[1];
       this.setFall(c, c.y, (ti % cols) * cs);
+      c.up = false; c.snow = true;
       nc[ti] = c; moved.add(fi);
     }
     const removed = new Set(d.removed_coords.map((rc) => rc[0] * cols + rc[1]));
     E.cells.forEach((c, i) => { if (c && !removed.has(i) && !moved.has(i) && !nc[i]) nc[i] = c; });
     const perCol = {};
     for (const n of d.newly_dropped) perCol[n.coord[1]] = Math.max(perCol[n.coord[1]] || 0, n.coord[0] + 1);
+    // Marine Snow Refill (idea 4): nothing falls off a shelf. Near the surface the new symbols sink into view out of the murk;
+    // from Midnight down the vacuum the implosions left pulls them up from below. Either way they are dark until they reach the light.
+    const rise = (this.state.level || 0) >= 2;
     for (const n of d.newly_dropped) {
       const ti = n.coord[0] * cols + n.coord[1];
       const k = perCol[n.coord[1]];
       const c = this.mkCell(n.symbol, ti, cols, fin[ti].mult, n.has_pearl);
-      this.setFall(c, c.y0 - k * 312 - 90, 0.03 + n.coord[1] * cs + (k - 1 - n.coord[0]) * 0.05);
+      const span = k * 312 + 90;
+      this.setFall(c, c.y0 + (rise ? span : -span), 0.03 + n.coord[1] * cs + (k - 1 - n.coord[0]) * 0.05);
+      c.up = rise; c.snow = true; c.dark = 0.07; c.darkT = 1;
       nc[ti] = c;
     }
     nc.forEach((c, i) => { if (c) { c.sym = fin[i].sym; c.mult = fin[i].mult; c.pearl = fin[i].pearl; c.darkT = 1; } });
@@ -4324,10 +4390,14 @@ void main(){
       if (c.eatT >= 0) { c.eatT += dt; if (c.eatT > 0.5) c.state = 'gone'; }
       if (c.delay > 0) { c.delay -= sdt; return; }
       if (c.state === 'fall') {
-        c.vy = Math.min(c.vy + 4400 * sdt, 2700);
+        const up = c.up ? -1 : 1;
+        c.vy = up > 0 ? Math.min(c.vy + 4400 * sdt, 2700) : Math.max(c.vy - 4400 * sdt, -2700);
         c.y += c.vy * sdt;
         c.rot = Math.sin(T * 5 + c.phase) * 0.06 * Math.min(1, Math.abs(c.vy) / 1600);
-        if (c.y >= c.y0) {
+        // marine snow in its wake: specks drift the opposite way as it travels
+        if (c.snow && Math.random() < 0.5) E.parts.push({ k: 'snow', x: c.x + (Math.random() - 0.5) * 240, y: c.y + (Math.random() - 0.5) * 200,
+          vy: up > 0 ? -90 - Math.random() * 90 : 70 + Math.random() * 90, r: 3 + Math.random() * 5, w: Math.random() * 6.28, life: 0.7 + Math.random() * 0.6, max: 1.3 });
+        if (up > 0 ? c.y >= c.y0 : c.y <= c.y0) {
           c.y = c.y0;
           if (!c.landed) {
             c.landed = true;
@@ -4338,8 +4408,8 @@ void main(){
             const sy = D.sym[c.sym];
             if (sy.wild) { c.flash = 1; this.burst(c.x, c.y0, 'glint'); }
           }
-          if (c.vy > 700) c.vy = -c.vy * 0.17;
-          else { c.vy = 0; c.state = 'idle'; c.rot = 0; }
+          if (Math.abs(c.vy) > 700) c.vy = -c.vy * 0.17;
+          else { c.vy = 0; c.state = 'idle'; c.rot = 0; c.snow = false; }
         }
       } else if (c.state === 'out') {
         c.vy = Math.min(c.vy + 3800 * sdt, 2800);
@@ -4348,13 +4418,14 @@ void main(){
         if (c.y - 160 > E.H) c.state = 'gone';
       }
       if (c.hitT >= 0) c.hitT += sdt;
+      if (c.imp != null) c.imp = Math.min(1, c.imp + sdt * (c.disRate || 1) * 1.45);
       if (c.disT >= 0) {
         c.disT += sdt * (c.disRate || 1);
         const rock = c.sym === 'DEAD_SEDIMENT';
         if (c.disT < 0.7) {
           if (rock) {
             if (Math.random() < 0.5) E.parts.push({ k: 'puff', x: c.x + (Math.random() - 0.5) * 220, y: c.y + (Math.random() - 0.5) * 200, vx: (Math.random() - 0.5) * 120, vy: 40 + Math.random() * 60, r: 18 + Math.random() * 16, gr: 70, life: 0.9, max: 1.2 });
-          } else {
+          } else if (c.imp == null) {
             for (let j = 0; j < 2; j++) {
               const a = Math.random() * 6.283, rr = Math.random() * 120;
               E.parts.push({ k: 'ember', x: c.x + Math.cos(a) * rr, y: c.y + Math.sin(a) * rr, vx: (Math.random() - 0.5) * 90, vy: -60 - Math.random() * 170, r: 2 + Math.random() * 3, life: 0.6 + Math.random() * 0.6, max: 1.2 });
@@ -4423,13 +4494,14 @@ void main(){
         const pop = c.hitT >= 0 ? 0.1 * Math.min(1, c.hitT / 0.12) * (1 - 0.4 * Math.min(1, Math.max(0, c.hitT - 0.2) / 0.4)) : 0;
         const shake = c.disT < 0 ? hit * Math.sin(c.hitT * 40) * 0.035 : 0;
         const dis = c.disT >= 0 ? Math.min(1, c.disT / 0.7) : 0;
-        const sc = (1 + (b - 0.5) * 0.03 * sy.amp) * (1 + pop + c.pop * 0.18) * (1 - c.squash * 0.06);
+        const ik = c.imp != null ? c.imp : 0, iq = ik * ik * ik * ik;      // ease-in-quart: slow buckle, fast collapse
+        const sc = (1 + (b - 0.5) * 0.03 * sy.amp) * (1 + pop + c.pop * 0.18) * (1 - c.squash * 0.06) * (1 - 0.92 * iq);
         const se = c.surf ? c.surf * c.surf : 0;
         // swallowed: dragged toward the bite, shrinking and spinning, gone into the dark
         const ea = c.eatT >= 0 ? Math.min(1, c.eatT / 0.45) : 0, ee = ea * ea;
         const al = (c.rise ? 1 - 0.9 * Math.min(1, se * 1.3) : 1) * (1 - ee);
         if (al < 1) gl.uniform1f(U.uAlpha, Math.max(0, al));
-        quad(c, c.x + ((c.ex || c.x) - c.x) * ee, c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half, c.rot + shake + ee * (c.eatSpin || 1.2), sy.t,
+        quad(c, c.x + ((c.ex || c.x) - c.x) * ee, c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half, c.rot + shake + ee * (c.eatSpin || 1.2) + ik * 0.55 * (c.i % 2 ? 1 : -1), sy.t,
           sc * (1 - 0.45 * se) * (1 - 0.8 * ee), 0.45 + 0.65 * b * sy.amp + c.flash * 1.6, b * sy.amp,
           hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35, dis, c.dark * (1 - 0.7 * ee));
         if (al < 1) gl.uniform1f(U.uAlpha, 1);
@@ -4466,6 +4538,67 @@ void main(){
       f.fillStyle = pg;
       f.fillRect(cx - 150, E.H * 0.25, 300, E.H * 0.75);
       if (Math.random() < 0.9) E.parts.push({ k: 'ember', x: cx + (Math.random() - 0.5) * 240, y: E.H + 10, vx: (Math.random() - 0.5) * 50, vy: -380 - Math.random() * 420, r: 2 + Math.random() * 4, life: 1 + Math.random() * 0.8, max: 1.8 });
+    }
+    // Seam Breach: the crack in the glass along the winning way, its needle jets and the silt current behind them
+    if (E.seams && E.seams.length) {
+      for (let j = E.seams.length - 1; j >= 0; j--) {
+        const sm = E.seams[j];
+        sm.t += sdt;
+        sm.prog = Math.min(1, sm.prog + sdt / 0.24);
+        if (sm.prog >= 1 && !sm.scar) sm.flow = Math.min(1, sm.flow + sdt / 0.14);
+        if (sm.scar) { sm.scar -= sdt / 2.6; if (sm.scar <= 0) { E.seams.splice(j, 1); continue; } }
+        const live = sm.scar ? sm.scar * 0.4 : 1, col = sm.col;
+        const n = Math.max(2, Math.ceil(sm.pts.length * sm.prog));
+        const path = () => {
+          f.beginPath();
+          for (let q = 0; q < n; q++) { const pt = sm.pts[q]; q ? f.lineTo(pt[0], pt[1]) : f.moveTo(pt[0], pt[1]); }
+          // the branches open behind the spine's head, each once the crack has passed its column
+          const bn = sm.branches || [];
+          for (let bi = 0; bi < bn.length; bi++) {
+            const br = bn[bi], reach = (sm.prog - (bi + 0.4) / (bn.length + 1)) * 3.2;
+            if (reach <= 0) continue;
+            const m = Math.max(2, Math.ceil(br.length * Math.min(1, reach)));
+            for (let q = 0; q < m; q++) { const pt = br[q]; q ? f.lineTo(pt[0], pt[1]) : f.moveTo(pt[0], pt[1]); }
+          }
+        };
+        // the silt current runs under the crack, toward the last symbol
+        if (sm.flow > 0 && !sm.scar) {
+          f.globalCompositeOperation = 'lighter';
+          f.save(); f.setLineDash([6, 34]); f.lineDashOffset = -T * 520; f.lineCap = 'round';
+          f.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (0.26 * sm.flow) + ')';
+          f.lineWidth = 16 + sm.width * 5;
+          f.beginPath(); for (let q = 0; q < n; q++) { const pt = sm.pts[q]; q ? f.lineTo(pt[0], pt[1]) : f.moveTo(pt[0], pt[1]); }
+          f.stroke(); f.restore();
+        }
+        // the crack: a dark core with a cyan refraction halo and a thin bright edge
+        f.globalCompositeOperation = 'lighter';
+        f.save(); f.lineJoin = 'round'; f.lineCap = 'round';
+        f.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (0.16 * live) + ')';
+        f.lineWidth = 54; path(); f.stroke();
+        f.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (0.22 * live) + ')';
+        f.lineWidth = 22; path(); f.stroke();
+        f.globalCompositeOperation = 'source-over';
+        f.strokeStyle = 'rgba(2,6,10,' + (0.8 * live) + ')'; f.lineWidth = 11; path(); f.stroke();
+        f.strokeStyle = 'rgba(214,240,243,' + (0.55 * live) + ')'; f.lineWidth = 3.5; path(); f.stroke();
+        f.restore();
+        // needle jets: they fire inward from the crack at each symbol, 1-2 cells long, and atomise
+        if (sm.jet && !sm.scar) {
+          f.globalCompositeOperation = 'lighter';
+          for (let q = 0; q < sm.nodes.length; q++) {
+            const nd = sm.nodes[q], at = sm.t - 0.24 - q * 0.02;
+            if (at < 0 || at > 0.34) continue;
+            const k = at / 0.34, dir = (q % 2 ? 1 : -1), len = 300 * Math.min(1, k * 4) * (1 - k * 0.3);
+            const gr = f.createLinearGradient(nd[0], nd[1], nd[0], nd[1] + dir * len);
+            gr.addColorStop(0, 'rgba(236,252,252,' + (0.85 * (1 - k)) + ')');
+            gr.addColorStop(0.45, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (0.5 * (1 - k)) + ')');
+            gr.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+            f.strokeStyle = gr; f.lineWidth = 15; f.lineCap = 'round';
+            f.beginPath(); f.moveTo(nd[0], nd[1]); f.lineTo(nd[0] + (Math.random() - 0.5) * 16, nd[1] + dir * len); f.stroke();
+            if (Math.random() < 0.6) E.parts.push({ k: 'spray', x: nd[0] + (Math.random() - 0.5) * 60, y: nd[1] + dir * len * 0.7,
+              vx: (Math.random() - 0.5) * 150, vy: dir * (60 + Math.random() * 220), r: 5 + Math.random() * 7, life: 0.5 + Math.random() * 0.4, max: 0.9 });
+          }
+        }
+      }
     }
     for (let j = E.parts.length - 1; j >= 0; j--) {
       const p = E.parts[j];
@@ -4517,6 +4650,28 @@ void main(){
         g.addColorStop(1, 'rgba(63,224,208,0)');
         f.fillStyle = g;
         f.beginPath(); f.arc(p.x, p.y, pr, 0, 6.2832); f.fill();
+      } else if (p.k === 'crush') {
+        // brass dust and bright flecks: thrown out, then sucked back into the collapse
+        if (p.flip > 0) { p.flip -= sdt; if (p.flip <= 0) { p.vx *= -1.7; p.vy *= -1.7; } }
+        p.x += p.vx * sdt; p.y += p.vy * sdt;
+        f.globalCompositeOperation = 'lighter';
+        const c0 = p.bright ? '226,248,250' : '150,112,62';
+        const g = f.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        g.addColorStop(0, 'rgba(' + c0 + ',' + (a * (p.bright ? 0.9 : 0.5)) + ')');
+        g.addColorStop(1, 'rgba(' + c0 + ',0)');
+        f.fillStyle = g; f.beginPath(); f.arc(p.x, p.y, p.r, 0, 6.2832); f.fill();
+      } else if (p.k === 'spray') {
+        // atomised water off a jet: fine, pale, falling away
+        p.x += p.vx * sdt; p.y += p.vy * sdt; p.vy += 420 * sdt; p.vx *= 0.97;
+        f.globalCompositeOperation = 'lighter';
+        f.fillStyle = 'rgba(228,250,250,' + (a * 0.55) + ')';
+        f.beginPath(); f.arc(p.x, p.y, p.r, 0, 6.2832); f.fill();
+      } else if (p.k === 'snow') {
+        // marine snow: pale specks drifting the other way, which is what sinking looks like from inside
+        p.w += sdt * 1.6; p.x += Math.sin(p.w) * 26 * sdt; p.y += p.vy * sdt;
+        f.globalCompositeOperation = 'lighter';
+        f.fillStyle = 'rgba(206,224,226,' + (a * 0.5) + ')';
+        f.beginPath(); f.arc(p.x, p.y, p.r, 0, 6.2832); f.fill();
       } else if (p.k === 'ember') {
         p.x += p.vx * sdt; p.y += p.vy * sdt; p.vx *= 0.94; p.vy = p.vy * 0.94 - 90 * sdt;
         f.globalCompositeOperation = 'lighter';
