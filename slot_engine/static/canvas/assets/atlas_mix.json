@@ -1,0 +1,26 @@
+{
+  "cell": 384,
+  "grid": 4,
+  "tiles": {
+    "low_a": {
+      "tile": 9,
+      "source": "generated/targets/symbols/low_a.png"
+    },
+    "low_k": {
+      "tile": 10,
+      "source": "generated/targets/symbols/low_k.png"
+    },
+    "low_q": {
+      "tile": 11,
+      "source": "generated/targets/symbols/low_q.png"
+    },
+    "low_j": {
+      "tile": 12,
+      "source": "generated/targets/symbols/low_j.png"
+    },
+    "low_10": {
+      "tile": 13,
+      "source": "generated/targets/symbols/low_10.png"
+    }
+  }
+}

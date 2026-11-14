@@ -93,6 +93,8 @@ def main() -> int:
     ap.add_argument("--out", default=str(ASSETS / "atlas"), help="output prefix; writes <prefix>_{albedo,normal,emissive,aux}.jpg")
     ap.add_argument("--quality", type=int, default=92)
     ap.add_argument("--emissive-gain", type=float, default=0.55)
+    ap.add_argument("--only", nargs="*", help="pack only these tiers (low mid high wild); the other cells keep the earlier art. "
+                                              "`--only low --out .../atlas_mix` is the mixed set the game uses by default")
     ap.add_argument("--albedo", action="store_true", help="use <key>_albedo.png (un-graded paint) where it exists")
     ap.add_argument("--preview", help="also write a lit preview sheet here")
     a = ap.parse_args()
@@ -101,7 +103,7 @@ def main() -> int:
     used = {}
     for tile, key in TILES.items():
         p = src / f"{key}.png"
-        if not p.exists():
+        if not p.exists() or (a.only and tier_of(key) not in a.only):
             continue
         fill = FILL_ALL
         # <key>_albedo.png is the un-graded paint. Tried in the game (2026-11-14) and rejected: with the tier ladder left to the

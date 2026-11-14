@@ -336,10 +336,10 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 </sc-if>
 </div>
 <sc-for list="{{vents}}" as="v" hint-placeholder-count="0"><div class="vent" style="left: {{v.x}}px">REEL {{v.r}} · ×{{v.m}}</div></sc-for>
-<img data-atlas="albedo" src="assets/atlas_albedo.jpg" alt="" style="display: none">
-<img data-atlas="normal" src="assets/atlas_normal.jpg" alt="" style="display: none">
-<img data-atlas="emissive" src="assets/atlas_emissive.jpg" alt="" style="display: none">
-<img data-atlas="aux" src="assets/atlas_aux.jpg" alt="" style="display: none">
+<img data-atlas="albedo" src="assets/atlas_mix_albedo.jpg" alt="" style="display: none">
+<img data-atlas="normal" src="assets/atlas_mix_normal.jpg" alt="" style="display: none">
+<img data-atlas="emissive" src="assets/atlas_mix_emissive.jpg" alt="" style="display: none">
+<img data-atlas="aux" src="assets/atlas_mix_aux.jpg" alt="" style="display: none">
 
 </section>
 
@@ -570,6 +570,13 @@ a{color:#3ff5ff}a:hover{color:#9ffaff}
 class Component extends DCLogic {
   state = this.initState();
 
+  // which symbol art is on the reels: 'mix' (default: the carved runes with the earlier creature, equipment and Wild medallions,
+  // the owner's pick), 'new' (the whole repainted set) or 'old' (the earlier set untouched). ?symbols=new|mix|old
+  symSet() {
+    if (!this._symSet) { const m = /[?&]symbols=(new|mix|old)(&|$)/.exec(location.search); this._symSet = m ? m[1] : 'mix'; }
+    return this._symSet;
+  }
+
   // ---------- game data (mirrors slot_engine/config) ----------
   defs() {
     if (this._defs) return this._defs;
@@ -591,9 +598,17 @@ class Component extends DCLogic {
     // the tier ladder on screen (docs/targets/review_round2.md, G1/G2). k = size of the quad relative to the standard one, set so the
     // symbol's longest side is 0.70 / 0.90 / 1.06 / 1.14 / 1.00 of a cell (the atlas fills 0.94 of its tile; the standard quad is 0.89
     // of a cell); g = gain on the lit paint, so creatures out-shine the runes whatever the light is doing
-    const tier = { LOW: { k: 0.836, g: 1.0 }, MID: { k: 1.075, g: 1.4 }, HIGH: { k: 1.266, g: 1.85 }, APEX: { k: 1.362, g: 3.1 },
-      WILD: { k: 1.194, g: 2.2 }, BLOCK: { k: 1.1, g: 1.3 } };   // gains tuned on the graded paintings in generated/targets/symbols
-    for (const k2 in sym) sym[k2].tier = tier[sym[k2].cat] || { k: 1, g: 1 };
+    const tierNew = { LOW: { k: 0.836, g: 1.0, h: 1 }, MID: { k: 1.075, g: 1.4, h: 1 }, HIGH: { k: 1.266, g: 1.85, h: 1 }, APEX: { k: 1.362, g: 3.1, h: 1 },
+      WILD: { k: 1.194, g: 2.2, h: 1 }, BLOCK: { k: 1.1, g: 1.3, h: 1 } };   // gains tuned on the graded paintings in generated/targets/symbols
+    // the earlier medallions fill their whole tile and were painted bright, so they take a small overscan, a modest gain and a
+    // softer own-light on a hit (h); in the mix the runes are the new tablets and everything above them is a medallion
+    const tierOld = { LOW: { k: 1.0, g: 1.15, h: 0.35 }, MID: { k: 1.0, g: 1.2, h: 0.35 }, HIGH: { k: 1.07, g: 1.5, h: 0.35 }, APEX: { k: 1.14, g: 1.9, h: 0.35 },
+      WILD: { k: 1.1, g: 1.65, h: 0.35 }, BLOCK: { k: 1.0, g: 1.0, h: 0.35 } };
+    const set = this.symSet();
+    for (const k2 in sym) {
+      const cat = sym[k2].cat, old = set === 'old' || (set === 'mix' && cat !== 'LOW');
+      sym[k2].tier = (old ? tierOld : tierNew)[cat] || { k: 1, g: 1, h: 1 };
+    }
     // symbol weights per depth level (relative), from config/weights.py after the 96% rebalance: no sediment
     const weights = [
       { LOW_10: 320, LOW_J: 280, LOW_Q: 250, LOW_K: 220, LOW_A: 180, MID_HELMET: 120, MID_COMPASS: 100, HIGH_VIPER: 70, HIGH_ANGLER: 50, HIGH_SQUID: 30, HIGH_LEVIATHAN: 20, WILD_MAW: 31 },
@@ -4152,8 +4167,16 @@ class Component extends DCLogic {
     const set = new Set(idx);
     E.cells.forEach((c, i) => {
       if (!c) return;
-      if (set.has(i)) { c.hitT = 0; c.darkT = 1; this.burst(c.x, c.y, 'ring'); }
-      else c.darkT = 0.4;
+      if (set.has(i)) {
+        c.hitT = 0; c.darkT = 1; this.burst(c.x, c.y, 'ring');
+        // symbol behaviours (visual only): the Viperfish snaps forward, the Phantom Squid leaves a puff of ink behind it
+        if (c.sym === 'HIGH_VIPER') c.snap = 1;
+        if (c.sym === 'HIGH_SQUID') for (let j = 0; j < 5; j++) {
+          const a = Math.random() * 6.283, sp = 40 + Math.random() * 110;
+          E.parts.push({ k: 'ink', x: c.x + (Math.random() - 0.5) * 120, y: c.y + 40 + Math.random() * 80, vx: Math.cos(a) * sp, vy: Math.abs(Math.sin(a)) * sp,
+            r: 34 + Math.random() * 30, gr: 90 + Math.random() * 60, life: 0.5 + Math.random() * 0.3, max: 0.8 });
+        }
+      } else c.darkT = 0.4;
     });
   }
 
@@ -4374,7 +4397,7 @@ precision mediump float;
 uniform sampler2D uAlb, uNrm, uEmi, uAux;
 uniform vec4 uTile;
 uniform vec3 uLight, uLightCol;
-uniform float uGlow, uDissolve, uHit, uDark, uAlpha, uSeed, uBreath, uRip, uTime, uGain;
+uniform float uGlow, uDissolve, uHit, uDark, uAlpha, uSeed, uBreath, uRip, uTime, uGain, uLure;
 uniform vec2 uRipC;
 varying vec2 vUv;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -4413,6 +4436,8 @@ void main(){
   col += vec3(0.25, 0.9, 1.0) * rim * 0.12 * uGlow;
   col = mix(col, col * vec3(0.5, 0.82, 1.05) + vec3(0.0, 0.05, 0.08) * (0.6 + 0.4 * rs), clamp(rk * 0.55, 0.0, 0.7));
   col *= uDark;
+  // the Angler's lure lights what is next to it: a cold fill that ignores the dimming, like a lamp held up in the dark
+  col += (alb * 1.5 + vec3(0.015, 0.05, 0.055)) * vec3(0.3, 0.92, 1.0) * uLure;
   float el = dot(emi, vec3(0.333));
   // a struck symbol lights in its OWN light (a rune's groove, a lure, a throat) rather than one orange for everything;
   // only the wet highlights still catch the warm flash
@@ -4438,6 +4463,10 @@ void main(){
     const imgs = {};
     document.querySelectorAll('img[data-atlas]').forEach((im) => { imgs[im.getAttribute('data-atlas')] = im; });
     const names = ['albedo', 'normal', 'emissive', 'aux'];
+    // the page ships the mix atlases; another symbol set (?symbols=new|old) is swapped in here before the textures are made.
+    // symFrame calls this every frame until it returns, so a swapped image simply loads on a later frame.
+    const atl = this.symSet() === 'new' ? 'atlas' : 'atlas_' + this.symSet();
+    names.forEach((n) => { const im = imgs[n]; if (im && !im.getAttribute('src').endsWith(atl + '_' + n + '.jpg')) im.setAttribute('src', 'assets/' + atl + '_' + n + '.jpg'); });
     if (!c || !fx || names.some((n) => !imgs[n] || !imgs[n].complete || !imgs[n].naturalWidth)) return null;
     const E = { c, fx, fctx: fx.getContext('2d'), W: c.width, H: c.height, parts: [], outgoing: [], cells: [], cols: 5, vents: {}, lx: c.width / 2, ly: c.height * 0.3 };
     const opts = { premultipliedAlpha: true, antialias: true, alpha: true };
@@ -4479,7 +4508,7 @@ void main(){
       else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     });
     const U = {};
-    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uGain', 'uAlb', 'uNrm', 'uEmi', 'uAux']
+    ['uRes', 'uRect', 'uScale', 'uTile', 'uLight', 'uLightCol', 'uGlow', 'uDissolve', 'uHit', 'uDark', 'uAlpha', 'uSeed', 'uBreath', 'uRip', 'uRipC', 'uTime', 'uGain', 'uLure', 'uAlb', 'uNrm', 'uEmi', 'uAux']
       .forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
     gl.uniform1i(U.uAlb, 0); gl.uniform1i(U.uNrm, 1); gl.uniform1i(U.uEmi, 2); gl.uniform1i(U.uAux, 3);
     gl.uniform2f(U.uRes, E.W, E.H);
@@ -4520,6 +4549,7 @@ void main(){
       c.squash *= Math.exp(-dt * 7);
       c.flash *= Math.exp(-dt * 2.5);
       c.pop *= Math.exp(-dt * 5);
+      if (c.snap) c.snap = Math.max(0, c.snap - dt * 2.6);
       if (c.surf) c.surf = Math.max(0, c.surf - dt * (c.surfRate || (c.rise ? 0.95 : 1.3)));
       if (c.eatT >= 0) { c.eatT += dt; if (c.eatT > 0.5) c.state = 'gone'; }
       if (c.delay > 0) { c.delay -= sdt; return; }
@@ -4541,6 +4571,11 @@ void main(){
             this.burst(c.x, c.y0, 'puff');
             const sy = D.sym[c.sym];
             if (sy.wild) { c.flash = 1; this.burst(c.x, c.y0, 'glint'); }
+            // symbol behaviour (visual only): where the Leviathan lands, its neighbours fall into its shadow and recover in ~0.4 s
+            if (c.sym === 'HIGH_LEVIATHAN') {
+              c.flash = Math.max(c.flash, 0.8);
+              for (const n of E.cells) if (n && n !== c && n.landed && Math.hypot(n.x - c.x, n.y - c.y0) < 480) n.dark = Math.min(n.dark, 0.4);
+            }
           }
           if (Math.abs(c.vy) > 700) c.vy = -c.vy * 0.17;
           else { c.vy = 0; c.state = 'idle'; c.rot = 0; c.snow = false; }
@@ -4621,10 +4656,23 @@ void main(){
         gl.uniform1f(U.uSeed, c.seed);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       };
+      // symbol behaviours (visual only): every Angler on the board is a lamp for the cells around it
+      const lamps = live.filter((c) => c.sym === 'HIGH_ANGLER' && c.state !== 'fall' && c.disT < 0 && !(c.eatT >= 0));
+      const lureAt = (c) => {
+        let v = 0;
+        for (const a of lamps) {
+          if (a === c) continue;
+          const dd = Math.hypot(a.x - c.x, a.y - c.y);
+          if (dd < 520) v += (1 - dd / 520) * (0.5 + 0.5 * Math.sin(T * 1.9 + a.phase)) * (a.hitT >= 0 ? 1.8 : 1) * a.dark;
+        }
+        return Math.min(0.55, v * 0.34);
+      };
       for (const c of list) {
         if (c.state === 'gone') continue;
         const sy = D.sym[c.sym];
         const b = 0.5 + 0.5 * Math.sin(T * 1.55 + c.phase);
+        const snap = c.snap || 0;
+        gl.uniform1f(U.uLure, lamps.length ? lureAt(c) : 0);
         const hit = c.hitT >= 0 ? Math.min(1, c.hitT / 0.18) : 0;
         const pop = c.hitT >= 0 ? 0.1 * Math.min(1, c.hitT / 0.12) * (1 - 0.4 * Math.min(1, Math.max(0, c.hitT - 0.2) / 0.4)) : 0;
         const shake = c.disT < 0 ? hit * Math.sin(c.hitT * 40) * 0.035 : 0;
@@ -4637,12 +4685,13 @@ void main(){
         const al = (c.rise ? 1 - 0.9 * Math.min(1, se * 1.3) : 1) * (1 - ee);
         if (al < 1) gl.uniform1f(U.uAlpha, Math.max(0, al));
         gl.uniform1f(U.uGain, sy.tier.g);
-        quad(c, c.x + ((c.ex || c.x) - c.x) * ee, c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half, c.rot + shake + ee * (c.eatSpin || 1.2) + ik * 0.55 * (c.i % 2 ? 1 : -1), sy.t,
-          sc * sy.tier.k * (1 - 0.45 * se) * (1 - 0.8 * ee), (E.glowOff ? 0 : 0.45 + 0.65 * b * sy.amp) + c.flash * 1.6, b * sy.amp,
-          hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35, dis, c.dark * (1 - 0.7 * ee));
+        quad(c, c.x + ((c.ex || c.x) - c.x) * ee - snap * 26 * Math.sin(snap * 3.1), c.y + se * (c.rise ? 170 : 130) + ((c.ey || c.y) - c.y) * ee, half,
+          c.rot + shake + ee * (c.eatSpin || 1.2) + ik * 0.55 * (c.i % 2 ? 1 : -1) - 0.3 * snap * Math.sin(snap * 6.283), sy.t,
+          sc * sy.tier.k * (1 + 0.2 * snap) * (1 - 0.45 * se) * (1 - 0.8 * ee), (E.glowOff ? 0 : 0.45 + 0.65 * b * sy.amp) + c.flash * 1.6, b * sy.amp,
+          (hit * (0.75 + 0.25 * Math.sin(c.hitT * 14)) + c.flash * 0.35) * sy.tier.h, dis, c.dark * (1 - 0.7 * ee));
         if (al < 1) gl.uniform1f(U.uAlpha, 1);
         // pearl token riding on the cell
-        gl.uniform1f(U.uGain, 1.2);
+        gl.uniform1f(U.uGain, 1.2); gl.uniform1f(U.uLure, 0);
         if (c.pearl && dis < 0.5 && !(c.eatT >= 0)) quad(c, c.x + half * 0.62, c.y - half * 0.62, half * 0.3, 0, 7, 1 + 0.08 * Math.sin(T * 4 + c.phase), 1.4 + 0.6 * b, 0, 0, 0, c.dark);
       }
     } else if (E.ctx2d) {

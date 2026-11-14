@@ -108,11 +108,37 @@ def sheet(frames, origin_ms, ev, title, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--headed", action="store_true")
+    ap.add_argument("--compare", action="store_true", help="only shoot the fixed board in the three symbol sets -> slice_sets_compare.png")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     report, errors = {}, []
     with sync_playwright() as pw:
         br = launch(pw, a.headed)
+        if a.compare:
+            shots = []
+            for name in ("old", "mix", "new"):
+                ctx = br.new_context(viewport={"width": 1920, "height": 1080})
+                page = ctx.new_page()
+                page.on("pageerror", lambda e: errors.append(str(e)))
+                page.goto(PAGE + "&symbols=" + name)
+                page.wait_for_function("window.__FEEL_READY === true || !!window.__canvasGame", timeout=30000)
+                page.wait_for_timeout(3000)
+                page.evaluate(SET_JS, SET_BOARD)
+                page.wait_for_timeout(2600)
+                page.screenshot(path=str(OUT / f"slice_set_{name}.png"))
+                shots.append((name, Image.open(OUT / f"slice_set_{name}.png").convert("RGB").crop((390, 0, 1480, 960))))
+                ctx.close()
+            w, h = shots[0][1].size
+            sheet_im = Image.new("RGB", (3 * w + 4 * 12, h + 64), (4, 9, 12))
+            d = ImageDraw.Draw(sheet_im)
+            labels = {"old": "PREVIOUS SET", "mix": "MIX: new runes + previous creatures (default)", "new": "NEW SET"}
+            for i, (name, im) in enumerate(shots):
+                sheet_im.paste(im, (12 + i * (w + 12), 52))
+                d.text((12 + i * (w + 12), 12), labels[name], fill=(63, 224, 208), font=font(26))
+            sheet_im.save(OUT / "slice_sets_compare.png")
+            br.close()
+            print("compare ->", OUT / "slice_sets_compare.png", "errors:", errors)
+            return 1 if errors else 0
         # ---- idle screens ----
         for w, h, name in ((1920, 1080, "slice_idle_1920"), (390, 844, "slice_idle_390")):
             ctx = br.new_context(viewport={"width": w, "height": h}, device_scale_factor=1 if w > 1000 else 2)
