@@ -93,6 +93,7 @@ def main() -> int:
     ap.add_argument("--out", default=str(ASSETS / "atlas"), help="output prefix; writes <prefix>_{albedo,normal,emissive,aux}.jpg")
     ap.add_argument("--quality", type=int, default=92)
     ap.add_argument("--emissive-gain", type=float, default=0.55)
+    ap.add_argument("--albedo", action="store_true", help="use <key>_albedo.png (un-graded paint) where it exists")
     ap.add_argument("--preview", help="also write a lit preview sheet here")
     a = ap.parse_args()
     src = Path(a.src).resolve()
@@ -103,9 +104,10 @@ def main() -> int:
         if not p.exists():
             continue
         fill = FILL_ALL
-        # <key>_albedo.png, when the artist supplies it, is the un-graded paint meant for the engine's own lighting
+        # <key>_albedo.png is the un-graded paint. Tried in the game (2026-11-14) and rejected: with the tier ladder left to the
+        # shader alone the set goes flat and grey and the Wild loses its red. The graded paintings stay the default.
         pa = src / f"{key}_albedo.png"
-        cell = fit_cell(Image.open(pa if pa.exists() else p), fill)
+        cell = fit_cell(Image.open(pa if (a.albedo and pa.exists()) else p), fill)
         glow = None
         pm, pw = src / f"{key}_emissive.png", src / f"{key}_win.png"
         if pm.exists() and pw.exists():

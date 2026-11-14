@@ -566,8 +566,8 @@ class Component extends DCLogic {
     // the tier ladder on screen (docs/targets/review_round2.md, G1/G2). k = size of the quad relative to the standard one, set so the
     // symbol's longest side is 0.70 / 0.90 / 1.06 / 1.14 / 1.00 of a cell (the atlas fills 0.94 of its tile; the standard quad is 0.89
     // of a cell); g = gain on the lit paint, so creatures out-shine the runes whatever the light is doing
-    const tier = { LOW: { k: 0.836, g: 1.0 }, MID: { k: 1.075, g: 1.7 }, HIGH: { k: 1.266, g: 1.85 }, APEX: { k: 1.362, g: 2.9 },
-      WILD: { k: 1.194, g: 2.2 }, BLOCK: { k: 1.1, g: 1.3 } };
+    const tier = { LOW: { k: 0.836, g: 1.0 }, MID: { k: 1.075, g: 1.4 }, HIGH: { k: 1.266, g: 1.85 }, APEX: { k: 1.362, g: 2.9 },
+      WILD: { k: 1.194, g: 2.5 }, BLOCK: { k: 1.1, g: 1.3 } };   // gains tuned on the graded paintings in generated/targets/symbols
     for (const k2 in sym) sym[k2].tier = tier[sym[k2].cat] || { k: 1, g: 1 };
     // symbol weights per depth level (relative), from config/weights.py after the 96% rebalance: no sediment
     const weights = [
