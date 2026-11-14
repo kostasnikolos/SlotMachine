@@ -1,6 +1,6 @@
 [
  {
-  "t": 29.7,
+  "t": 32.9,
   "f": 1,
   "type": "profile",
   "profile": "mga",
@@ -16,15 +16,15 @@
   "shakeMs": 250
  },
  {
-  "t": 226.7,
+  "t": 231.2,
   "f": 6,
   "type": "ready",
   "profile": "mga",
   "front": "canvas"
  },
  {
-  "t": 2113.6,
-  "f": 52,
+  "t": 2144,
+  "f": 55,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -34,105 +34,105 @@
   "front": "canvas"
  },
  {
-  "t": 2480.3,
-  "f": 75,
+  "t": 2517.5,
+  "f": 79,
   "type": "slam"
  },
  {
-  "t": 3718.6,
-  "f": 150,
+  "t": 3761,
+  "f": 154,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1605,
+  "atMs": 1617,
   "turbo": false
  },
  {
-  "t": 3718.7,
-  "f": 150,
+  "t": 3761.1,
+  "f": 154,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 3819,
-  "f": 156,
+  "t": 3860.9,
+  "f": 160,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1705,
+  "atMs": 1717,
   "turbo": false
  },
  {
-  "t": 3819,
-  "f": 156,
+  "t": 3860.9,
+  "f": 160,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 3918.7,
-  "f": 162,
+  "t": 3961.1,
+  "f": 166,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1805,
+  "atMs": 1817,
   "turbo": false
  },
  {
-  "t": 3918.7,
-  "f": 162,
+  "t": 3961.2,
+  "f": 166,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 4019,
-  "f": 168,
+  "t": 4061.1,
+  "f": 172,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1905,
+  "atMs": 1917,
   "turbo": false
  },
  {
-  "t": 4019,
-  "f": 168,
+  "t": 4061.2,
+  "f": 172,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 4118.8,
-  "f": 174,
+  "t": 4161.4,
+  "f": 178,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2005,
+  "atMs": 2017,
   "turbo": false
  },
  {
-  "t": 4118.8,
-  "f": 174,
+  "t": 4161.4,
+  "f": 178,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 4354,
-  "f": 188,
+  "t": 4372.5,
+  "f": 190,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 2240
+  "beforePadMs": 2229
  },
  {
-  "t": 4354.2,
-  "f": 188,
+  "t": 4372.6,
+  "f": 190,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2241,
+  "cycleMs": 2229,
   "won": 0,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 4992.4,
-  "f": 203,
+  "t": 4999.8,
+  "f": 205,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -142,100 +142,207 @@
   "front": "canvas"
  },
  {
-  "t": 6604.4,
-  "f": 300,
+  "t": 6530.3,
+  "f": 297,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 6530.3,
+  "f": 297,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 6530.3,
+  "f": 297,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 6612.6,
+  "f": 302,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 6680.4,
+  "f": 306,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1612,
+  "atMs": 1681,
   "turbo": false
  },
  {
-  "t": 6604.4,
-  "f": 300,
+  "t": 6680.4,
+  "f": 306,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 6704.4,
-  "f": 306,
+  "t": 6780.5,
+  "f": 312,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1712,
+  "atMs": 1781,
   "turbo": false
  },
  {
-  "t": 6704.4,
-  "f": 306,
+  "t": 6780.5,
+  "f": 312,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 6804.6,
+  "t": 6782.1,
   "f": 312,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 6880.7,
+  "f": 318,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1812,
+  "atMs": 1881,
   "turbo": false
  },
  {
-  "t": 6804.6,
-  "f": 312,
+  "t": 6880.8,
+  "f": 318,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 6904.7,
-  "f": 318,
+  "t": 6980.6,
+  "f": 324,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1912,
+  "atMs": 1981,
   "turbo": false
  },
  {
-  "t": 6904.8,
-  "f": 318,
+  "t": 6980.6,
+  "f": 324,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 7004.5,
-  "f": 324,
+  "t": 7082.6,
+  "f": 330,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2012,
+  "atMs": 2083,
   "turbo": false
  },
  {
-  "t": 7004.6,
-  "f": 324,
+  "t": 7082.6,
+  "f": 330,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 7223.3,
-  "f": 337,
-  "type": "pad",
-  "ms": 0,
-  "beforePadMs": 2231
+  "t": 7313,
+  "f": 343,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
  },
  {
-  "t": 7223.3,
-  "f": 337,
+  "t": 7313.8,
+  "f": 343,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 7314.3,
+  "f": 343,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.017
+ },
+ {
+  "t": 8067,
+  "f": 389,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 8698.8,
+  "f": 427,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 8715.4,
+  "f": 428,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 8732.4,
+  "f": 429,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 8749,
+  "f": 430,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 9168.1,
+  "f": 455,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1855,
+  "interMs": 0
+ },
+ {
+  "t": 9168.3,
+  "f": 455,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.02,
+  "stake": 1
+ },
+ {
+  "t": 9168.3,
+  "f": 455,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 4169
+ },
+ {
+  "t": 9168.3,
+  "f": 455,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2231,
-  "won": 0,
+  "cycleMs": 4169,
+  "won": 0.02,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 7475.5,
-  "f": 352,
+  "t": 9420.3,
+  "f": 470,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -245,100 +352,136 @@
   "front": "canvas"
  },
  {
-  "t": 9089.7,
-  "f": 449,
+  "t": 11033.8,
+  "f": 567,
   "type": "reelStop",
   "col": 0,
   "atMs": 1614,
   "turbo": false
  },
  {
-  "t": 9089.8,
-  "f": 449,
+  "t": 11033.8,
+  "f": 567,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 9189.9,
-  "f": 455,
+  "t": 11100.8,
+  "f": 571,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 11100.8,
+  "f": 571,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 11100.8,
+  "f": 571,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 11183.1,
+  "f": 576,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 11200.9,
+  "f": 577,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1714,
+  "atMs": 1781,
   "turbo": false
  },
  {
-  "t": 9189.9,
-  "f": 455,
+  "t": 11200.9,
+  "f": 577,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 9289.8,
-  "f": 461,
+  "t": 11300.9,
+  "f": 583,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1814,
+  "atMs": 1881,
   "turbo": false
  },
  {
-  "t": 9289.9,
-  "f": 461,
+  "t": 11300.9,
+  "f": 583,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 9390.1,
-  "f": 467,
+  "t": 11352.4,
+  "f": 586,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 11400.7,
+  "f": 589,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1915,
+  "atMs": 1980,
   "turbo": false
  },
  {
-  "t": 9390.1,
-  "f": 467,
+  "t": 11400.7,
+  "f": 589,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 9490,
-  "f": 473,
+  "t": 11500.8,
+  "f": 595,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2015,
+  "atMs": 2081,
   "turbo": false
  },
  {
-  "t": 9490,
-  "f": 473,
+  "t": 11500.8,
+  "f": 595,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 9725,
-  "f": 487,
+  "t": 11731.7,
+  "f": 608,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 2250
+  "beforePadMs": 2311
  },
  {
-  "t": 9725,
-  "f": 487,
+  "t": 11731.7,
+  "f": 608,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2250,
+  "cycleMs": 2311,
   "won": 0,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 9978.8,
-  "f": 502,
+  "t": 11999.7,
+  "f": 624,
   "type": "press",
   "kind": "spin",
   "profile": "mga",
@@ -348,100 +491,100 @@
   "front": "canvas"
  },
  {
-  "t": 11592,
-  "f": 599,
+  "t": 13602.9,
+  "f": 721,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1613,
+  "atMs": 1603,
   "turbo": false
  },
  {
-  "t": 11592,
-  "f": 599,
+  "t": 13602.9,
+  "f": 721,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 11692,
-  "f": 605,
+  "t": 13702.6,
+  "f": 727,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1713,
+  "atMs": 1703,
   "turbo": false
  },
  {
-  "t": 11692,
-  "f": 605,
+  "t": 13702.6,
+  "f": 727,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 11792.1,
-  "f": 611,
+  "t": 13802.9,
+  "f": 733,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1813,
+  "atMs": 1803,
   "turbo": false
  },
  {
-  "t": 11792.1,
-  "f": 611,
+  "t": 13802.9,
+  "f": 733,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 11891.9,
-  "f": 617,
+  "t": 13903,
+  "f": 739,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1913,
+  "atMs": 1903,
   "turbo": false
  },
  {
-  "t": 11892,
-  "f": 617,
+  "t": 13903,
+  "f": 739,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 11992.1,
-  "f": 623,
+  "t": 14002.9,
+  "f": 745,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2013,
+  "atMs": 2003,
   "turbo": false
  },
  {
-  "t": 11992.1,
-  "f": 623,
+  "t": 14002.9,
+  "f": 745,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 12228,
-  "f": 637,
+  "t": 14214.1,
+  "f": 757,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 2249
+  "beforePadMs": 2214
  },
  {
-  "t": 12228,
-  "f": 637,
+  "t": 14214.1,
+  "f": 757,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2249,
+  "cycleMs": 2214,
   "won": 0,
   "stake": 1,
   "minCycleMs": 0
  },
  {
-  "t": 12564,
-  "f": 657,
+  "t": 14541.9,
+  "f": 777,
   "type": "press",
   "kind": "bonus",
   "profile": "mga",
@@ -451,2019 +594,356 @@
   "front": "canvas"
  },
  {
-  "t": 16596.3,
-  "f": 896,
+  "t": 18573.5,
+  "f": 1016,
   "type": "reelStop",
   "col": 0,
   "atMs": 4032,
   "turbo": false
  },
  {
-  "t": 16596.3,
-  "f": 896,
+  "t": 18573.5,
+  "f": 1016,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 16696.3,
-  "f": 902,
+  "t": 18673.7,
+  "f": 1022,
   "type": "reelStop",
   "col": 1,
   "atMs": 4132,
   "turbo": false
  },
  {
-  "t": 16696.3,
-  "f": 902,
+  "t": 18673.7,
+  "f": 1022,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 16796.3,
-  "f": 908,
+  "t": 18773.8,
+  "f": 1028,
   "type": "reelStop",
   "col": 2,
   "atMs": 4232,
   "turbo": false
  },
  {
-  "t": 16796.3,
-  "f": 908,
+  "t": 18773.8,
+  "f": 1028,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 16863.1,
-  "f": 912,
+  "t": 18773.8,
+  "f": 1028,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 16863.3,
-  "f": 912,
+  "t": 18773.9,
+  "f": 1028,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 16863.3,
-  "f": 912,
+  "t": 18773.9,
+  "f": 1028,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 16945.4,
-  "f": 917,
+  "t": 18856.2,
+  "f": 1033,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 16963.2,
-  "f": 918,
+  "t": 18940.5,
+  "f": 1038,
   "type": "reelStop",
   "col": 3,
   "atMs": 4399,
   "turbo": false
  },
  {
-  "t": 16963.2,
-  "f": 918,
+  "t": 18940.5,
+  "f": 1038,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 17063.3,
-  "f": 924,
+  "t": 19027,
+  "f": 1043,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 19041.1,
+  "f": 1044,
   "type": "reelStop",
   "col": 4,
   "atMs": 4499,
   "turbo": false
  },
  {
-  "t": 17063.3,
-  "f": 924,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 17115.9,
-  "f": 927,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 253
- },
- {
-  "t": 17281.8,
-  "f": 937,
-  "type": "strikePace",
-  "v": "full",
-  "level": 3
- },
- {
-  "t": 17291.1,
-  "f": 937,
-  "type": "heroPlay",
-  "id": "lev_eye",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 1020,
-  "rect": [
-   155,
-   122,
-   1218,
-   680
-  ]
- },
- {
-  "t": 18199,
-  "f": 992,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2282.3529411764707,
-  "rect": [
-   89,
-   -181,
-   1622,
-   927
-  ]
- },
- {
-  "t": 18815.8,
-  "f": 1029,
-  "type": "strikeBite",
-  "v": "full",
-  "lungeMs": 617,
-  "plannedMs": 600
- },
- {
-  "t": 18816,
-  "f": 1029,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 18816.3,
-  "f": 1029,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 18816.3,
-  "f": 1029,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 18816.3,
-  "f": 1029,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 18897.4,
-  "f": 1034,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 81,
-  "frames": 4
- },
- {
-  "t": 19029,
-  "f": 1041,
-  "type": "strikeTurn",
-  "atMs": 230,
-  "cells": 4
- },
- {
-  "t": 19067,
+  "t": 19041.1,
   "f": 1044,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 251
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
  },
  {
-  "t": 19548.7,
-  "f": 1073,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1350
- },
- {
-  "t": 20100.5,
-  "f": 1106,
-  "type": "strikeEnd",
-  "v": "full",
-  "totalMs": 2802
- },
- {
-  "t": 21052.1,
-  "f": 1163,
+  "t": 19830.4,
+  "f": 1091,
   "type": "stepStart",
   "step": 1,
   "factor": 1
  },
  {
-  "t": 21052.8,
-  "f": 1163,
+  "t": 19830.7,
+  "f": 1091,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 21053.2,
-  "f": 1163,
+  "t": 19831,
+  "f": 1091,
   "type": "stepWin",
   "step": 1,
-  "total": 4.3848
+  "total": 1.08
  },
  {
-  "t": 21819.6,
-  "f": 1209,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 21819.6,
-  "f": 1209,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 21819.6,
-  "f": 1209,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 21899.7,
-  "f": 1214,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 22070,
-  "f": 1224,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 250
- },
- {
-  "t": 22517.8,
-  "f": 1251,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 22517.9,
-  "f": 1251,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 22634.6,
-  "f": 1258,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 22667.9,
-  "f": 1260,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 22701.5,
-  "f": 1262,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 23070.2,
-  "f": 1284,
-  "type": "stepEnd",
-  "step": 1,
-  "ms": 2018,
-  "interMs": 0
- },
- {
-  "t": 23636.8,
-  "f": 1318,
-  "type": "stepStart",
-  "step": 2,
-  "factor": 1
- },
- {
-  "t": 23637,
-  "f": 1318,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 23637.3,
-  "f": 1318,
-  "type": "stepWin",
-  "step": 2,
-  "total": 5.3568
- },
- {
-  "t": 24388,
-  "f": 1363,
-  "type": "impact",
-  "kind": "explode",
-  "n": 7
- },
- {
-  "t": 25020.2,
-  "f": 1401,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 25036.8,
-  "f": 1402,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 25070.2,
-  "f": 1404,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 25086.8,
-  "f": 1405,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 25086.9,
-  "f": 1405,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 25455.5,
-  "f": 1427,
-  "type": "stepEnd",
-  "step": 2,
-  "ms": 1819,
-  "interMs": 0
- },
- {
-  "t": 27055,
-  "f": 1523,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 14491,
-  "turbo": false
- },
- {
-  "t": 27055,
-  "f": 1523,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 27072,
-  "f": 1524,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 27072,
-  "f": 1524,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 27072,
-  "f": 1524,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 27154.1,
-  "f": 1529,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 27221.8,
-  "f": 1533,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 14658,
-  "turbo": false
- },
- {
-  "t": 27221.8,
-  "f": 1533,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 27321.8,
-  "f": 1539,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 14758,
-  "turbo": false
- },
- {
-  "t": 27321.8,
-  "f": 1539,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 27323.5,
-  "f": 1539,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 27423,
-  "f": 1545,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 14859,
-  "turbo": false
- },
- {
-  "t": 27423,
-  "f": 1545,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 27522.1,
-  "f": 1551,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 14958,
-  "turbo": false
- },
- {
-  "t": 27522.1,
-  "f": 1551,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 27765.2,
-  "f": 1565,
-  "type": "stepStart",
-  "step": 3,
-  "factor": 1
- },
- {
-  "t": 27765.4,
-  "f": 1565,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 27765.9,
-  "f": 1565,
-  "type": "stepWin",
-  "step": 3,
-  "total": 5.5512
- },
- {
-  "t": 28524.9,
-  "f": 1611,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 28524.9,
-  "f": 1611,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 28524.9,
-  "f": 1611,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 28605.4,
-  "f": 1616,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 28776.2,
-  "f": 1626,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 251
- },
- {
-  "t": 29157.2,
-  "f": 1649,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 29190.2,
-  "f": 1651,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 29306.8,
-  "f": 1658,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 29323.5,
-  "f": 1659,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 29356.8,
-  "f": 1661,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 29390.3,
-  "f": 1663,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 29390.3,
-  "f": 1663,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 29390.3,
-  "f": 1663,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 29472.6,
-  "f": 1668,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 29643,
-  "f": 1678,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 253
- },
- {
-  "t": 29796.7,
-  "f": 1687,
-  "type": "stepEnd",
-  "step": 3,
-  "ms": 2032,
-  "interMs": 0
- },
- {
-  "t": 29796.8,
-  "f": 1687,
-  "type": "stepStart",
-  "step": 4,
-  "factor": 0.92
- },
- {
-  "t": 29797,
-  "f": 1687,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 29797.3,
-  "f": 1687,
-  "type": "stepWin",
-  "step": 4,
-  "total": 5.5916999999999994
- },
- {
-  "t": 30559.7,
-  "f": 1733,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 31175.1,
-  "f": 1770,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 31191.9,
-  "f": 1771,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 31191.9,
-  "f": 1771,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 31208.4,
-  "f": 1772,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 31241.9,
-  "f": 1774,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 31483.5,
-  "f": 1788,
-  "type": "stepEnd",
-  "step": 4,
-  "ms": 1687,
-  "interMs": 0
- },
- {
-  "t": 31483.5,
-  "f": 1788,
-  "type": "stepStart",
-  "step": 5,
-  "factor": 0.84
- },
- {
-  "t": 31483.6,
-  "f": 1788,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 31484,
-  "f": 1788,
-  "type": "stepWin",
-  "step": 5,
-  "total": 6.1316999999999995
- },
- {
-  "t": 32244.8,
-  "f": 1834,
-  "type": "impact",
-  "kind": "explode",
-  "n": 7
- },
- {
-  "t": 32826.8,
-  "f": 1869,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 32826.9,
-  "f": 1869,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 32843.3,
-  "f": 1870,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 32860,
-  "f": 1871,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 32893.2,
-  "f": 1873,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 33205.8,
-  "f": 1891,
-  "type": "stepEnd",
-  "step": 5,
-  "ms": 1722,
-  "interMs": 0
- },
- {
-  "t": 33761.8,
-  "f": 1925,
-  "type": "stepStart",
-  "step": 6,
-  "factor": 0.76
- },
- {
-  "t": 33762,
-  "f": 1925,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 33762.4,
-  "f": 1925,
-  "type": "stepWin",
-  "step": 6,
-  "total": 8.0757
- },
- {
-  "t": 34513.4,
-  "f": 1970,
-  "type": "impact",
-  "kind": "explode",
-  "n": 11
- },
- {
-  "t": 35061.8,
-  "f": 2003,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 35078.4,
-  "f": 2004,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 35095.1,
-  "f": 2005,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 35178.7,
-  "f": 2010,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 35178.7,
-  "f": 2010,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 35497.4,
-  "f": 2029,
-  "type": "stepEnd",
-  "step": 6,
-  "ms": 1736,
-  "interMs": 0
- },
- {
-  "t": 35497.4,
-  "f": 2029,
-  "type": "stepStart",
-  "step": 7,
-  "factor": 0.7
- },
- {
-  "t": 35497.5,
-  "f": 2029,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 35497.8,
-  "f": 2029,
-  "type": "stepWin",
-  "step": 7,
-  "total": 8.1081
- },
- {
-  "t": 36248.3,
-  "f": 2074,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 36729.8,
-  "f": 2103,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 36746.1,
-  "f": 2104,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 36796.3,
-  "f": 2107,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 36830.1,
-  "f": 2109,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 36830.1,
-  "f": 2109,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 36830.1,
-  "f": 2109,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 36912.3,
-  "f": 2114,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 37081.5,
-  "f": 2124,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 251
- },
- {
-  "t": 37148.2,
-  "f": 2128,
-  "type": "stepEnd",
-  "step": 7,
-  "ms": 1651,
-  "interMs": 0
- },
- {
-  "t": 37148.2,
-  "f": 2128,
-  "type": "stepStart",
-  "step": 8,
-  "factor": 0.7
- },
- {
-  "t": 37148.3,
-  "f": 2128,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 37148.6,
-  "f": 2128,
-  "type": "stepWin",
-  "step": 8,
-  "total": 8.112400000000001
- },
- {
-  "t": 37899.5,
-  "f": 2173,
-  "type": "impact",
-  "kind": "explode",
-  "n": 4
- },
- {
-  "t": 38397.8,
-  "f": 2203,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 38414.7,
-  "f": 2204,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 38431.5,
-  "f": 2205,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 38716.3,
-  "f": 2222,
-  "type": "stepEnd",
-  "step": 8,
-  "ms": 1568,
-  "interMs": 0
- },
- {
-  "t": 38716.3,
-  "f": 2222,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 38716.5,
-  "f": 2222,
-  "type": "heroPlay",
-  "id": "lev_eye",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
-  "rect": [
-   155,
-   122,
-   1218,
-   680
-  ]
- },
- {
-  "t": 39075.5,
-  "f": 2243,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   89,
-   -337,
-   1622,
-   927
-  ]
- },
- {
-  "t": 39429.2,
-  "f": 2264,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 354,
-  "plannedMs": 350
- },
- {
-  "t": 39429.3,
-  "f": 2264,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 39429.4,
-  "f": 2264,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 39429.5,
-  "f": 2264,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 39429.5,
-  "f": 2264,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 39497.7,
-  "f": 2269,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 68,
-  "frames": 4
- },
- {
-  "t": 39580.7,
-  "f": 2273,
-  "type": "strikeTurn",
-  "atMs": 155,
-  "cells": 4
- },
- {
-  "t": 39684.7,
-  "f": 2280,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 255
- },
- {
-  "t": 40098.9,
-  "f": 2305,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1023
- },
- {
-  "t": 40195.1,
-  "f": 2310,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1470
- },
- {
-  "t": 40615.2,
-  "f": 2335,
-  "type": "stepStart",
-  "step": 9,
-  "factor": 0.7
- },
- {
-  "t": 40615.4,
-  "f": 2335,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 40615.8,
-  "f": 2335,
-  "type": "stepWin",
-  "step": 9,
-  "total": 8.3716
- },
- {
-  "t": 41368.7,
-  "f": 2381,
-  "type": "impact",
-  "kind": "explode",
-  "n": 7
- },
- {
-  "t": 41900.9,
-  "f": 2413,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 41950.9,
-  "f": 2416,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 41967.6,
-  "f": 2417,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 42269.2,
-  "f": 2435,
-  "type": "stepEnd",
-  "step": 9,
-  "ms": 1654,
-  "interMs": 0
- },
- {
-  "t": 42819.6,
-  "f": 2468,
-  "type": "stepStart",
-  "step": 10,
-  "factor": 0.7
- },
- {
-  "t": 42819.8,
-  "f": 2468,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 42820,
-  "f": 2468,
-  "type": "stepWin",
-  "step": 10,
-  "total": 8.3824
- },
- {
-  "t": 43570.6,
-  "f": 2513,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 44069.1,
-  "f": 2543,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 44085.9,
-  "f": 2544,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 44086.1,
-  "f": 2544,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 44152.7,
-  "f": 2548,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 44438,
-  "f": 2565,
-  "type": "stepEnd",
-  "step": 10,
-  "ms": 1618,
-  "interMs": 0
- },
- {
-  "t": 46037.9,
-  "f": 2661,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 33474,
-  "turbo": false
- },
- {
-  "t": 46038,
-  "f": 2661,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 46137.3,
-  "f": 2667,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 33573,
-  "turbo": false
- },
- {
-  "t": 46137.3,
-  "f": 2667,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 46237.5,
-  "f": 2673,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 33674,
-  "turbo": false
- },
- {
-  "t": 46237.5,
-  "f": 2673,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 46337.7,
-  "f": 2679,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 33774,
-  "turbo": false
- },
- {
-  "t": 46337.7,
-  "f": 2679,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 46437.9,
-  "f": 2685,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 33874,
-  "turbo": false
- },
- {
-  "t": 46437.9,
-  "f": 2685,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 47190.9,
-  "f": 2730,
-  "type": "stepStart",
-  "step": 11,
-  "factor": 0.7
- },
- {
-  "t": 47191,
-  "f": 2730,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 47191.3,
-  "f": 2730,
-  "type": "stepWin",
-  "step": 11,
-  "total": 8.4364
- },
- {
-  "t": 47953.8,
-  "f": 2775,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 48439.7,
-  "f": 2805,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 48472.9,
-  "f": 2807,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 48506.3,
-  "f": 2809,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 48817.8,
-  "f": 2827,
-  "type": "stepEnd",
-  "step": 11,
-  "ms": 1627,
-  "interMs": 0
- },
- {
-  "t": 48817.8,
-  "f": 2827,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 48818,
-  "f": 2827,
-  "type": "heroPlay",
-  "id": "lev_eye",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
-  "rect": [
-   155,
-   122,
-   1218,
-   680
-  ]
- },
- {
-  "t": 49175.3,
-  "f": 2849,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   -67,
-   -337,
-   1622,
-   927
-  ]
- },
- {
-  "t": 49531.1,
-  "f": 2870,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 356,
-  "plannedMs": 350
- },
- {
-  "t": 49531.1,
-  "f": 2870,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 49531.2,
-  "f": 2870,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 49531.2,
-  "f": 2870,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 49531.2,
-  "f": 2870,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 49606.3,
-  "f": 2875,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 75,
-  "frames": 4
- },
- {
-  "t": 49681.8,
-  "f": 2879,
-  "type": "strikeTurn",
-  "atMs": 157,
-  "cells": 4
- },
- {
-  "t": 49793.6,
-  "f": 2886,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 262
- },
- {
-  "t": 50207.4,
-  "f": 2911,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1032
- },
- {
-  "t": 50292.8,
-  "f": 2916,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1468
- },
- {
-  "t": 50695.4,
-  "f": 2940,
-  "type": "stepStart",
-  "step": 12,
-  "factor": 0.7
- },
- {
-  "t": 50695.5,
-  "f": 2940,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 50695.8,
-  "f": 2940,
-  "type": "stepWin",
-  "step": 12,
-  "total": 9.129800000000001
- },
- {
-  "t": 51460.3,
-  "f": 2986,
-  "type": "impact",
-  "kind": "explode",
-  "n": 13
- },
- {
-  "t": 52026,
-  "f": 3020,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 52042.9,
-  "f": 3021,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 52059.4,
-  "f": 3022,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 52209.5,
-  "f": 3031,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 52209.5,
-  "f": 3031,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 52209.5,
-  "f": 3031,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 52209.6,
-  "f": 3031,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 52291.9,
-  "f": 3036,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 52419.3,
-  "f": 3043,
-  "type": "stepEnd",
-  "step": 12,
-  "ms": 1724,
-  "interMs": 0
- },
- {
-  "t": 52461.5,
-  "f": 3046,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 52978.2,
-  "f": 3077,
-  "type": "stepStart",
-  "step": 13,
-  "factor": 0.7
- },
- {
-  "t": 52978.4,
-  "f": 3077,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 52978.6,
-  "f": 3077,
-  "type": "stepWin",
-  "step": 13,
-  "total": 9.170300000000001
- },
- {
-  "t": 53729,
-  "f": 3122,
-  "type": "impact",
-  "kind": "explode",
-  "n": 5
- },
- {
-  "t": 54211.3,
-  "f": 3151,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 54245,
-  "f": 3153,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 54261.1,
-  "f": 3154,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 54261.2,
-  "f": 3154,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 54277.7,
-  "f": 3155,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 54491,
-  "f": 3167,
-  "type": "stepEnd",
-  "step": 13,
-  "ms": 1513,
-  "interMs": 0
- },
- {
-  "t": 55046.8,
-  "f": 3201,
-  "type": "stepStart",
-  "step": 14,
-  "factor": 0.7
- },
- {
-  "t": 55046.9,
-  "f": 3201,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 55047.2,
-  "f": 3201,
-  "type": "stepWin",
-  "step": 14,
-  "total": 9.5591
- },
- {
-  "t": 55798.3,
-  "f": 3246,
-  "type": "impact",
-  "kind": "explode",
-  "n": 9
- },
- {
-  "t": 56312.8,
-  "f": 3277,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 56362.9,
-  "f": 3280,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 56396.2,
-  "f": 3282,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 56396.3,
-  "f": 3282,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 56413,
-  "f": 3283,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 56714.8,
-  "f": 3301,
-  "type": "stepEnd",
-  "step": 14,
-  "ms": 1668,
-  "interMs": 0
- },
- {
-  "t": 56714.8,
-  "f": 3301,
-  "type": "stepStart",
-  "step": 15,
-  "factor": 0.7
- },
- {
-  "t": 56715,
-  "f": 3301,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 56715.3,
-  "f": 3301,
-  "type": "stepWin",
-  "step": 15,
-  "total": 9.5623
- },
- {
-  "t": 57466.6,
-  "f": 3346,
-  "type": "impact",
-  "kind": "explode",
-  "n": 4
- },
- {
-  "t": 57981,
-  "f": 3377,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 57981.1,
-  "f": 3377,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 58014.4,
-  "f": 3379,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 58276.6,
-  "f": 3394,
-  "type": "stepEnd",
-  "step": 15,
-  "ms": 1562,
-  "interMs": 0
- },
- {
-  "t": 58833,
-  "f": 3428,
-  "type": "stepStart",
-  "step": 16,
-  "factor": 0.7
- },
- {
-  "t": 58833.1,
-  "f": 3428,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 58833.6,
-  "f": 3428,
-  "type": "stepWin",
-  "step": 16,
-  "total": 9.6206
- },
- {
-  "t": 59584,
-  "f": 3473,
-  "type": "impact",
-  "kind": "explode",
-  "n": 9
- },
- {
-  "t": 60066,
-  "f": 3502,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 60099.3,
-  "f": 3504,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 60116,
-  "f": 3505,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 60132.7,
-  "f": 3506,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 60477.2,
-  "f": 3526,
-  "type": "stepEnd",
-  "step": 16,
-  "ms": 1644,
-  "interMs": 0
- },
- {
-  "t": 61028.8,
-  "f": 3559,
-  "type": "stepStart",
-  "step": 17,
-  "factor": 0.7
- },
- {
-  "t": 61028.9,
-  "f": 3559,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 61029.3,
-  "f": 3559,
-  "type": "stepWin",
-  "step": 17,
-  "total": 9.645999999999999
- },
- {
-  "t": 61786,
-  "f": 3605,
+  "t": 20594.6,
+  "f": 1137,
   "type": "impact",
   "kind": "explode",
   "n": 8
  },
  {
-  "t": 62267.9,
-  "f": 3634,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 62284.5,
-  "f": 3635,
+  "t": 21242.5,
+  "f": 1176,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 62301.4,
-  "f": 3636,
+  "t": 21275.9,
+  "f": 1178,
   "type": "impact",
   "kind": "drop",
-  "col": 2
+  "col": 3
  },
  {
-  "t": 62418,
-  "f": 3643,
+  "t": 21292.5,
+  "f": 1179,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 21309.2,
+  "f": 1180,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 62418,
-  "f": 3643,
+  "t": 21309.2,
+  "f": 1180,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 62418,
-  "f": 3643,
+  "t": 21309.2,
+  "f": 1180,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 62500.7,
-  "f": 3648,
+  "t": 21391.8,
+  "f": 1185,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 62669.9,
-  "f": 3658,
+  "t": 21392.7,
+  "f": 1185,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 21409.1,
+  "f": 1186,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 21561.6,
+  "f": 1195,
   "type": "shakeEnd",
   "kind": "wildMaw",
   "ms": 252
  },
  {
-  "t": 62719.8,
-  "f": 3661,
+  "t": 21778.1,
+  "f": 1208,
   "type": "stepEnd",
-  "step": 17,
-  "ms": 1691,
+  "step": 1,
+  "ms": 1948,
   "interMs": 0
  },
  {
-  "t": 64319.2,
-  "f": 3757,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 51755,
-  "turbo": false
+  "t": 22345,
+  "f": 1242,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
  },
  {
-  "t": 64319.2,
-  "f": 3757,
+  "t": 22345.2,
+  "f": 1242,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 22345.5,
+  "f": 1242,
+  "type": "stepWin",
+  "step": 2,
+  "total": 1.2258
+ },
+ {
+  "t": 23096,
+  "f": 1287,
   "type": "impact",
-  "kind": "reelStop",
-  "col": 0
+  "kind": "explode",
+  "n": 11
  },
  {
-  "t": 64419.6,
-  "f": 3763,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 51856,
-  "turbo": false
- },
- {
-  "t": 64419.6,
-  "f": 3763,
+  "t": 23744.5,
+  "f": 1326,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 1
  },
  {
-  "t": 64519.8,
-  "f": 3769,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 51956,
-  "turbo": false
- },
- {
-  "t": 64519.8,
-  "f": 3769,
+  "t": 23777.9,
+  "f": 1328,
   "type": "impact",
-  "kind": "reelStop",
-  "col": 2
+  "kind": "drop",
+  "col": 0
  },
  {
-  "t": 64619.6,
-  "f": 3775,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 52056,
-  "turbo": false
- },
- {
-  "t": 64619.6,
-  "f": 3775,
+  "t": 23778,
+  "f": 1328,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 3
  },
  {
-  "t": 64719.8,
-  "f": 3781,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 52156,
-  "turbo": false
- },
- {
-  "t": 64719.8,
-  "f": 3781,
+  "t": 23794.5,
+  "f": 1329,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 4
  },
  {
-  "t": 64921.4,
-  "f": 3793,
+  "t": 23861.8,
+  "f": 1333,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 23861.8,
+  "f": 1333,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 23861.8,
+  "f": 1333,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 23943.8,
+  "f": 1338,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 23961.1,
+  "f": 1339,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 24113.7,
+  "f": 1348,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 24298.6,
+  "f": 1359,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1954,
+  "interMs": 0
+ },
+ {
+  "t": 24299.1,
+  "f": 1359,
   "type": "strikePace",
-  "v": "short",
+  "v": "full",
   "level": 3
  },
  {
-  "t": 64921.6,
-  "f": 3793,
+  "t": 24309.2,
+  "f": 1359,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
+  "dur": 1020,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 65272,
-  "f": 3814,
+  "t": 25214,
+  "f": 1414,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
+  "dur": 2282.3529411764707,
   "rect": [
    89,
    131,
@@ -2472,16 +952,16 @@
   ]
  },
  {
-  "t": 65625.9,
-  "f": 3835,
+  "t": 25818,
+  "f": 1450,
   "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 354,
-  "plannedMs": 350
+  "v": "full",
+  "lungeMs": 604,
+  "plannedMs": 600
  },
  {
-  "t": 65625.9,
-  "f": 3835,
+  "t": 25818.1,
+  "f": 1450,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -2489,275 +969,507 @@
   "playMs": 542
  },
  {
-  "t": 65626,
-  "f": 3835,
+  "t": 25818.5,
+  "f": 1450,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 65626,
-  "f": 3835,
+  "t": 25818.5,
+  "f": 1450,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 65626,
-  "f": 3835,
+  "t": 25818.5,
+  "f": 1450,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 65703.2,
-  "f": 3840,
+  "t": 25895.5,
+  "f": 1455,
   "type": "hitStopEnd",
   "kind": "leviathan",
   "actualMs": 77,
   "frames": 4
  },
  {
-  "t": 65789.1,
-  "f": 3845,
+  "t": 26020.5,
+  "f": 1462,
   "type": "strikeTurn",
-  "atMs": 167,
+  "atMs": 207,
   "cells": 4
  },
  {
-  "t": 65879.2,
-  "f": 3850,
+  "t": 26082.1,
+  "f": 1466,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 253
+  "ms": 264
  },
  {
-  "t": 66321.1,
-  "f": 3877,
+  "t": 26179.6,
+  "f": 1472,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1049
+  "el": 966
  },
  {
-  "t": 66406.6,
-  "f": 3882,
+  "t": 27082.4,
+  "f": 1526,
   "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1485
+  "v": "full",
+  "totalMs": 2769
  },
  {
-  "t": 67384.8,
-  "f": 3940,
+  "t": 28049.2,
+  "f": 1584,
   "type": "stepStart",
-  "step": 18,
-  "factor": 0.7
+  "step": 3,
+  "factor": 1
  },
  {
-  "t": 67385,
-  "f": 3940,
+  "t": 28049.4,
+  "f": 1584,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 67385.2,
-  "f": 3940,
+  "t": 28049.8,
+  "f": 1584,
   "type": "stepWin",
-  "step": 18,
-  "total": 10.034799999999999
+  "step": 3,
+  "total": 7.6583000000000006
  },
  {
-  "t": 68141.5,
-  "f": 3986,
+  "t": 28800.9,
+  "f": 1629,
   "type": "impact",
-  "kind": "explode",
-  "n": 10
+  "kind": "bigCascade",
+  "heavy": true
  },
  {
-  "t": 68723.5,
-  "f": 4021,
+  "t": 28801,
+  "f": 1629,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 28801,
+  "f": 1629,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 28881.2,
+  "f": 1634,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 29051.5,
+  "f": 1644,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 29499.6,
+  "f": 1671,
   "type": "impact",
   "kind": "drop",
-  "col": 2
+  "col": 4
  },
  {
-  "t": 68756.7,
-  "f": 4023,
+  "t": 29549.5,
+  "f": 1674,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 68856.6,
-  "f": 4029,
+  "t": 29582.9,
+  "f": 1676,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 29616.2,
+  "f": 1678,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 29649.7,
+  "f": 1680,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 69103.1,
-  "f": 4043,
+  "t": 30045.9,
+  "f": 1703,
   "type": "stepEnd",
-  "step": 18,
-  "ms": 1718,
+  "step": 3,
+  "ms": 1997,
   "interMs": 0
  },
  {
-  "t": 70708.1,
-  "f": 4140,
+  "t": 30045.9,
+  "f": 1703,
+  "type": "stepStart",
+  "step": 4,
+  "factor": 0.92
+ },
+ {
+  "t": 30046,
+  "f": 1703,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 30046.4,
+  "f": 1703,
+  "type": "stepWin",
+  "step": 4,
+  "total": 7.6713000000000005
+ },
+ {
+  "t": 30802.2,
+  "f": 1749,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 31417.7,
+  "f": 1786,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 31451.1,
+  "f": 1788,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 31484.4,
+  "f": 1790,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 31484.4,
+  "f": 1790,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 31863.2,
+  "f": 1812,
+  "type": "stepEnd",
+  "step": 4,
+  "ms": 1817,
+  "interMs": 0
+ },
+ {
+  "t": 32420.1,
+  "f": 1846,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
+ },
+ {
+  "t": 32420.2,
+  "f": 1846,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 32420.6,
+  "f": 1846,
+  "type": "stepWin",
+  "step": 5,
+  "total": 7.728000000000001
+ },
+ {
+  "t": 33171,
+  "f": 1891,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 33719.9,
+  "f": 1924,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 33736.4,
+  "f": 1925,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 33769.9,
+  "f": 1927,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 33803.1,
+  "f": 1929,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 34121.3,
+  "f": 1948,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1701,
+  "interMs": 0
+ },
+ {
+  "t": 34121.3,
+  "f": 1948,
+  "type": "stepStart",
+  "step": 6,
+  "factor": 0.76
+ },
+ {
+  "t": 34121.5,
+  "f": 1948,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 34121.8,
+  "f": 1948,
+  "type": "stepWin",
+  "step": 6,
+  "total": 7.7712
+ },
+ {
+  "t": 34872.6,
+  "f": 1993,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 35421,
+  "f": 2026,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 35437.6,
+  "f": 2027,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 35437.6,
+  "f": 2027,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 35504.4,
+  "f": 2031,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 35813.1,
+  "f": 2049,
+  "type": "stepEnd",
+  "step": 6,
+  "ms": 1692,
+  "interMs": 0
+ },
+ {
+  "t": 37406,
+  "f": 2145,
   "type": "reelStop",
   "col": 0,
-  "atMs": 58144,
+  "atMs": 22864,
   "turbo": false
  },
  {
-  "t": 70708.1,
-  "f": 4140,
+  "t": 37406,
+  "f": 2145,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 70708.2,
-  "f": 4140,
+  "t": 37505.9,
+  "f": 2151,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 22964,
+  "turbo": false
+ },
+ {
+  "t": 37505.9,
+  "f": 2151,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 37572.8,
+  "f": 2155,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 70708.2,
-  "f": 4140,
+  "t": 37572.8,
+  "f": 2155,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 70708.2,
-  "f": 4140,
+  "t": 37572.8,
+  "f": 2155,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 70790.7,
-  "f": 4145,
+  "t": 37655.1,
+  "f": 2160,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 70875.2,
-  "f": 4150,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 58311,
-  "turbo": false
- },
- {
-  "t": 70875.2,
-  "f": 4150,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 70961.3,
-  "f": 4155,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 253
- },
- {
-  "t": 70975.6,
-  "f": 4156,
+  "t": 37673,
+  "f": 2161,
   "type": "reelStop",
   "col": 2,
-  "atMs": 58412,
+  "atMs": 23131,
   "turbo": false
  },
  {
-  "t": 70975.6,
-  "f": 4156,
+  "t": 37673,
+  "f": 2161,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 71075.2,
-  "f": 4162,
+  "t": 37772.9,
+  "f": 2167,
   "type": "reelStop",
   "col": 3,
-  "atMs": 58511,
+  "atMs": 23231,
   "turbo": false
  },
  {
-  "t": 71075.2,
-  "f": 4162,
+  "t": 37772.9,
+  "f": 2167,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 71175.3,
-  "f": 4168,
+  "t": 37826.1,
+  "f": 2170,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 37873,
+  "f": 2173,
   "type": "reelStop",
   "col": 4,
-  "atMs": 58611,
+  "atMs": 23331,
   "turbo": false
  },
  {
-  "t": 71175.3,
-  "f": 4168,
+  "t": 37873,
+  "f": 2173,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 71407.5,
-  "f": 4181,
+  "t": 38075,
+  "f": 2185,
   "type": "strikePace",
   "v": "short",
   "level": 3
  },
  {
-  "t": 71407.8,
-  "f": 4181,
+  "t": 38075.2,
+  "f": 2185,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
   "dur": 470,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 71760.6,
-  "f": 4203,
+  "t": 38426.2,
+  "f": 2206,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2164.705882352941,
   "rect": [
-   -67,
-   -25,
+   245,
+   131,
    1622,
    927
   ]
  },
  {
-  "t": 72117.7,
-  "f": 4224,
+  "t": 38781.6,
+  "f": 2227,
   "type": "strikeBite",
   "v": "short",
-  "lungeMs": 357,
+  "lungeMs": 356,
   "plannedMs": 350
  },
  {
-  "t": 72117.8,
-  "f": 4224,
+  "t": 38781.7,
+  "f": 2227,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -2765,345 +1477,1532 @@
   "playMs": 542
  },
  {
-  "t": 72117.8,
-  "f": 4224,
+  "t": 38781.8,
+  "f": 2227,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 72117.8,
-  "f": 4224,
+  "t": 38781.8,
+  "f": 2227,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 72117.8,
-  "f": 4224,
+  "t": 38781.8,
+  "f": 2227,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 72191.9,
-  "f": 4229,
+  "t": 38856.3,
+  "f": 2232,
   "type": "hitStopEnd",
   "kind": "leviathan",
   "actualMs": 74,
   "frames": 4
  },
  {
-  "t": 72271.4,
-  "f": 4233,
+  "t": 38935,
+  "f": 2236,
   "type": "strikeTurn",
-  "atMs": 161,
+  "atMs": 159,
   "cells": 4
  },
  {
-  "t": 72378.4,
-  "f": 4240,
+  "t": 39043.2,
+  "f": 2243,
   "type": "shakeEnd",
   "kind": "leviathan",
   "ms": 261
  },
  {
-  "t": 72793.3,
-  "f": 4265,
+  "t": 39140.6,
+  "f": 2249,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1033
+  "el": 714
  },
  {
-  "t": 72880.1,
-  "f": 4270,
+  "t": 39242.9,
+  "f": 2255,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 39544.1,
+  "f": 2273,
   "type": "strikeEnd",
   "v": "short",
-  "totalMs": 1470
+  "totalMs": 1468
  },
  {
-  "t": 73845.7,
-  "f": 4328,
+  "t": 40520,
+  "f": 2331,
   "type": "stepStart",
-  "step": 19,
+  "step": 7,
   "factor": 0.7
  },
  {
-  "t": 73845.9,
-  "f": 4328,
+  "t": 40520.2,
+  "f": 2331,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 73846.2,
-  "f": 4328,
+  "t": 40520.5,
+  "f": 2331,
   "type": "stepWin",
-  "step": 19,
-  "total": 10.760599999999998
+  "step": 7,
+  "total": 7.944
  },
  {
-  "t": 74597.9,
-  "f": 4373,
+  "t": 41278.1,
+  "f": 2377,
   "type": "impact",
   "kind": "explode",
-  "n": 11
+  "n": 7
  },
  {
-  "t": 75145.7,
-  "f": 4406,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 75178.6,
-  "f": 4408,
+  "t": 41759.7,
+  "f": 2406,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 75329,
-  "f": 4417,
+  "t": 41809.8,
+  "f": 2409,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 41843.3,
+  "f": 2411,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 75547.1,
-  "f": 4430,
+  "t": 41859.8,
+  "f": 2412,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 42174.6,
+  "f": 2430,
   "type": "stepEnd",
-  "step": 19,
-  "ms": 1701,
+  "step": 7,
+  "ms": 1655,
   "interMs": 0
  },
  {
-  "t": 77063.4,
-  "f": 4521,
+  "t": 43777.7,
+  "f": 2527,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 29236,
+  "turbo": false
+ },
+ {
+  "t": 43777.7,
+  "f": 2527,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 43777.7,
+  "f": 2527,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 77063.4,
-  "f": 4521,
+  "t": 43777.7,
+  "f": 2527,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 77063.4,
-  "f": 4521,
+  "t": 43777.7,
+  "f": 2527,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 77145.9,
-  "f": 4526,
+  "t": 43860.5,
+  "f": 2532,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 77213.6,
-  "f": 4530,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 64650,
-  "turbo": false
- },
- {
-  "t": 77213.6,
-  "f": 4530,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 77313.9,
-  "f": 4536,
+  "t": 43944.6,
+  "f": 2537,
   "type": "reelStop",
   "col": 1,
-  "atMs": 64750,
+  "atMs": 29403,
   "turbo": false
  },
  {
-  "t": 77313.9,
-  "f": 4536,
+  "t": 43944.6,
+  "f": 2537,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 77315.4,
-  "f": 4536,
+  "t": 44030.2,
+  "f": 2542,
   "type": "shakeEnd",
   "kind": "wildMaw",
-  "ms": 252
+  "ms": 253
  },
  {
-  "t": 77414.4,
-  "f": 4542,
+  "t": 44046.2,
+  "f": 2543,
   "type": "reelStop",
   "col": 2,
-  "atMs": 64850,
+  "atMs": 29504,
   "turbo": false
  },
  {
-  "t": 77414.4,
-  "f": 4542,
+  "t": 44046.2,
+  "f": 2543,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 77514.1,
-  "f": 4548,
+  "t": 44144.8,
+  "f": 2549,
   "type": "reelStop",
   "col": 3,
-  "atMs": 64950,
+  "atMs": 29603,
   "turbo": false
  },
  {
-  "t": 77514.1,
-  "f": 4548,
+  "t": 44144.8,
+  "f": 2549,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 77614.1,
-  "f": 4554,
+  "t": 44245.1,
+  "f": 2555,
   "type": "reelStop",
   "col": 4,
-  "atMs": 65050,
+  "atMs": 29703,
   "turbo": false
  },
  {
-  "t": 77614.1,
-  "f": 4554,
+  "t": 44245.1,
+  "f": 2555,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 78416.5,
-  "f": 4602,
-  "type": "stepStart",
-  "step": 20,
-  "factor": 0.7
- },
- {
-  "t": 78416.7,
-  "f": 4602,
-  "type": "celebrationSound",
-  "voice": "win"
- },
- {
-  "t": 78416.9,
-  "f": 4602,
-  "type": "stepWin",
-  "step": 20,
-  "total": 11.505799999999999
- },
- {
-  "t": 79167.8,
-  "f": 4647,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 79167.8,
-  "f": 4647,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 79167.8,
-  "f": 4647,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 79248,
-  "f": 4652,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 79418.7,
-  "f": 4662,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 251
- },
- {
-  "t": 79699.4,
-  "f": 4679,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 79716.2,
-  "f": 4680,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 79799.6,
-  "f": 4685,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 79899.5,
-  "f": 4691,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 80118.1,
-  "f": 4704,
-  "type": "stepEnd",
-  "step": 20,
-  "ms": 1702,
-  "interMs": 0
- },
- {
-  "t": 80118.1,
-  "f": 4704,
+  "t": 44463.7,
+  "f": 2568,
   "type": "strikePace",
   "v": "short",
   "level": 3
  },
  {
-  "t": 80118.3,
-  "f": 4704,
+  "t": 44464,
+  "f": 2568,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
   "dur": 470,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 80480.5,
-  "f": 4725,
+  "t": 44826.6,
+  "f": 2589,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -67,
+   131,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 45165.1,
+  "f": 2610,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 339,
+  "plannedMs": 350
+ },
+ {
+  "t": 45165.1,
+  "f": 2610,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 45165.2,
+  "f": 2610,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 45165.2,
+  "f": 2610,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 45165.2,
+  "f": 2610,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 45245.2,
+  "f": 2615,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 45327.2,
+  "f": 2619,
+  "type": "strikeTurn",
+  "atMs": 151,
+  "cells": 4
+ },
+ {
+  "t": 45419.8,
+  "f": 2625,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 255
+ },
+ {
+  "t": 45529.2,
+  "f": 2632,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 703
+ },
+ {
+  "t": 45931.5,
+  "f": 2656,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1455
+ },
+ {
+  "t": 46335.3,
+  "f": 2680,
+  "type": "stepStart",
+  "step": 8,
+  "factor": 0.7
+ },
+ {
+  "t": 46335.5,
+  "f": 2680,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 46335.9,
+  "f": 2680,
+  "type": "stepWin",
+  "step": 8,
+  "total": 13.4628
+ },
+ {
+  "t": 47088.9,
+  "f": 2724,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 47088.9,
+  "f": 2724,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 47088.9,
+  "f": 2724,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 47163.5,
+  "f": 2729,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 74,
+  "frames": 4
+ },
+ {
+  "t": 47339.9,
+  "f": 2739,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 47647.9,
+  "f": 2758,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 47681.5,
+  "f": 2760,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 47698,
+  "f": 2761,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 47798.1,
+  "f": 2767,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 47814.8,
+  "f": 2768,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 47814.8,
+  "f": 2768,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 47814.8,
+  "f": 2768,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 47897.3,
+  "f": 2773,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 47898.2,
+  "f": 2773,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 48000.8,
+  "f": 2779,
+  "type": "stepEnd",
+  "step": 8,
+  "ms": 1666,
+  "interMs": 0
+ },
+ {
+  "t": 48000.8,
+  "f": 2779,
+  "type": "stepStart",
+  "step": 9,
+  "factor": 0.7
+ },
+ {
+  "t": 48001.1,
+  "f": 2779,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 48001.4,
+  "f": 2779,
+  "type": "stepWin",
+  "step": 9,
+  "total": 13.885399999999999
+ },
+ {
+  "t": 48069.6,
+  "f": 2783,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 255
+ },
+ {
+  "t": 48751.7,
+  "f": 2817,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 48751.7,
+  "f": 2817,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 48751.7,
+  "f": 2817,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 48831.6,
+  "f": 2822,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 49002.3,
+  "f": 2832,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 49249.6,
+  "f": 2847,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 49299.3,
+  "f": 2850,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 49315.9,
+  "f": 2851,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 49466.2,
+  "f": 2860,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 49482.8,
+  "f": 2861,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 49711.4,
+  "f": 2874,
+  "type": "stepEnd",
+  "step": 9,
+  "ms": 1711,
+  "interMs": 0
+ },
+ {
+  "t": 51184.4,
+  "f": 2963,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 51184.4,
+  "f": 2963,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 51184.4,
+  "f": 2963,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 51266.6,
+  "f": 2968,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 51384.3,
+  "f": 2975,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 36842,
+  "turbo": false
+ },
+ {
+  "t": 51384.4,
+  "f": 2975,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 51435.8,
+  "f": 2978,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 251
+ },
+ {
+  "t": 51484.3,
+  "f": 2981,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 36942,
+  "turbo": false
+ },
+ {
+  "t": 51484.3,
+  "f": 2981,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 51584.4,
+  "f": 2987,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 37043,
+  "turbo": false
+ },
+ {
+  "t": 51584.4,
+  "f": 2987,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 51684.5,
+  "f": 2993,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 37143,
+  "turbo": false
+ },
+ {
+  "t": 51684.5,
+  "f": 2993,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 51784.6,
+  "f": 2999,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 37243,
+  "turbo": false
+ },
+ {
+  "t": 51784.7,
+  "f": 2999,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 52020.5,
+  "f": 3013,
+  "type": "stepStart",
+  "step": 10,
+  "factor": 0.7
+ },
+ {
+  "t": 52020.6,
+  "f": 3013,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 52021,
+  "f": 3013,
+  "type": "stepWin",
+  "step": 10,
+  "total": 14.2229
+ },
+ {
+  "t": 52778.2,
+  "f": 3058,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 52778.2,
+  "f": 3058,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 52778.2,
+  "f": 3058,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 52851.7,
+  "f": 3063,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 73,
+  "frames": 4
+ },
+ {
+  "t": 53038.7,
+  "f": 3074,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 261
+ },
+ {
+  "t": 53302.9,
+  "f": 3090,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 53369.8,
+  "f": 3094,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 53369.9,
+  "f": 3094,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 53385.9,
+  "f": 3095,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 53502.8,
+  "f": 3102,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 53519.5,
+  "f": 3103,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 53519.5,
+  "f": 3103,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 53519.5,
+  "f": 3103,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 53602.3,
+  "f": 3108,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 53688.5,
+  "f": 3113,
+  "type": "stepEnd",
+  "step": 10,
+  "ms": 1668,
+  "interMs": 0
+ },
+ {
+  "t": 53688.5,
+  "f": 3113,
+  "type": "stepStart",
+  "step": 11,
+  "factor": 0.7
+ },
+ {
+  "t": 53688.7,
+  "f": 3113,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 53688.9,
+  "f": 3113,
+  "type": "stepWin",
+  "step": 11,
+  "total": 14.236899999999999
+ },
+ {
+  "t": 53772.4,
+  "f": 3118,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 54450,
+  "f": 3158,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 54954.1,
+  "f": 3189,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 54987.9,
+  "f": 3191,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 54987.9,
+  "f": 3191,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 55020.8,
+  "f": 3193,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 55356.1,
+  "f": 3213,
+  "type": "stepEnd",
+  "step": 11,
+  "ms": 1668,
+  "interMs": 0
+ },
+ {
+  "t": 55356.1,
+  "f": 3213,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 55356.4,
+  "f": 3213,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 55713.5,
+  "f": 3234,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -67,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 56066.9,
+  "f": 3255,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 354,
+  "plannedMs": 350
+ },
+ {
+  "t": 56067,
+  "f": 3255,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 56067.1,
+  "f": 3255,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 56067.1,
+  "f": 3255,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 56067.1,
+  "f": 3255,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 56137.7,
+  "f": 3260,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 56224,
+  "f": 3265,
+  "type": "strikeTurn",
+  "atMs": 161,
+  "cells": 4
+ },
+ {
+  "t": 56323.9,
+  "f": 3271,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 257
+ },
+ {
+  "t": 56421.7,
+  "f": 3277,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 708
+ },
+ {
+  "t": 56840.8,
+  "f": 3302,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1477
+ },
+ {
+  "t": 57241,
+  "f": 3326,
+  "type": "stepStart",
+  "step": 12,
+  "factor": 0.7
+ },
+ {
+  "t": 57241.1,
+  "f": 3326,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 57241.3,
+  "f": 3326,
+  "type": "stepWin",
+  "step": 12,
+  "total": 16.8964
+ },
+ {
+  "t": 57991.7,
+  "f": 3371,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 57991.7,
+  "f": 3371,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 57991.7,
+  "f": 3371,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 58072.4,
+  "f": 3376,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 58242.6,
+  "f": 3386,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 58524.1,
+  "f": 3403,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 58540.5,
+  "f": 3404,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 58557.1,
+  "f": 3405,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 58624,
+  "f": 3409,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 58624,
+  "f": 3409,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 58892.5,
+  "f": 3425,
+  "type": "stepEnd",
+  "step": 12,
+  "ms": 1652,
+  "interMs": 0
+ },
+ {
+  "t": 59452.5,
+  "f": 3458,
+  "type": "stepStart",
+  "step": 13,
+  "factor": 0.7
+ },
+ {
+  "t": 59452.7,
+  "f": 3458,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 59453,
+  "f": 3458,
+  "type": "stepWin",
+  "step": 13,
+  "total": 17.0692
+ },
+ {
+  "t": 60204,
+  "f": 3503,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 60204,
+  "f": 3503,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 60204,
+  "f": 3503,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 60274.3,
+  "f": 3508,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 60455.5,
+  "f": 3518,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 252
+ },
+ {
+  "t": 60725.7,
+  "f": 3535,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 60759.3,
+  "f": 3537,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 60793.2,
+  "f": 3539,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 60826.3,
+  "f": 3541,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 60842.6,
+  "f": 3542,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 61140.8,
+  "f": 3559,
+  "type": "stepEnd",
+  "step": 13,
+  "ms": 1688,
+  "interMs": 0
+ },
+ {
+  "t": 61140.9,
+  "f": 3559,
+  "type": "stepStart",
+  "step": 14,
+  "factor": 0.7
+ },
+ {
+  "t": 61141.1,
+  "f": 3559,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 61141.5,
+  "f": 3559,
+  "type": "stepWin",
+  "step": 14,
+  "total": 17.0746
+ },
+ {
+  "t": 62195.2,
+  "f": 3623,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 62710.7,
+  "f": 3654,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 62710.8,
+  "f": 3654,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 62727.4,
+  "f": 3655,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 62810.8,
+  "f": 3660,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 63061.9,
+  "f": 3675,
+  "type": "stepEnd",
+  "step": 14,
+  "ms": 1618,
+  "interMs": 303
+ },
+ {
+  "t": 63612.6,
+  "f": 3708,
+  "type": "stepStart",
+  "step": 15,
+  "factor": 0.7
+ },
+ {
+  "t": 63612.7,
+  "f": 3708,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 63612.9,
+  "f": 3708,
+  "type": "stepWin",
+  "step": 15,
+  "total": 17.107
+ },
+ {
+  "t": 64363.7,
+  "f": 3753,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 64862.4,
+  "f": 3783,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 64879,
+  "f": 3784,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 64895.9,
+  "f": 3785,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 64929.1,
+  "f": 3787,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 65214.2,
+  "f": 3804,
+  "type": "stepEnd",
+  "step": 15,
+  "ms": 1602,
+  "interMs": 0
+ },
+ {
+  "t": 66813.8,
+  "f": 3900,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 52272,
+  "turbo": false
+ },
+ {
+  "t": 66813.8,
+  "f": 3900,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 66913.9,
+  "f": 3906,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 52372,
+  "turbo": false
+ },
+ {
+  "t": 66913.9,
+  "f": 3906,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 66981.1,
+  "f": 3910,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 66981.1,
+  "f": 3910,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 66981.1,
+  "f": 3910,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 67063.2,
+  "f": 3915,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 67081,
+  "f": 3916,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 52539,
+  "turbo": false
+ },
+ {
+  "t": 67081,
+  "f": 3916,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 67180.7,
+  "f": 3922,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 52639,
+  "turbo": false
+ },
+ {
+  "t": 67180.7,
+  "f": 3922,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 67232.6,
+  "f": 3925,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 67280.9,
+  "f": 3928,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 52739,
+  "turbo": false
+ },
+ {
+  "t": 67280.9,
+  "f": 3928,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 68067.2,
+  "f": 3975,
+  "type": "stepStart",
+  "step": 16,
+  "factor": 0.7
+ },
+ {
+  "t": 68067.3,
+  "f": 3975,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 68067.6,
+  "f": 3975,
+  "type": "stepWin",
+  "step": 16,
+  "total": 17.150199999999998
+ },
+ {
+  "t": 68817.8,
+  "f": 4020,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 69299.5,
+  "f": 4049,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 69315.8,
+  "f": 4050,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 69332.6,
+  "f": 4051,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 69349.4,
+  "f": 4052,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 69366.1,
+  "f": 4053,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 69680.3,
+  "f": 4071,
+  "type": "stepEnd",
+  "step": 16,
+  "ms": 1613,
+  "interMs": 0
+ },
+ {
+  "t": 69680.3,
+  "f": 4071,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 69680.5,
+  "f": 4071,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 70035.3,
+  "f": 4093,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
@@ -3116,16 +3015,16 @@
   ]
  },
  {
-  "t": 80823.3,
-  "f": 4746,
+  "t": 70392.5,
+  "f": 4114,
   "type": "strikeBite",
   "v": "short",
-  "lungeMs": 343,
+  "lungeMs": 357,
   "plannedMs": 350
  },
  {
-  "t": 80823.4,
-  "f": 4746,
+  "t": 70392.6,
+  "f": 4114,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -3133,246 +3032,697 @@
   "playMs": 542
  },
  {
-  "t": 80823.5,
-  "f": 4746,
+  "t": 70392.7,
+  "f": 4114,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 80823.5,
-  "f": 4746,
+  "t": 70392.7,
+  "f": 4114,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 80823.5,
-  "f": 4746,
+  "t": 70392.7,
+  "f": 4114,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 80899.3,
-  "f": 4751,
+  "t": 70466.2,
+  "f": 4119,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 75,
+  "actualMs": 73,
   "frames": 4
  },
  {
-  "t": 80984.9,
-  "f": 4756,
+  "t": 70545,
+  "f": 4123,
   "type": "strikeTurn",
-  "atMs": 155,
+  "atMs": 160,
   "cells": 4
  },
  {
-  "t": 81077.7,
-  "f": 4761,
+  "t": 70652.8,
+  "f": 4130,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 254
+  "ms": 260
  },
  {
-  "t": 81500.4,
-  "f": 4787,
+  "t": 70734.2,
+  "f": 4135,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1020
+  "el": 699
  },
  {
-  "t": 81602.5,
-  "f": 4793,
+  "t": 71159.7,
+  "f": 4160,
   "type": "strikeEnd",
   "v": "short",
-  "totalMs": 1472
+  "totalMs": 1475
  },
  {
-  "t": 82558.4,
-  "f": 4850,
+  "t": 72136.4,
+  "f": 4219,
   "type": "stepStart",
-  "step": 21,
+  "step": 17,
   "factor": 0.7
  },
  {
-  "t": 82558.6,
-  "f": 4850,
+  "t": 72136.6,
+  "f": 4219,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 82558.8,
-  "f": 4850,
+  "t": 72136.9,
+  "f": 4219,
   "type": "stepWin",
-  "step": 21,
-  "total": 21.566
+  "step": 17,
+  "total": 20.0662
  },
  {
-  "t": 83320.8,
-  "f": 4896,
+  "t": 72887.9,
+  "f": 4264,
   "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
+  "kind": "explode",
+  "n": 11
  },
  {
-  "t": 83320.8,
-  "f": 4896,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 83320.8,
-  "f": 4896,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 83401.4,
-  "f": 4901,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 83571.1,
-  "f": 4911,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 250
- },
- {
-  "t": 83869.3,
-  "f": 4929,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 83903.1,
-  "f": 4931,
+  "t": 73419.6,
+  "f": 4296,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 83919.5,
-  "f": 4932,
+  "t": 73436.4,
+  "f": 4297,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 73436.4,
+  "f": 4297,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 83952.6,
-  "f": 4934,
+  "t": 73469.7,
+  "f": 4299,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 84053,
-  "f": 4940,
+  "t": 73503.5,
+  "f": 4301,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 84257.1,
-  "f": 4952,
+  "t": 73788.6,
+  "f": 4318,
   "type": "stepEnd",
-  "step": 21,
-  "ms": 1699,
+  "step": 17,
+  "ms": 1652,
   "interMs": 0
  },
  {
-  "t": 84257.1,
-  "f": 4952,
+  "t": 75387.6,
+  "f": 4414,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 60846,
+  "turbo": false
+ },
+ {
+  "t": 75387.6,
+  "f": 4414,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 75487.9,
+  "f": 4420,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 60946,
+  "turbo": false
+ },
+ {
+  "t": 75487.9,
+  "f": 4420,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 75587.8,
+  "f": 4426,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 61046,
+  "turbo": false
+ },
+ {
+  "t": 75587.8,
+  "f": 4426,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 75687.9,
+  "f": 4432,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 61146,
+  "turbo": false
+ },
+ {
+  "t": 75687.9,
+  "f": 4432,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 75788,
+  "f": 4438,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 61246,
+  "turbo": false
+ },
+ {
+  "t": 75788,
+  "f": 4438,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 76581.5,
+  "f": 4485,
   "type": "stepStart",
-  "step": 22,
+  "step": 18,
   "factor": 0.7
  },
  {
-  "t": 84257.2,
-  "f": 4952,
+  "t": 76581.6,
+  "f": 4485,
   "type": "celebrationSound",
   "voice": "win"
  },
  {
-  "t": 84257.6,
-  "f": 4952,
+  "t": 76582,
+  "f": 4485,
   "type": "stepWin",
-  "step": 22,
-  "total": 21.5703
+  "step": 18,
+  "total": 20.076999999999998
  },
  {
-  "t": 85008.6,
-  "f": 4997,
+  "t": 77342.1,
+  "f": 4531,
   "type": "impact",
   "kind": "explode",
-  "n": 6
+  "n": 3
  },
  {
-  "t": 85487.6,
-  "f": 5026,
+  "t": 77840.1,
+  "f": 4561,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 85504,
-  "f": 5027,
+  "t": 77856.6,
+  "f": 4562,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 85537.5,
-  "f": 5029,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 85554.1,
-  "f": 5030,
+  "t": 77873.2,
+  "f": 4563,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 85865.5,
-  "f": 5048,
+  "t": 78108.3,
+  "f": 4577,
   "type": "stepEnd",
-  "step": 22,
-  "ms": 1608,
+  "step": 18,
+  "ms": 1527,
   "interMs": 0
  },
  {
-  "t": 85865.8,
-  "f": 5048,
+  "t": 78108.3,
+  "f": 4577,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 78108.5,
+  "f": 4577,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 78467,
+  "f": 4598,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   401,
+   -337,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 78818.4,
+  "f": 4619,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 351,
+  "plannedMs": 350
+ },
+ {
+  "t": 78818.5,
+  "f": 4619,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 78818.5,
+  "f": 4619,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 78818.5,
+  "f": 4619,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 78818.5,
+  "f": 4619,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 78889.8,
+  "f": 4624,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 71,
+  "frames": 4
+ },
+ {
+  "t": 78976.1,
+  "f": 4629,
+  "type": "strikeTurn",
+  "atMs": 159,
+  "cells": 4
+ },
+ {
+  "t": 79070.4,
+  "f": 4634,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 252
+ },
+ {
+  "t": 79174.1,
+  "f": 4641,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 707
+ },
+ {
+  "t": 79593,
+  "f": 4666,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1476
+ },
+ {
+  "t": 81593.3,
+  "f": 4786,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 67051,
+  "turbo": false
+ },
+ {
+  "t": 81593.3,
+  "f": 4786,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 81692.9,
+  "f": 4792,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 67151,
+  "turbo": false
+ },
+ {
+  "t": 81692.9,
+  "f": 4792,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 81793,
+  "f": 4798,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 67251,
+  "turbo": false
+ },
+ {
+  "t": 81793,
+  "f": 4798,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 81893.2,
+  "f": 4804,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 67351,
+  "turbo": false
+ },
+ {
+  "t": 81893.2,
+  "f": 4804,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 81993.6,
+  "f": 4810,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 67452,
+  "turbo": false
+ },
+ {
+  "t": 81993.6,
+  "f": 4810,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 82795.3,
+  "f": 4858,
+  "type": "stepStart",
+  "step": 19,
+  "factor": 0.7
+ },
+ {
+  "t": 82795.4,
+  "f": 4858,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 82795.8,
+  "f": 4858,
+  "type": "stepWin",
+  "step": 19,
+  "total": 20.1013
+ },
+ {
+  "t": 83546.4,
+  "f": 4903,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 84028.5,
+  "f": 4932,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 84045,
+  "f": 4933,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 84095.2,
+  "f": 4936,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 84313.6,
+  "f": 4949,
+  "type": "stepEnd",
+  "step": 19,
+  "ms": 1518,
+  "interMs": 0
+ },
+ {
+  "t": 84313.6,
+  "f": 4949,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 84313.8,
+  "f": 4949,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 84672.9,
+  "f": 4970,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   245,
+   -337,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 85027.4,
+  "f": 4991,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 355,
+  "plannedMs": 350
+ },
+ {
+  "t": 85027.4,
+  "f": 4991,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 85027.5,
+  "f": 4991,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 85027.5,
+  "f": 4991,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 85027.5,
+  "f": 4991,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 85095.3,
+  "f": 4996,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 67,
+  "frames": 4
+ },
+ {
+  "t": 85181.2,
+  "f": 5001,
+  "type": "strikeTurn",
+  "atMs": 158,
+  "cells": 4
+ },
+ {
+  "t": 85281.3,
+  "f": 5007,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 254
+ },
+ {
+  "t": 85379.4,
+  "f": 5013,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 707
+ },
+ {
+  "t": 85798.4,
+  "f": 5038,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1476
+ },
+ {
+  "t": 86762.9,
+  "f": 5095,
+  "type": "stepStart",
+  "step": 20,
+  "factor": 0.7
+ },
+ {
+  "t": 86763,
+  "f": 5095,
+  "type": "celebrationSound",
+  "voice": "win"
+ },
+ {
+  "t": 86763.4,
+  "f": 5095,
+  "type": "stepWin",
+  "step": 20,
+  "total": 21.1813
+ },
+ {
+  "t": 87516.4,
+  "f": 5141,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 88015.4,
+  "f": 5171,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 88032,
+  "f": 5172,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 88115.1,
+  "f": 5177,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 88131.9,
+  "f": 5178,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 88367.2,
+  "f": 5192,
+  "type": "stepEnd",
+  "step": 20,
+  "ms": 1604,
+  "interMs": 0
+ },
+ {
+  "t": 88367.5,
+  "f": 5192,
   "type": "win",
   "celebrate": false,
-  "total": 21.57,
+  "total": 21.18,
   "stake": 100
  },
  {
-  "t": 88474.1,
-  "f": 5205,
+  "t": 90968.7,
+  "f": 5348,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 75910
+  "beforePadMs": 76427
  },
  {
-  "t": 88474.1,
-  "f": 5205,
+  "t": 90968.7,
+  "f": 5348,
   "type": "cycleEnd",
   "kind": "bonus",
-  "cycleMs": 75910,
-  "won": 21.57,
+  "cycleMs": 76427,
+  "won": 21.18,
   "stake": 100,
   "minCycleMs": 0
  }

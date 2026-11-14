@@ -1,6 +1,6 @@
 [
  {
-  "t": 32.7,
+  "t": 33.1,
   "f": 1,
   "type": "profile",
   "profile": "ukgc",
@@ -16,15 +16,15 @@
   "shakeMs": 250
  },
  {
-  "t": 206.1,
-  "f": 10,
+  "t": 224.4,
+  "f": 11,
   "type": "ready",
   "profile": "ukgc",
   "front": "canvas"
  },
  {
-  "t": 1962.2,
-  "f": 89,
+  "t": 1983.4,
+  "f": 93,
   "type": "press",
   "kind": "spin",
   "profile": "ukgc",
@@ -34,96 +34,132 @@
   "front": "canvas"
  },
  {
-  "t": 2339.6,
-  "f": 113,
+  "t": 2366.8,
+  "f": 117,
   "type": "slamIgnored",
   "profile": "ukgc"
  },
  {
-  "t": 3572,
-  "f": 187,
+  "t": 3605.2,
+  "f": 192,
   "type": "reelStop",
   "col": 0,
-  "atMs": 1610,
+  "atMs": 1622,
   "turbo": false
  },
  {
-  "t": 3572.1,
-  "f": 187,
+  "t": 3605.3,
+  "f": 192,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 3672,
-  "f": 193,
+  "t": 3705.3,
+  "f": 198,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1710,
+  "atMs": 1722,
   "turbo": false
  },
  {
-  "t": 3672.1,
-  "f": 193,
+  "t": 3705.3,
+  "f": 198,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 3772.2,
-  "f": 199,
+  "t": 3705.4,
+  "f": 198,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 3705.4,
+  "f": 198,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 3705.4,
+  "f": 198,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 3788.1,
+  "f": 203,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 3873.3,
+  "f": 208,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1810,
+  "atMs": 1890,
   "turbo": false
  },
  {
-  "t": 3772.2,
-  "f": 199,
+  "t": 3873.3,
+  "f": 208,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 3872.3,
-  "f": 205,
+  "t": 3958,
+  "f": 213,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 3973.6,
+  "f": 214,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1910,
+  "atMs": 1990,
   "turbo": false
  },
  {
-  "t": 3872.3,
-  "f": 205,
+  "t": 3973.6,
+  "f": 214,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 3972.4,
-  "f": 211,
+  "t": 4072.7,
+  "f": 220,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2010,
+  "atMs": 2089,
   "turbo": false
  },
  {
-  "t": 3972.4,
-  "f": 211,
+  "t": 4072.7,
+  "f": 220,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 4203.8,
-  "f": 224,
+  "t": 4274.4,
+  "f": 232,
   "type": "stepStart",
   "step": 1,
   "factor": 1
  },
  {
-  "t": 4204.3,
-  "f": 224,
+  "t": 4274.9,
+  "f": 232,
   "type": "win",
   "celebrate": false,
   "step": 1,
@@ -131,81 +167,74 @@
   "stake": 1
  },
  {
-  "t": 4204.5,
-  "f": 224,
+  "t": 4275.1,
+  "f": 232,
   "type": "stepWin",
   "step": 1,
   "total": 0.0043
  },
  {
-  "t": 4958.2,
-  "f": 270,
+  "t": 5028.1,
+  "f": 277,
   "type": "impact",
   "kind": "explode",
-  "n": 5
+  "n": 4
  },
  {
-  "t": 5590.6,
-  "f": 308,
+  "t": 5657.1,
+  "f": 315,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 5607.3,
-  "f": 309,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 5624,
-  "f": 310,
+  "t": 5692.8,
+  "f": 317,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 5640.5,
-  "f": 311,
+  "t": 5757.8,
+  "f": 321,
   "type": "impact",
   "kind": "drop",
-  "col": 3
+  "col": 1
  },
  {
-  "t": 6020.4,
-  "f": 333,
+  "t": 6043.7,
+  "f": 338,
   "type": "stepEnd",
   "step": 1,
-  "ms": 1817,
+  "ms": 1769,
   "interMs": 0
  },
  {
-  "t": 6020.4,
-  "f": 333,
+  "t": 6043.7,
+  "f": 338,
   "type": "crush",
   "crushed": 0.0043
  },
  {
-  "t": 7190,
-  "f": 403,
+  "t": 7210.1,
+  "f": 408,
   "type": "pad",
   "ms": 0,
-  "beforePadMs": 5228
+  "beforePadMs": 5227
  },
  {
-  "t": 7190.1,
-  "f": 403,
+  "t": 7210.2,
+  "f": 408,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 5228,
+  "cycleMs": 5227,
   "won": 0,
   "stake": 1,
   "minCycleMs": 2600
  },
  {
-  "t": 7478.8,
-  "f": 420,
+  "t": 7512.3,
+  "f": 425,
   "type": "press",
   "kind": "spin",
   "profile": "ukgc",
@@ -215,407 +244,562 @@
   "front": "canvas"
  },
  {
-  "t": 9093.3,
-  "f": 517,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 1615,
-  "turbo": false
- },
- {
-  "t": 9093.4,
-  "f": 517,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 9193.5,
-  "f": 523,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 1715,
-  "turbo": false
- },
- {
-  "t": 9193.5,
-  "f": 523,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 9293.6,
-  "f": 529,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 1815,
-  "turbo": false
- },
- {
-  "t": 9293.6,
-  "f": 529,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 9393.5,
-  "f": 535,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 1915,
-  "turbo": false
- },
- {
-  "t": 9393.5,
-  "f": 535,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 9493.9,
-  "f": 541,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 2015,
-  "turbo": false
- },
- {
-  "t": 9493.9,
-  "f": 541,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 9725.7,
-  "f": 554,
-  "type": "pad",
-  "ms": 353,
-  "beforePadMs": 2247
- },
- {
-  "t": 10080.1,
-  "f": 576,
-  "type": "cycleEnd",
-  "kind": "spin",
-  "cycleMs": 2601,
-  "won": 0,
-  "stake": 1,
-  "minCycleMs": 2600
- },
- {
-  "t": 10347.8,
-  "f": 592,
-  "type": "press",
-  "kind": "spin",
-  "profile": "ukgc",
-  "bet": 1,
-  "stake": 1,
-  "turbo": false,
-  "front": "canvas"
- },
- {
-  "t": 11962.2,
-  "f": 689,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 1615,
-  "turbo": false
- },
- {
-  "t": 11962.2,
-  "f": 689,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 12062.3,
-  "f": 695,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 1715,
-  "turbo": false
- },
- {
-  "t": 12062.3,
-  "f": 695,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 12162.3,
-  "f": 701,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 1815,
-  "turbo": false
- },
- {
-  "t": 12162.3,
-  "f": 701,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 12262.6,
-  "f": 707,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 1915,
-  "turbo": false
- },
- {
-  "t": 12262.6,
-  "f": 707,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 12362.6,
-  "f": 713,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 2015,
-  "turbo": false
- },
- {
-  "t": 12362.6,
-  "f": 713,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 12581.3,
-  "f": 726,
-  "type": "stepStart",
-  "step": 1,
-  "factor": 1
- },
- {
-  "t": 12581.5,
-  "f": 726,
-  "type": "win",
-  "celebrate": false,
-  "step": 1,
-  "total": 0.0076,
-  "stake": 1
- },
- {
-  "t": 12581.9,
-  "f": 726,
-  "type": "stepWin",
-  "step": 1,
-  "total": 0.0076
- },
- {
-  "t": 13332.6,
-  "f": 771,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 13980.7,
-  "f": 810,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 13997.1,
-  "f": 811,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 14014,
-  "f": 812,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 14164.6,
-  "f": 821,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 14164.6,
-  "f": 821,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 14164.6,
-  "f": 821,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 14246.8,
-  "f": 826,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 14416.2,
-  "f": 836,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 14577.6,
-  "f": 845,
-  "type": "stepEnd",
-  "step": 1,
-  "ms": 1996,
-  "interMs": 0
- },
- {
-  "t": 14577.7,
-  "f": 845,
-  "type": "crush",
-  "crushed": 0.0076
- },
- {
-  "t": 15750.5,
-  "f": 916,
-  "type": "pad",
-  "ms": 0,
-  "beforePadMs": 5403
- },
- {
-  "t": 15750.5,
-  "f": 916,
-  "type": "cycleEnd",
-  "kind": "spin",
-  "cycleMs": 5403,
-  "won": 0,
-  "stake": 1,
-  "minCycleMs": 2600
- },
- {
-  "t": 16019.8,
-  "f": 932,
-  "type": "press",
-  "kind": "spin",
-  "profile": "ukgc",
-  "bet": 1,
-  "stake": 1,
-  "turbo": false,
-  "front": "canvas"
- },
- {
-  "t": 17633.7,
-  "f": 1029,
+  "t": 9126.6,
+  "f": 522,
   "type": "reelStop",
   "col": 0,
   "atMs": 1614,
   "turbo": false
  },
  {
-  "t": 17633.7,
-  "f": 1029,
+  "t": 9126.6,
+  "f": 522,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 17733.6,
-  "f": 1035,
+  "t": 9193.9,
+  "f": 526,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 9194,
+  "f": 526,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 9194,
+  "f": 526,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 9276,
+  "f": 531,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 9293.4,
+  "f": 532,
   "type": "reelStop",
   "col": 1,
-  "atMs": 1714,
+  "atMs": 1781,
   "turbo": false
  },
  {
-  "t": 17733.6,
-  "f": 1035,
+  "t": 9293.4,
+  "f": 532,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 17834.2,
-  "f": 1041,
+  "t": 9393.9,
+  "f": 538,
   "type": "reelStop",
   "col": 2,
-  "atMs": 1814,
+  "atMs": 1882,
   "turbo": false
  },
  {
-  "t": 17834.2,
-  "f": 1041,
+  "t": 9393.9,
+  "f": 538,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 17934,
-  "f": 1047,
+  "t": 9445.5,
+  "f": 541,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 9493.8,
+  "f": 544,
   "type": "reelStop",
   "col": 3,
-  "atMs": 1914,
+  "atMs": 1982,
   "turbo": false
  },
  {
-  "t": 17934,
-  "f": 1047,
+  "t": 9493.8,
+  "f": 544,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 18034,
-  "f": 1053,
+  "t": 9593.7,
+  "f": 550,
   "type": "reelStop",
   "col": 4,
-  "atMs": 2014,
+  "atMs": 2081,
   "turbo": false
  },
  {
-  "t": 18034,
-  "f": 1053,
+  "t": 9593.7,
+  "f": 550,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 18248.7,
-  "f": 1065,
+  "t": 9795.4,
+  "f": 562,
   "type": "pad",
-  "ms": 371,
-  "beforePadMs": 2229
+  "ms": 317,
+  "beforePadMs": 2283
  },
  {
-  "t": 18622.1,
-  "f": 1088,
+  "t": 10112,
+  "f": 581,
   "type": "cycleEnd",
   "kind": "spin",
-  "cycleMs": 2602,
+  "cycleMs": 2600,
   "won": 0,
   "stake": 1,
   "minCycleMs": 2600
  },
  {
-  "t": 18922.5,
-  "f": 1106,
+  "t": 10381.3,
+  "f": 597,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false,
+  "front": "canvas"
+ },
+ {
+  "t": 11912.5,
+  "f": 689,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 11912.6,
+  "f": 689,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 11912.6,
+  "f": 689,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 11995,
+  "f": 694,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 12062.5,
+  "f": 698,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 1681,
+  "turbo": false
+ },
+ {
+  "t": 12062.5,
+  "f": 698,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 12163,
+  "f": 704,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 1782,
+  "turbo": false
+ },
+ {
+  "t": 12163,
+  "f": 704,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 12164.5,
+  "f": 704,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 12263,
+  "f": 710,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 1882,
+  "turbo": false
+ },
+ {
+  "t": 12263,
+  "f": 710,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 12363,
+  "f": 716,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 1982,
+  "turbo": false
+ },
+ {
+  "t": 12363,
+  "f": 716,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 12463.1,
+  "f": 722,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 2082,
+  "turbo": false
+ },
+ {
+  "t": 12463.1,
+  "f": 722,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 12705.7,
+  "f": 736,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 12706,
+  "f": 736,
+  "type": "win",
+  "celebrate": false,
+  "step": 1,
+  "total": 0.0127,
+  "stake": 1
+ },
+ {
+  "t": 12706.3,
+  "f": 736,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.0127
+ },
+ {
+  "t": 13457.3,
+  "f": 781,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 14097.6,
+  "f": 820,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 14114.3,
+  "f": 821,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 14180.8,
+  "f": 825,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 14549.6,
+  "f": 847,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1844,
+  "interMs": 0
+ },
+ {
+  "t": 14549.8,
+  "f": 847,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.01,
+  "stake": 1
+ },
+ {
+  "t": 14549.9,
+  "f": 847,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 4169
+ },
+ {
+  "t": 14549.9,
+  "f": 847,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 4169,
+  "won": 0.01,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 14818.7,
+  "f": 863,
+  "type": "press",
+  "kind": "spin",
+  "profile": "ukgc",
+  "bet": 1,
+  "stake": 1,
+  "turbo": false,
+  "front": "canvas"
+ },
+ {
+  "t": 16249.3,
+  "f": 949,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 16249.3,
+  "f": 949,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 16249.3,
+  "f": 949,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 16332,
+  "f": 954,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 16499.5,
+  "f": 964,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 1681,
+  "turbo": false
+ },
+ {
+  "t": 16499.5,
+  "f": 964,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 16500.9,
+  "f": 964,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 16599.7,
+  "f": 970,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 1781,
+  "turbo": false
+ },
+ {
+  "t": 16599.7,
+  "f": 970,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 16699.7,
+  "f": 976,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 1881,
+  "turbo": false
+ },
+ {
+  "t": 16699.7,
+  "f": 976,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 16799.7,
+  "f": 982,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 1981,
+  "turbo": false
+ },
+ {
+  "t": 16799.7,
+  "f": 982,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 16899.9,
+  "f": 988,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 2081,
+  "turbo": false
+ },
+ {
+  "t": 16899.9,
+  "f": 988,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 17135,
+  "f": 1002,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 17135.1,
+  "f": 1002,
+  "type": "win",
+  "celebrate": false,
+  "step": 1,
+  "total": 0.054,
+  "stake": 1
+ },
+ {
+  "t": 17135.3,
+  "f": 1002,
+  "type": "stepWin",
+  "step": 1,
+  "total": 0.054
+ },
+ {
+  "t": 17885.9,
+  "f": 1047,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 18517.9,
+  "f": 1085,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 18534.8,
+  "f": 1086,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 18568.1,
+  "f": 1088,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 18584.8,
+  "f": 1089,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 18584.8,
+  "f": 1089,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 18949.2,
+  "f": 1110,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 1814,
+  "interMs": 0
+ },
+ {
+  "t": 18949.3,
+  "f": 1110,
+  "type": "win",
+  "celebrate": false,
+  "total": 0.05,
+  "stake": 1
+ },
+ {
+  "t": 18949.4,
+  "f": 1110,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 4131
+ },
+ {
+  "t": 18949.4,
+  "f": 1110,
+  "type": "cycleEnd",
+  "kind": "spin",
+  "cycleMs": 4131,
+  "won": 0.05,
+  "stake": 1,
+  "minCycleMs": 2600
+ },
+ {
+  "t": 19256.7,
+  "f": 1129,
   "type": "press",
   "kind": "bonus",
   "profile": "ukgc",
@@ -625,258 +809,162 @@
   "front": "canvas"
  },
  {
-  "t": 22955,
-  "f": 1348,
+  "t": 23305.5,
+  "f": 1372,
   "type": "reelStop",
   "col": 0,
-  "atMs": 4033,
+  "atMs": 4049,
   "turbo": false
  },
  {
-  "t": 22955,
-  "f": 1348,
+  "t": 23305.5,
+  "f": 1372,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 23055.3,
-  "f": 1354,
+  "t": 23405.4,
+  "f": 1378,
   "type": "reelStop",
   "col": 1,
-  "atMs": 4133,
+  "atMs": 4149,
   "turbo": false
  },
  {
-  "t": 23055.3,
-  "f": 1354,
+  "t": 23405.4,
+  "f": 1378,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 23155.1,
-  "f": 1360,
+  "t": 23505.4,
+  "f": 1384,
   "type": "reelStop",
   "col": 2,
-  "atMs": 4233,
+  "atMs": 4249,
   "turbo": false
  },
  {
-  "t": 23155.1,
-  "f": 1360,
+  "t": 23505.4,
+  "f": 1384,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 23255.1,
-  "f": 1366,
+  "t": 23572.4,
+  "f": 1388,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 23572.4,
+  "f": 1388,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 23572.5,
+  "f": 1388,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 23654.7,
+  "f": 1393,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 23672.4,
+  "f": 1394,
   "type": "reelStop",
   "col": 3,
-  "atMs": 4333,
+  "atMs": 4416,
   "turbo": false
  },
  {
-  "t": 23255.1,
-  "f": 1366,
+  "t": 23672.4,
+  "f": 1394,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 23355.2,
-  "f": 1372,
+  "t": 23772.4,
+  "f": 1400,
   "type": "reelStop",
   "col": 4,
-  "atMs": 4433,
+  "atMs": 4516,
   "turbo": false
  },
  {
-  "t": 23355.2,
-  "f": 1372,
+  "t": 23772.4,
+  "f": 1400,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 24141.6,
-  "f": 1419,
-  "type": "stepStart",
-  "step": 1,
-  "factor": 1
+  "t": 23825.5,
+  "f": 1403,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
  },
  {
-  "t": 24141.7,
-  "f": 1419,
-  "type": "win",
-  "celebrate": false,
-  "step": 1,
-  "total": 1.8225,
-  "stake": 100
- },
- {
-  "t": 24141.9,
-  "f": 1419,
-  "type": "stepWin",
-  "step": 1,
-  "total": 1.8225
- },
- {
-  "t": 24892.9,
-  "f": 1464,
-  "type": "impact",
-  "kind": "explode",
-  "n": 9
- },
- {
-  "t": 25523.7,
-  "f": 1502,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 25540.5,
-  "f": 1503,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 25557.3,
-  "f": 1504,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 25573.7,
-  "f": 1505,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 25590.5,
-  "f": 1506,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 26053.3,
-  "f": 1533,
-  "type": "stepEnd",
-  "step": 1,
-  "ms": 1912,
-  "interMs": 0
- },
- {
-  "t": 26606.8,
-  "f": 1566,
-  "type": "stepStart",
-  "step": 2,
-  "factor": 1
- },
- {
-  "t": 26606.9,
-  "f": 1566,
-  "type": "win",
-  "celebrate": false,
-  "step": 2,
-  "total": 1.8311,
-  "stake": 100
- },
- {
-  "t": 26607.2,
-  "f": 1566,
-  "type": "stepWin",
-  "step": 2,
-  "total": 1.8311
- },
- {
-  "t": 27360,
-  "f": 1612,
-  "type": "impact",
-  "kind": "explode",
-  "n": 4
- },
- {
-  "t": 27975.8,
-  "f": 1649,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 27992.7,
-  "f": 1650,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 28092.5,
-  "f": 1656,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 28410.8,
-  "f": 1675,
-  "type": "stepEnd",
-  "step": 2,
-  "ms": 1804,
-  "interMs": 0
- },
- {
-  "t": 28411.3,
-  "f": 1675,
+  "t": 23982.7,
+  "f": 1412,
   "type": "strikePace",
   "v": "full",
   "level": 3
  },
  {
-  "t": 28420.5,
-  "f": 1675,
+  "t": 23992.4,
+  "f": 1412,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
   "dur": 1020,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 29328.6,
-  "f": 1730,
+  "t": 24896.5,
+  "f": 1467,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2282.3529411764707,
   "rect": [
-   89,
-   -337,
+   -67,
+   131,
    1622,
    927
   ]
  },
  {
-  "t": 29933.1,
-  "f": 1766,
+  "t": 25504.5,
+  "f": 1503,
   "type": "strikeBite",
   "v": "full",
-  "lungeMs": 605,
+  "lungeMs": 608,
   "plannedMs": 600
  },
  {
-  "t": 29933.2,
-  "f": 1766,
+  "t": 25504.6,
+  "f": 1503,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -884,1404 +972,635 @@
   "playMs": 542
  },
  {
-  "t": 29933.5,
-  "f": 1766,
+  "t": 25505,
+  "f": 1503,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 29933.5,
-  "f": 1766,
+  "t": 25505,
+  "f": 1503,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 29933.5,
-  "f": 1766,
+  "t": 25505,
+  "f": 1503,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 30010.2,
-  "f": 1771,
+  "t": 25573.1,
+  "f": 1508,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 76,
+  "actualMs": 68,
   "frames": 4
  },
  {
-  "t": 30142.5,
-  "f": 1778,
+  "t": 25709.9,
+  "f": 1516,
   "type": "strikeTurn",
   "atMs": 214,
   "cells": 4
  },
  {
-  "t": 30189.7,
-  "f": 1781,
+  "t": 25759.2,
+  "f": 1519,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 256
+  "ms": 254
  },
  {
-  "t": 30661.7,
-  "f": 1810,
+  "t": 25857.5,
+  "f": 1525,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1333
+  "el": 961
  },
  {
-  "t": 31196.8,
-  "f": 1842,
+  "t": 26176.2,
+  "f": 1544,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 26779.2,
+  "f": 1580,
   "type": "strikeEnd",
   "v": "full",
-  "totalMs": 2769
+  "totalMs": 2783
  },
  {
-  "t": 32160.5,
-  "f": 1899,
+  "t": 27193.7,
+  "f": 1605,
+  "type": "stepStart",
+  "step": 1,
+  "factor": 1
+ },
+ {
+  "t": 27193.8,
+  "f": 1605,
+  "type": "win",
+  "celebrate": false,
+  "step": 1,
+  "total": 8.1675,
+  "stake": 100
+ },
+ {
+  "t": 27193.9,
+  "f": 1605,
+  "type": "stepWin",
+  "step": 1,
+  "total": 8.1675
+ },
+ {
+  "t": 27944.7,
+  "f": 1650,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 27944.7,
+  "f": 1650,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 27944.7,
+  "f": 1650,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 28025.1,
+  "f": 1655,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 28195.2,
+  "f": 1665,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 28643.4,
+  "f": 1692,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 28693.1,
+  "f": 1695,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 28726.8,
+  "f": 1697,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 28826.9,
+  "f": 1703,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 28843.3,
+  "f": 1704,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 29214.3,
+  "f": 1726,
+  "type": "stepEnd",
+  "step": 1,
+  "ms": 2021,
+  "interMs": 0
+ },
+ {
+  "t": 29214.3,
+  "f": 1726,
+  "type": "stepStart",
+  "step": 2,
+  "factor": 1
+ },
+ {
+  "t": 29214.3,
+  "f": 1726,
+  "type": "win",
+  "celebrate": false,
+  "step": 2,
+  "total": 8.181000000000001,
+  "stake": 100
+ },
+ {
+  "t": 29214.5,
+  "f": 1726,
+  "type": "stepWin",
+  "step": 2,
+  "total": 8.181000000000001
+ },
+ {
+  "t": 29979.4,
+  "f": 1772,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 30661.8,
+  "f": 1813,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 30661.9,
+  "f": 1813,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 30661.9,
+  "f": 1813,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 30678.6,
+  "f": 1814,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 30678.6,
+  "f": 1814,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 30991.6,
+  "f": 1832,
+  "type": "stepEnd",
+  "step": 2,
+  "ms": 1777,
+  "interMs": 0
+ },
+ {
+  "t": 30991.6,
+  "f": 1832,
   "type": "stepStart",
   "step": 3,
   "factor": 1
  },
  {
-  "t": 32160.6,
-  "f": 1899,
+  "t": 30991.7,
+  "f": 1832,
   "type": "win",
   "celebrate": false,
   "step": 3,
-  "total": 13.0361,
+  "total": 8.343000000000002,
   "stake": 100
  },
  {
-  "t": 32160.8,
-  "f": 1899,
+  "t": 30992,
+  "f": 1832,
   "type": "stepWin",
   "step": 3,
-  "total": 13.0361
+  "total": 8.343000000000002
  },
  {
-  "t": 32915.2,
-  "f": 1945,
+  "t": 31747.3,
+  "f": 1878,
   "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
+  "kind": "explode",
+  "n": 6
  },
  {
-  "t": 32915.2,
-  "f": 1945,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 32915.2,
-  "f": 1945,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 32995.9,
-  "f": 1950,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 33166.3,
-  "f": 1960,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 251
- },
- {
-  "t": 33597.6,
-  "f": 1986,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 33613.9,
-  "f": 1987,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 33664.1,
-  "f": 1990,
+  "t": 32412.9,
+  "f": 1918,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 33697.7,
-  "f": 1992,
+  "t": 32429.8,
+  "f": 1919,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 33764.1,
-  "f": 1996,
+  "t": 32429.9,
+  "f": 1919,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 34122.5,
-  "f": 2017,
+  "t": 32479.8,
+  "f": 1922,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 32833.2,
+  "f": 1943,
   "type": "stepEnd",
   "step": 3,
-  "ms": 1962,
+  "ms": 1842,
   "interMs": 0
  },
  {
-  "t": 34683.4,
+  "t": 34431.2,
+  "f": 2039,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 15175,
+  "turbo": false
+ },
+ {
+  "t": 34431.2,
+  "f": 2039,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 34531.3,
+  "f": 2045,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 15275,
+  "turbo": false
+ },
+ {
+  "t": 34531.3,
+  "f": 2045,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 34631.3,
   "f": 2051,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 15375,
+  "turbo": false
+ },
+ {
+  "t": 34631.3,
+  "f": 2051,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 34731.4,
+  "f": 2057,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 15475,
+  "turbo": false
+ },
+ {
+  "t": 34731.4,
+  "f": 2057,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 34831.4,
+  "f": 2063,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 15575,
+  "turbo": false
+ },
+ {
+  "t": 34831.4,
+  "f": 2063,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 35633.7,
+  "f": 2111,
   "type": "stepStart",
   "step": 4,
   "factor": 0.92
  },
  {
-  "t": 34683.4,
-  "f": 2051,
+  "t": 35633.9,
+  "f": 2111,
   "type": "win",
   "celebrate": false,
   "step": 4,
-  "total": 13.4681,
+  "total": 8.498500000000002,
   "stake": 100
  },
  {
-  "t": 34683.6,
-  "f": 2051,
+  "t": 35634,
+  "f": 2111,
   "type": "stepWin",
   "step": 4,
-  "total": 13.4681
+  "total": 8.498500000000002
  },
  {
-  "t": 35434.2,
-  "f": 2096,
-  "type": "impact",
-  "kind": "explode",
-  "n": 7
- },
- {
-  "t": 36032.7,
-  "f": 2132,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 36049.6,
-  "f": 2133,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 36066.1,
-  "f": 2134,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 36082.7,
-  "f": 2135,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 36099.3,
-  "f": 2136,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 36149.8,
-  "f": 2139,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 36149.8,
-  "f": 2139,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 36149.8,
-  "f": 2139,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 36232,
-  "f": 2144,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 36402,
-  "f": 2154,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 36535.2,
-  "f": 2162,
-  "type": "stepEnd",
-  "step": 4,
-  "ms": 1852,
-  "interMs": 0
- },
- {
-  "t": 37094.5,
-  "f": 2195,
-  "type": "stepStart",
-  "step": 5,
-  "factor": 0.84
- },
- {
-  "t": 37094.6,
-  "f": 2195,
-  "type": "win",
-  "celebrate": false,
-  "step": 5,
-  "total": 14.0254,
-  "stake": 100
- },
- {
-  "t": 37094.8,
-  "f": 2195,
-  "type": "stepWin",
-  "step": 5,
-  "total": 14.0254
- },
- {
-  "t": 37852.9,
-  "f": 2241,
+  "t": 36385,
+  "f": 2156,
   "type": "impact",
   "kind": "explode",
   "n": 8
  },
  {
-  "t": 38417.8,
-  "f": 2275,
+  "t": 36983.6,
+  "f": 2192,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 38434.8,
-  "f": 2276,
+  "t": 37000.3,
+  "f": 2193,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 38451.6,
-  "f": 2277,
+  "t": 37016.8,
+  "f": 2194,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 38467.9,
-  "f": 2278,
+  "t": 37034.1,
+  "f": 2195,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 38485,
-  "f": 2279,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 38822.5,
-  "f": 2299,
+  "t": 37435.6,
+  "f": 2219,
   "type": "stepEnd",
-  "step": 5,
-  "ms": 1728,
+  "step": 4,
+  "ms": 1802,
   "interMs": 0
  },
  {
-  "t": 40419.5,
-  "f": 2395,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 21497,
-  "turbo": false
+  "t": 37997.7,
+  "f": 2252,
+  "type": "stepStart",
+  "step": 5,
+  "factor": 0.84
  },
  {
-  "t": 40419.5,
-  "f": 2395,
+  "t": 37997.7,
+  "f": 2252,
+  "type": "win",
+  "celebrate": false,
+  "step": 5,
+  "total": 8.584900000000001,
+  "stake": 100
+ },
+ {
+  "t": 37997.9,
+  "f": 2252,
+  "type": "stepWin",
+  "step": 5,
+  "total": 8.584900000000001
+ },
+ {
+  "t": 38753.2,
+  "f": 2298,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 39302.2,
+  "f": 2331,
+  "type": "impact",
+  "kind": "drop",
   "col": 0
  },
  {
-  "t": 40519.9,
-  "f": 2401,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 21597,
-  "turbo": false
- },
- {
-  "t": 40519.9,
-  "f": 2401,
+  "t": 39318.6,
+  "f": 2332,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 1
  },
  {
-  "t": 40536.4,
-  "f": 2402,
+  "t": 39335.6,
+  "f": 2333,
   "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 40536.4,
-  "f": 2402,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 40536.4,
-  "f": 2402,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 40618.8,
-  "f": 2407,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 40686.4,
-  "f": 2411,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 21764,
-  "turbo": false
- },
- {
-  "t": 40686.4,
-  "f": 2411,
-  "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 2
  },
  {
-  "t": 40786.5,
-  "f": 2417,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 21864,
-  "turbo": false
- },
- {
-  "t": 40786.5,
-  "f": 2417,
+  "t": 39352.2,
+  "f": 2334,
   "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 3
  },
  {
-  "t": 40789.2,
-  "f": 2417,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 253
+  "t": 39670.8,
+  "f": 2353,
+  "type": "stepEnd",
+  "step": 5,
+  "ms": 1673,
+  "interMs": 0
  },
  {
-  "t": 40886.6,
-  "f": 2423,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 21964,
-  "turbo": false
- },
- {
-  "t": 40886.6,
-  "f": 2423,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 41088.2,
-  "f": 2435,
+  "t": 40221.2,
+  "f": 2386,
   "type": "stepStart",
   "step": 6,
   "factor": 0.76
  },
  {
-  "t": 41088.3,
-  "f": 2435,
+  "t": 40221.4,
+  "f": 2386,
   "type": "win",
   "celebrate": false,
   "step": 6,
-  "total": 14.0276,
+  "total": 10.5289,
   "stake": 100
  },
  {
-  "t": 41088.5,
-  "f": 2435,
+  "t": 40221.5,
+  "f": 2386,
   "type": "stepWin",
   "step": 6,
-  "total": 14.0276
+  "total": 10.5289
  },
  {
-  "t": 41839.9,
-  "f": 2480,
-  "type": "impact",
-  "kind": "explode",
-  "n": 3
- },
- {
-  "t": 42371.2,
-  "f": 2512,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 42388.2,
-  "f": 2513,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 42388.2,
-  "f": 2513,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 42644.2,
-  "f": 2528,
-  "type": "stepEnd",
-  "step": 6,
-  "ms": 1556,
-  "interMs": 0
- },
- {
-  "t": 42644.3,
-  "f": 2528,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 42644.5,
-  "f": 2528,
-  "type": "heroPlay",
-  "id": "lev_eye",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
-  "rect": [
-   155,
-   122,
-   1218,
-   680
-  ]
- },
- {
-  "t": 43007.1,
-  "f": 2550,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   89,
-   -337,
-   1622,
-   927
-  ]
- },
- {
-  "t": 43360.4,
-  "f": 2571,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 353,
-  "plannedMs": 350
- },
- {
-  "t": 43360.5,
-  "f": 2571,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 43360.7,
-  "f": 2571,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 43360.7,
-  "f": 2571,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 43360.7,
-  "f": 2571,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 43437.9,
-  "f": 2576,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 77,
-  "frames": 4
- },
- {
-  "t": 43519.9,
-  "f": 2580,
-  "type": "strikeTurn",
-  "atMs": 163,
-  "cells": 4
- },
- {
-  "t": 43613.6,
-  "f": 2586,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 253
- },
- {
-  "t": 44039,
-  "f": 2612,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1032
- },
- {
-  "t": 44125,
-  "f": 2617,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1468
- },
- {
-  "t": 45091.4,
-  "f": 2675,
-  "type": "stepStart",
-  "step": 7,
-  "factor": 0.7
- },
- {
-  "t": 45091.5,
-  "f": 2675,
-  "type": "win",
-  "celebrate": false,
-  "step": 7,
-  "total": 27.6572,
-  "stake": 100
- },
- {
-  "t": 45091.7,
-  "f": 2675,
-  "type": "stepWin",
-  "step": 7,
-  "total": 27.6572
- },
- {
-  "t": 45842.6,
-  "f": 2720,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 45842.6,
-  "f": 2720,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 45842.6,
-  "f": 2720,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 45923.4,
-  "f": 2725,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 46093.5,
-  "f": 2735,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 251
- },
- {
-  "t": 46375,
-  "f": 2752,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 46408.4,
-  "f": 2754,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 46424.8,
-  "f": 2755,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 46541.4,
-  "f": 2762,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 46541.5,
-  "f": 2762,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 46760.3,
-  "f": 2775,
-  "type": "stepEnd",
-  "step": 7,
-  "ms": 1669,
-  "interMs": 0
- },
- {
-  "t": 48359.8,
-  "f": 2871,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 29437,
-  "turbo": false
- },
- {
-  "t": 48359.8,
-  "f": 2871,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 48426.7,
-  "f": 2875,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 48426.7,
-  "f": 2875,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 48426.7,
-  "f": 2875,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 48508.9,
-  "f": 2880,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 48526.6,
-  "f": 2881,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 29604,
-  "turbo": false
- },
- {
-  "t": 48526.6,
-  "f": 2881,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 48626.5,
-  "f": 2887,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 29704,
-  "turbo": false
- },
- {
-  "t": 48626.5,
-  "f": 2887,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 48678.2,
-  "f": 2890,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 48726.4,
-  "f": 2893,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 29804,
-  "turbo": false
- },
- {
-  "t": 48726.4,
-  "f": 2893,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 48826.7,
-  "f": 2899,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 29904,
-  "turbo": false
- },
- {
-  "t": 48826.7,
-  "f": 2899,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 49580.5,
-  "f": 2944,
-  "type": "stepStart",
-  "step": 8,
-  "factor": 0.7
- },
- {
-  "t": 49580.6,
-  "f": 2944,
-  "type": "win",
-  "celebrate": false,
-  "step": 8,
-  "total": 27.7009,
-  "stake": 100
- },
- {
-  "t": 49580.9,
-  "f": 2944,
-  "type": "stepWin",
-  "step": 8,
-  "total": 27.7009
- },
- {
-  "t": 50346.5,
-  "f": 2990,
-  "type": "impact",
-  "kind": "explode",
-  "n": 13
- },
- {
-  "t": 50928.4,
-  "f": 3025,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 50945.1,
-  "f": 3026,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 51011.9,
-  "f": 3030,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 51011.9,
-  "f": 3030,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 51045.2,
-  "f": 3032,
-  "type": "impact",
-  "kind": "wildMaw",
-  "heavy": true
- },
- {
-  "t": 51045.2,
-  "f": 3032,
-  "type": "hitStopStart",
-  "kind": "wildMaw",
-  "plannedMs": 67
- },
- {
-  "t": 51045.2,
-  "f": 3032,
-  "type": "shakeStart",
-  "kind": "wildMaw",
-  "px": 6
- },
- {
-  "t": 51127.8,
-  "f": 3037,
-  "type": "hitStopEnd",
-  "kind": "wildMaw",
-  "actualMs": 82,
-  "frames": 4
- },
- {
-  "t": 51250.2,
-  "f": 3044,
-  "type": "stepEnd",
-  "step": 8,
-  "ms": 1670,
-  "interMs": 0
- },
- {
-  "t": 51297.4,
-  "f": 3047,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 51810.4,
-  "f": 3077,
-  "type": "stepStart",
-  "step": 9,
-  "factor": 0.7
- },
- {
-  "t": 51810.6,
-  "f": 3077,
-  "type": "win",
-  "celebrate": false,
-  "step": 9,
-  "total": 28.0033,
-  "stake": 100
- },
- {
-  "t": 51810.7,
-  "f": 3077,
-  "type": "stepWin",
-  "step": 9,
-  "total": 28.0033
- },
- {
-  "t": 52560.9,
-  "f": 3122,
+  "t": 40973.1,
+  "f": 2431,
   "type": "impact",
   "kind": "explode",
   "n": 12
  },
  {
-  "t": 53047,
-  "f": 3152,
+  "t": 41487.3,
+  "f": 2462,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 53096.9,
-  "f": 3155,
+  "t": 41543.1,
+  "f": 2465,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 53130.3,
-  "f": 3157,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 53163.7,
-  "f": 3159,
+  "t": 41554,
+  "f": 2466,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 53197,
-  "f": 3161,
+  "t": 41654.1,
+  "f": 2472,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 41687.4,
+  "f": 2474,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 53482.3,
-  "f": 3178,
+  "t": 41991.6,
+  "f": 2492,
   "type": "stepEnd",
-  "step": 9,
-  "ms": 1672,
+  "step": 6,
+  "ms": 1770,
   "interMs": 0
  },
  {
-  "t": 53482.4,
-  "f": 3178,
+  "t": 41991.7,
+  "f": 2492,
   "type": "strikePace",
   "v": "short",
   "level": 3
  },
  {
-  "t": 53482.5,
-  "f": 3178,
+  "t": 41991.8,
+  "f": 2492,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
   "dur": 470,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 53832.9,
-  "f": 3199,
+  "t": 42356.1,
+  "f": 2514,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2164.705882352941,
   "rect": [
    245,
-   -181,
-   1622,
-   927
-  ]
- },
- {
-  "t": 54185.7,
-  "f": 3220,
-  "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 353,
-  "plannedMs": 350
- },
- {
-  "t": 54185.8,
-  "f": 3220,
-  "type": "heroFlipbook",
-  "id": "lev_lunge",
-  "frames": 14,
-  "fps": 24,
-  "playMs": 542
- },
- {
-  "t": 54185.9,
-  "f": 3220,
-  "type": "impact",
-  "kind": "leviathan",
-  "heavy": true
- },
- {
-  "t": 54185.9,
-  "f": 3220,
-  "type": "hitStopStart",
-  "kind": "leviathan",
-  "plannedMs": 67
- },
- {
-  "t": 54185.9,
-  "f": 3220,
-  "type": "shakeStart",
-  "kind": "leviathan",
-  "px": 6
- },
- {
-  "t": 54263.8,
-  "f": 3225,
-  "type": "hitStopEnd",
-  "kind": "leviathan",
-  "actualMs": 77,
-  "frames": 4
- },
- {
-  "t": 54349.9,
-  "f": 3230,
-  "type": "strikeTurn",
-  "atMs": 167,
-  "cells": 4
- },
- {
-  "t": 54444.4,
-  "f": 3235,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 259
- },
- {
-  "t": 54865,
-  "f": 3261,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1032
- },
- {
-  "t": 54967,
-  "f": 3267,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1484
- },
- {
-  "t": 55934.1,
-  "f": 3325,
-  "type": "stepStart",
-  "step": 10,
-  "factor": 0.7
- },
- {
-  "t": 55934.2,
-  "f": 3325,
-  "type": "win",
-  "celebrate": false,
-  "step": 10,
-  "total": 45.4993,
-  "stake": 100
- },
- {
-  "t": 55934.4,
-  "f": 3325,
-  "type": "stepWin",
-  "step": 10,
-  "total": 45.4993
- },
- {
-  "t": 56685.3,
-  "f": 3370,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 56685.3,
-  "f": 3370,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 56685.3,
-  "f": 3370,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 56765.9,
-  "f": 3375,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
-  "actualMs": 80,
-  "frames": 4
- },
- {
-  "t": 56935.6,
-  "f": 3385,
-  "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 250
- },
- {
-  "t": 57167.3,
-  "f": 3399,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 57217.1,
-  "f": 3402,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 57233.9,
-  "f": 3403,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 57250.3,
-  "f": 3404,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 57267.3,
-  "f": 3405,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 57535.4,
-  "f": 3421,
-  "type": "stepEnd",
-  "step": 10,
-  "ms": 1601,
-  "interMs": 0
- },
- {
-  "t": 59135.4,
-  "f": 3517,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 40213,
-  "turbo": false
- },
- {
-  "t": 59135.4,
-  "f": 3517,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 59235.5,
-  "f": 3523,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 40313,
-  "turbo": false
- },
- {
-  "t": 59235.5,
-  "f": 3523,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 1
- },
- {
-  "t": 59335.4,
-  "f": 3529,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 40413,
-  "turbo": false
- },
- {
-  "t": 59335.4,
-  "f": 3529,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 59435.5,
-  "f": 3535,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 40513,
-  "turbo": false
- },
- {
-  "t": 59435.5,
-  "f": 3535,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 59535.5,
-  "f": 3541,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 40613,
-  "turbo": false
- },
- {
-  "t": 59535.5,
-  "f": 3541,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 60321.5,
-  "f": 3588,
-  "type": "stepStart",
-  "step": 11,
-  "factor": 0.7
- },
- {
-  "t": 60321.5,
-  "f": 3588,
-  "type": "win",
-  "celebrate": false,
-  "step": 11,
-  "total": 45.5803,
-  "stake": 100
- },
- {
-  "t": 60321.7,
-  "f": 3588,
-  "type": "stepWin",
-  "step": 11,
-  "total": 45.5803
- },
- {
-  "t": 61072.1,
-  "f": 3633,
-  "type": "impact",
-  "kind": "explode",
-  "n": 3
- },
- {
-  "t": 61554,
-  "f": 3662,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 61570.7,
-  "f": 3663,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 61587.3,
-  "f": 3664,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 61839.1,
-  "f": 3679,
-  "type": "stepEnd",
-  "step": 11,
-  "ms": 1518,
-  "interMs": 0
- },
- {
-  "t": 61839.2,
-  "f": 3679,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
- },
- {
-  "t": 61839.3,
-  "f": 3679,
-  "type": "heroPlay",
-  "id": "lev_eye",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
-  "rect": [
-   155,
-   122,
-   1218,
-   680
-  ]
- },
- {
-  "t": 62196.4,
-  "f": 3700,
-  "type": "heroPlay",
-  "id": "lev_lunge",
-  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
-  "dur": 2164.705882352941,
-  "rect": [
-   89,
    -337,
    1622,
    927
   ]
  },
  {
-  "t": 62548.5,
-  "f": 3721,
+  "t": 42707.8,
+  "f": 2535,
   "type": "strikeBite",
   "v": "short",
   "lungeMs": 352,
   "plannedMs": 350
  },
  {
-  "t": 62548.5,
-  "f": 3721,
+  "t": 42707.8,
+  "f": 2535,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -2289,344 +1608,1740 @@
   "playMs": 542
  },
  {
-  "t": 62548.6,
-  "f": 3721,
+  "t": 42707.9,
+  "f": 2535,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 62548.6,
-  "f": 3721,
+  "t": 42707.9,
+  "f": 2535,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 62548.6,
-  "f": 3721,
+  "t": 42707.9,
+  "f": 2535,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 62621,
-  "f": 3726,
+  "t": 42787.5,
+  "f": 2540,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 72,
-  "frames": 4
- },
- {
-  "t": 62707.1,
-  "f": 3731,
-  "type": "strikeTurn",
-  "atMs": 161,
-  "cells": 4
- },
- {
-  "t": 62802.6,
-  "f": 3736,
-  "type": "shakeEnd",
-  "kind": "leviathan",
-  "ms": 254
- },
- {
-  "t": 63238.8,
-  "f": 3763,
-  "type": "heroEnd",
-  "id": "lev_lunge",
-  "el": 1042
- },
- {
-  "t": 63325,
-  "f": 3768,
-  "type": "strikeEnd",
-  "v": "short",
-  "totalMs": 1479
- },
- {
-  "t": 64291.1,
-  "f": 3826,
-  "type": "stepStart",
-  "step": 12,
-  "factor": 0.7
- },
- {
-  "t": 64291.3,
-  "f": 3826,
-  "type": "win",
-  "celebrate": false,
-  "step": 12,
-  "total": 70.0423,
-  "stake": 100
- },
- {
-  "t": 64291.4,
-  "f": 3826,
-  "type": "stepWin",
-  "step": 12,
-  "total": 70.0423
- },
- {
-  "t": 65043.2,
-  "f": 3871,
-  "type": "impact",
-  "kind": "bigCascade",
-  "heavy": true
- },
- {
-  "t": 65043.2,
-  "f": 3871,
-  "type": "hitStopStart",
-  "kind": "bigCascade",
-  "plannedMs": 67
- },
- {
-  "t": 65043.2,
-  "f": 3871,
-  "type": "shakeStart",
-  "kind": "bigCascade",
-  "px": 6
- },
- {
-  "t": 65122.9,
-  "f": 3876,
-  "type": "hitStopEnd",
-  "kind": "bigCascade",
   "actualMs": 79,
   "frames": 4
  },
  {
-  "t": 65297.9,
-  "f": 3886,
+  "t": 42859,
+  "f": 2544,
+  "type": "strikeTurn",
+  "atMs": 153,
+  "cells": 4
+ },
+ {
+  "t": 42967.8,
+  "f": 2550,
   "type": "shakeEnd",
-  "kind": "bigCascade",
-  "ms": 255
+  "kind": "leviathan",
+  "ms": 260
  },
  {
-  "t": 65557.7,
-  "f": 3902,
+  "t": 43055.8,
+  "f": 2556,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 700
+ },
+ {
+  "t": 43466.8,
+  "f": 2580,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1461
+ },
+ {
+  "t": 43874.8,
+  "f": 2605,
+  "type": "stepStart",
+  "step": 7,
+  "factor": 0.7
+ },
+ {
+  "t": 43874.9,
+  "f": 2605,
+  "type": "win",
+  "celebrate": false,
+  "step": 7,
+  "total": 14.3089,
+  "stake": 100
+ },
+ {
+  "t": 43875.1,
+  "f": 2605,
+  "type": "stepWin",
+  "step": 7,
+  "total": 14.3089
+ },
+ {
+  "t": 44625.2,
+  "f": 2650,
   "type": "impact",
-  "kind": "drop",
-  "col": 1
+  "kind": "explode",
+  "n": 10
  },
  {
-  "t": 65574.1,
-  "f": 3903,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 65607.7,
-  "f": 3905,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 65640.7,
-  "f": 3907,
+  "t": 45107,
+  "f": 2679,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 65724.5,
-  "f": 3912,
+  "t": 45173.7,
+  "f": 2683,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 45240.9,
+  "f": 2687,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 65992.7,
-  "f": 3928,
+  "t": 45257.1,
+  "f": 2688,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 45273.9,
+  "f": 2689,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 45525.9,
+  "f": 2704,
   "type": "stepEnd",
-  "step": 12,
+  "step": 7,
+  "ms": 1651,
+  "interMs": 0
+ },
+ {
+  "t": 46087.6,
+  "f": 2737,
+  "type": "stepStart",
+  "step": 8,
+  "factor": 0.7
+ },
+ {
+  "t": 46087.8,
+  "f": 2737,
+  "type": "win",
+  "celebrate": false,
+  "step": 8,
+  "total": 18.6964,
+  "stake": 100
+ },
+ {
+  "t": 46087.9,
+  "f": 2737,
+  "type": "stepWin",
+  "step": 8,
+  "total": 18.6964
+ },
+ {
+  "t": 46838.8,
+  "f": 2782,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 47342.2,
+  "f": 2813,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 47358.8,
+  "f": 2814,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 47375.8,
+  "f": 2815,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 47375.8,
+  "f": 2815,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 47492.8,
+  "f": 2822,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 47789.3,
+  "f": 2839,
+  "type": "stepEnd",
+  "step": 8,
   "ms": 1702,
   "interMs": 0
  },
  {
-  "t": 66543.3,
-  "f": 3961,
+  "t": 48344.4,
+  "f": 2873,
   "type": "stepStart",
-  "step": 13,
+  "step": 9,
   "factor": 0.7
  },
  {
-  "t": 66543.3,
-  "f": 3961,
+  "t": 48344.5,
+  "f": 2873,
   "type": "win",
   "celebrate": false,
-  "step": 13,
-  "total": 70.1152,
+  "step": 9,
+  "total": 18.7061,
   "stake": 100
  },
  {
-  "t": 66543.5,
-  "f": 3961,
+  "t": 48344.7,
+  "f": 2873,
   "type": "stepWin",
-  "step": 13,
-  "total": 70.1152
+  "step": 9,
+  "total": 18.7061
  },
  {
-  "t": 67294.1,
-  "f": 4006,
+  "t": 49095.9,
+  "f": 2918,
   "type": "impact",
   "kind": "explode",
-  "n": 3
+  "n": 8
  },
  {
-  "t": 67792.9,
-  "f": 4036,
+  "t": 49594.2,
+  "f": 2948,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 67809.3,
-  "f": 4037,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 67809.3,
-  "f": 4037,
+  "t": 49610.7,
+  "f": 2949,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 68058.2,
-  "f": 4051,
+  "t": 49627.4,
+  "f": 2950,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 49660.9,
+  "f": 2952,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 49953.4,
+  "f": 2969,
   "type": "stepEnd",
-  "step": 13,
-  "ms": 1515,
+  "step": 9,
+  "ms": 1609,
   "interMs": 0
  },
  {
-  "t": 69660.7,
-  "f": 4148,
+  "t": 51562.3,
+  "f": 3066,
   "type": "reelStop",
   "col": 0,
-  "atMs": 50738,
+  "atMs": 32306,
   "turbo": false
  },
  {
-  "t": 69660.7,
-  "f": 4148,
+  "t": 51562.3,
+  "f": 3066,
   "type": "impact",
   "kind": "reelStop",
   "col": 0
  },
  {
-  "t": 69760.9,
-  "f": 4154,
+  "t": 51662.5,
+  "f": 3072,
   "type": "reelStop",
   "col": 1,
-  "atMs": 50838,
+  "atMs": 32406,
   "turbo": false
  },
  {
-  "t": 69760.9,
-  "f": 4154,
+  "t": 51662.5,
+  "f": 3072,
   "type": "impact",
   "kind": "reelStop",
   "col": 1
  },
  {
-  "t": 69861.1,
-  "f": 4160,
+  "t": 51762.6,
+  "f": 3078,
   "type": "reelStop",
   "col": 2,
-  "atMs": 50939,
+  "atMs": 32506,
   "turbo": false
  },
  {
-  "t": 69861.1,
-  "f": 4160,
+  "t": 51762.6,
+  "f": 3078,
   "type": "impact",
   "kind": "reelStop",
   "col": 2
  },
  {
-  "t": 69961.2,
-  "f": 4166,
+  "t": 51863,
+  "f": 3084,
   "type": "reelStop",
   "col": 3,
-  "atMs": 51039,
+  "atMs": 32606,
   "turbo": false
  },
  {
-  "t": 69961.2,
-  "f": 4166,
+  "t": 51863,
+  "f": 3084,
   "type": "impact",
   "kind": "reelStop",
   "col": 3
  },
  {
-  "t": 70061.1,
-  "f": 4172,
+  "t": 51879.8,
+  "f": 3085,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 51879.9,
+  "f": 3085,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 51879.9,
+  "f": 3085,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 51961.8,
+  "f": 3090,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 52030.2,
+  "f": 3094,
   "type": "reelStop",
   "col": 4,
-  "atMs": 51139,
+  "atMs": 32774,
   "turbo": false
  },
  {
-  "t": 70061.1,
-  "f": 4172,
+  "t": 52030.2,
+  "f": 3094,
   "type": "impact",
   "kind": "reelStop",
   "col": 4
  },
  {
-  "t": 70280,
-  "f": 4185,
+  "t": 52131.2,
+  "f": 3100,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 251
+ },
+ {
+  "t": 52231.3,
+  "f": 3106,
   "type": "strikePace",
   "v": "short",
   "level": 3
  },
  {
-  "t": 70280.1,
-  "f": 4185,
+  "t": 52231.6,
+  "f": 3106,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
   "dur": 470,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 70630.7,
-  "f": 4206,
+  "t": 52582.6,
+  "f": 3127,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2164.705882352941,
   "rect": [
-   245,
-   -337,
+   -67,
+   131,
    1622,
    927
   ]
  },
  {
-  "t": 70981.6,
+  "t": 52940.9,
+  "f": 3148,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 358,
+  "plannedMs": 350
+ },
+ {
+  "t": 52941,
+  "f": 3148,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 52941.1,
+  "f": 3148,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 52941.1,
+  "f": 3148,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 52941.1,
+  "f": 3148,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 53012.9,
+  "f": 3153,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 71,
+  "frames": 4
+ },
+ {
+  "t": 53098.8,
+  "f": 3158,
+  "type": "strikeTurn",
+  "atMs": 166,
+  "cells": 4
+ },
+ {
+  "t": 53199.4,
+  "f": 3164,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 258
+ },
+ {
+  "t": 53297.1,
+  "f": 3170,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 715
+ },
+ {
+  "t": 53732.8,
+  "f": 3196,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1500
+ },
+ {
+  "t": 54135.9,
+  "f": 3220,
+  "type": "stepStart",
+  "step": 10,
+  "factor": 0.7
+ },
+ {
+  "t": 54136,
+  "f": 3220,
+  "type": "win",
+  "celebrate": false,
+  "step": 10,
+  "total": 21.086399999999998,
+  "stake": 100
+ },
+ {
+  "t": 54136.3,
+  "f": 3220,
+  "type": "stepWin",
+  "step": 10,
+  "total": 21.086399999999998
+ },
+ {
+  "t": 54888,
+  "f": 3265,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 55399,
+  "f": 3296,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 55415.7,
+  "f": 3297,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 55432.4,
+  "f": 3298,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 55432.4,
+  "f": 3298,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 55515.8,
+  "f": 3303,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 55632.7,
+  "f": 3310,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 55632.7,
+  "f": 3310,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 55632.7,
+  "f": 3310,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 55714.9,
+  "f": 3315,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 55801.1,
+  "f": 3320,
+  "type": "stepEnd",
+  "step": 10,
+  "ms": 1665,
+  "interMs": 0
+ },
+ {
+  "t": 55884.7,
+  "f": 3325,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 56362.1,
+  "f": 3353,
+  "type": "stepStart",
+  "step": 11,
+  "factor": 0.7
+ },
+ {
+  "t": 56362.2,
+  "f": 3353,
+  "type": "win",
+  "celebrate": false,
+  "step": 11,
+  "total": 21.153899999999997,
+  "stake": 100
+ },
+ {
+  "t": 56362.4,
+  "f": 3353,
+  "type": "stepWin",
+  "step": 11,
+  "total": 21.153899999999997
+ },
+ {
+  "t": 57118.8,
+  "f": 3399,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 57634,
+  "f": 3430,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 57667.8,
+  "f": 3432,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 57667.8,
+  "f": 3432,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 57684.3,
+  "f": 3433,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 57684.3,
+  "f": 3433,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 57985.9,
+  "f": 3451,
+  "type": "stepEnd",
+  "step": 11,
+  "ms": 1624,
+  "interMs": 0
+ },
+ {
+  "t": 58536.5,
+  "f": 3484,
+  "type": "stepStart",
+  "step": 12,
+  "factor": 0.7
+ },
+ {
+  "t": 58536.5,
+  "f": 3484,
+  "type": "win",
+  "celebrate": false,
+  "step": 12,
+  "total": 21.186299999999996,
+  "stake": 100
+ },
+ {
+  "t": 58536.7,
+  "f": 3484,
+  "type": "stepWin",
+  "step": 12,
+  "total": 21.186299999999996
+ },
+ {
+  "t": 59287.1,
+  "f": 3529,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 59769.2,
+  "f": 3558,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 59786.1,
+  "f": 3559,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 59802.7,
+  "f": 3560,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 60099.2,
+  "f": 3577,
+  "type": "stepEnd",
+  "step": 12,
+  "ms": 1563,
+  "interMs": 0
+ },
+ {
+  "t": 61654.5,
+  "f": 3671,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 61654.5,
+  "f": 3671,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 61654.5,
+  "f": 3671,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 61736.9,
+  "f": 3676,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 61754.1,
+  "f": 3677,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 42497,
+  "turbo": false
+ },
+ {
+  "t": 61754.1,
+  "f": 3677,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 61854.3,
+  "f": 3683,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 42598,
+  "turbo": false
+ },
+ {
+  "t": 61854.3,
+  "f": 3683,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 61905.8,
+  "f": 3686,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 251
+ },
+ {
+  "t": 61954.7,
+  "f": 3689,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 42698,
+  "turbo": false
+ },
+ {
+  "t": 61954.7,
+  "f": 3689,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 62054.7,
+  "f": 3695,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 42798,
+  "turbo": false
+ },
+ {
+  "t": 62054.7,
+  "f": 3695,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 62154.6,
+  "f": 3701,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 42898,
+  "turbo": false
+ },
+ {
+  "t": 62154.6,
+  "f": 3701,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 62924.6,
+  "f": 3747,
+  "type": "stepStart",
+  "step": 13,
+  "factor": 0.7
+ },
+ {
+  "t": 62924.8,
+  "f": 3747,
+  "type": "win",
+  "celebrate": false,
+  "step": 13,
+  "total": 23.562299999999997,
+  "stake": 100
+ },
+ {
+  "t": 62925,
+  "f": 3747,
+  "type": "stepWin",
+  "step": 13,
+  "total": 23.562299999999997
+ },
+ {
+  "t": 63691.7,
+  "f": 3793,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 63691.7,
+  "f": 3793,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 63691.7,
+  "f": 3793,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 63771.7,
+  "f": 3798,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 63942.4,
+  "f": 3808,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 64173,
+  "f": 3822,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 64189.8,
+  "f": 3823,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 64323.1,
+  "f": 3831,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 64339.7,
+  "f": 3832,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 64423.6,
+  "f": 3837,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 64629.7,
+  "f": 3849,
+  "type": "stepEnd",
+  "step": 13,
+  "ms": 1705,
+  "interMs": 0
+ },
+ {
+  "t": 64629.7,
+  "f": 3849,
+  "type": "stepStart",
+  "step": 14,
+  "factor": 0.7
+ },
+ {
+  "t": 64629.8,
+  "f": 3849,
+  "type": "win",
+  "celebrate": false,
+  "step": 14,
+  "total": 23.610899999999997,
+  "stake": 100
+ },
+ {
+  "t": 64629.9,
+  "f": 3849,
+  "type": "stepWin",
+  "step": 14,
+  "total": 23.610899999999997
+ },
+ {
+  "t": 65392.6,
+  "f": 3895,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 65874.3,
+  "f": 3924,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 65890.9,
+  "f": 3925,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 65907.7,
+  "f": 3926,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 65924.7,
+  "f": 3927,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 66292.9,
+  "f": 3949,
+  "type": "stepEnd",
+  "step": 14,
+  "ms": 1663,
+  "interMs": 0
+ },
+ {
+  "t": 66292.9,
+  "f": 3949,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 66293.1,
+  "f": 3949,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 66655.3,
+  "f": 3970,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -67,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 67004.5,
+  "f": 3991,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 349,
+  "plannedMs": 350
+ },
+ {
+  "t": 67004.5,
+  "f": 3991,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 67004.6,
+  "f": 3991,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 67004.6,
+  "f": 3991,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 67004.6,
+  "f": 3991,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 67074.6,
+  "f": 3996,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 67160.3,
+  "f": 4001,
+  "type": "strikeTurn",
+  "atMs": 155,
+  "cells": 4
+ },
+ {
+  "t": 67261.3,
+  "f": 4007,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 257
+ },
+ {
+  "t": 67358.6,
+  "f": 4013,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 703
+ },
+ {
+  "t": 67761.2,
+  "f": 4037,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1456
+ },
+ {
+  "t": 68723.8,
+  "f": 4094,
+  "type": "stepStart",
+  "step": 15,
+  "factor": 0.7
+ },
+ {
+  "t": 68723.9,
+  "f": 4094,
+  "type": "win",
+  "celebrate": false,
+  "step": 15,
+  "total": 25.7034,
+  "stake": 100
+ },
+ {
+  "t": 68724.1,
+  "f": 4094,
+  "type": "stepWin",
+  "step": 15,
+  "total": 25.7034
+ },
+ {
+  "t": 69479.2,
+  "f": 4140,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 70011.4,
+  "f": 4172,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 70045.1,
+  "f": 4174,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 70045.1,
+  "f": 4174,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 70111.2,
+  "f": 4178,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 70111.3,
+  "f": 4178,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 70379.9,
+  "f": 4194,
+  "type": "stepEnd",
+  "step": 15,
+  "ms": 1656,
+  "interMs": 0
+ },
+ {
+  "t": 70931.1,
   "f": 4227,
+  "type": "stepStart",
+  "step": 16,
+  "factor": 0.7
+ },
+ {
+  "t": 70931.2,
+  "f": 4227,
+  "type": "win",
+  "celebrate": false,
+  "step": 16,
+  "total": 25.865399999999998,
+  "stake": 100
+ },
+ {
+  "t": 70931.4,
+  "f": 4227,
+  "type": "stepWin",
+  "step": 16,
+  "total": 25.865399999999998
+ },
+ {
+  "t": 71681.9,
+  "f": 4272,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 72196.3,
+  "f": 4303,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 72213.1,
+  "f": 4304,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 72229.5,
+  "f": 4305,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 72246.4,
+  "f": 4306,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 72262.9,
+  "f": 4307,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 72313.4,
+  "f": 4310,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 72313.4,
+  "f": 4310,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 72313.4,
+  "f": 4310,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 72395.7,
+  "f": 4315,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 72565.4,
+  "f": 4325,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 72593.2,
+  "f": 4326,
+  "type": "stepEnd",
+  "step": 16,
+  "ms": 1662,
+  "interMs": 0
+ },
+ {
+  "t": 73148.7,
+  "f": 4360,
+  "type": "stepStart",
+  "step": 17,
+  "factor": 0.7
+ },
+ {
+  "t": 73148.8,
+  "f": 4360,
+  "type": "win",
+  "celebrate": false,
+  "step": 17,
+  "total": 25.946399999999997,
+  "stake": 100
+ },
+ {
+  "t": 73149,
+  "f": 4360,
+  "type": "stepWin",
+  "step": 17,
+  "total": 25.946399999999997
+ },
+ {
+  "t": 73899.5,
+  "f": 4405,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 74398.2,
+  "f": 4435,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 74448.3,
+  "f": 4438,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 74482,
+  "f": 4440,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 74482,
+  "f": 4440,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 74565,
+  "f": 4445,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 74565,
+  "f": 4445,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 74565,
+  "f": 4445,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 74647.6,
+  "f": 4450,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 74816.8,
+  "f": 4460,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 74866.7,
+  "f": 4463,
+  "type": "stepEnd",
+  "step": 17,
+  "ms": 1718,
+  "interMs": 0
+ },
+ {
+  "t": 75421.9,
+  "f": 4496,
+  "type": "stepStart",
+  "step": 18,
+  "factor": 0.7
+ },
+ {
+  "t": 75422,
+  "f": 4496,
+  "type": "win",
+  "celebrate": false,
+  "step": 18,
+  "total": 26.032799999999998,
+  "stake": 100
+ },
+ {
+  "t": 75422.1,
+  "f": 4496,
+  "type": "stepWin",
+  "step": 18,
+  "total": 26.032799999999998
+ },
+ {
+  "t": 76175.5,
+  "f": 4541,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 76666.8,
+  "f": 4571,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 76716.9,
+  "f": 4574,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 76716.9,
+  "f": 4574,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 76750.3,
+  "f": 4576,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 77029.5,
+  "f": 4592,
+  "type": "stepEnd",
+  "step": 18,
+  "ms": 1608,
+  "interMs": 0
+ },
+ {
+  "t": 78635.5,
+  "f": 4689,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 59379,
+  "turbo": false
+ },
+ {
+  "t": 78635.5,
+  "f": 4689,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 78735.6,
+  "f": 4695,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 59479,
+  "turbo": false
+ },
+ {
+  "t": 78735.6,
+  "f": 4695,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 78835.4,
+  "f": 4701,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 59579,
+  "turbo": false
+ },
+ {
+  "t": 78835.4,
+  "f": 4701,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 78935.2,
+  "f": 4707,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 59679,
+  "turbo": false
+ },
+ {
+  "t": 78935.2,
+  "f": 4707,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 79035.2,
+  "f": 4713,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 59779,
+  "turbo": false
+ },
+ {
+  "t": 79035.2,
+  "f": 4713,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 79805.2,
+  "f": 4759,
+  "type": "stepStart",
+  "step": 19,
+  "factor": 0.7
+ },
+ {
+  "t": 79805.2,
+  "f": 4759,
+  "type": "win",
+  "celebrate": false,
+  "step": 19,
+  "total": 26.3568,
+  "stake": 100
+ },
+ {
+  "t": 79805.4,
+  "f": 4759,
+  "type": "stepWin",
+  "step": 19,
+  "total": 26.3568
+ },
+ {
+  "t": 80555.7,
+  "f": 4804,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 81053.9,
+  "f": 4834,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 81104.1,
+  "f": 4837,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 81120.6,
+  "f": 4838,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 81120.6,
+  "f": 4838,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 81153.9,
+  "f": 4840,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 81512.9,
+  "f": 4861,
+  "type": "stepEnd",
+  "step": 19,
+  "ms": 1708,
+  "interMs": 0
+ },
+ {
+  "t": 82072.7,
+  "f": 4895,
+  "type": "stepStart",
+  "step": 20,
+  "factor": 0.7
+ },
+ {
+  "t": 82072.8,
+  "f": 4895,
+  "type": "win",
+  "celebrate": false,
+  "step": 20,
+  "total": 26.454,
+  "stake": 100
+ },
+ {
+  "t": 82072.9,
+  "f": 4895,
+  "type": "stepWin",
+  "step": 20,
+  "total": 26.454
+ },
+ {
+  "t": 82823.7,
+  "f": 4940,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 83305.8,
+  "f": 4969,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 83322.4,
+  "f": 4970,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 83355.6,
+  "f": 4972,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 83389.1,
+  "f": 4974,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 83389.1,
+  "f": 4974,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 83683,
+  "f": 4991,
+  "type": "stepEnd",
+  "step": 20,
+  "ms": 1610,
+  "interMs": 0
+ },
+ {
+  "t": 83683.1,
+  "f": 4991,
+  "type": "strikePace",
+  "v": "short",
+  "level": 3
+ },
+ {
+  "t": 83683.3,
+  "f": 4991,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 84041.3,
+  "f": 5013,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   89,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 84391.7,
+  "f": 5034,
   "type": "strikeBite",
   "v": "short",
   "lungeMs": 351,
   "plannedMs": 350
  },
  {
-  "t": 70981.7,
-  "f": 4227,
+  "t": 84391.8,
+  "f": 5034,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -2634,770 +3349,4946 @@
   "playMs": 542
  },
  {
-  "t": 70981.8,
-  "f": 4227,
+  "t": 84391.9,
+  "f": 5034,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 70981.8,
-  "f": 4227,
+  "t": 84391.9,
+  "f": 5034,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 70981.8,
-  "f": 4227,
+  "t": 84391.9,
+  "f": 5034,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 71061.4,
-  "f": 4232,
+  "t": 84472.6,
+  "f": 5039,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 79,
+  "actualMs": 80,
   "frames": 4
  },
  {
-  "t": 71146.9,
-  "f": 4237,
+  "t": 84542,
+  "f": 5043,
   "type": "strikeTurn",
-  "atMs": 166,
+  "atMs": 151,
   "cells": 4
  },
  {
-  "t": 71238.2,
-  "f": 4242,
+  "t": 84642.3,
+  "f": 5049,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 256
+  "ms": 250
  },
  {
-  "t": 71662.2,
-  "f": 4268,
+  "t": 84740.1,
+  "f": 5055,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1032
+  "el": 699
  },
  {
-  "t": 71748.9,
-  "f": 4273,
+  "t": 84842.3,
+  "f": 5061,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 85153.6,
+  "f": 5079,
   "type": "strikeEnd",
   "v": "short",
-  "totalMs": 1468
+  "totalMs": 1463
  },
  {
-  "t": 72716.5,
-  "f": 4331,
+  "t": 86122.9,
+  "f": 5137,
   "type": "stepStart",
-  "step": 14,
+  "step": 21,
   "factor": 0.7
  },
  {
-  "t": 72716.7,
-  "f": 4331,
+  "t": 86123,
+  "f": 5137,
   "type": "win",
   "celebrate": false,
-  "step": 14,
-  "total": 91.2832,
+  "step": 21,
+  "total": 28.9866,
   "stake": 100
  },
  {
-  "t": 72716.8,
-  "f": 4331,
+  "t": 86123.3,
+  "f": 5137,
   "type": "stepWin",
-  "step": 14,
-  "total": 91.2832
+  "step": 21,
+  "total": 28.9866
  },
  {
-  "t": 73478.3,
-  "f": 4376,
+  "t": 86877.1,
+  "f": 5183,
   "type": "impact",
   "kind": "bigCascade",
   "heavy": true
  },
  {
-  "t": 73478.3,
-  "f": 4376,
+  "t": 86877.1,
+  "f": 5183,
   "type": "hitStopStart",
   "kind": "bigCascade",
   "plannedMs": 67
  },
  {
-  "t": 73478.3,
-  "f": 4376,
+  "t": 86877.1,
+  "f": 5183,
   "type": "shakeStart",
   "kind": "bigCascade",
   "px": 6
  },
  {
-  "t": 73547.1,
-  "f": 4381,
+  "t": 86957.9,
+  "f": 5188,
   "type": "hitStopEnd",
   "kind": "bigCascade",
-  "actualMs": 68,
+  "actualMs": 80,
   "frames": 4
  },
  {
-  "t": 73728.6,
-  "f": 4391,
+  "t": 87127.6,
+  "f": 5198,
   "type": "shakeEnd",
   "kind": "bigCascade",
-  "ms": 250
+  "ms": 251
  },
  {
-  "t": 74014.3,
-  "f": 4409,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 74031.7,
-  "f": 4410,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 74081.5,
-  "f": 4413,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 74131.3,
-  "f": 4416,
+  "t": 87442.6,
+  "f": 5217,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 74214.7,
-  "f": 4421,
+  "t": 87459.4,
+  "f": 5218,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 87542.4,
+  "f": 5223,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 87559.4,
+  "f": 5224,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 87576,
+  "f": 5225,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 87576,
+  "f": 5225,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 74214.7,
-  "f": 4421,
+  "t": 87576,
+  "f": 5225,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 74214.7,
-  "f": 4421,
+  "t": 87576,
+  "f": 5225,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 74297,
-  "f": 4426,
+  "t": 87658.3,
+  "f": 5230,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 74298.1,
-  "f": 4426,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 74428.9,
-  "f": 4433,
+  "t": 87778.5,
+  "f": 5237,
   "type": "stepEnd",
-  "step": 14,
-  "ms": 1712,
+  "step": 21,
+  "ms": 1656,
   "interMs": 0
  },
  {
-  "t": 74467,
-  "f": 4436,
+  "t": 87828.4,
+  "f": 5240,
   "type": "shakeEnd",
   "kind": "wildMaw",
   "ms": 252
  },
  {
-  "t": 74983.7,
-  "f": 4467,
+  "t": 88337.8,
+  "f": 5270,
   "type": "stepStart",
-  "step": 15,
+  "step": 22,
   "factor": 0.7
  },
  {
-  "t": 74983.7,
-  "f": 4467,
+  "t": 88337.9,
+  "f": 5270,
   "type": "win",
   "celebrate": false,
-  "step": 15,
-  "total": 91.6288,
+  "step": 22,
+  "total": 29.1637,
   "stake": 100
  },
  {
-  "t": 74984,
-  "f": 4467,
+  "t": 88338.1,
+  "f": 5270,
   "type": "stepWin",
-  "step": 15,
-  "total": 91.6288
+  "step": 22,
+  "total": 29.1637
  },
  {
-  "t": 75734.5,
-  "f": 4512,
+  "t": 89102.1,
+  "f": 5316,
+  "type": "heroPlay",
+  "id": "lev_rise",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+  "dur": 6000,
+  "rect": [
+   -4,
+   265,
+   1928,
+   1076
+  ]
+ },
+ {
+  "t": 92719.8,
+  "f": 5531,
   "type": "impact",
   "kind": "explode",
-  "n": 13
+  "n": 12
  },
  {
-  "t": 76233,
-  "f": 4542,
+  "t": 93197.5,
+  "f": 5560,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 76283,
-  "f": 4545,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
+  "t": 93230.8,
+  "f": 5562,
+  "type": "heroEnd",
+  "id": "lev_rise",
+  "el": 4134
  },
  {
-  "t": 76383.7,
-  "f": 4551,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 76400.1,
-  "f": 4552,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 76400.1,
-  "f": 4552,
+  "t": 93264.1,
+  "f": 5564,
   "type": "impact",
   "kind": "drop",
   "col": 4
  },
  {
-  "t": 76673.1,
-  "f": 4568,
-  "type": "stepEnd",
-  "step": 15,
-  "ms": 1689,
-  "interMs": 0
- },
- {
-  "t": 76673.1,
-  "f": 4568,
-  "type": "stepStart",
-  "step": 16,
-  "factor": 0.7
- },
- {
-  "t": 76673.1,
-  "f": 4568,
-  "type": "win",
-  "celebrate": false,
-  "step": 16,
-  "total": 91.9528,
-  "stake": 100
- },
- {
-  "t": 76673.3,
-  "f": 4568,
-  "type": "stepWin",
-  "step": 16,
-  "total": 91.9528
- },
- {
-  "t": 77435.8,
-  "f": 4614,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 77917.9,
-  "f": 4643,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 77934.2,
-  "f": 4644,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 77951.1,
-  "f": 4645,
+  "t": 93281,
+  "f": 5565,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 77968,
-  "f": 4646,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 78034.4,
-  "f": 4650,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 78295.7,
-  "f": 4665,
-  "type": "stepEnd",
-  "step": 16,
-  "ms": 1623,
-  "interMs": 0
- },
- {
-  "t": 78853.2,
-  "f": 4699,
-  "type": "stepStart",
-  "step": 17,
-  "factor": 0.7
- },
- {
-  "t": 78853.3,
-  "f": 4699,
-  "type": "win",
-  "celebrate": false,
-  "step": 17,
-  "total": 92.22279999999999,
-  "stake": 100
- },
- {
-  "t": 78853.4,
-  "f": 4699,
-  "type": "stepWin",
-  "step": 17,
-  "total": 92.22279999999999
- },
- {
-  "t": 79604.3,
-  "f": 4744,
-  "type": "impact",
-  "kind": "explode",
-  "n": 6
- },
- {
-  "t": 80103.1,
-  "f": 4774,
+  "t": 93314.4,
+  "f": 5567,
   "type": "impact",
   "kind": "drop",
   "col": 1
  },
  {
-  "t": 80119.6,
-  "f": 4775,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 80153.2,
-  "f": 4777,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 80169.6,
-  "f": 4778,
+  "t": 93331.3,
+  "f": 5568,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 80169.6,
-  "f": 4778,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 80454.5,
-  "f": 4795,
+  "t": 93635.1,
+  "f": 5586,
   "type": "stepEnd",
-  "step": 17,
-  "ms": 1601,
-  "interMs": 0
+  "step": 22,
+  "ms": 1667,
+  "interMs": 3630
  },
  {
-  "t": 81005,
-  "f": 4828,
+  "t": 94190.4,
+  "f": 5619,
   "type": "stepStart",
-  "step": 18,
+  "step": 23,
   "factor": 0.7
  },
  {
-  "t": 81005.1,
-  "f": 4828,
+  "t": 94190.5,
+  "f": 5619,
   "type": "win",
   "celebrate": false,
-  "step": 18,
-  "total": 92.49279999999999,
+  "step": 23,
+  "total": 29.2933,
   "stake": 100
  },
  {
-  "t": 81005.3,
-  "f": 4828,
+  "t": 94191,
+  "f": 5619,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 23
+ },
+ {
+  "t": 94191.1,
+  "f": 5619,
   "type": "stepWin",
-  "step": 18,
-  "total": 92.49279999999999
+  "step": 23,
+  "total": 29.2933
  },
  {
-  "t": 81755.9,
-  "f": 4873,
-  "type": "impact",
-  "kind": "explode",
-  "n": 6
- },
- {
-  "t": 82238.3,
-  "f": 4902,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 82254.8,
-  "f": 4903,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 82288.3,
-  "f": 4905,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 82304.7,
-  "f": 4906,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 82304.8,
-  "f": 4906,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 82617.8,
-  "f": 4924,
-  "type": "stepEnd",
-  "step": 18,
-  "ms": 1613,
-  "interMs": 0
- },
- {
-  "t": 83174.3,
-  "f": 4958,
-  "type": "stepStart",
-  "step": 19,
-  "factor": 0.7
- },
- {
-  "t": 83174.3,
-  "f": 4958,
-  "type": "win",
-  "celebrate": false,
-  "step": 19,
-  "total": 92.50359999999999,
-  "stake": 100
- },
- {
-  "t": 83174.4,
-  "f": 4958,
-  "type": "stepWin",
-  "step": 19,
-  "total": 92.50359999999999
- },
- {
-  "t": 83925.2,
-  "f": 5003,
+  "t": 94950.3,
+  "f": 5665,
   "type": "impact",
   "kind": "explode",
   "n": 5
  },
  {
-  "t": 84456.8,
-  "f": 5035,
-  "type": "impact",
-  "kind": "drop",
-  "col": 2
- },
- {
-  "t": 84473.3,
-  "f": 5036,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 84473.3,
-  "f": 5036,
-  "type": "impact",
-  "kind": "drop",
-  "col": 3
- },
- {
-  "t": 84506.7,
-  "f": 5038,
+  "t": 95433.3,
+  "f": 5694,
   "type": "impact",
   "kind": "drop",
   "col": 0
  },
  {
-  "t": 84742,
-  "f": 5052,
-  "type": "stepEnd",
-  "step": 19,
-  "ms": 1568,
-  "interMs": 0
- },
- {
-  "t": 86341.9,
-  "f": 5148,
-  "type": "reelStop",
-  "col": 0,
-  "atMs": 67419,
-  "turbo": false
- },
- {
-  "t": 86341.9,
-  "f": 5148,
+  "t": 95450.2,
+  "f": 5695,
   "type": "impact",
-  "kind": "reelStop",
-  "col": 0
- },
- {
-  "t": 86441.5,
-  "f": 5154,
-  "type": "reelStop",
-  "col": 1,
-  "atMs": 67519,
-  "turbo": false
- },
- {
-  "t": 86441.5,
-  "f": 5154,
-  "type": "impact",
-  "kind": "reelStop",
+  "kind": "drop",
   "col": 1
  },
  {
-  "t": 86541.9,
-  "f": 5160,
-  "type": "reelStop",
-  "col": 2,
-  "atMs": 67619,
-  "turbo": false
- },
- {
-  "t": 86541.9,
-  "f": 5160,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 2
- },
- {
-  "t": 86608.3,
-  "f": 5164,
+  "t": 95482.5,
+  "f": 5697,
   "type": "impact",
   "kind": "wildMaw",
   "heavy": true
  },
  {
-  "t": 86608.3,
-  "f": 5164,
+  "t": 95482.5,
+  "f": 5697,
   "type": "hitStopStart",
   "kind": "wildMaw",
   "plannedMs": 67
  },
  {
-  "t": 86608.3,
-  "f": 5164,
+  "t": 95482.5,
+  "f": 5697,
   "type": "shakeStart",
   "kind": "wildMaw",
   "px": 6
  },
  {
-  "t": 86690.8,
-  "f": 5169,
+  "t": 95565.2,
+  "f": 5702,
   "type": "hitStopEnd",
   "kind": "wildMaw",
   "actualMs": 82,
   "frames": 4
  },
  {
-  "t": 86708.3,
-  "f": 5170,
-  "type": "reelStop",
-  "col": 3,
-  "atMs": 67786,
-  "turbo": false
- },
- {
-  "t": 86708.3,
-  "f": 5170,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 3
- },
- {
-  "t": 86808.7,
-  "f": 5176,
-  "type": "reelStop",
-  "col": 4,
-  "atMs": 67886,
-  "turbo": false
- },
- {
-  "t": 86808.7,
-  "f": 5176,
-  "type": "impact",
-  "kind": "reelStop",
-  "col": 4
- },
- {
-  "t": 86860.5,
-  "f": 5179,
-  "type": "shakeEnd",
-  "kind": "wildMaw",
-  "ms": 252
- },
- {
-  "t": 87578.8,
-  "f": 5222,
-  "type": "stepStart",
-  "step": 20,
-  "factor": 0.7
- },
- {
-  "t": 87578.8,
-  "f": 5222,
-  "type": "win",
-  "celebrate": false,
-  "step": 20,
-  "total": 94.1236,
-  "stake": 100
- },
- {
-  "t": 87579,
-  "f": 5222,
-  "type": "stepWin",
-  "step": 20,
-  "total": 94.1236
- },
- {
-  "t": 88334.2,
-  "f": 5267,
-  "type": "impact",
-  "kind": "explode",
-  "n": 8
- },
- {
-  "t": 88827.5,
-  "f": 5297,
-  "type": "impact",
-  "kind": "drop",
-  "col": 0
- },
- {
-  "t": 88860.5,
-  "f": 5299,
+  "t": 95566.2,
+  "f": 5702,
   "type": "impact",
   "kind": "drop",
   "col": 2
  },
  {
-  "t": 88894.2,
-  "f": 5301,
-  "type": "impact",
-  "kind": "drop",
-  "col": 1
- },
- {
-  "t": 88894.2,
-  "f": 5301,
-  "type": "impact",
-  "kind": "drop",
-  "col": 4
- },
- {
-  "t": 88960.8,
-  "f": 5305,
+  "t": 95599.7,
+  "f": 5704,
   "type": "impact",
   "kind": "drop",
   "col": 3
  },
  {
-  "t": 89236.5,
-  "f": 5321,
+  "t": 95735.5,
+  "f": 5712,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 95894.3,
+  "f": 5721,
   "type": "stepEnd",
-  "step": 20,
-  "ms": 1658,
+  "step": 23,
+  "ms": 1704,
   "interMs": 0
  },
  {
-  "t": 89236.6,
-  "f": 5321,
-  "type": "strikePace",
-  "v": "short",
-  "level": 3
+  "t": 95894.3,
+  "f": 5721,
+  "type": "stepStart",
+  "step": 24,
+  "factor": 0.7
  },
  {
-  "t": 89236.8,
-  "f": 5321,
+  "t": 95894.4,
+  "f": 5721,
+  "type": "win",
+  "celebrate": false,
+  "step": 24,
+  "total": 29.3063,
+  "stake": 100
+ },
+ {
+  "t": 95894.6,
+  "f": 5721,
+  "type": "stepWin",
+  "step": 24,
+  "total": 29.3063
+ },
+ {
+  "t": 96645.2,
+  "f": 5766,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 97167.4,
+  "f": 5798,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 97184,
+  "f": 5799,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 97234.4,
+  "f": 5802,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 97267.7,
+  "f": 5804,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 97267.7,
+  "f": 5804,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 97267.7,
+  "f": 5804,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 97350,
+  "f": 5809,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 97519.6,
+  "f": 5819,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 97596.6,
+  "f": 5823,
+  "type": "stepEnd",
+  "step": 24,
+  "ms": 1702,
+  "interMs": 0
+ },
+ {
+  "t": 98153,
+  "f": 5857,
+  "type": "stepStart",
+  "step": 25,
+  "factor": 0.7
+ },
+ {
+  "t": 98153.2,
+  "f": 5857,
+  "type": "win",
+  "celebrate": false,
+  "step": 25,
+  "total": 30.0758,
+  "stake": 100
+ },
+ {
+  "t": 98153.3,
+  "f": 5857,
+  "type": "stepWin",
+  "step": 25,
+  "total": 30.0758
+ },
+ {
+  "t": 98903.6,
+  "f": 5902,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 99385.9,
+  "f": 5931,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 99452.6,
+  "f": 5935,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 99452.7,
+  "f": 5935,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 99486.3,
+  "f": 5937,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 99502.7,
+  "f": 5938,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 99848.8,
+  "f": 5958,
+  "type": "stepEnd",
+  "step": 25,
+  "ms": 1696,
+  "interMs": 0
+ },
+ {
+  "t": 100405,
+  "f": 5992,
+  "type": "stepStart",
+  "step": 26,
+  "factor": 0.7
+ },
+ {
+  "t": 100405,
+  "f": 5992,
+  "type": "win",
+  "celebrate": false,
+  "step": 26,
+  "total": 30.5942,
+  "stake": 100
+ },
+ {
+  "t": 100405.4,
+  "f": 5992,
+  "type": "stepWin",
+  "step": 26,
+  "total": 30.5942
+ },
+ {
+  "t": 101156,
+  "f": 6037,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 101638,
+  "f": 6066,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 101687.8,
+  "f": 6069,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 101738.1,
+  "f": 6072,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 101754.5,
+  "f": 6073,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 101754.5,
+  "f": 6073,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 101754.5,
+  "f": 6073,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 101754.7,
+  "f": 6073,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 101836.9,
+  "f": 6078,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 102006.5,
+  "f": 6088,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 102064.4,
+  "f": 6091,
+  "type": "stepEnd",
+  "step": 26,
+  "ms": 1659,
+  "interMs": 0
+ },
+ {
+  "t": 102064.4,
+  "f": 6091,
+  "type": "stepStart",
+  "step": 27,
+  "factor": 0.7
+ },
+ {
+  "t": 102064.6,
+  "f": 6091,
+  "type": "win",
+  "celebrate": false,
+  "step": 27,
+  "total": 33.0242,
+  "stake": 100
+ },
+ {
+  "t": 102064.7,
+  "f": 6091,
+  "type": "stepWin",
+  "step": 27,
+  "total": 33.0242
+ },
+ {
+  "t": 102817.6,
+  "f": 6136,
+  "type": "impact",
+  "kind": "explode",
+  "n": 9
+ },
+ {
+  "t": 103322.7,
+  "f": 6167,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 103339.2,
+  "f": 6168,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 103339.2,
+  "f": 6168,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 103372.6,
+  "f": 6170,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 103405.9,
+  "f": 6172,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 103721.8,
+  "f": 6190,
+  "type": "stepEnd",
+  "step": 27,
+  "ms": 1657,
+  "interMs": 0
+ },
+ {
+  "t": 104274.7,
+  "f": 6224,
+  "type": "stepStart",
+  "step": 28,
+  "factor": 0.7
+ },
+ {
+  "t": 104274.8,
+  "f": 6224,
+  "type": "win",
+  "celebrate": false,
+  "step": 28,
+  "total": 33.1052,
+  "stake": 100
+ },
+ {
+  "t": 104274.9,
+  "f": 6224,
+  "type": "stepWin",
+  "step": 28,
+  "total": 33.1052
+ },
+ {
+  "t": 105025.4,
+  "f": 6269,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 105507.8,
+  "f": 6298,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 105524.5,
+  "f": 6299,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 105541.1,
+  "f": 6300,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 105557.8,
+  "f": 6301,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 105574.7,
+  "f": 6302,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 105826.5,
+  "f": 6317,
+  "type": "stepEnd",
+  "step": 28,
+  "ms": 1552,
+  "interMs": 0
+ },
+ {
+  "t": 105826.5,
+  "f": 6317,
+  "type": "strikePace",
+  "v": "full",
+  "level": 4
+ },
+ {
+  "t": 105826.7,
+  "f": 6317,
   "type": "heroPlay",
   "id": "lev_eye",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
-  "dur": 470,
+  "dur": 1020,
   "rect": [
-   155,
+   77,
    122,
    1218,
    680
   ]
  },
  {
-  "t": 89595.8,
-  "f": 5343,
+  "t": 106731.7,
+  "f": 6371,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2282.3529411764707,
+  "rect": [
+   272,
+   13,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 107333.9,
+  "f": 6407,
+  "type": "strikeBite",
+  "v": "full",
+  "lungeMs": 602,
+  "plannedMs": 600
+ },
+ {
+  "t": 107333.9,
+  "f": 6407,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 107334,
+  "f": 6407,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 107334,
+  "f": 6407,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 107334,
+  "f": 6407,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 107408.4,
+  "f": 6412,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 74,
+  "frames": 4
+ },
+ {
+  "t": 107541.4,
+  "f": 6419,
+  "type": "strikeTurn",
+  "atMs": 210,
+  "cells": 9
+ },
+ {
+  "t": 107588.2,
+  "f": 6422,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 254
+ },
+ {
+  "t": 107692.6,
+  "f": 6429,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 961
+ },
+ {
+  "t": 108228.6,
+  "f": 6461,
+  "type": "retrigger",
+  "spins": 1
+ },
+ {
+  "t": 108836.6,
+  "f": 6497,
+  "type": "strikeEnd",
+  "v": "full",
+  "totalMs": 3005
+ },
+ {
+  "t": 110711.9,
+  "f": 6610,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 110711.9,
+  "f": 6610,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 110711.9,
+  "f": 6610,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 110794.7,
+  "f": 6615,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 110912.5,
+  "f": 6622,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 91656,
+  "turbo": false
+ },
+ {
+  "t": 110912.5,
+  "f": 6622,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 110964.1,
+  "f": 6625,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 111012.4,
+  "f": 6628,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 91756,
+  "turbo": false
+ },
+ {
+  "t": 111012.4,
+  "f": 6628,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 111112.4,
+  "f": 6634,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 91856,
+  "turbo": false
+ },
+ {
+  "t": 111112.4,
+  "f": 6634,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 111212.2,
+  "f": 6640,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 91956,
+  "turbo": false
+ },
+ {
+  "t": 111212.2,
+  "f": 6640,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 111312.5,
+  "f": 6646,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 92056,
+  "turbo": false
+ },
+ {
+  "t": 111312.5,
+  "f": 6646,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 112082,
+  "f": 6692,
+  "type": "stepStart",
+  "step": 29,
+  "factor": 0.7
+ },
+ {
+  "t": 112082,
+  "f": 6692,
+  "type": "win",
+  "celebrate": false,
+  "step": 29,
+  "total": 33.114900000000006,
+  "stake": 100
+ },
+ {
+  "t": 112082.1,
+  "f": 6692,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 29
+ },
+ {
+  "t": 112082.3,
+  "f": 6692,
+  "type": "stepWin",
+  "step": 29,
+  "total": 33.114900000000006
+ },
+ {
+  "t": 112833.5,
+  "f": 6737,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 113331.1,
+  "f": 6767,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 113347.7,
+  "f": 6768,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 113364.4,
+  "f": 6769,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 113431.1,
+  "f": 6773,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 113431.1,
+  "f": 6773,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 113431.1,
+  "f": 6773,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 113513.6,
+  "f": 6778,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 113683.3,
+  "f": 6788,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 113700.3,
+  "f": 6789,
+  "type": "stepEnd",
+  "step": 29,
+  "ms": 1618,
+  "interMs": 0
+ },
+ {
+  "t": 114250.9,
+  "f": 6822,
+  "type": "stepStart",
+  "step": 30,
+  "factor": 0.7
+ },
+ {
+  "t": 114251,
+  "f": 6822,
+  "type": "win",
+  "celebrate": false,
+  "step": 30,
+  "total": 33.21210000000001,
+  "stake": 100
+ },
+ {
+  "t": 114251.2,
+  "f": 6822,
+  "type": "stepWin",
+  "step": 30,
+  "total": 33.21210000000001
+ },
+ {
+  "t": 115001.7,
+  "f": 6867,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 115482.6,
+  "f": 6896,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 115549.5,
+  "f": 6900,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 115582.8,
+  "f": 6902,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 115884.4,
+  "f": 6920,
+  "type": "stepEnd",
+  "step": 30,
+  "ms": 1634,
+  "interMs": 0
+ },
+ {
+  "t": 116434.9,
+  "f": 6953,
+  "type": "stepStart",
+  "step": 31,
+  "factor": 0.7
+ },
+ {
+  "t": 116434.9,
+  "f": 6953,
+  "type": "win",
+  "celebrate": false,
+  "step": 31,
+  "total": 33.60090000000001,
+  "stake": 100
+ },
+ {
+  "t": 116435.1,
+  "f": 6953,
+  "type": "stepWin",
+  "step": 31,
+  "total": 33.60090000000001
+ },
+ {
+  "t": 117185.8,
+  "f": 6998,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 117684.4,
+  "f": 7028,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 117701.2,
+  "f": 7029,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 117718.2,
+  "f": 7030,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 117734.5,
+  "f": 7031,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 117834.7,
+  "f": 7037,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 117834.7,
+  "f": 7037,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 117834.7,
+  "f": 7037,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 117917.1,
+  "f": 7042,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 118087.7,
+  "f": 7052,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 118095.3,
+  "f": 7052,
+  "type": "stepEnd",
+  "step": 31,
+  "ms": 1660,
+  "interMs": 0
+ },
+ {
+  "t": 118095.3,
+  "f": 7052,
+  "type": "stepStart",
+  "step": 32,
+  "factor": 0.7
+ },
+ {
+  "t": 118095.4,
+  "f": 7052,
+  "type": "win",
+  "celebrate": false,
+  "step": 32,
+  "total": 33.69810000000001,
+  "stake": 100
+ },
+ {
+  "t": 118095.7,
+  "f": 7052,
+  "type": "stepWin",
+  "step": 32,
+  "total": 33.69810000000001
+ },
+ {
+  "t": 118854.1,
+  "f": 7098,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 119352.7,
+  "f": 7128,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 119369.3,
+  "f": 7129,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 119386,
+  "f": 7130,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 119419.5,
+  "f": 7132,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 119436.1,
+  "f": 7133,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 119721.5,
+  "f": 7150,
+  "type": "stepEnd",
+  "step": 32,
+  "ms": 1626,
+  "interMs": 0
+ },
+ {
+  "t": 120284.2,
+  "f": 7183,
+  "type": "stepStart",
+  "step": 33,
+  "factor": 0.7
+ },
+ {
+  "t": 120284.2,
+  "f": 7183,
+  "type": "win",
+  "celebrate": false,
+  "step": 33,
+  "total": 34.913100000000014,
+  "stake": 100
+ },
+ {
+  "t": 120284.4,
+  "f": 7183,
+  "type": "stepWin",
+  "step": 33,
+  "total": 34.913100000000014
+ },
+ {
+  "t": 121039.1,
+  "f": 7229,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 121521.5,
+  "f": 7258,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 121571.4,
+  "f": 7261,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 121604.6,
+  "f": 7263,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 121900.2,
+  "f": 7280,
+  "type": "stepEnd",
+  "step": 33,
+  "ms": 1616,
+  "interMs": 0
+ },
+ {
+  "t": 122450.8,
+  "f": 7313,
+  "type": "stepStart",
+  "step": 34,
+  "factor": 0.7
+ },
+ {
+  "t": 122450.9,
+  "f": 7313,
+  "type": "win",
+  "celebrate": false,
+  "step": 34,
+  "total": 35.326200000000014,
+  "stake": 100
+ },
+ {
+  "t": 122451.1,
+  "f": 7313,
+  "type": "stepWin",
+  "step": 34,
+  "total": 35.326200000000014
+ },
+ {
+  "t": 123207.8,
+  "f": 7359,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 123706.2,
+  "f": 7389,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 123739.9,
+  "f": 7391,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 123756.2,
+  "f": 7392,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 123773.1,
+  "f": 7393,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 124125.1,
+  "f": 7414,
+  "type": "stepEnd",
+  "step": 34,
+  "ms": 1674,
+  "interMs": 0
+ },
+ {
+  "t": 124688.4,
+  "f": 7447,
+  "type": "stepStart",
+  "step": 35,
+  "factor": 0.7
+ },
+ {
+  "t": 124688.4,
+  "f": 7447,
+  "type": "win",
+  "celebrate": false,
+  "step": 35,
+  "total": 35.366700000000016,
+  "stake": 100
+ },
+ {
+  "t": 124688.6,
+  "f": 7447,
+  "type": "stepWin",
+  "step": 35,
+  "total": 35.366700000000016
+ },
+ {
+  "t": 125442.7,
+  "f": 7493,
+  "type": "impact",
+  "kind": "explode",
+  "n": 3
+ },
+ {
+  "t": 125924.7,
+  "f": 7522,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 125941.5,
+  "f": 7523,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 125958.3,
+  "f": 7524,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 126200.8,
+  "f": 7538,
+  "type": "stepEnd",
+  "step": 35,
+  "ms": 1512,
+  "interMs": 0
+ },
+ {
+  "t": 126760.2,
+  "f": 7572,
+  "type": "stepStart",
+  "step": 36,
+  "factor": 0.7
+ },
+ {
+  "t": 126760.3,
+  "f": 7572,
+  "type": "win",
+  "celebrate": false,
+  "step": 36,
+  "total": 35.38130000000002,
+  "stake": 100
+ },
+ {
+  "t": 126760.5,
+  "f": 7572,
+  "type": "stepWin",
+  "step": 36,
+  "total": 35.38130000000002
+ },
+ {
+  "t": 127511,
+  "f": 7617,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 128060,
+  "f": 7650,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 128060.1,
+  "f": 7650,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 128093.1,
+  "f": 7652,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 128411.3,
+  "f": 7671,
+  "type": "stepEnd",
+  "step": 36,
+  "ms": 1651,
+  "interMs": 0
+ },
+ {
+  "t": 128411.3,
+  "f": 7671,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 128411.5,
+  "f": 7671,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 128762.9,
+  "f": 7692,
   "type": "heroPlay",
   "id": "lev_lunge",
   "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
   "dur": 2164.705882352941,
+  "rect": [
+   -40,
+   13,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 129112.9,
+  "f": 7713,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 350,
+  "plannedMs": 350
+ },
+ {
+  "t": 129113,
+  "f": 7713,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 129113,
+  "f": 7713,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 129113,
+  "f": 7713,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 129113,
+  "f": 7713,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 129193.4,
+  "f": 7718,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 129272.3,
+  "f": 7722,
+  "type": "strikeTurn",
+  "atMs": 160,
+  "cells": 9
+ },
+ {
+  "t": 129363.2,
+  "f": 7728,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 250
+ },
+ {
+  "t": 129477.7,
+  "f": 7735,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 715
+ },
+ {
+  "t": 130280.8,
+  "f": 7783,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1868
+ },
+ {
+  "t": 131247.3,
+  "f": 7841,
+  "type": "stepStart",
+  "step": 37,
+  "factor": 0.7
+ },
+ {
+  "t": 131247.3,
+  "f": 7841,
+  "type": "win",
+  "celebrate": false,
+  "step": 37,
+  "total": 37.406300000000016,
+  "stake": 100
+ },
+ {
+  "t": 131247.5,
+  "f": 7841,
+  "type": "stepWin",
+  "step": 37,
+  "total": 37.406300000000016
+ },
+ {
+  "t": 131999.4,
+  "f": 7886,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 132530.4,
+  "f": 7918,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 132597.2,
+  "f": 7922,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 132613.9,
+  "f": 7923,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 132630.5,
+  "f": 7924,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 132941.2,
+  "f": 7942,
+  "type": "stepEnd",
+  "step": 37,
+  "ms": 1694,
+  "interMs": 0
+ },
+ {
+  "t": 132941.2,
+  "f": 7942,
+  "type": "stepStart",
+  "step": 38,
+  "factor": 0.7
+ },
+ {
+  "t": 132941.3,
+  "f": 7942,
+  "type": "win",
+  "celebrate": false,
+  "step": 38,
+  "total": 37.43060000000001,
+  "stake": 100
+ },
+ {
+  "t": 132941.5,
+  "f": 7942,
+  "type": "stepWin",
+  "step": 38,
+  "total": 37.43060000000001
+ },
+ {
+  "t": 133699.6,
+  "f": 7988,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 134198.2,
+  "f": 8018,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 134248.5,
+  "f": 8021,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 134265.2,
+  "f": 8022,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 134265.3,
+  "f": 8022,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 134566.9,
+  "f": 8040,
+  "type": "stepEnd",
+  "step": 38,
+  "ms": 1626,
+  "interMs": 0
+ },
+ {
+  "t": 136166.7,
+  "f": 8136,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 116910,
+  "turbo": false
+ },
+ {
+  "t": 136166.7,
+  "f": 8136,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 136183.3,
+  "f": 8137,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 136183.3,
+  "f": 8137,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 136183.3,
+  "f": 8137,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 136265.9,
+  "f": 8142,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 136333.5,
+  "f": 8146,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 117077,
+  "turbo": false
+ },
+ {
+  "t": 136333.5,
+  "f": 8146,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 136433.5,
+  "f": 8152,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 117177,
+  "turbo": false
+ },
+ {
+  "t": 136433.5,
+  "f": 8152,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 136435.4,
+  "f": 8152,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 136533.9,
+  "f": 8158,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 117277,
+  "turbo": false
+ },
+ {
+  "t": 136533.9,
+  "f": 8158,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 136633.7,
+  "f": 8164,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 117377,
+  "turbo": false
+ },
+ {
+  "t": 136633.7,
+  "f": 8164,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 136835.8,
+  "f": 8176,
+  "type": "stepStart",
+  "step": 39,
+  "factor": 0.7
+ },
+ {
+  "t": 136835.9,
+  "f": 8176,
+  "type": "win",
+  "celebrate": false,
+  "step": 39,
+  "total": 37.507500000000014,
+  "stake": 100
+ },
+ {
+  "t": 136836,
+  "f": 8176,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 39
+ },
+ {
+  "t": 136836.1,
+  "f": 8176,
+  "type": "stepWin",
+  "step": 39,
+  "total": 37.507500000000014
+ },
+ {
+  "t": 137586.6,
+  "f": 8221,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 138101.9,
+  "f": 8252,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 138118.1,
+  "f": 8253,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 138118.2,
+  "f": 8253,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 138185.2,
+  "f": 8257,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 138201.9,
+  "f": 8258,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 138201.9,
+  "f": 8258,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 138201.9,
+  "f": 8258,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 138284.2,
+  "f": 8263,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 138453.9,
+  "f": 8273,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 138536.8,
+  "f": 8278,
+  "type": "stepEnd",
+  "step": 39,
+  "ms": 1701,
+  "interMs": 0
+ },
+ {
+  "t": 138536.8,
+  "f": 8278,
+  "type": "stepStart",
+  "step": 40,
+  "factor": 0.7
+ },
+ {
+  "t": 138536.9,
+  "f": 8278,
+  "type": "win",
+  "celebrate": false,
+  "step": 40,
+  "total": 37.72620000000001,
+  "stake": 100
+ },
+ {
+  "t": 138537.1,
+  "f": 8278,
+  "type": "stepWin",
+  "step": 40,
+  "total": 37.72620000000001
+ },
+ {
+  "t": 139288.5,
+  "f": 8323,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 139786.9,
+  "f": 8353,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 139819.9,
+  "f": 8355,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 139819.9,
+  "f": 8355,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 139836.5,
+  "f": 8356,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 139936.6,
+  "f": 8362,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 139970,
+  "f": 8364,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 139970,
+  "f": 8364,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 139970,
+  "f": 8364,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 140052.4,
+  "f": 8369,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 140196.5,
+  "f": 8377,
+  "type": "stepEnd",
+  "step": 40,
+  "ms": 1660,
+  "interMs": 0
+ },
+ {
+  "t": 140227.7,
+  "f": 8379,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 258
+ },
+ {
+  "t": 140755.5,
+  "f": 8411,
+  "type": "stepStart",
+  "step": 41,
+  "factor": 0.7
+ },
+ {
+  "t": 140755.6,
+  "f": 8411,
+  "type": "win",
+  "celebrate": false,
+  "step": 41,
+  "total": 43.24030000000001,
+  "stake": 100
+ },
+ {
+  "t": 140755.8,
+  "f": 8411,
+  "type": "stepWin",
+  "step": 41,
+  "total": 43.24030000000001
+ },
+ {
+  "t": 141507.4,
+  "f": 8456,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 141507.4,
+  "f": 8456,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 141507.4,
+  "f": 8456,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 141587.1,
+  "f": 8461,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 79,
+  "frames": 4
+ },
+ {
+  "t": 141767.2,
+  "f": 8471,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 260
+ },
+ {
+  "t": 141988.1,
+  "f": 8485,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 142038.3,
+  "f": 8488,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 142055,
+  "f": 8489,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 142071.7,
+  "f": 8490,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 142407.1,
+  "f": 8510,
+  "type": "stepEnd",
+  "step": 41,
+  "ms": 1652,
+  "interMs": 0
+ },
+ {
+  "t": 142969.7,
+  "f": 8543,
+  "type": "stepStart",
+  "step": 42,
+  "factor": 0.7
+ },
+ {
+  "t": 142969.8,
+  "f": 8543,
+  "type": "win",
+  "celebrate": false,
+  "step": 42,
+  "total": 43.483300000000014,
+  "stake": 100
+ },
+ {
+  "t": 142970,
+  "f": 8543,
+  "type": "stepWin",
+  "step": 42,
+  "total": 43.483300000000014
+ },
+ {
+  "t": 143720.7,
+  "f": 8588,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 143720.7,
+  "f": 8588,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 143720.7,
+  "f": 8588,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 143788.9,
+  "f": 8593,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 68,
+  "frames": 4
+ },
+ {
+  "t": 143975.2,
+  "f": 8604,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 255
+ },
+ {
+  "t": 144223.5,
+  "f": 8619,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 144273.9,
+  "f": 8622,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 144307,
+  "f": 8624,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 144307,
+  "f": 8624,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 144457.4,
+  "f": 8633,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 144490.6,
+  "f": 8635,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 144490.6,
+  "f": 8635,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 144490.6,
+  "f": 8635,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 144573.1,
+  "f": 8640,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 144626.2,
+  "f": 8643,
+  "type": "stepEnd",
+  "step": 42,
+  "ms": 1657,
+  "interMs": 0
+ },
+ {
+  "t": 144626.2,
+  "f": 8643,
+  "type": "stepStart",
+  "step": 43,
+  "factor": 0.7
+ },
+ {
+  "t": 144626.3,
+  "f": 8643,
+  "type": "win",
+  "celebrate": false,
+  "step": 43,
+  "total": 43.665500000000016,
+  "stake": 100
+ },
+ {
+  "t": 144626.5,
+  "f": 8643,
+  "type": "stepWin",
+  "step": 43,
+  "total": 43.665500000000016
+ },
+ {
+  "t": 144743.2,
+  "f": 8650,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 145377.7,
+  "f": 8688,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 145874.8,
+  "f": 8718,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 145925,
+  "f": 8721,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 145941.6,
+  "f": 8722,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 145941.7,
+  "f": 8722,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 145958.2,
+  "f": 8723,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 146315.8,
+  "f": 8744,
+  "type": "stepEnd",
+  "step": 43,
+  "ms": 1690,
+  "interMs": 0
+ },
+ {
+  "t": 146315.8,
+  "f": 8744,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 146316,
+  "f": 8744,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 146677.5,
+  "f": 8766,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   -40,
+   13,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 147032,
+  "f": 8787,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 355,
+  "plannedMs": 350
+ },
+ {
+  "t": 147032.1,
+  "f": 8787,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 147032.2,
+  "f": 8787,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 147032.2,
+  "f": 8787,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 147032.2,
+  "f": 8787,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 147108.4,
+  "f": 8792,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 76,
+  "frames": 4
+ },
+ {
+  "t": 147194.3,
+  "f": 8797,
+  "type": "strikeTurn",
+  "atMs": 167,
+  "cells": 9
+ },
+ {
+  "t": 147286.2,
+  "f": 8802,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 254
+ },
+ {
+  "t": 147392.6,
+  "f": 8809,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 715
+ },
+ {
+  "t": 148195.2,
+  "f": 8857,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1868
+ },
+ {
+  "t": 149162.5,
+  "f": 8915,
+  "type": "stepStart",
+  "step": 44,
+  "factor": 0.7
+ },
+ {
+  "t": 149162.6,
+  "f": 8915,
+  "type": "win",
+  "celebrate": false,
+  "step": 44,
+  "total": 48.161000000000016,
+  "stake": 100
+ },
+ {
+  "t": 149162.8,
+  "f": 8915,
+  "type": "stepWin",
+  "step": 44,
+  "total": 48.161000000000016
+ },
+ {
+  "t": 149913.8,
+  "f": 8960,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 149913.8,
+  "f": 8960,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 149913.8,
+  "f": 8960,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 149994.2,
+  "f": 8965,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 150164.6,
+  "f": 8975,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 150462.2,
+  "f": 8993,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 150495.4,
+  "f": 8995,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 150495.4,
+  "f": 8995,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 150512.2,
+  "f": 8996,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 150529,
+  "f": 8997,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 150679.1,
+  "f": 9006,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 150679.2,
+  "f": 9006,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 150679.2,
+  "f": 9006,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 150761.4,
+  "f": 9011,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 150864.5,
+  "f": 9017,
+  "type": "stepEnd",
+  "step": 44,
+  "ms": 1702,
+  "interMs": 0
+ },
+ {
+  "t": 150932.5,
+  "f": 9021,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 151424.7,
+  "f": 9050,
+  "type": "stepStart",
+  "step": 45,
+  "factor": 0.7
+ },
+ {
+  "t": 151424.8,
+  "f": 9050,
+  "type": "win",
+  "celebrate": false,
+  "step": 45,
+  "total": 48.40400000000002,
+  "stake": 100
+ },
+ {
+  "t": 151425,
+  "f": 9050,
+  "type": "stepWin",
+  "step": 45,
+  "total": 48.40400000000002
+ },
+ {
+  "t": 152181.9,
+  "f": 9096,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 152680.9,
+  "f": 9126,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 152697.5,
+  "f": 9127,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 152714,
+  "f": 9128,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 152730.9,
+  "f": 9129,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 152747.5,
+  "f": 9130,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 152994.4,
+  "f": 9144,
+  "type": "stepEnd",
+  "step": 45,
+  "ms": 1570,
+  "interMs": 0
+ },
+ {
+  "t": 153549.4,
+  "f": 9178,
+  "type": "stepStart",
+  "step": 46,
+  "factor": 0.7
+ },
+ {
+  "t": 153549.5,
+  "f": 9178,
+  "type": "win",
+  "celebrate": false,
+  "step": 46,
+  "total": 49.13300000000002,
+  "stake": 100
+ },
+ {
+  "t": 153549.6,
+  "f": 9178,
+  "type": "stepWin",
+  "step": 46,
+  "total": 49.13300000000002
+ },
+ {
+  "t": 154300.9,
+  "f": 9223,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 154782.4,
+  "f": 9252,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 154816,
+  "f": 9254,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 154832.3,
+  "f": 9255,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 154832.3,
+  "f": 9255,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 154849.4,
+  "f": 9256,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 155150.9,
+  "f": 9274,
+  "type": "stepEnd",
+  "step": 46,
+  "ms": 1602,
+  "interMs": 0
+ },
+ {
+  "t": 156750.7,
+  "f": 9370,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 137494,
+  "turbo": false
+ },
+ {
+  "t": 156750.7,
+  "f": 9370,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 156850.9,
+  "f": 9376,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 137594,
+  "turbo": false
+ },
+ {
+  "t": 156850.9,
+  "f": 9376,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 156951.1,
+  "f": 9382,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 137694,
+  "turbo": false
+ },
+ {
+  "t": 156951.1,
+  "f": 9382,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 156951.1,
+  "f": 9382,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 156951.1,
+  "f": 9382,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 156951.1,
+  "f": 9382,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 157033.5,
+  "f": 9387,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 157117.5,
+  "f": 9392,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 137861,
+  "turbo": false
+ },
+ {
+  "t": 157117.5,
+  "f": 9392,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 157202.6,
+  "f": 9397,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 157218.3,
+  "f": 9398,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 137962,
+  "turbo": false
+ },
+ {
+  "t": 157218.3,
+  "f": 9398,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 157443.7,
+  "f": 9411,
+  "type": "stepStart",
+  "step": 47,
+  "factor": 0.7
+ },
+ {
+  "t": 157443.8,
+  "f": 9411,
+  "type": "win",
+  "celebrate": false,
+  "step": 47,
+  "total": 49.205500000000015,
+  "stake": 100
+ },
+ {
+  "t": 157444,
+  "f": 9411,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 47
+ },
+ {
+  "t": 157444.2,
+  "f": 9411,
+  "type": "stepWin",
+  "step": 47,
+  "total": 49.205500000000015
+ },
+ {
+  "t": 158204.2,
+  "f": 9457,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 158204.2,
+  "f": 9457,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 158204.2,
+  "f": 9457,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 158284.5,
+  "f": 9462,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 158454.6,
+  "f": 9472,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 250
+ },
+ {
+  "t": 158735.9,
+  "f": 9489,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 158752.4,
+  "f": 9490,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 158768.9,
+  "f": 9491,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 158919,
+  "f": 9500,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 158935.9,
+  "f": 9501,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 159154.6,
+  "f": 9514,
+  "type": "stepEnd",
+  "step": 47,
+  "ms": 1711,
+  "interMs": 0
+ },
+ {
+  "t": 159154.6,
+  "f": 9514,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 159154.8,
+  "f": 9514,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 159521.1,
+  "f": 9536,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   272,
+   13,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 159878.3,
+  "f": 9557,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 357,
+  "plannedMs": 350
+ },
+ {
+  "t": 159878.3,
+  "f": 9557,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 159878.5,
+  "f": 9557,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 159878.5,
+  "f": 9557,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 159878.5,
+  "f": 9557,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 159952.5,
+  "f": 9562,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 74,
+  "frames": 4
+ },
+ {
+  "t": 160033.3,
+  "f": 9566,
+  "type": "strikeTurn",
+  "atMs": 162,
+  "cells": 9
+ },
+ {
+  "t": 160139.1,
+  "f": 9573,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 261
+ },
+ {
+  "t": 160236.8,
+  "f": 9579,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 716
+ },
+ {
+  "t": 161006.7,
+  "f": 9625,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1836
+ },
+ {
+  "t": 162989.3,
+  "f": 9744,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 162989.3,
+  "f": 9744,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 162989.3,
+  "f": 9744,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 163071.7,
+  "f": 9749,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 163089.3,
+  "f": 9750,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 143833,
+  "turbo": false
+ },
+ {
+  "t": 163089.3,
+  "f": 9750,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 163189.3,
+  "f": 9756,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 143933,
+  "turbo": false
+ },
+ {
+  "t": 163189.3,
+  "f": 9756,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 163241.8,
+  "f": 9759,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 163289.5,
+  "f": 9762,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 144033,
+  "turbo": false
+ },
+ {
+  "t": 163289.5,
+  "f": 9762,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 163389.6,
+  "f": 9768,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 144133,
+  "turbo": false
+ },
+ {
+  "t": 163389.6,
+  "f": 9768,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 163489.9,
+  "f": 9774,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 144233,
+  "turbo": false
+ },
+ {
+  "t": 163489.9,
+  "f": 9774,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 163691.6,
+  "f": 9786,
+  "type": "stepStart",
+  "step": 48,
+  "factor": 0.7
+ },
+ {
+  "t": 163691.7,
+  "f": 9786,
+  "type": "win",
+  "celebrate": false,
+  "step": 48,
+  "total": 49.367500000000014,
+  "stake": 100
+ },
+ {
+  "t": 163691.9,
+  "f": 9786,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 48
+ },
+ {
+  "t": 163692.1,
+  "f": 9786,
+  "type": "stepWin",
+  "step": 48,
+  "total": 49.367500000000014
+ },
+ {
+  "t": 164443.6,
+  "f": 9831,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 164974.7,
+  "f": 9863,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 164990.9,
+  "f": 9864,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 165007.7,
+  "f": 9865,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 165024.4,
+  "f": 9866,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 165040.8,
+  "f": 9867,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 165091.1,
+  "f": 9870,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 165091.1,
+  "f": 9870,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 165091.1,
+  "f": 9870,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 165173.5,
+  "f": 9875,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 165343.2,
+  "f": 9885,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 165376.3,
+  "f": 9887,
+  "type": "stepEnd",
+  "step": 48,
+  "ms": 1685,
+  "interMs": 0
+ },
+ {
+  "t": 165376.3,
+  "f": 9887,
+  "type": "stepStart",
+  "step": 49,
+  "factor": 0.7
+ },
+ {
+  "t": 165376.4,
+  "f": 9887,
+  "type": "win",
+  "celebrate": false,
+  "step": 49,
+  "total": 49.420200000000015,
+  "stake": 100
+ },
+ {
+  "t": 165376.6,
+  "f": 9887,
+  "type": "stepWin",
+  "step": 49,
+  "total": 49.420200000000015
+ },
+ {
+  "t": 166127,
+  "f": 9932,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 166659.1,
+  "f": 9964,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 166675.6,
+  "f": 9965,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 166709.1,
+  "f": 9967,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 166792.2,
+  "f": 9972,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 167062.3,
+  "f": 9988,
+  "type": "stepEnd",
+  "step": 49,
+  "ms": 1686,
+  "interMs": 0
+ },
+ {
+  "t": 167616.1,
+  "f": 10021,
+  "type": "stepStart",
+  "step": 50,
+  "factor": 0.7
+ },
+ {
+  "t": 167616.2,
+  "f": 10021,
+  "type": "win",
+  "celebrate": false,
+  "step": 50,
+  "total": 50.52180000000001,
+  "stake": 100
+ },
+ {
+  "t": 167616.4,
+  "f": 10021,
+  "type": "stepWin",
+  "step": 50,
+  "total": 50.52180000000001
+ },
+ {
+  "t": 168370.4,
+  "f": 10066,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 168370.4,
+  "f": 10066,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 168370.4,
+  "f": 10066,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 168443,
+  "f": 10071,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 72,
+  "frames": 4
+ },
+ {
+  "t": 168629.3,
+  "f": 10082,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 259
+ },
+ {
+  "t": 168927.5,
+  "f": 10100,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 168944.5,
+  "f": 10101,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 168961,
+  "f": 10102,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 168961,
+  "f": 10102,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 169061,
+  "f": 10108,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 169110.9,
+  "f": 10111,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 169110.9,
+  "f": 10111,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 169110.9,
+  "f": 10111,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 169193.6,
+  "f": 10116,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 169313,
+  "f": 10123,
+  "type": "stepEnd",
+  "step": 50,
+  "ms": 1697,
+  "interMs": 0
+ },
+ {
+  "t": 169313.1,
+  "f": 10123,
+  "type": "stepStart",
+  "step": 51,
+  "factor": 0.7
+ },
+ {
+  "t": 169313.1,
+  "f": 10123,
+  "type": "win",
+  "celebrate": false,
+  "step": 51,
+  "total": 50.588600000000014,
+  "stake": 100
+ },
+ {
+  "t": 169313.3,
+  "f": 10123,
+  "type": "stepWin",
+  "step": 51,
+  "total": 50.588600000000014
+ },
+ {
+  "t": 169363.7,
+  "f": 10126,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 253
+ },
+ {
+  "t": 170063.8,
+  "f": 10168,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 170579.4,
+  "f": 10199,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 170595.8,
+  "f": 10200,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 170612.4,
+  "f": 10201,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 170696,
+  "f": 10206,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 170997.5,
+  "f": 10224,
+  "type": "stepEnd",
+  "step": 51,
+  "ms": 1684,
+  "interMs": 0
+ },
+ {
+  "t": 171549,
+  "f": 10257,
+  "type": "stepStart",
+  "step": 52,
+  "factor": 0.7
+ },
+ {
+  "t": 171549.1,
+  "f": 10257,
+  "type": "win",
+  "celebrate": false,
+  "step": 52,
+  "total": 50.610500000000016,
+  "stake": 100
+ },
+ {
+  "t": 171549.2,
+  "f": 10257,
+  "type": "stepWin",
+  "step": 52,
+  "total": 50.610500000000016
+ },
+ {
+  "t": 172299.4,
+  "f": 10302,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 172797.6,
+  "f": 10332,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 172814.2,
+  "f": 10333,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 172830.9,
+  "f": 10334,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 173210.2,
+  "f": 10356,
+  "type": "stepEnd",
+  "step": 52,
+  "ms": 1661,
+  "interMs": 0
+ },
+ {
+  "t": 173761.4,
+  "f": 10389,
+  "type": "stepStart",
+  "step": 53,
+  "factor": 0.7
+ },
+ {
+  "t": 173761.4,
+  "f": 10389,
+  "type": "win",
+  "celebrate": false,
+  "step": 53,
+  "total": 51.42050000000002,
+  "stake": 100
+ },
+ {
+  "t": 173761.6,
+  "f": 10389,
+  "type": "stepWin",
+  "step": 53,
+  "total": 51.42050000000002
+ },
+ {
+  "t": 174517.1,
+  "f": 10435,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 175016,
+  "f": 10465,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 175032.8,
+  "f": 10466,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 175049.2,
+  "f": 10467,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 175066.2,
+  "f": 10468,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 175082.7,
+  "f": 10469,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 175368,
+  "f": 10486,
+  "type": "stepEnd",
+  "step": 53,
+  "ms": 1607,
+  "interMs": 0
+ },
+ {
+  "t": 175919.4,
+  "f": 10519,
+  "type": "stepStart",
+  "step": 54,
+  "factor": 0.7
+ },
+ {
+  "t": 175919.4,
+  "f": 10519,
+  "type": "win",
+  "celebrate": false,
+  "step": 54,
+  "total": 51.444800000000015,
+  "stake": 100
+ },
+ {
+  "t": 175919.5,
+  "f": 10519,
+  "type": "stepWin",
+  "step": 54,
+  "total": 51.444800000000015
+ },
+ {
+  "t": 176670.3,
+  "f": 10564,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 177152.3,
+  "f": 10593,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 177167.8,
+  "f": 10594,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 177184.3,
+  "f": 10595,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 177528.8,
+  "f": 10615,
+  "type": "stepEnd",
+  "step": 54,
+  "ms": 1609,
+  "interMs": 0
+ },
+ {
+  "t": 177528.9,
+  "f": 10615,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 177529,
+  "f": 10615,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 177886.4,
+  "f": 10637,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   272,
+   -299,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 178243.3,
+  "f": 10658,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 357,
+  "plannedMs": 350
+ },
+ {
+  "t": 178243.4,
+  "f": 10658,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 178243.5,
+  "f": 10658,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 178243.5,
+  "f": 10658,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 178243.5,
+  "f": 10658,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 178318,
+  "f": 10663,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 74,
+  "frames": 4
+ },
+ {
+  "t": 178404.3,
+  "f": 10668,
+  "type": "strikeTurn",
+  "atMs": 168,
+  "cells": 9
+ },
+ {
+  "t": 178499.9,
+  "f": 10673,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 256
+ },
+ {
+  "t": 178602.4,
+  "f": 10680,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 716
+ },
+ {
+  "t": 179390.2,
+  "f": 10727,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1854
+ },
+ {
+  "t": 181354.6,
+  "f": 10845,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 181354.6,
+  "f": 10845,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 181354.6,
+  "f": 10845,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 181437.2,
+  "f": 10850,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 181454.5,
+  "f": 10851,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 162198,
+  "turbo": false
+ },
+ {
+  "t": 181454.6,
+  "f": 10851,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 181554.9,
+  "f": 10857,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 162298,
+  "turbo": false
+ },
+ {
+  "t": 181554.9,
+  "f": 10857,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 181606.5,
+  "f": 10860,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 181654.8,
+  "f": 10863,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 162398,
+  "turbo": false
+ },
+ {
+  "t": 181654.8,
+  "f": 10863,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 181755.2,
+  "f": 10869,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 162499,
+  "turbo": false
+ },
+ {
+  "t": 181755.2,
+  "f": 10869,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 181855,
+  "f": 10875,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 162598,
+  "turbo": false
+ },
+ {
+  "t": 181855,
+  "f": 10875,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 182624.8,
+  "f": 10921,
+  "type": "stepStart",
+  "step": 55,
+  "factor": 0.7
+ },
+ {
+  "t": 182624.9,
+  "f": 10921,
+  "type": "win",
+  "celebrate": false,
+  "step": 55,
+  "total": 57.276800000000016,
+  "stake": 100
+ },
+ {
+  "t": 182625,
+  "f": 10921,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 55
+ },
+ {
+  "t": 182625.3,
+  "f": 10921,
+  "type": "stepWin",
+  "step": 55,
+  "total": 57.276800000000016
+ },
+ {
+  "t": 183380.3,
+  "f": 10966,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 183380.3,
+  "f": 10966,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 183380.3,
+  "f": 10966,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 183455.7,
+  "f": 10971,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 75,
+  "frames": 4
+ },
+ {
+  "t": 183642.4,
+  "f": 10982,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 262
+ },
+ {
+  "t": 183940.4,
+  "f": 11000,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 183957.1,
+  "f": 11001,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 184056.9,
+  "f": 11007,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 184090.5,
+  "f": 11009,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 184107.3,
+  "f": 11010,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 184342.9,
+  "f": 11024,
+  "type": "stepEnd",
+  "step": 55,
+  "ms": 1718,
+  "interMs": 0
+ },
+ {
+  "t": 184893.4,
+  "f": 11057,
+  "type": "stepStart",
+  "step": 56,
+  "factor": 0.7
+ },
+ {
+  "t": 184893.5,
+  "f": 11057,
+  "type": "win",
+  "celebrate": false,
+  "step": 56,
+  "total": 57.661600000000014,
+  "stake": 100
+ },
+ {
+  "t": 184893.6,
+  "f": 11057,
+  "type": "stepWin",
+  "step": 56,
+  "total": 57.661600000000014
+ },
+ {
+  "t": 185643.9,
+  "f": 11102,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 186142,
+  "f": 11132,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 186175.3,
+  "f": 11134,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 186192.2,
+  "f": 11135,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 186209,
+  "f": 11136,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 186507.6,
+  "f": 11153,
+  "type": "stepEnd",
+  "step": 56,
+  "ms": 1614,
+  "interMs": 0
+ },
+ {
+  "t": 186507.7,
+  "f": 11153,
+  "type": "strikePace",
+  "v": "short",
+  "level": 4
+ },
+ {
+  "t": 186507.9,
+  "f": 11153,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 186860.7,
+  "f": 11175,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   116,
+   -143,
+   1728,
+   987
+  ]
+ },
+ {
+  "t": 187218.3,
+  "f": 11196,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 358,
+  "plannedMs": 350
+ },
+ {
+  "t": 187218.4,
+  "f": 11196,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 187218.5,
+  "f": 11196,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 187218.5,
+  "f": 11196,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 187218.5,
+  "f": 11196,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 187292.1,
+  "f": 11201,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 73,
+  "frames": 4
+ },
+ {
+  "t": 187378.3,
+  "f": 11206,
+  "type": "strikeTurn",
+  "atMs": 168,
+  "cells": 9
+ },
+ {
+  "t": 187470.5,
+  "f": 11211,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 252
+ },
+ {
+  "t": 187576.3,
+  "f": 11218,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 716
+ },
+ {
+  "t": 188379,
+  "f": 11266,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1868
+ },
+ {
+  "t": 189342,
+  "f": 11323,
+  "type": "stepStart",
+  "step": 57,
+  "factor": 0.7
+ },
+ {
+  "t": 189342.1,
+  "f": 11323,
+  "type": "win",
+  "celebrate": false,
+  "step": 57,
+  "total": 60.77200000000001,
+  "stake": 100
+ },
+ {
+  "t": 189342.3,
+  "f": 11323,
+  "type": "stepWin",
+  "step": 57,
+  "total": 60.77200000000001
+ },
+ {
+  "t": 190097.4,
+  "f": 11369,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 190595.9,
+  "f": 11399,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 190629.6,
+  "f": 11401,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 190629.6,
+  "f": 11401,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 190645.9,
+  "f": 11402,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 190712.9,
+  "f": 11406,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 190745.9,
+  "f": 11408,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 190745.9,
+  "f": 11408,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 190745.9,
+  "f": 11408,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 190828.3,
+  "f": 11413,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 190998.3,
+  "f": 11423,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 191016.4,
+  "f": 11424,
+  "type": "stepEnd",
+  "step": 57,
+  "ms": 1674,
+  "interMs": 0
+ },
+ {
+  "t": 191581.6,
+  "f": 11458,
+  "type": "stepStart",
+  "step": 58,
+  "factor": 0.7
+ },
+ {
+  "t": 191581.6,
+  "f": 11458,
+  "type": "win",
+  "celebrate": false,
+  "step": 58,
+  "total": 60.79630000000001,
+  "stake": 100
+ },
+ {
+  "t": 191581.8,
+  "f": 11458,
+  "type": "stepWin",
+  "step": 58,
+  "total": 60.79630000000001
+ },
+ {
+  "t": 192333.4,
+  "f": 11503,
+  "type": "impact",
+  "kind": "explode",
+  "n": 5
+ },
+ {
+  "t": 192830.9,
+  "f": 11533,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 192847.9,
+  "f": 11534,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 192981.1,
+  "f": 11542,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 193233.1,
+  "f": 11557,
+  "type": "stepEnd",
+  "step": 58,
+  "ms": 1652,
+  "interMs": 0
+ },
+ {
+  "t": 194649.2,
+  "f": 11642,
+  "type": "impact",
+  "kind": "wildMaw",
+  "heavy": true
+ },
+ {
+  "t": 194649.2,
+  "f": 11642,
+  "type": "hitStopStart",
+  "kind": "wildMaw",
+  "plannedMs": 67
+ },
+ {
+  "t": 194649.2,
+  "f": 11642,
+  "type": "shakeStart",
+  "kind": "wildMaw",
+  "px": 6
+ },
+ {
+  "t": 194731.8,
+  "f": 11647,
+  "type": "hitStopEnd",
+  "kind": "wildMaw",
+  "actualMs": 82,
+  "frames": 4
+ },
+ {
+  "t": 194899.4,
+  "f": 11657,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 175643,
+  "turbo": false
+ },
+ {
+  "t": 194899.4,
+  "f": 11657,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 194900.8,
+  "f": 11657,
+  "type": "shakeEnd",
+  "kind": "wildMaw",
+  "ms": 252
+ },
+ {
+  "t": 194999.3,
+  "f": 11663,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 175743,
+  "turbo": false
+ },
+ {
+  "t": 194999.3,
+  "f": 11663,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 195099.6,
+  "f": 11669,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 175843,
+  "turbo": false
+ },
+ {
+  "t": 195099.6,
+  "f": 11669,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 195199.6,
+  "f": 11675,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 175943,
+  "turbo": false
+ },
+ {
+  "t": 195199.6,
+  "f": 11675,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 195299.6,
+  "f": 11681,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 176043,
+  "turbo": false
+ },
+ {
+  "t": 195299.6,
+  "f": 11681,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 196068.9,
+  "f": 11727,
+  "type": "stepStart",
+  "step": 59,
+  "factor": 0.7
+ },
+ {
+  "t": 196069,
+  "f": 11727,
+  "type": "win",
+  "celebrate": false,
+  "step": 59,
+  "total": 60.86350000000001,
+  "stake": 100
+ },
+ {
+  "t": 196069.1,
+  "f": 11727,
+  "type": "pressureMult",
+  "mult": 1.5,
+  "step": 59
+ },
+ {
+  "t": 196069.4,
+  "f": 11727,
+  "type": "stepWin",
+  "step": 59,
+  "total": 60.86350000000001
+ },
+ {
+  "t": 196840.3,
+  "f": 11773,
+  "type": "heroPlay",
+  "id": "lev_rise",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_rise_1.jpg",
+  "dur": 6000,
+  "rect": [
+   -4,
+   247,
+   1928,
+   1076
+  ]
+ },
+ {
+  "t": 200463.3,
+  "f": 11990,
+  "type": "impact",
+  "kind": "explode",
+  "n": 11
+ },
+ {
+  "t": 200954.5,
+  "f": 12020,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 200971.4,
+  "f": 12021,
+  "type": "heroEnd",
+  "id": "lev_rise",
+  "el": 4131
+ },
+ {
+  "t": 201104.5,
+  "f": 12029,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 201204.7,
+  "f": 12035,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 201416.7,
+  "f": 12047,
+  "type": "stepEnd",
+  "step": 59,
+  "ms": 1704,
+  "interMs": 3643
+ },
+ {
+  "t": 201974.6,
+  "f": 12081,
+  "type": "stepStart",
+  "step": 60,
+  "factor": 0.7
+ },
+ {
+  "t": 201974.8,
+  "f": 12081,
+  "type": "win",
+  "celebrate": false,
+  "step": 60,
+  "total": 61.64110000000001,
+  "stake": 100
+ },
+ {
+  "t": 201974.9,
+  "f": 12081,
+  "type": "pressureMult",
+  "mult": 2,
+  "step": 60
+ },
+ {
+  "t": 201975.1,
+  "f": 12081,
+  "type": "stepWin",
+  "step": 60,
+  "total": 61.64110000000001
+ },
+ {
+  "t": 202733.9,
+  "f": 12126,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 203239.9,
+  "f": 12157,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 203256.5,
+  "f": 12158,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 203273.3,
+  "f": 12159,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 203273.4,
+  "f": 12159,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 203641.6,
+  "f": 12181,
+  "type": "stepEnd",
+  "step": 60,
+  "ms": 1667,
+  "interMs": 0
+ },
+ {
+  "t": 203641.6,
+  "f": 12181,
+  "type": "stepStart",
+  "step": 61,
+  "factor": 0.7
+ },
+ {
+  "t": 203641.7,
+  "f": 12181,
+  "type": "win",
+  "celebrate": false,
+  "step": 61,
+  "total": 61.66270000000001,
+  "stake": 100
+ },
+ {
+  "t": 203641.9,
+  "f": 12181,
+  "type": "stepWin",
+  "step": 61,
+  "total": 61.66270000000001
+ },
+ {
+  "t": 204393,
+  "f": 12226,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 204874.4,
+  "f": 12255,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 204908,
+  "f": 12257,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 204924.4,
+  "f": 12258,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 205256.8,
+  "f": 12277,
+  "type": "stepEnd",
+  "step": 61,
+  "ms": 1615,
+  "interMs": 0
+ },
+ {
+  "t": 205256.9,
+  "f": 12277,
+  "type": "strikePace",
+  "v": "full",
+  "level": 5
+ },
+ {
+  "t": 205257.1,
+  "f": 12277,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 1020,
+  "rect": [
+   77,
+   122,
+   1218,
+   680
+  ]
+ },
+ {
+  "t": 206159.7,
+  "f": 12332,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2282.3529411764707,
   "rect": [
    401,
    -337,
@@ -3406,16 +8297,16 @@
   ]
  },
  {
-  "t": 89954.2,
-  "f": 5364,
+  "t": 206766.8,
+  "f": 12368,
   "type": "strikeBite",
-  "v": "short",
-  "lungeMs": 359,
-  "plannedMs": 350
+  "v": "full",
+  "lungeMs": 607,
+  "plannedMs": 600
  },
  {
-  "t": 89954.3,
-  "f": 5364,
+  "t": 206766.8,
+  "f": 12368,
   "type": "heroFlipbook",
   "id": "lev_lunge",
   "frames": 14,
@@ -3423,84 +8314,1788 @@
   "playMs": 542
  },
  {
-  "t": 89954.4,
-  "f": 5364,
+  "t": 206766.9,
+  "f": 12368,
   "type": "impact",
   "kind": "leviathan",
   "heavy": true
  },
  {
-  "t": 89954.4,
-  "f": 5364,
+  "t": 206766.9,
+  "f": 12368,
   "type": "hitStopStart",
   "kind": "leviathan",
   "plannedMs": 67
  },
  {
-  "t": 89954.4,
-  "f": 5364,
+  "t": 206766.9,
+  "f": 12368,
   "type": "shakeStart",
   "kind": "leviathan",
   "px": 6
  },
  {
-  "t": 90027.3,
-  "f": 5369,
+  "t": 206842,
+  "f": 12373,
   "type": "hitStopEnd",
   "kind": "leviathan",
-  "actualMs": 72,
+  "actualMs": 75,
   "frames": 4
  },
  {
-  "t": 90113.7,
-  "f": 5374,
+  "t": 206977.9,
+  "f": 12381,
   "type": "strikeTurn",
-  "atMs": 168,
+  "atMs": 218,
   "cells": 4
  },
  {
-  "t": 90209.3,
-  "f": 5379,
+  "t": 207028.3,
+  "f": 12384,
   "type": "shakeEnd",
   "kind": "leviathan",
-  "ms": 255
+  "ms": 261
  },
  {
-  "t": 90644.9,
-  "f": 5406,
+  "t": 207126.1,
+  "f": 12390,
   "type": "heroEnd",
   "id": "lev_lunge",
-  "el": 1049
+  "el": 966
  },
  {
-  "t": 90714.6,
-  "f": 5410,
+  "t": 207895.4,
+  "f": 12436,
+  "type": "strikeEnd",
+  "v": "full",
+  "totalMs": 2636
+ },
+ {
+  "t": 211046.4,
+  "f": 12625,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 191790,
+  "turbo": false
+ },
+ {
+  "t": 211046.4,
+  "f": 12625,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 211146.1,
+  "f": 12631,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 191889,
+  "turbo": false
+ },
+ {
+  "t": 211146.1,
+  "f": 12631,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 211247.4,
+  "f": 12637,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 191991,
+  "turbo": false
+ },
+ {
+  "t": 211247.4,
+  "f": 12637,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 211346.6,
+  "f": 12643,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 192090,
+  "turbo": false
+ },
+ {
+  "t": 211346.6,
+  "f": 12643,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 211446.6,
+  "f": 12649,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 192190,
+  "turbo": false
+ },
+ {
+  "t": 211446.6,
+  "f": 12649,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 211546.9,
+  "f": 12655,
+  "type": "reelStop",
+  "col": 5,
+  "atMs": 192290,
+  "turbo": false
+ },
+ {
+  "t": 211546.9,
+  "f": 12655,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 5
+ },
+ {
+  "t": 211782.2,
+  "f": 12669,
+  "type": "stepStart",
+  "step": 62,
+  "factor": 0.7
+ },
+ {
+  "t": 211782.3,
+  "f": 12669,
+  "type": "win",
+  "celebrate": false,
+  "step": 62,
+  "total": 61.70700000000001,
+  "stake": 100
+ },
+ {
+  "t": 211782.6,
+  "f": 12669,
+  "type": "stepWin",
+  "step": 62,
+  "total": 61.70700000000001
+ },
+ {
+  "t": 212532.7,
+  "f": 12714,
+  "type": "impact",
+  "kind": "explode",
+  "n": 8
+ },
+ {
+  "t": 213014.8,
+  "f": 12743,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 213048.1,
+  "f": 12745,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 213081.3,
+  "f": 12747,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 213441.7,
+  "f": 12768,
+  "type": "stepEnd",
+  "step": 62,
+  "ms": 1660,
+  "interMs": 0
+ },
+ {
+  "t": 214000.1,
+  "f": 12802,
+  "type": "stepStart",
+  "step": 63,
+  "factor": 0.7
+ },
+ {
+  "t": 214000.2,
+  "f": 12802,
+  "type": "win",
+  "celebrate": false,
+  "step": 63,
+  "total": 63.45660000000001,
+  "stake": 100
+ },
+ {
+  "t": 214000.4,
+  "f": 12802,
+  "type": "stepWin",
+  "step": 63,
+  "total": 63.45660000000001
+ },
+ {
+  "t": 214751.1,
+  "f": 12847,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 215283.6,
+  "f": 12879,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 215300.1,
+  "f": 12880,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 215316.7,
+  "f": 12881,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 215316.7,
+  "f": 12881,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 215333.7,
+  "f": 12882,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 215708.2,
+  "f": 12904,
+  "type": "stepEnd",
+  "step": 63,
+  "ms": 1708,
+  "interMs": 0
+ },
+ {
+  "t": 215708.2,
+  "f": 12904,
+  "type": "strikePace",
+  "v": "short",
+  "level": 5
+ },
+ {
+  "t": 215708.4,
+  "f": 12904,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   -156,
+   59,
+   1452,
+   810
+  ]
+ },
+ {
+  "t": 216068.6,
+  "f": 12926,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   479,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 216426.1,
+  "f": 12947,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 358,
+  "plannedMs": 350
+ },
+ {
+  "t": 216426.2,
+  "f": 12947,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 216426.3,
+  "f": 12947,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 216426.3,
+  "f": 12947,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 216426.3,
+  "f": 12947,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 216500,
+  "f": 12952,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 73,
+  "frames": 4
+ },
+ {
+  "t": 216585.8,
+  "f": 12957,
+  "type": "strikeTurn",
+  "atMs": 167,
+  "cells": 4
+ },
+ {
+  "t": 216683.3,
+  "f": 12962,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 257
+ },
+ {
+  "t": 216784.3,
+  "f": 12969,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 716
+ },
+ {
+  "t": 217203.1,
+  "f": 12994,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1485
+ },
+ {
+  "t": 219203.3,
+  "f": 13114,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 199947,
+  "turbo": false
+ },
+ {
+  "t": 219203.3,
+  "f": 13114,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 219303.4,
+  "f": 13120,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 200047,
+  "turbo": false
+ },
+ {
+  "t": 219303.4,
+  "f": 13120,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 219403.5,
+  "f": 13126,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 200147,
+  "turbo": false
+ },
+ {
+  "t": 219403.5,
+  "f": 13126,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 219503.6,
+  "f": 13132,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 200247,
+  "turbo": false
+ },
+ {
+  "t": 219503.6,
+  "f": 13132,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 219603.7,
+  "f": 13138,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 200347,
+  "turbo": false
+ },
+ {
+  "t": 219603.7,
+  "f": 13138,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 219703.7,
+  "f": 13144,
+  "type": "reelStop",
+  "col": 5,
+  "atMs": 200447,
+  "turbo": false
+ },
+ {
+  "t": 219703.7,
+  "f": 13144,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 5
+ },
+ {
+  "t": 219949.3,
+  "f": 13158,
+  "type": "strikePace",
+  "v": "short",
+  "level": 5
+ },
+ {
+  "t": 219949.5,
+  "f": 13158,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   -156,
+   59,
+   1452,
+   810
+  ]
+ },
+ {
+  "t": 220305.4,
+  "f": 13180,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   323,
+   131,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 220656.7,
+  "f": 13201,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 351,
+  "plannedMs": 350
+ },
+ {
+  "t": 220656.7,
+  "f": 13201,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 220656.8,
+  "f": 13201,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 220656.8,
+  "f": 13201,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 220656.8,
+  "f": 13201,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 220736.9,
+  "f": 13206,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 220815.8,
+  "f": 13210,
+  "type": "strikeTurn",
+  "atMs": 160,
+  "cells": 4
+ },
+ {
+  "t": 220910.8,
+  "f": 13216,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 254
+ },
+ {
+  "t": 221004.4,
+  "f": 13222,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 699
+ },
+ {
+  "t": 221423.9,
+  "f": 13247,
   "type": "strikeEnd",
   "v": "short",
   "totalMs": 1469
  },
  {
-  "t": 91119.2,
-  "f": 5434,
+  "t": 223439.9,
+  "f": 13368,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 204183,
+  "turbo": false
+ },
+ {
+  "t": 223440,
+  "f": 13368,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 223540.2,
+  "f": 13374,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 204284,
+  "turbo": false
+ },
+ {
+  "t": 223540.2,
+  "f": 13374,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 223640.3,
+  "f": 13380,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 204384,
+  "turbo": false
+ },
+ {
+  "t": 223640.3,
+  "f": 13380,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 223740.1,
+  "f": 13386,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 204483,
+  "turbo": false
+ },
+ {
+  "t": 223740.1,
+  "f": 13386,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 223840.4,
+  "f": 13392,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 204584,
+  "turbo": false
+ },
+ {
+  "t": 223840.4,
+  "f": 13392,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 223940.4,
+  "f": 13398,
+  "type": "reelStop",
+  "col": 5,
+  "atMs": 204684,
+  "turbo": false
+ },
+ {
+  "t": 223940.4,
+  "f": 13398,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 5
+ },
+ {
+  "t": 224692.7,
+  "f": 13443,
+  "type": "stepStart",
+  "step": 64,
+  "factor": 0.7
+ },
+ {
+  "t": 224692.8,
+  "f": 13443,
   "type": "win",
   "celebrate": false,
-  "total": 94.12,
+  "step": 64,
+  "total": 65.53020000000001,
   "stake": 100
  },
  {
-  "t": 93720.1,
-  "f": 5590,
-  "type": "pad",
-  "ms": 0,
-  "beforePadMs": 74798
+  "t": 224692.9,
+  "f": 13443,
+  "type": "stepWin",
+  "step": 64,
+  "total": 65.53020000000001
  },
  {
-  "t": 93720.1,
-  "f": 5590,
+  "t": 225750.9,
+  "f": 13506,
+  "type": "impact",
+  "kind": "explode",
+  "n": 10
+ },
+ {
+  "t": 226276.2,
+  "f": 13538,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 226292.9,
+  "f": 13539,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 226309.1,
+  "f": 13540,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 226309.1,
+  "f": 13540,
+  "type": "impact",
+  "kind": "drop",
+  "col": 5
+ },
+ {
+  "t": 226343.3,
+  "f": 13542,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 226359.2,
+  "f": 13543,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 226656.6,
+  "f": 13560,
+  "type": "stepEnd",
+  "step": 64,
+  "ms": 1657,
+  "interMs": 307
+ },
+ {
+  "t": 226656.6,
+  "f": 13560,
+  "type": "stepStart",
+  "step": 65,
+  "factor": 0.7
+ },
+ {
+  "t": 226656.7,
+  "f": 13560,
+  "type": "win",
+  "celebrate": false,
+  "step": 65,
+  "total": 65.5626,
+  "stake": 100
+ },
+ {
+  "t": 226656.9,
+  "f": 13560,
+  "type": "stepWin",
+  "step": 65,
+  "total": 65.5626
+ },
+ {
+  "t": 227412.1,
+  "f": 13606,
+  "type": "impact",
+  "kind": "explode",
+  "n": 6
+ },
+ {
+  "t": 227927.2,
+  "f": 13637,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 227943.7,
+  "f": 13638,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 228043.9,
+  "f": 13644,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 228312.8,
+  "f": 13660,
+  "type": "stepEnd",
+  "step": 65,
+  "ms": 1656,
+  "interMs": 0
+ },
+ {
+  "t": 228312.8,
+  "f": 13660,
+  "type": "stepStart",
+  "step": 66,
+  "factor": 0.7
+ },
+ {
+  "t": 228312.9,
+  "f": 13660,
+  "type": "win",
+  "celebrate": false,
+  "step": 66,
+  "total": 68.174,
+  "stake": 100
+ },
+ {
+  "t": 228313.1,
+  "f": 13660,
+  "type": "stepWin",
+  "step": 66,
+  "total": 68.174
+ },
+ {
+  "t": 229063.7,
+  "f": 13705,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 229063.7,
+  "f": 13705,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 229063.7,
+  "f": 13705,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 229144,
+  "f": 13710,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 229313.9,
+  "f": 13720,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 250
+ },
+ {
+  "t": 229545.4,
+  "f": 13734,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 229595.4,
+  "f": 13737,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 229612.1,
+  "f": 13738,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 229612.1,
+  "f": 13738,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 229612.1,
+  "f": 13738,
+  "type": "impact",
+  "kind": "drop",
+  "col": 5
+ },
+ {
+  "t": 229729.2,
+  "f": 13745,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 229964.8,
+  "f": 13759,
+  "type": "stepEnd",
+  "step": 66,
+  "ms": 1652,
+  "interMs": 0
+ },
+ {
+  "t": 229964.8,
+  "f": 13759,
+  "type": "stepStart",
+  "step": 67,
+  "factor": 0.7
+ },
+ {
+  "t": 229964.8,
+  "f": 13759,
+  "type": "win",
+  "celebrate": false,
+  "step": 67,
+  "total": 72.11600000000001,
+  "stake": 100
+ },
+ {
+  "t": 229964.9,
+  "f": 13759,
+  "type": "stepWin",
+  "step": 67,
+  "total": 72.11600000000001
+ },
+ {
+  "t": 230715.1,
+  "f": 13804,
+  "type": "impact",
+  "kind": "bigCascade",
+  "heavy": true
+ },
+ {
+  "t": 230715.1,
+  "f": 13804,
+  "type": "hitStopStart",
+  "kind": "bigCascade",
+  "plannedMs": 67
+ },
+ {
+  "t": 230715.1,
+  "f": 13804,
+  "type": "shakeStart",
+  "kind": "bigCascade",
+  "px": 6
+ },
+ {
+  "t": 230795.5,
+  "f": 13809,
+  "type": "hitStopEnd",
+  "kind": "bigCascade",
+  "actualMs": 80,
+  "frames": 4
+ },
+ {
+  "t": 230965.8,
+  "f": 13819,
+  "type": "shakeEnd",
+  "kind": "bigCascade",
+  "ms": 251
+ },
+ {
+  "t": 231246.5,
+  "f": 13836,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 231246.5,
+  "f": 13836,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 231263.5,
+  "f": 13837,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 231263.5,
+  "f": 13837,
+  "type": "impact",
+  "kind": "drop",
+  "col": 5
+ },
+ {
+  "t": 231313.5,
+  "f": 13840,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 231331.1,
+  "f": 13841,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 231649.2,
+  "f": 13860,
+  "type": "stepEnd",
+  "step": 67,
+  "ms": 1684,
+  "interMs": 0
+ },
+ {
+  "t": 232210.9,
+  "f": 13893,
+  "type": "stepStart",
+  "step": 68,
+  "factor": 0.7
+ },
+ {
+  "t": 232211,
+  "f": 13893,
+  "type": "win",
+  "celebrate": false,
+  "step": 68,
+  "total": 73.39580000000001,
+  "stake": 100
+ },
+ {
+  "t": 232211.2,
+  "f": 13893,
+  "type": "stepWin",
+  "step": 68,
+  "total": 73.39580000000001
+ },
+ {
+  "t": 232963.5,
+  "f": 13938,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 233465.2,
+  "f": 13969,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 233481.9,
+  "f": 13970,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 233498.7,
+  "f": 13971,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 233515.1,
+  "f": 13972,
+  "type": "impact",
+  "kind": "drop",
+  "col": 5
+ },
+ {
+  "t": 233548.6,
+  "f": 13974,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 233582.2,
+  "f": 13976,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 233867.4,
+  "f": 13993,
+  "type": "stepEnd",
+  "step": 68,
+  "ms": 1657,
+  "interMs": 0
+ },
+ {
+  "t": 234418,
+  "f": 14026,
+  "type": "stepStart",
+  "step": 69,
+  "factor": 0.7
+ },
+ {
+  "t": 234418.1,
+  "f": 14026,
+  "type": "win",
+  "celebrate": false,
+  "step": 69,
+  "total": 73.81700000000001,
+  "stake": 100
+ },
+ {
+  "t": 234418.3,
+  "f": 14026,
+  "type": "stepWin",
+  "step": 69,
+  "total": 73.81700000000001
+ },
+ {
+  "t": 235168.8,
+  "f": 14071,
+  "type": "impact",
+  "kind": "explode",
+  "n": 12
+ },
+ {
+  "t": 235717.2,
+  "f": 14104,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 235750.8,
+  "f": 14106,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 235767.7,
+  "f": 14107,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 235783.9,
+  "f": 14108,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 236119.5,
+  "f": 14128,
+  "type": "stepEnd",
+  "step": 69,
+  "ms": 1702,
+  "interMs": 0
+ },
+ {
+  "t": 236680,
+  "f": 14161,
+  "type": "stepStart",
+  "step": 70,
+  "factor": 0.7
+ },
+ {
+  "t": 236680.1,
+  "f": 14161,
+  "type": "win",
+  "celebrate": false,
+  "step": 70,
+  "total": 73.8494,
+  "stake": 100
+ },
+ {
+  "t": 236680.3,
+  "f": 14161,
+  "type": "stepWin",
+  "step": 70,
+  "total": 73.8494
+ },
+ {
+  "t": 237437.1,
+  "f": 14207,
+  "type": "impact",
+  "kind": "explode",
+  "n": 4
+ },
+ {
+  "t": 237935.5,
+  "f": 14237,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 237952.2,
+  "f": 14238,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 237969.1,
+  "f": 14239,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 238308.4,
+  "f": 14259,
+  "type": "stepEnd",
+  "step": 70,
+  "ms": 1628,
+  "interMs": 0
+ },
+ {
+  "t": 238308.5,
+  "f": 14259,
+  "type": "strikePace",
+  "v": "short",
+  "level": 5
+ },
+ {
+  "t": 238308.6,
+  "f": 14259,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   -156,
+   59,
+   1452,
+   810
+  ]
+ },
+ {
+  "t": 238670.6,
+  "f": 14281,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   479,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 239024.2,
+  "f": 14302,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 354,
+  "plannedMs": 350
+ },
+ {
+  "t": 239024.3,
+  "f": 14302,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 239024.3,
+  "f": 14302,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 239024.3,
+  "f": 14302,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 239024.3,
+  "f": 14302,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 239102.3,
+  "f": 14307,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 78,
+  "frames": 4
+ },
+ {
+  "t": 239188.6,
+  "f": 14312,
+  "type": "strikeTurn",
+  "atMs": 168,
+  "cells": 4
+ },
+ {
+  "t": 239279.7,
+  "f": 14317,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 255
+ },
+ {
+  "t": 239387.1,
+  "f": 14324,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 717
+ },
+ {
+  "t": 239805.7,
+  "f": 14349,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1485
+ },
+ {
+  "t": 241805.4,
+  "f": 14469,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 222549,
+  "turbo": false
+ },
+ {
+  "t": 241805.5,
+  "f": 14469,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 241905.6,
+  "f": 14475,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 222649,
+  "turbo": false
+ },
+ {
+  "t": 241905.6,
+  "f": 14475,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 242005.5,
+  "f": 14481,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 222749,
+  "turbo": false
+ },
+ {
+  "t": 242005.5,
+  "f": 14481,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 242105.6,
+  "f": 14487,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 222849,
+  "turbo": false
+ },
+ {
+  "t": 242105.6,
+  "f": 14487,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 242205.7,
+  "f": 14493,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 222949,
+  "turbo": false
+ },
+ {
+  "t": 242205.7,
+  "f": 14493,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 242305.7,
+  "f": 14499,
+  "type": "reelStop",
+  "col": 5,
+  "atMs": 223049,
+  "turbo": false
+ },
+ {
+  "t": 242305.8,
+  "f": 14499,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 5
+ },
+ {
+  "t": 242524.9,
+  "f": 14512,
+  "type": "stepStart",
+  "step": 71,
+  "factor": 0.7
+ },
+ {
+  "t": 242525.1,
+  "f": 14512,
+  "type": "win",
+  "celebrate": false,
+  "step": 71,
+  "total": 75.7934,
+  "stake": 100
+ },
+ {
+  "t": 242525.2,
+  "f": 14512,
+  "type": "stepWin",
+  "step": 71,
+  "total": 75.7934
+ },
+ {
+  "t": 243276.2,
+  "f": 14557,
+  "type": "impact",
+  "kind": "explode",
+  "n": 13
+ },
+ {
+  "t": 243791,
+  "f": 14588,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 243807.5,
+  "f": 14589,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 243807.5,
+  "f": 14589,
+  "type": "impact",
+  "kind": "drop",
+  "col": 3
+ },
+ {
+  "t": 243824.2,
+  "f": 14590,
+  "type": "impact",
+  "kind": "drop",
+  "col": 4
+ },
+ {
+  "t": 243874.4,
+  "f": 14593,
+  "type": "impact",
+  "kind": "drop",
+  "col": 5
+ },
+ {
+  "t": 243907.6,
+  "f": 14595,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 244209.5,
+  "f": 14613,
+  "type": "stepEnd",
+  "step": 71,
+  "ms": 1685,
+  "interMs": 0
+ },
+ {
+  "t": 244761.1,
+  "f": 14646,
+  "type": "stepStart",
+  "step": 72,
+  "factor": 0.7
+ },
+ {
+  "t": 244761.1,
+  "f": 14646,
+  "type": "win",
+  "celebrate": false,
+  "step": 72,
+  "total": 75.8323,
+  "stake": 100
+ },
+ {
+  "t": 244761.3,
+  "f": 14646,
+  "type": "stepWin",
+  "step": 72,
+  "total": 75.8323
+ },
+ {
+  "t": 245521.2,
+  "f": 14691,
+  "type": "impact",
+  "kind": "explode",
+  "n": 7
+ },
+ {
+  "t": 246025.9,
+  "f": 14722,
+  "type": "impact",
+  "kind": "drop",
+  "col": 1
+ },
+ {
+  "t": 246092.6,
+  "f": 14726,
+  "type": "impact",
+  "kind": "drop",
+  "col": 0
+ },
+ {
+  "t": 246143.3,
+  "f": 14729,
+  "type": "impact",
+  "kind": "drop",
+  "col": 2
+ },
+ {
+  "t": 246429.7,
+  "f": 14746,
+  "type": "stepEnd",
+  "step": 72,
+  "ms": 1669,
+  "interMs": 0
+ },
+ {
+  "t": 246429.7,
+  "f": 14746,
+  "type": "strikePace",
+  "v": "short",
+  "level": 5
+ },
+ {
+  "t": 246429.9,
+  "f": 14746,
+  "type": "heroPlay",
+  "id": "lev_eye",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_eye_1.jpg",
+  "dur": 470,
+  "rect": [
+   -156,
+   59,
+   1452,
+   810
+  ]
+ },
+ {
+  "t": 246789.9,
+  "f": 14767,
+  "type": "heroPlay",
+  "id": "lev_lunge",
+  "source": "generated\\inbox\\p3_leviathan_hero\\lev_lunge_1.png",
+  "dur": 2164.705882352941,
+  "rect": [
+   323,
+   -181,
+   1622,
+   927
+  ]
+ },
+ {
+  "t": 247138.6,
+  "f": 14788,
+  "type": "strikeBite",
+  "v": "short",
+  "lungeMs": 349,
+  "plannedMs": 350
+ },
+ {
+  "t": 247138.7,
+  "f": 14788,
+  "type": "heroFlipbook",
+  "id": "lev_lunge",
+  "frames": 14,
+  "fps": 24,
+  "playMs": 542
+ },
+ {
+  "t": 247138.7,
+  "f": 14788,
+  "type": "impact",
+  "kind": "leviathan",
+  "heavy": true
+ },
+ {
+  "t": 247138.7,
+  "f": 14788,
+  "type": "hitStopStart",
+  "kind": "leviathan",
+  "plannedMs": 67
+ },
+ {
+  "t": 247138.7,
+  "f": 14788,
+  "type": "shakeStart",
+  "kind": "leviathan",
+  "px": 6
+ },
+ {
+  "t": 247209.1,
+  "f": 14793,
+  "type": "hitStopEnd",
+  "kind": "leviathan",
+  "actualMs": 70,
+  "frames": 4
+ },
+ {
+  "t": 247295.1,
+  "f": 14798,
+  "type": "strikeTurn",
+  "atMs": 155,
+  "cells": 4
+ },
+ {
+  "t": 247389,
+  "f": 14803,
+  "type": "shakeEnd",
+  "kind": "leviathan",
+  "ms": 250
+ },
+ {
+  "t": 247493.6,
+  "f": 14810,
+  "type": "heroEnd",
+  "id": "lev_lunge",
+  "el": 704
+ },
+ {
+  "t": 247912.5,
+  "f": 14835,
+  "type": "strikeEnd",
+  "v": "short",
+  "totalMs": 1473
+ },
+ {
+  "t": 248313.1,
+  "f": 14859,
+  "type": "win",
+  "celebrate": false,
+  "total": 75.83,
+  "stake": 100
+ },
+ {
+  "t": 252631.2,
+  "f": 15118,
+  "type": "reelStop",
+  "col": 0,
+  "atMs": 233375,
+  "turbo": false
+ },
+ {
+  "t": 252631.2,
+  "f": 15118,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 0
+ },
+ {
+  "t": 252731.1,
+  "f": 15124,
+  "type": "reelStop",
+  "col": 1,
+  "atMs": 233474,
+  "turbo": false
+ },
+ {
+  "t": 252731.1,
+  "f": 15124,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 1
+ },
+ {
+  "t": 252831.4,
+  "f": 15130,
+  "type": "reelStop",
+  "col": 2,
+  "atMs": 233575,
+  "turbo": false
+ },
+ {
+  "t": 252831.4,
+  "f": 15130,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 2
+ },
+ {
+  "t": 252931.4,
+  "f": 15136,
+  "type": "reelStop",
+  "col": 3,
+  "atMs": 233675,
+  "turbo": false
+ },
+ {
+  "t": 252931.4,
+  "f": 15136,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 3
+ },
+ {
+  "t": 253031.3,
+  "f": 15142,
+  "type": "reelStop",
+  "col": 4,
+  "atMs": 233775,
+  "turbo": false
+ },
+ {
+  "t": 253031.3,
+  "f": 15142,
+  "type": "impact",
+  "kind": "reelStop",
+  "col": 4
+ },
+ {
+  "t": 253244.9,
+  "f": 15154,
+  "type": "pad",
+  "ms": 0,
+  "beforePadMs": 233988
+ },
+ {
+  "t": 253244.9,
+  "f": 15154,
   "type": "cycleEnd",
   "kind": "bonus",
-  "cycleMs": 74798,
-  "won": 94.12,
+  "cycleMs": 233988,
+  "won": 75.83,
   "stake": 100,
   "minCycleMs": 2600
  }
